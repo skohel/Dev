@@ -1,0 +1,38 @@
+﻿var openTextFile = function(file, delimiter){
+    this.file = file ;
+    this.delimiter = delimiter;
+    var reader, labels;   
+
+    reader= aqua.io.newTextReader();
+    reader.setFile(file);
+    labels = getColumnHeadings(reader, delimiter);
+    aqua.console.println(labels);        
+    reader.close();
+}
+
+var getColumnHeadings = function(reader, delimiter){
+    this.reader = reader;
+    var titleRow, tableHeadings;
+    
+    reader.setCellDelimiter(delimiter);
+    titleRow = reader.readNextRow();
+    tableHeadings = new Array(titleRow.getSize());
+
+    for (var i = 0; i < titleRow.getSize(); i++){
+        tableHeadings[i] = titleRow.get(i);
+    }
+    return tableHeadings;
+}
+
+var getPlayerData = function(reader, delimiter){
+    this.reader = reader;
+    var row, playerStats;
+    
+    reader.setCellDelimiter(delimiter);
+    row = reader.readNextRow();
+
+     for (var i = 0; i < row.getSize(); i++){
+        playerStats[i] = row.get(i);
+    }
+    return playerStats;
+}

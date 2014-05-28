@@ -1,0 +1,3 @@
+﻿var functionTest = aqua.require('./functionTest');
+
+aqua.console.println(openTextFile("/home/sterling/Dev/test/User\ Files/2013\ Final\ MLB\ Batter\ Stats.txt", "\t"));
