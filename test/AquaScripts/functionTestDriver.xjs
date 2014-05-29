@@ -1,3 +1,8 @@
-﻿var functionTest = aqua.require('./functionTest');
+﻿aqua.system.runScript('functionTest.xjs', null, true);
 
-aqua.console.println(openTextFile("/home/sterling/Dev/test/User\ Files/2013\ Final\ MLB\ Batter\ Stats.txt", "\t"));
+openTextFile("/home/sterling/Dev/test/User\ Files/2013\ Final\ MLB\ Batter\ Stats.txt");
+setDelimiter("\t");
+
+var columnHeadings = getRow();
+
+print(columnHeadings);

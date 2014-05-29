@@ -1,38 +1,25 @@
-﻿var openTextFile = function(file, delimiter){
+﻿function openTextFile(file){
     this.file = file ;
-    this.delimiter = delimiter;
-    var reader, labels;   
-
-    reader= aqua.io.newTextReader();
+    var reader= aqua.io.newTextReader();
     reader.setFile(file);
-    labels = getColumnHeadings(reader, delimiter);
-    aqua.console.println(labels);        
-    reader.close();
-}
-
-var getColumnHeadings = function(reader, delimiter){
-    this.reader = reader;
-    var titleRow, tableHeadings;
     
-    reader.setCellDelimiter(delimiter);
-    titleRow = reader.readNextRow();
-    tableHeadings = new Array(titleRow.getSize());
-
-    for (var i = 0; i < titleRow.getSize(); i++){
-        tableHeadings[i] = titleRow.get(i);
+    this.setDelimiter = function(delimiter){
+        reader.setCellDelimiter(delimiter);
     }
-    return tableHeadings;
-}
 
-var getPlayerData = function(reader, delimiter){
-    this.reader = reader;
-    var row, playerStats;
-    
-    reader.setCellDelimiter(delimiter);
-    row = reader.readNextRow();
+    this.getRow = function(){
+       var row;
+       var playerStats = new Array();
 
-     for (var i = 0; i < row.getSize(); i++){
-        playerStats[i] = row.get(i);
+       row = reader.readNextRow();
+
+        for (var i = 0; i < row.getSize(); i++){
+           playerStats[i] = row.get(i);
+       }
+       return playerStats;
     }
-    return playerStats;
+
+    this.close = function(){
+        reader.close();
+    }
 }
