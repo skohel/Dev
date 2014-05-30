@@ -1,4 +1,4 @@
-﻿var TextFile = "/home/sterling/Downloads/Aqua OpenAPI/IO/User\ Files/access.log";
+﻿var TextFile = "/home/sterling/Dev/Aqua OpenAPI/IO/User\ Files/access.log";
 var reader   = aqua.io.newTextReader();
 
 print("Start TextFileReader read() test...");

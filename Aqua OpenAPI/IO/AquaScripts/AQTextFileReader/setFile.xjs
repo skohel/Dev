@@ -1,4 +1,4 @@
-﻿var textFile = "/access.log";
+﻿var textFile = "/home/sterling/Dev/Aqua OpenAPI/IO/User\ Files/access.log";
 var reader   = aqua.io.newTextReader();
 
 reader.setFile(textFile);

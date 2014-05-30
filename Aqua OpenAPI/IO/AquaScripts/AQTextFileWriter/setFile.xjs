@@ -1,4 +1,4 @@
-﻿var textFile = "/text.out";
+﻿var textFile = "/home/sterling/Dev/Aqua OpenAPI/IO/User\ Files/text.out";
 var str      = "Aquafold Inc.";
 var writer   = aqua.io.newTextWriter();
 
@@ -6,7 +6,6 @@ writer.setFile(textFile);
 writer.write(str);
 writer.close();
 readFile();
-
 
 function readFile() {
 
