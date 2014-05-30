@@ -1,0 +1,5 @@
+﻿print("Generate a random color name (in English):");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextColorName();
+    print("\t"+x);
+}

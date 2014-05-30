@@ -1,0 +1,45 @@
+﻿/*
+aqua.chart.chartModel.getTotalAbsolute
+
+Synopsis
+    double getTotalAbsolute(int seriesNumber);
+
+Description
+Returns the total of all absolute values in the specified series
+
+Example
+    see below
+
+*/
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+model.addSeries("First Series");
+model.addSeries("Second Series");
+
+model.addCategory(100);
+model.addCategory(1000);
+model.addCategory(3000);
+
+model.setValue(0, 0, 100);
+model.setValue(0, 1, 200);
+model.setValue(0, 2, 300);
+model.setValue(1, 0, -10);
+model.setValue(1, 1, 20);
+model.setValue(1, 2, 30);
+
+chart.getProperties().setChartTypeStacked();
+
+chart.getProperties().setNumericCategoryAxis(true);
+
+var total = model.getTotalAbsolute(1);
+aqua.response.write("Total of absolute values in second series: ").write(total).write("<p>");
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

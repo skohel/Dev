@@ -1,0 +1,54 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "/tmp/test/AQFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.filesystem;
+
+/* --- test move --- */
+
+test_moveFileSetsToDir();
+
+
+
+function test_moveFileSetsToDir(){
+
+    var src_base = test_data_dir + "files/";
+    var dest_base = test_data_dir + "move/";
+    var dest_from_base = dest_base + "from/";
+    
+    var dest_to_base = dest_base + "to/";
+    var dest_to_dir = dest_to_base + "filesets";
+
+    AQFS.copy(src_base, dest_from_base);
+    
+    var fileset1 = AQFS.newFileSet();
+    fileset1.setBaseDir(dest_from_base + "src_base1");
+    fileset1.setIncludes("**/*");
+    fileset1.setExcludes("**/*.html");
+    
+    var fileset2 = AQFS.newFileSet();
+    fileset2.setBaseDir(dest_from_base + "src_base2");
+    fileset2.setIncludes("**/*");
+    fileset2.setExcludes("**/*.txt");
+    
+    var filesets = new Array(fileset1, fileset2);
+    
+    exec_moveFileSetsToDir(filesets, dest_to_dir);
+}
+
+function exec_moveFileSetsToDir(filesets, destination){
+    try {
+        aqua.console.println("moveFileSets: moving files in directory [");
+        for(var i=0; i<filesets.length; i++){
+        	aqua.console.println("[" + filesets[i].getBaseDir() + "]");
+        }
+        aqua.console.println("] to [" + destination + "]...");
+        AQFS.moveFileSets(filesets, destination);
+        aqua.console.println("moveFileSets done.");
+    } 
+    catch(ex) {
+        aqua.console.println("moveFilesets failed - " + ex.toString());
+    }
+
+}
+// -------------------------------------------------------------------------------

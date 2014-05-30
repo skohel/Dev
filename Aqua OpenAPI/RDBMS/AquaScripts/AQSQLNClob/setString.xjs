@@ -1,0 +1,56 @@
+﻿var server      = "Oracle 11G - 10.168.11.51 - HR";
+var db          = null;
+var schema      = "HR";
+var sql         = "select * from HR.ANGER";
+var conn        = aqua.project.getServerConnection(server);
+conn.connect();
+
+var resultSet       = conn.executeQuery(sql);
+var columnStructure = resultSet.getColumnStructure();
+var columnNames     = columnStructure.getColumnNames();
+
+if (resultSet.next()){
+
+    var clobColumnOne;
+    var clobColumnTwo;
+
+    try{
+        clobColumnOne = resultSet.getNClob(0);
+        clobColumnTwo = resultSet.getNClob(1);
+    }
+    catch(ex){
+        aqua.console.println(ex.toString());
+        aqua.console.println("");
+    }
+
+    // print out clobs
+    var stringFromColumnOne = clobColumnOne.getSubString(0, clobColumnOne.getLength());
+    var stringFromColumnTwo = clobColumnTwo.getSubString(0, clobColumnTwo.getLength());
+
+    var stringFactory = aqua.type.getString();
+    aqua.console.println("Column One AQSQLClob.getString()  [" + stringFromColumnOne + "] ");
+    
+    aqua.console.println("Column Two AQSQLClob.getString()  [" + stringFromColumnTwo + "] ");
+
+    aqua.console.println("Now take column one date and put at the end of column two");
+
+    var numOfBytesWritten = clobColumnTwo.setString(clobColumnTwo.getLength(), stringFromColumnOne, 0, clobColumnOne.getLength())
+
+    aqua.console.println("No. of bytes written: " + numOfBytesWritten);
+
+    stringFromColumnTwo = clobColumnTwo.getSubString(0, clobColumnTwo.getLength()-1);
+    aqua.console.println("Column Two AQSQLClob.getString()  [" + stringFromColumnTwo + "] ");
+    
+    aqua.console.println("Now take column two data and put it into clob column one");
+
+    var numOfBytesWritten = clobColumnOne.setString(0, clobColumnTwo.getSubString(0, clobColumnTwo.getLength()));
+
+    aqua.console.println("No. of bytes written: " + numOfBytesWritten);
+
+    stringFromColumnTwo = clobColumnTwo.getSubString(0, clobColumnTwo.getLength()-1);
+    aqua.console.println("Column Two AQSQLClob.getString()  [" + stringFromColumnTwo + "] ");
+
+}
+
+resultSet.close();
+conn.disconnect();

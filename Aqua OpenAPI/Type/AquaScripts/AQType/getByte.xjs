@@ -1,0 +1,7 @@
+﻿var validValue   = "127";
+var invalidValue = "128";
+var byteFactory  = aqua.type.getByte();
+
+aqua.console.println("Is [" + validValue   + "] a byte? [" + byteFactory.isValid(validValue) + "]");
+aqua.console.println("Is [" + invalidValue + "] a byte? [" + byteFactory.isValid(invalidValue) + "]");
+

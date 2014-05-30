@@ -1,0 +1,96 @@
+﻿
+
+var svn = aqua.vcs.newWorkspaceSubversion();
+svn.setPassword(aqua.crypto.getSecureField("svn.password"));
+svn.setUsername(aqua.crypto.getSecureField("svn.username"));
+
+//var srcFolder = "c:/Test.aquascript/test.svn";
+var srcFolder = "C:\\AquaProjests\\OpenApiScripts\\Aqua OpenAPI\\VCS";
+
+var headRev = 4973; //svn.getHistory(srcFolder)[0].getRevision();
+var last = 4962; //svn.getRevision(srcFolder).revision; //change //change2
+print("Local rev: " + last);
+print("Head rev: " +headRev);
+print("");
+
+var revisions = svn.getHistory(srcFolder, last, headRev);
+
+var affectedPathsMap = calculateDiff(revisions);
+var iterator = affectedPathsMap.keySet().iterator();
+while(iterator.hasNext()) {
+    var path = iterator.next();
+    var action = affectedPathsMap.get(path); 
+    print("\n ---- [" + action + "] " + path);
+    if(action == 'modified') {
+        printChanges(path, last, headRev);
+    }
+}
+
+function calculateDiff(revisions) {
+    var map = new java.util.HashMap();
+    for(var i = 0; i < revisions.length; i++) { //we assume diff is sorted by modification time
+        processRevision(map, revisions[i]);
+    }
+    return map;
+}
+
+function processRevision(map , revision) {
+//    var rev = revision.getRevision();
+    var addedPaths = revision.affectedPaths.addedPaths;
+    if(addedPaths.length > 0) {
+        for(var j=0; j < addedPaths.length; j++) {
+//            print("------- added("+rev+"):\t" + addedPaths[j]);
+            putAddedPath(map, addedPaths[j]);
+            
+        }
+    }
+    var deletedPaths = revision.affectedPaths.deletedPaths;
+    if(deletedPaths.length > 0) {
+        for(var j=0; j < deletedPaths.length; j++) {
+//            print("------- deleted("+rev+"):\t" + deletedPaths[j]);
+            putDeletedPath(map, deletedPaths[j]);
+        }
+    }
+    var modifiedPaths = revision.affectedPaths.modifiedPaths;
+    if(modifiedPaths.length > 0) {
+        for(var j=0; j < modifiedPaths.length; j++) {
+//            print("------- modified("+rev+"):\t" + modifiedPaths[j]);
+           putModifiedPath(map, modifiedPaths[j]);
+        }
+    }
+}
+
+function putAddedPath(map, path) {
+    var obj = map.get(path);
+    if(obj == null || obj == "deleted") {
+        map.put(path, "added");
+    }
+}
+
+function putDeletedPath(map, path) {
+    var obj = map.get(path);
+    if(obj == 'added') {
+        map.remove(path);
+    } else {
+        map.put(path, "deleted");
+    }
+}
+
+function putModifiedPath(map, path) {
+    var obj = map.get(path);
+    if(obj == null) {
+        map.put(path, "modified");
+    }
+}
+
+
+function printChanges(file, rev1, rev2) {
+    var text1 = svn.getRevisionContentsAsString(file,rev1,"UTF-8");
+    var text2 = svn.getRevisionContentsAsString(file,rev2,"UTF-8");
+
+    var changes = aqua.compare.newComparator().compareText(text1,text2).getChanges();
+    for(var k = 0; k < changes.length; k++) {
+        if(changes[k].isUnchanged()) continue;
+        aqua.console.println(changes[k]);
+    }
+}

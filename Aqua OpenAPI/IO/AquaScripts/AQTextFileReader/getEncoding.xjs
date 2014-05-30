@@ -1,0 +1,10 @@
+﻿var reader   = aqua.io.newTextReader();
+var encoding = "UTF-16";
+
+aqua.console.println("Default file encoding [" + reader.getEncoding() + "]");
+aqua.console.println("Setting encoding to [" + encoding + "]");
+reader.setEncoding(encoding);
+aqua.console.println("new file encoding [" + reader.getEncoding() + "]");
+
+
+

@@ -1,0 +1,9 @@
+﻿var sql          = "SELECT table1.*, table2.* FROM table1 JOIN table2 ON table1.name = table2.name\nGO\nselect 1=1;";
+var scriptParser = aqua.project.getServerConnection("MySql 6.0 - 10.168.1.38 - demo").newScriptParser();
+
+parsedText = scriptParser.parse(sql);
+
+for (var i=0; i<parsedText.length; i++){
+    aqua.console.println("");
+    aqua.console.println("STATEMENT [" + i + "]: [" + parsedText[i] + "]");
+}

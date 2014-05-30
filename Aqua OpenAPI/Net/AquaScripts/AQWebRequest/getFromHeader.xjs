@@ -1,0 +1,27 @@
+
+// create a web client
+var client = aqua.net.newWebClient();
+
+// create a request
+var request = client.newWebRequest("http://www.aquafold.com");
+
+// set From request header
+request.addRequestHeader("From", "test@aquafold.com");
+
+// submit request as a get request
+var response = client.submitGetRequest(request);
+
+// write request to console
+aqua.console.println(request.toString());
+
+// get header's value
+var headerValue = request.getFromHeader();
+
+// write response to console
+aqua.console.println(response.toString(false));
+
+// terminate client
+client.closeConnection();
+
+// show header's value
+aqua.console.println("The value of the From request header is [" + headerValue + "].");

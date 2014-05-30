@@ -1,0 +1,3 @@
+﻿var filename   = "/tmp/somefile";
+var filesystem = aqua.getFilesystem();
+filesystem.touch(filename, null);

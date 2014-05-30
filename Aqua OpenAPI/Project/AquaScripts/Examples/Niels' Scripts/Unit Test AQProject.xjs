@@ -1,0 +1,17 @@
+importPackage(com.aquafold.openapi.project);
+importPackage(java.lang);
+
+// Unit Test Server Connections
+
+var serverConnections = aqua.project.*
+
+// Unit Test AquaScripts
+
+var aquaScripts = aqua.project.*
+    
+// Unit Test User Files
+
+var userFiles = aqua.project.*
+    
+project = aqua.project.collectUserFiles("/");
+

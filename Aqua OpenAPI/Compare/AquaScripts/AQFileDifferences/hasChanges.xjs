@@ -1,0 +1,8 @@
+﻿importPackage(java.io);
+
+var c       = aqua.compare.newFileComparator();
+var folder1 = new File("/tmp/compare/folder1");
+var folder2 = new File("/tmp/compare/folder2");
+var result  = c.compare(folder1, folder2, true);
+
+aqua.console.println("Has changes? [" + result.hasChanges() + "]");

@@ -1,0 +1,106 @@
+﻿var columns    = ["shipcountry","freight","description"];
+var dataSet    = generateDataSet(columns);
+var comparator = getComparator();
+
+aqua.console.println("No sorting:");
+aqua.console.println(dataSet.renderText());
+aqua.console.println("");
+
+sort(dataSet);
+
+sortWithColumnName(dataSet);
+
+sortWithColumnIndex(dataSet);
+
+sortWithColumnNameAndComparator(dataSet, comparator);
+
+sortWithColumnIndexAndComparator(dataSet, comparator);
+
+//------------------------------------------------------------------------------
+
+function sort(dataSet){
+
+    var ds = aqua.data.newDataSet(columns);
+    ds.importData(dataSet.getReader());
+    aqua.console.println("Sorting Column 0 ascending order:");
+    ds.setSortingAscending(0);
+    ds.sort();
+    aqua.console.println(ds.renderText());
+    aqua.console.println("");
+}
+
+
+function sortWithColumnName(dataSet){
+
+    var ds = aqua.data.newDataSet(columns);
+    ds.importData(dataSet.getReader());
+    // sort(int, boolean)
+    aqua.console.println("Sorting Column \"freight\" ascending order:");
+    ds.sort("freight", true);
+    aqua.console.println(ds.renderText());
+    aqua.console.println("");
+}
+
+
+function sortWithColumnIndex(dataSet){
+
+    var ds = aqua.data.newDataSet(columns);
+    ds.importData(dataSet.getReader());
+    // sort(int, boolean)
+    aqua.console.println("Sorting Column 1 ascending order:");
+    ds.sort(1, true);
+    aqua.console.println(ds.renderText());
+    aqua.console.println("");
+}
+
+function getComparator(){
+
+    var compare = {compare: 
+                    function(obj1, obj2){
+                        // please refer to java.util.Comparator
+                        return obj1 <= obj2;
+                    }, 
+
+                   equal:
+                    function(obj){
+                        // please refer to java.util.Comparator
+                        return true;
+                    }
+    }
+    return new java.util.Comparator(compare);
+}
+
+
+function sortWithColumnNameAndComparator(dataSet, comparator){
+
+    var ds = aqua.data.newDataSet(columns);
+    ds.importData(dataSet.getReader());
+    // sort(string, boolean, comparator);
+    aqua.console.println("Sorting Column \"description\" ascending order using a custom comparator:");
+    ds.sort("description", true, comparator);
+    aqua.console.println(ds.renderText());
+    aqua.console.println("");
+
+}
+
+function sortWithColumnIndexAndComparator(dataSet, comparator){
+
+    var ds = aqua.data.newDataSet(columns);
+    ds.importData(dataSet.getReader());
+    // sort(string, boolean, comparator);
+    aqua.console.println("Sorting Column 0 ascending order using a custom comparator:");
+    ds.sort(0, true, comparator);
+    aqua.console.println(ds.renderText());
+    aqua.console.println("");
+}
+
+function generateDataSet(columns){
+
+    var ds = aqua.data.newDataSet(columns);
+    ds.addRowWithValues(aqua.random.nextCountry(),    "10", 1);
+    ds.addRowWithValues(aqua.random.nextCountry(),   "100", 2);
+    ds.addRowWithValues(aqua.random.nextCountry(),  "1000", 3);
+    ds.addRowWithValues(aqua.random.nextCountry(), "10000", "100004");
+    return ds;
+}
+

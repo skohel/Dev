@@ -1,0 +1,3 @@
+﻿var project = aqua.getProject();
+
+aqua.console.println("Chart URL: [" + project.getChartURL() + "]");

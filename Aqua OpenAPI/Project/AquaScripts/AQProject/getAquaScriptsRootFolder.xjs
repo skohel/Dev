@@ -1,0 +1,19 @@
+﻿testGetRootFolder();
+
+function testGetRootFolder() {
+	aqua.console.println('[TEST] aqua.project.getAquaScriptsRootFolder()');
+	var error;
+	var result;
+	try {
+		result = aqua.project.getAquaScriptsRootFolder();
+	} catch(e) {
+		error = e;
+	}
+	if(error != null) {
+		throw "Expected: NO exception but was: " + error;
+	}
+	if(result == null) {
+		throw "Expected: NOT empty result but was: " + result;
+	}
+	aqua.console.println('[OK]');
+}

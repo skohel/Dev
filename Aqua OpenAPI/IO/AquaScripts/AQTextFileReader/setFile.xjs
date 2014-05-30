@@ -1,0 +1,9 @@
+﻿var textFile = "/access.log";
+var reader   = aqua.io.newTextReader();
+
+reader.setFile(textFile);
+reader.setFirstLineContainsColumnNames(true);
+aqua.console.list(reader.read());
+reader.close();
+
+

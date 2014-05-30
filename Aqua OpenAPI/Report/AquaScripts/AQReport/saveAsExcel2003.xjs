@@ -1,0 +1,134 @@
+//
+// This script demonstrates how to save report as an Excel 2003 file.
+//
+
+importPackage(java.math);
+importPackage(java.sql);
+
+// an utility function to create a new dataset with rows added
+function createDataSet() {
+    // create a new dataset
+    var columns = ["EmployeeID", "ShipCountry", "Freight", "ShipCity", "ShipName", "OrderDate", "ShipRegion"];
+    var dataset = aqua.data.newDataSet(columns);
+
+    // define dataset column types
+    var clmStructure = dataset.getColumnStructure();
+    var clmDescriptor = null;
+    clmDescriptor = clmStructure.getColumn(0); clmDescriptor.setSqlType(java.sql.Types.VARCHAR); clmDescriptor.setJavaType("java.lang.String");
+    clmDescriptor = clmStructure.getColumn(1); clmDescriptor.setSqlType(java.sql.Types.VARCHAR); clmDescriptor.setJavaType("java.lang.String");
+    clmDescriptor = clmStructure.getColumn(2); clmDescriptor.setSqlType(java.sql.Types.DECIMAL); clmDescriptor.setJavaType("java.math.BigDecimal"); 
+
+    // add rows to data set
+    dataset.addRowWithValues("1001", "US", 100,   "Genève","Ernst Handel",            "8/1/1996",   "SW");
+    dataset.addRowWithValues("1002", "UK", 11.5,  "Reims","Hanari Carnes",            "10/10/2010", "HA");
+    dataset.addRowWithValues("1003", "US", 234,   "harleroi","Wartian",               "8/7/1978",   "HR");
+    dataset.addRowWithValues("1004", "AG", 65,    "Genève","Tortuga Restaurante",     "4/1/2005",   "MX");
+    dataset.addRowWithValues("1005", "JP", 81.91, "Bergamo","Romero y tomillo",       "5/6/2005",   "SP");
+    dataset.addRowWithValues("1006", "US", 3.67,  "Madrid","QUICK-Stop",              "6/7/2005",   "IN");
+    dataset.addRowWithValues("1007", "CN", 229,   "Cunewalde","Que Delícia",          "3/12/2005",  "JP");
+    dataset.addRowWithValues("1008", "IN", 147,   "Sao Paulo","Blondel père et fils", "8/12/2008",  "CN");
+    dataset.addRowWithValues("1009", "US", 29.76, "Albuquerque","Rattlesnake Canyon", "5/1/2008",   "CN");
+    dataset.addRowWithValues("1010", "BG", 17.68, "Seattle","White Clover",           "4/4/2005",   "WX");
+
+    return dataset;
+}
+
+// an utility function to create a new dataset settings with custom numeric format
+function createDataSetSettings() {
+    // create a dataset settings
+    var settings = aqua.report.newReportDataSetSettings();
+    // customize numeric format
+    settings.setNumericFormat("#,###.00");
+
+    return settings;
+}
+
+// an utility function to create a new chart
+function createChart(dataSource) {
+    // create a new chart
+    var chart = aqua.chart.newChart();
+    // bind data source
+    chart.setDataSource(dataSource);
+    // define chart size
+    chart.getProperties().setImageHeight(300);
+    chart.getProperties().setImageWidth(500);
+
+    return chart;
+}
+
+// an utility function to create a new pivot dataset
+function createPivotDataSet() {
+    // create a new pivot dataset
+    var pivot = aqua.data.newPivotDataSet();
+    // define pivot row fields
+    pivot.addRowField("ShipCountry");
+    // define pivot column fields
+    pivot.addColumnField("ShipRegion");
+    // define pivot data fields
+    pivot.addDataField("Freight");
+
+    // create a dataset
+    var dataset = createDataSet();
+    // bind dataset to pivot
+    pivot.setDataSet(dataset);
+    // calculate pivot data
+    pivot.calculateGrid();
+
+    return pivot;
+}
+
+
+// create a report
+var report = aqua.report.newReport();
+
+
+// create a new dataset
+var dataSet = createDataSet();
+// create a new dataset settings
+var dataSetSettings = createDataSetSettings();
+// set title
+dataSetSettings.setTitle("Dataset with custom numeric format defined");
+// add dataset to report with custom settings
+report.addDataSet(dataSet, dataSetSettings);
+
+
+// create a new dataset
+dataSet = createDataSet();
+// create a new chart
+var chart = createChart(dataSet);
+chart.setCategoryFields("ShipCountry");
+chart.setSeriesFields("Freight");
+// create a new dataset settings
+dataSetSettings = createDataSetSettings();
+// set title
+dataSetSettings.setTitle("Dataset with chart enabled");
+// add dataset to report with chart enabled
+report.addDataSet(dataSet, dataSetSettings, chart);
+
+
+// create a new pivot dataset
+var pivotDataSet = createPivotDataSet();
+// create a new dataset settings
+var pivotSettings = createDataSetSettings();
+// set title
+pivotSettings.setTitle("Pivot table with custom numeric format defined");
+// add pivot dataset to report with custom settings
+report.addDataSet(pivotDataSet, pivotSettings);
+
+
+// create a new pivot dataset
+pivotDataSet = createPivotDataSet();
+// create a new chart
+chart = createChart(pivotDataSet);
+// create a new dataset settings
+pivotSettings = createDataSetSettings();
+// set title
+pivotSettings.setTitle("Pivot table with chart enabled");
+// add pivot dataset to report with chart enabled
+report.addDataSet(pivotDataSet, pivotSettings, chart);
+
+
+// save report as an excel 2003 file
+var fileName = "C:/temp/temp3Report.xls";
+report.saveAsExcel2003(fileName);
+aqua.console.println("Report is written to " + fileName + ".");

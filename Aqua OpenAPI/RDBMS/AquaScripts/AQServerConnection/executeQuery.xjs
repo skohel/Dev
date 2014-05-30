@@ -1,0 +1,21 @@
+﻿var server = "MySql 6.0 - 10.168.1.38 - demo";
+var db     = "mysql";
+var schema = null;
+var conn   = aqua.project.getServerConnection(server);
+
+conn.connect();
+
+var sql1 = "SELECT 1=1"
+var sql2 = "UPDATE mysql.host set host = null where host = \"dummy host\"";
+
+aqua.console.println("Calling method AQServerConnection.executeQuery(" + sql1 + ")");
+var resultSet1 = conn.executeQuery(sql1);
+
+aqua.console.println("No. of columns in result:      [" + resultSet1.getColumnStructure().getColumnCount() + "]\n");
+
+// This will throw an exception because sql2 is a data manupulation statement
+aqua.console.println("Calling method AQServerConnection.executeQuery(sql2)");
+var resultSet = conn.executeQuery(sql2);
+
+conn.disconnect();
+

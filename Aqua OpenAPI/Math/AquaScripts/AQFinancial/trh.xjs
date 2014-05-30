@@ -1,0 +1,30 @@
+
+
+var high=new Array();
+var low = new Array();
+var open = new Array();
+var close = new Array();
+var volume = new Array();
+var time = new Array();
+var out=new Array();
+
+//generate stock data
+for(i=0;i<100;i++){
+   time[i]=i;
+//noise[i]=2*Math.random()-1;
+   high[i]=100+2*time[i] +10* Math.sin(time[i]/5)+ 4*Math.random()-2;
+   low[i]=high[i]-10+2*Math.random()-1;
+close[i]=high[i]/2+low[i]/2;
+open[i]= close[i] + 2*Math.random()-1;
+volume[i]=100000*(100+ 10*Math.random()-5 + 20*Math.sin(time[i]/30));
+}
+
+out=aqua.math.financial.trh(high,close);
+
+aqua.console.println("Time, True Range High");
+for(i=0;i<100;i++){
+
+aqua.console.println(time[i] +", " +out[i]);
+}
+
+

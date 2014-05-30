@@ -1,0 +1,24 @@
+/*
+aqua.math.hash
+
+Returns an integer hash code representing the given double value.
+
+Synopsys
+    int aqua.math.hash(double)
+
+Description
+    Nothing really exciting to describe.
+
+Example
+    see below
+*/
+
+// --- hash() ---
+function show_hash(value) {
+    aqua.console.println("hash[" + value + "] --> [" + aqua.math.hash(value) + "]");
+}
+show_hash(-3.5);
+show_hash(-3.5);
+show_hash(0);
+show_hash(5.321);
+show_hash(5.321);

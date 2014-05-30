@@ -1,0 +1,5 @@
+﻿var writer = aqua.io.newXmlWriter();
+
+aqua.console.println("The default encoding for XML files is [" + writer.getEncoding() + "]" );
+
+

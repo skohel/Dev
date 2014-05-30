@@ -1,0 +1,11 @@
+﻿var folder   = "/tmp/SVNTEST";
+var svn      = aqua.vcs.newWorkspaceSubversion();
+svn.username = aqua.crypto.getSecureField('svn.username');
+svn.password = aqua.crypto.getSecureField('svn.password');
+
+aqua.console.println("svn.update(folder);");
+svn.update(folder);
+
+aqua.console.println("");
+aqua.console.println("svn.update(folder, revision);");
+svn.update(folder, svn.getRevision(folder).getRevision());

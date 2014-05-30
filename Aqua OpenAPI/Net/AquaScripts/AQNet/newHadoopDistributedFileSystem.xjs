@@ -1,0 +1,5 @@
+
+// get instance of filesystem object
+var AQFS = aqua.net.newHadoopDistributedFileSystem("hdfs://localhost:9100");
+
+aqua.console.println("Hadoop file system instance successfully created.");

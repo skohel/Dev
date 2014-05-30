@@ -1,0 +1,5 @@
+﻿print("Generate a random day of week:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextDayOfWeek();
+    print("\t"+x);
+}

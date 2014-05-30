@@ -1,0 +1,20 @@
+﻿var server = "Sybase Anywhere 10 - 10.168.1.37 - demo - DBA";
+var db     = "demo";
+var schema = "DBA";
+
+var conn = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+
+var Events = metadata.extractEvents(db, schema);
+
+for (var j=0; j<Events.length; j++){
+
+    var event = metadata.extractEvent(db, schema, Events[j].getName());
+
+    // calling AQEvent.getTypeName()
+    aqua.console.println("Event Name: [" + event.getName() + "]    Type Name: [" + event.getTypeName() + "]");
+    aqua.console.println("");
+}
+conn.disconnect();

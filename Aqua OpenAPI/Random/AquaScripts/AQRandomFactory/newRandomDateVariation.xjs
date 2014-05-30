@@ -1,0 +1,44 @@
+
+importPackage(java.util);
+
+// utility function - create a new Date object
+function createDate(year, month, day, hour, minute, second) {
+    // month: zero-based, 0 for January
+    var gc = new GregorianCalendar(year, month, day, hour, minute, second);
+    var date = gc.getTime();
+    return date;
+}
+
+
+// create a random data set generator
+var rows = 6;
+var types = [ "date", "date", "date" ];
+var ranges = [ 
+    null, 
+    aqua.random.newRandomDateRange(), 
+    aqua.random.newRandomDateRange(createDate(2010, 0, 1, 0, 0, 0), createDate(2010, 0, 15, 23, 59, 59))
+];
+var variations = [
+    aqua.random.newRandomDateVariation(),
+    aqua.random.newRandomDateVariation(0, 0, 3, 0, 0, 0),
+    aqua.random.newRandomDateVariation(0,0,0,0,0,0,  0,0,0,6,0,0),
+];
+var randomDataSet = aqua.random.newRandomDataSet(rows, types, ranges, variations);
+
+
+// create a report
+var report = aqua.report.newReport();
+
+// create a dataset settings
+var settings = aqua.report.newReportDataSetSettings();
+settings.setDateTimeFormat("yyyy-MM-dd HH:mm:ss");
+
+// generate some datasets and add them to report
+for( var i=0; i<2; i++ ) {
+    var dataset = randomDataSet.nextDataSet();
+    report.addDataSet(dataset, settings);
+}
+
+
+// show report
+aqua.console.println(report.renderText());

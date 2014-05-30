@@ -1,0 +1,95 @@
+﻿/*
+AQChartProperties.loadProperty
+
+Synopsys
+    void loadProperty(String propertyName, String propertyValue);
+
+Description
+Updates a property using the name-value pair.
+
+Below are examples of chart property name-value pairs
+
+Propery names and values:
+    Chart="{column}",
+	RotX=325,
+	RotY=0,
+	RotZ=0,
+	ZoomScalar=1.0,
+	ShowLegend=true,
+	ShowGrid=true,
+	PieExplode=0.0,
+	GroupSmallValues=true,
+	SmallValuesThreshold=3.0,
+	PieLabelDistance=3.0,
+	PieShowLines=false,
+	LineWidth=1.0,
+	ShowMarkers=true,
+	MapShowBackground=false,
+	MapShowDetails=false,
+	Width=16.0,
+	Height=10.0,
+	Depth=5.0,
+	SeriesSpacing=1.0,
+	CategorySpacing=1.0,
+	Font="Arial Bold-BOLD-10",
+	TopColor="#EBF0F5",
+	BottomColor="#D7DCF5",
+	PanX=0.0,
+	PanY=0.0,
+	Lighting=Default,
+	View2D=false,
+	StackedPercent=false,
+	ShowValueAxis=true,
+	ShowCategoryAxis=true,
+	ShowSeriesAxis=true,
+	NumericCategoryAxis=false,
+	MergeAxis=false,
+	SeriesAlias="default",
+	SeriesSubType="",
+	SeriesColumnType="Cube",
+	SeriesMin="default",
+	SeriesMax="default",
+	SeriesColor="default",
+	SeriesFunctionMetaData="true",
+	LegendPosition=Top Right,
+	LegendWidthType=Fit,
+	LegendWidth=100,
+	LegendHeightType=Fit,
+	LegendHeight=160,
+	ShowFixedCategoryCount=false,
+	FixedCategoryCount=0 
+
+Example
+    see below
+
+*/
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+var ds = aqua.data.newDataSet(["country","freight"]);
+
+ds.addRowWithValues("US", 100);
+ds.addRowWithValues("UK", 10);
+ds.addRowWithValues("Japan", 200);
+ds.addRowWithValues("Canada", 20);
+ds.addRowWithValues("France", 300);
+ds.addRowWithValues("Germany", 30);
+
+model.setDataSource(ds);
+
+chart.getModel().addCategoryField("country");
+chart.getModel().addSeriesField("freight");
+
+var propertyName = "chart";
+var propertyValue = "surface";
+chart.getProperties().loadProperty(propertyName, propertyValue);
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');
+

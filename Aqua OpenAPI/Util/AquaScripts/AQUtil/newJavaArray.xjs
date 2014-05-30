@@ -1,0 +1,9 @@
+﻿// string array
+var str_array = aqua.util.newJavaArray('java.lang.String', 10);
+str_array[0] ='AquaFold Inc.'; 
+aqua.console.println(str_array[0]);
+
+// integer array
+var int_array = aqua.util.newJavaArray('int', 10);
+int_array[0] =100; 
+aqua.console.println(int_array[0]);

@@ -1,0 +1,20 @@
+﻿
+// create pivot data set
+var pivotTable = aqua.data.newPivotDataSet();
+
+// data field name
+var fieldName = "ShipCountry";
+
+// check sort order
+var isNone = pivotTable.isRowFieldSortNone(fieldName);
+aqua.console.println("--- before setting sort order ---");
+aqua.console.println("row field sort none = " + isNone);
+
+// set sort order
+pivotTable.setRowFieldSortNone(fieldName);
+
+// check sort order
+isNone = pivotTable.isRowFieldSortNone(fieldName);
+aqua.console.println("--- after setting sort order ---");
+aqua.console.println("row field sort none = " + isNone);
+

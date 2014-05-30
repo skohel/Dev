@@ -1,0 +1,5 @@
+﻿// run this script by clicking "debug in browser"
+
+var dashboard =  aqua.response.getDashboard();
+
+dashboard.addToolbarButton(null, "button", null, null);

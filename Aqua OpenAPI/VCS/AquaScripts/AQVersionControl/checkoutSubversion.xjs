@@ -1,0 +1,2 @@
+﻿
+var ws = aqua.vcs.checkoutSubversion("/tmp/SVNTEST", "svn://10.168.1.33/AquaXProjectSVN/trunk/rdbms%20docs", null, aqua.crypto.getSecureField("svn.username"), aqua.crypto.getSecureField("svn.password"), true);

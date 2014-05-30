@@ -1,0 +1,13 @@
+﻿print("Start TextFileReader read() test...");
+
+var TextFile = "/home/sterling/Downloads/Aqua OpenAPI/IO/User\ Files/access.log";
+
+var reader = aqua.io.newTextReader();
+reader.setFile(TextFile);
+reader.setColumnNames(["Column A", "Column B"]);
+
+var ds = reader.read();
+
+print(ds.renderText());
+
+print("DONE");

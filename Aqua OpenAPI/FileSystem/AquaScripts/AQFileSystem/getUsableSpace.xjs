@@ -1,0 +1,32 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "/tmp/test/AQFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.filesystem;
+
+/* --- getUsableSpace --- */
+
+test_getUsableSpace();
+
+// --- test getUsableSpace ---
+
+function test_getUsableSpace(){
+
+   var src_file = test_data_dir + "files/src_base/test_file.txt";
+   var file_doesnt_exist = test_data_dir + "file_doesnt_exist";
+
+   exec_getUsableSpace(src_file);
+   exec_getUsableSpace(file_doesnt_exist);
+   exec_getUsableSpace(test_data_dir);
+ 
+}
+
+function exec_getUsableSpace(partition) {
+    try {
+        aqua.console.println("getUsableSpace: The partition of [" + partition + "] has " + AQFS.getUsableSpace(partition) + " usable bytes.");
+        aqua.console.println("getUsableSpace done");
+    } 
+    catch(ex) {
+        aqua.console.println("getUsableSpace failed - " + ex.toString());
+    }
+}

@@ -1,0 +1,21 @@
+
+
+var rawDataA=new Array();
+var rawDataB=new Array();
+
+var out;
+
+//generate data
+for(i=0;i<30;i++){
+
+   rawDataA[i]= i+2*Math.random()-1;
+   rawDataB[i]=i+2*Math.random()-1;
+ 
+  
+}
+
+//single correlation coefficient
+out=aqua.math.stat.rSquared(rawDataA, rawDataB);
+
+aqua.console.println("R-Squared  = " + out);
+

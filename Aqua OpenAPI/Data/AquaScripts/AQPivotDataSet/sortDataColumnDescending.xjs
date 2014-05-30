@@ -1,0 +1,54 @@
+﻿//
+// This script demonstrates how to sort pivot values in a column in decending order by column index.
+//
+
+importPackage(java.math);
+importPackage(java.sql);
+
+// create a new dataset
+var columns = ["EmployeeID", "ShipCountry", "Freight", "ShipCity", "ShipName", "OrderDate", "ShipRegion"];
+var dataSet = aqua.data.newDataSet(columns);
+
+// define dataset column types
+var clmStructure = dataSet.getColumnStructure();
+var clmDescriptor = null;
+clmDescriptor = clmStructure.getColumn(0); clmDescriptor.setSqlType(java.sql.Types.VARCHAR); clmDescriptor.setJavaType("java.lang.String");
+clmDescriptor = clmStructure.getColumn(1); clmDescriptor.setSqlType(java.sql.Types.VARCHAR); clmDescriptor.setJavaType("java.lang.String");
+clmDescriptor = clmStructure.getColumn(2); clmDescriptor.setSqlType(java.sql.Types.DECIMAL); clmDescriptor.setJavaType("java.math.BigDecimal"); 
+
+// add rows to data set
+dataSet.addRowWithValues(1001, "US", 100,   "Genève","Ernst Handel",            "8/1/1996",   "SW");
+dataSet.addRowWithValues(1002, "UK", 11.5,  "Reims","Hanari Carnes",            "10/10/2010", "HA");
+dataSet.addRowWithValues(1003, "US", 234,   "harleroi","Wartian",               "8/7/1978",   "HR");
+dataSet.addRowWithValues(1004, "AG", 65,    "Genève","Tortuga Restaurante",     "4/1/2005",   "MX");
+dataSet.addRowWithValues(1005, "JP", 81.91, "Bergamo","Romero y tomillo",       "5/6/2005",   "SP");
+dataSet.addRowWithValues(1006, "US", 3.67,  "Madrid","QUICK-Stop",              "6/7/2005",   "IN");
+dataSet.addRowWithValues(1007, "CN", 229,   "Cunewalde","Que Delícia",          "3/12/2005",  "JP");
+dataSet.addRowWithValues(1008, "IN", 147,   "Sao Paulo","Blondel père et fils", "8/12/2008",  "CN");
+dataSet.addRowWithValues(1009, "US", 29.76, "Albuquerque","Rattlesnake Canyon", "5/1/2008",   "CN");
+dataSet.addRowWithValues(1010, "BG", 17.68, "Seattle","White Clover",           "4/4/2005",   "WX");
+
+// create pivot data set
+var pivotTable = aqua.data.newPivotDataSet();
+
+// add pivot row fields
+pivotTable.addRowField("ShipCountry");
+
+// add pivot column fields
+pivotTable.addColumnField("ShipRegion");
+
+// add pivot data fields
+pivotTable.addDataField("Freight");
+
+// sort pivot values in the first column in decending order, column index is zero based
+pivotTable.sortDataColumnDescending(0);
+
+// set application data
+pivotTable.setDataSet(dataSet);
+
+// calculate pivot data grid
+pivotTable.calculateGrid();
+
+// show pivot data
+aqua.response.write(pivotTable.renderHtml());
+

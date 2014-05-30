@@ -1,0 +1,3 @@
+﻿aqua.console.println('[TEST] aqua.project.getUserFile()');
+var result = aqua.project.getUserFile("testProperties");
+aqua.console.println('[OK]: Name of file: [' + result.getName() + "]");

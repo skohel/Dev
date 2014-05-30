@@ -1,0 +1,16 @@
+﻿var factory  = aqua.type.getByte();
+
+var value = 32;
+var min   = -64;
+var max   = 64;
+
+aqua.console.println("Is [" + value + "] between  [" + min + "] and [" + max + "]? " + factory.isInRange(value, min, max));
+
+max = 32;
+aqua.console.println("Is [" + value + "] between  [" + min + "] and [" + max + "]? " + factory.isInRange(value, min, max));
+
+max = 31;
+aqua.console.println("Is [" + value + "] between  [" + min + "] and [" + max + "]? " + factory.isInRange(value, min, max));
+
+max = 512;
+saqua.console.println("Is [" + value + "] between  [" + min + "] and [" + max + "]? " + factory.isInRange(value, min, max));

@@ -1,0 +1,23 @@
+
+//
+// This script demonstrates how to get/set the numeric pattern used to format numeric values.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// get default numeric format pattern
+var pattern = settings.getNumericFormat();
+if ( pattern == null ) {
+    aqua.console.println("The custom numeric format pattern is not defined.");
+} else {
+    aqua.console.println("The current setting of numeric format pattern is [" + pattern + "].");
+}
+
+// customize numeric format pattern
+settings.setNumericFormat("#,###");
+
+// retrieve current setting of numeric format
+var pattern = settings.getNumericFormat();
+aqua.console.println("The numeric format pattern is currently set to [" + pattern + "].");
+

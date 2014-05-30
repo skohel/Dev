@@ -1,0 +1,41 @@
+﻿
+//
+// This script demonstrates how to get/set the URL for header cell identified by a column index or by a column name.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// get URL by column index, index is zero based
+var index = 0;
+var url = settings.getHtmlHeaderLink(index);
+if ( url == null ) {
+    aqua.console.println("No URL defined for column at index " + index + ".");
+} else {
+    aqua.console.println("The URL at index " + index + " is '" + url + "'.");
+}
+
+// set URL by column index
+settings.addHtmlHeaderLink(index, "http://www.aquafold.com?name=ShipCountry");
+
+// get URL by column index
+url = settings.getHtmlHeaderLink(index);
+aqua.console.println("The URL at index " + index + " is currently set to '" + url + "'.");
+
+
+// set URL by column name
+var name = "CustomerID";
+url = settings.getHtmlHeaderLink(name);
+if ( url == null ) {
+    aqua.console.println("No URL defined for column '" + name + "'.");
+} else {
+    aqua.console.println("The URL associated with column '" + name + "' is '" + url + "'.");
+}
+
+// set URL by column name
+settings.addHtmlHeaderLink(name, "http://www.aquafold.com?name=CustomerID");
+
+// get URL by column name
+url = settings.getHtmlHeaderLink(name);
+aqua.console.println("The URL associated with column '" + name + "' is currently set to '" + url + "'.");
+

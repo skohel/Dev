@@ -1,0 +1,30 @@
+
+// create a web client
+var client = aqua.net.newWebClient();
+
+// create a request
+var request = client.newWebRequest("http://www.aquafold.com");
+
+// set custom header
+var customHeader = "AQUA-test";
+request.addRequestHeader(customHeader, "custom-header-1-of-3");
+request.addRequestHeader(customHeader, "custom-header-2-of-3");
+request.addRequestHeader(customHeader, "custom-header-3-of-3");
+
+// submit request as a get request
+var response = client.submitGetRequest(request);
+
+// write request to console
+aqua.console.println(request.toString());
+
+// write response to console
+aqua.console.println(response.toString(false));
+
+// terminate client
+client.closeConnection();
+
+// get custom header values
+var valueList = request.getHeaderFields(customHeader);
+
+// show custom header values
+aqua.console.println("Values associated with custom header '" + customHeader + "' are " + valueList.toString() + ".");

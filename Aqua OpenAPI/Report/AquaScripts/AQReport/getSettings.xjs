@@ -1,0 +1,10 @@
+
+// create a report
+var report = aqua.report.newReport();
+
+// get default report settings
+var settings = report.getSettings();
+
+aqua.console.println("Default settings:");
+aqua.console.println("  generate HTML document header: " + settings.isGenerateHtmlDocHeader());
+aqua.console.println("  generate HTML document footer: " + settings.isGenerateHtmlDocFooter());

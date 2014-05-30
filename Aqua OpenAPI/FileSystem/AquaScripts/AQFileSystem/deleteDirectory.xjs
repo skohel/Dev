@@ -1,0 +1,39 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "c:/tmp/test/AQFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.filesystem;
+
+test_deleteDirectory();
+
+// --- delete a single directory
+
+function test_deleteDirectory() {
+    var src_dir = test_data_dir + "files/";
+    var dest_dir = test_data_dir + "delete/delete_dest/";
+
+    AQFS.copy(src_dir, dest_dir);
+    
+    // testing error condition - file required
+    exec_deleteDirectory(null);
+    // testing error condition - file to be deleted has to exist
+    exec_deleteDirectory(dest_dir + "file.does.not.exist.txt");
+    // testing error condition - does not support wild card values
+    exec_deleteDirectory(dest_dir + "src_base/*.*");
+    // testing error condition - delete single file
+    exec_deleteDirectory(dest_dir + "web.xml");
+    
+    // this should work - deleting directory
+    exec_deleteDirectory(dest_dir + "blank_dir");
+    
+}
+function exec_deleteDirectory(source) {
+    try {
+        aqua.console.println("deleteDirectory: deleting [" + source + "]...");
+        // NOTE: delete cannot be used as a method name; otherwise, would cause javascript error
+        aqua.console.println("deleteDirectory done? " + AQFS.deleteDirectory(source));
+    } 
+    catch(ex) {
+        aqua.console.println("deleteDirectory failed - " + ex.toString());
+    }
+}

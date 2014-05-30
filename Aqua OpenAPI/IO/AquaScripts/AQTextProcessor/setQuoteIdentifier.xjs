@@ -1,0 +1,40 @@
+﻿var reader    = aqua.io.newStringReader();
+var str       = "\"Column A\"|\"Column B\"|\'Column C\'";
+var delimiter = "|";
+
+aqua.console.println("Set input string [" + str + "]");
+reader.setColumnNames(["a", "b", "c"]);
+reader.setInputString(str);
+
+aqua.console.println("Set QuoteIdentifier for all columns to \"\"\"");
+reader.setQuoteIdentifier("\"");
+aqua.console.println("Set field delimiter to [" + delimiter + "]" );
+reader.setCellDelimiter(delimiter);
+reader.columnStructure.getColumn(0).setSqlType(java.sql.Types.VARCHAR);
+reader.columnStructure.getColumn(1).setSqlType(java.sql.Types.VARCHAR);
+reader.columnStructure.getColumn(2).setSqlType(java.sql.Types.VARCHAR);
+aqua.console.list(reader.read());
+aqua.console.println("");
+aqua.console.println("");
+
+
+
+
+reader = aqua.io.newStringReader();
+aqua.console.println("Set input string [" + str + "]");
+reader.setColumnNames(["a", "b", "c"]);
+reader.setInputString(str);
+
+aqua.console.println("Set field delimiter to [" + delimiter + "]" );
+reader.setCellDelimiter(delimiter);
+
+reader.columnStructure.getColumn(0).setSqlType(java.sql.Types.VARCHAR);
+reader.columnStructure.getColumn(1).setSqlType(java.sql.Types.VARCHAR);
+reader.columnStructure.getColumn(2).setSqlType(java.sql.Types.VARCHAR);
+
+aqua.console.println("Set QuoteIdenitifer for column 2 to \"\'\"");
+reader.setQuoteIdentifier(2, "\'");
+aqua.console.println("Read input string with delimter set:");
+aqua.console.list(reader.read());
+
+

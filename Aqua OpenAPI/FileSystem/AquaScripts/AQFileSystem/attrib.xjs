@@ -1,0 +1,66 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "/tmp/test/AQFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.filesystem;
+
+
+//------------------------------------------------------------------------------
+
+test_attrib();
+
+// --- attrib() ---
+
+function test_attrib() {
+    var src_base = test_data_dir + "files/src_base/";
+    var dest_base = test_data_dir + "attrib/";
+    var dest_file_readonly = dest_base + "test_file_readonly.txt";
+    var dest_file_hidden = dest_base + "test_file_hidden.txt";
+    var dest_file_archive = dest_base + "test_file_archive.txt";
+    var dest_file_system = dest_base + "test_file_system.txt";
+    
+    var dest_dir = dest_base + "test_dir/";
+
+    AQFS.sync(src_base, dest_base);
+
+    // testing error condition - invalid attribute
+    exec_attrib(dest_file_readonly, "invalid-attr", null);
+    // testing error condition - no file or directory specified
+    exec_attrib(null, "readonly", true);
+    // testing error condition - attribute not specified
+    exec_attrib(dest_file_readonly, null, null);
+
+    // this should work - testing readonly attribute
+    exec_attrib(dest_file_readonly, "readonly", null);
+    exec_attrib(dest_file_readonly, "readonly", "false");
+    exec_attrib(dest_file_readonly, "readonly", "true");
+
+    // this should work - testing hidden attribute    
+    exec_attrib(dest_file_hidden, "hidden", null);
+    exec_attrib(dest_file_hidden, "hidden", "false");
+    exec_attrib(dest_file_hidden, "hidden", "true");
+    
+    // this should work - testing archive attribute
+    exec_attrib(dest_file_archive, "archive", null);
+    exec_attrib(dest_file_archive, "archive", "false");
+    exec_attrib(dest_file_archive, "archive", "true");
+
+    // this should work - testing system attribute    
+    exec_attrib(dest_file_system, "system", null);
+    exec_attrib(dest_file_system, "system", "false");
+    exec_attrib(dest_file_system, "system", "true");
+    
+    // this should work - testing attribute on directory
+    exec_attrib(dest_dir,  "readonly", "true");
+    
+}
+function exec_attrib(pathname, attrName, attrValue) {
+    try {
+        aqua.console.println("attrib: changing attribute [" + attrName + "] in [" + pathname + "] to [" + attrValue + "]...");
+        AQFS.attrib(pathname, attrName, attrValue);
+        aqua.console.println("attrib done.");
+    } 
+    catch(ex) {
+        aqua.console.println("attrib failed - " + ex.toString());
+    }
+}

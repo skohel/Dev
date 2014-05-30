@@ -1,0 +1,44 @@
+
+// the server this test script to access
+var test_server = "http://10.168.5.211:8081/";
+
+// get password for user admin
+var password = aqua.console.readPassword("Please enter the password of 'admin' account at server " + test_server + ": ");
+
+// the list of URLs this test script to access
+var url_login = test_server + "app/login?username=admin&password=" + password;
+var url_upload = test_server + "app/home/project/newproject/issue/5/attach";
+var url_logout = test_server + "app/logout";
+
+
+// create a web client
+var client = aqua.net.newWebClient();
+
+// create a login request
+request = client.newWebRequest(url_login);
+// log onto server
+client.submitGetRequest(request);
+aqua.console.println("Done with login.");
+
+// create a upload request
+request = client.newWebRequest(url_upload);
+// set file to upload
+request.addUpload("file1", "c:/tmp/aqweb_test/test.html", "text/html", "UTF-8");
+// clear uploads
+request.clearUploads();
+// set a new upload
+request.addUpload("file1", "c:/tmp/aqweb_test/console.xjs", "text/html", "UTF-8");
+// upload file as a post request
+client.submitPostRequest(request);
+aqua.console.println("Done with upload.");
+
+// create a logout request
+request = client.newWebRequest(url_logout);
+// submit request
+client.submitGetRequest(request);
+aqua.console.println("Done with logout.");
+
+// terminate client
+client.closeConnection();
+aqua.console.println("DONE");
+

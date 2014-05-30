@@ -1,0 +1,4 @@
+﻿var session    = aqua.request.getSession();
+var dateFormat = session.getDateFormat();
+
+aqua.console.println("session.getDateFormat().hashCode(): [" + dateFormat.hashCode() + "]");

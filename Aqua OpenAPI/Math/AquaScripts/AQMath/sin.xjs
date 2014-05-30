@@ -1,0 +1,20 @@
+/*
+aqua.math.sin
+
+Returns the trigonometric sine of an angle.
+   
+Synopsys
+    double aqua.math.sin(double value1, double value2)
+
+Description
+    Nothing exciting to describe.
+
+Example
+    see below
+*/
+
+aqua.console.println("sin[0-degree] --> [" + aqua.math.sin(0) + "]");
+aqua.console.println("sin[30-degree] --> [" + aqua.math.sin(aqua.math.toRadians(30)) + "]");
+aqua.console.println("sin[60-degree] --> [" + aqua.math.sin(aqua.math.toRadians(60)) + "]");
+aqua.console.println("sin[90-degree] --> [" + aqua.math.sin(aqua.math.toRadians(90)) + "]");
+

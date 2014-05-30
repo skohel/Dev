@@ -1,0 +1,24 @@
+/*
+aqua.math.scalb
+
+Return d × 2scaleFactor rounded as if performed by a single correctly rounded floating-point multiply to a member of the double value set. 
+   
+Synopsys
+    double aqua.math.scalb(double value, double scaleFactor)
+
+Description
+    * If the first argument is infinite, then an infinity of the same sign is returned.
+    * If the first argument is zero, then a zero of the same sign is returned. 
+
+Example
+    see below
+*/
+
+
+// --- scalb() ---
+function show_scalb(value, factor) {
+    aqua.console.println("scalb[" + value + ", " + factor + "] --> [" + aqua.math.scalb(value, factor) + "]");
+}
+show_scalb(3, 0);
+show_scalb(3.5, 1);
+

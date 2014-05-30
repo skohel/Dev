@@ -1,0 +1,80 @@
+﻿/*
+aqua.math.financial.bollinger
+
+Returns bollinger bands.
+
+Synopsys
+    double[][] aqua.financial.bollinger(double[],int);
+
+Description
+    Calculates 2 standard deviations above (bollinger[][0]) and below (bollinger[][1]) the simple moving average.
+
+Example
+    see below
+*/
+
+var high=new Array();
+var low = new Array();
+var open = new Array();
+var close = new Array();
+var volume = new Array();
+var time = new Array();
+var boll=new Array();
+
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+
+//generate stock data
+for(i=0;i<100;i++){
+   time[i]=i;
+//noise[i]=2*Math.random()-1;
+   high[i]=100+2*time[i] +10* Math.sin(time[i]/5)+ 20*(2*Math.random()-1);
+   low[i]=high[i]-10+2*Math.random()-1;
+close[i]=high[i]/2+low[i]/2;
+open[i]= close[i] + 2*Math.random()-1;
+volume[i]=100000*(100+ 10*Math.random()-5 + 20*Math.sin(time[i]/30));
+}
+
+boll=aqua.math.financial.bollinger(high,5);
+
+
+//chart commands
+model.addSeries("data");
+model.addSeries("bollinger high");
+model.addSeries("bollinger low");
+
+for(i=0;i<100;i++){
+model.addCategory(i);
+model.setValue(0,i,high[i]);
+model.setValue(1,i,boll[i][1]);
+model.setValue(2,i,boll[i][2]);
+}
+
+chart.getProperties().setTitle("Bollinger Bands");
+chart.getProperties().setChartTypeLine(0);
+chart.getProperties().setChartTypeLine(1);
+chart.getProperties().setChartTypeLine(2);
+chart.getProperties().setMergeAxis(true);
+
+chart.getProperties().setWidth(20);
+chart.getProperties().setHeight(12);
+chart.getProperties().setView2D(true);
+
+//chart.getProperties().setMergeSeriesMin(0);
+//chart.getProperties().setMergeSeriesMax(100);
+//chart.getProperties().setCategoryRange(9,100);
+
+
+chart.getProperties().setImageHeight(480);
+chart.getProperties().setImageWidth(800);
+
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p style="font-size:200%">');
+
+
+

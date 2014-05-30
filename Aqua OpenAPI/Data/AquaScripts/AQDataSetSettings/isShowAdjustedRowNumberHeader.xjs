@@ -1,0 +1,17 @@
+﻿
+//
+// This script demonstrates how to determine whether to display a row number header at a custom location.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// check whether to display row number header at adjusted location
+var flag = settings.isShowAdjustedRowNumberHeader();
+aqua.console.println("Default setting: row number header will " + (flag ? "" : "not ") + "be displayed at adjusted location by default.");
+
+
+// do not display row number header at adjusted location
+settings.setShowAdjustedRowNumberHeader(false);
+flag = settings.isShowAdjustedRowNumberHeader();
+aqua.console.println("Custom Setting: row number header will " + (flag ? "" : "not ") + "be displayed at adjusted location.");

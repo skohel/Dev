@@ -1,0 +1,19 @@
+﻿
+//
+// This script demonstrates how to get/set a custom pattern for formatting percentage values for data cells in a pivot table when rendering in HTML.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// get default format pattern
+var pattern = settings.getPercentFormat();
+aqua.console.println("The default percent format pattern is [" + pattern + "].");
+
+// customize format pattern
+settings.setPercentFormat("#,###.00");
+
+// get format pattern
+pattern = settings.getPercentFormat();
+aqua.console.println("The percent format pattern is currently set to [" + pattern + "].");
+

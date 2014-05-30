@@ -1,0 +1,26 @@
+﻿/*
+
+Returns file length in bytes.
+
+Synopsys
+    int getLength()
+
+Description
+    Returns file length in bytes.
+
+Example
+    //
+
+
+*/
+
+
+userFiles = aqua.project.collectUserFiles("/");
+for(i=0; i<userFiles.length; i++)
+{
+   print("Length: " + userFiles[i].getLength());
+}
+
+function print(m) {
+    aqua.console.println(m);
+}

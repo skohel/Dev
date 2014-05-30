@@ -1,0 +1,12 @@
+﻿var server = "Oracle 11G - 10.168.11.51 - HR";
+var db     = null;
+var schema = "SYS";
+var sql    = "SELECT * FROM mysql.user WHERE name like 'xxx'";
+var conn   = aqua.project.getServerConnection(server);
+
+conn.connect();
+
+var encodedString = conn.sqlEncode(sql);
+
+aqua.console.println("Original string:      [" + sql + "]");
+aqua.console.println("Encoded string:       [" + encodedString + "]");

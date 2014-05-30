@@ -1,0 +1,37 @@
+﻿var collator = java.text.Collator.getInstance(java.util.Locale.SIMPLIFIED_CHINESE);
+
+var dataSet  = generateDataSet();
+
+aqua.console.println("DataSet not Sorted:");
+aqua.console.println(dataSet.renderText());
+
+
+dataSet.setSortingCollator(0,collator);
+dataSet.sort();
+
+aqua.console.println("DataSet after Sort is Applied :");
+aqua.console.println(dataSet.renderText());
+
+collator = java.text.Collator.getInstance(java.util.Locale.GERMAN);
+dataSet.setSortingCollator(0,collator);
+dataSet.sort();
+
+aqua.console.println("DataSet after Sort is Applied :");
+aqua.console.println(dataSet.renderText());
+
+
+var dataSet = generateDataSet();
+
+//------------------------------------------------------------------------------
+function generateDataSet(){
+
+    var ds = aqua.data.newDataSet(["shipcountry","freight","id"]);
+    ds.addRowWithValues(aqua.random.nextCountry(),    "10", "100001");
+    ds.addRowWithValues(aqua.random.nextCountry(),   "100", "100002");
+    ds.addRowWithValues("中国", "100000", "100005");
+    ds.addRowWithValues("العربية", "100000", "100005");
+    ds.addRowWithValues("Ελληνικά", "100000", "100005");
+    ds.addRowWithValues(aqua.random.nextCountry(),  "1000", "100003");
+    ds.addRowWithValues(aqua.random.nextCountry(), "10000", "100004");
+    return ds;
+}

@@ -1,0 +1,13 @@
+﻿var factory  = aqua.type.getBigInteger();
+
+var value1   = 100000;
+var value2   = 100000;
+
+aqua.console.println("Is [" + value1 + "] equal to [" + value2 + "]? " + factory.isEqual(value1, value2));
+
+value2 = 200000;
+aqua.console.println("Is [" + value1 + "] equal to [" + value2 + "]? " + factory.isEqual(value1, value2));
+
+// value2 as a double
+value2 = 100000.01;
+aqua.console.println("Is [" + value1 + "] equal to [" + value2 + "]? " + factory.isEqual(value1, value2));

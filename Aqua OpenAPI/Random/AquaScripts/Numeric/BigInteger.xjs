@@ -1,0 +1,5 @@
+print("Generate a random big integer value:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextBigInteger();
+    print("\t"+x);
+}

@@ -1,0 +1,14 @@
+﻿var gitWS    = aqua.vcs.newGit();
+
+try {
+// set the git workspace in your local machine
+gitWS.setWorkspace("c://git_repo_init");
+gitWS.add("c://git_repo_init/sql.txt")
+
+// print after adding the file successfully
+aqua.console.println("File added in Git Repo ...");
+}
+catch(ex) {
+// print if add to git repo failure
+aqua.console.println("Error in adding file in Git Repo..." +ex.toString() + "\n");
+}

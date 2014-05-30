@@ -1,0 +1,37 @@
+﻿//
+// This script demonstrates how to bind the application data a pivot table.
+//
+
+// create a new dataset
+var ds = aqua.data.newDataSet(["EmployeeID","ShipCountry","Freight","ShipCity","ShipName", "OrderDate","ShipRegion"]);
+ds.addRowWithValues(1001,"US", 100,"Genève","Ernst Handel","8/1/1996","SW");
+ds.addRowWithValues(1002,"UK", 11.5,"Reims","Hanari Carnes","10/10/2010","HA");
+ds.addRowWithValues(1003,"US", 234,"harleroi","Wartian","8/7/1978","HR");
+ds.addRowWithValues(1004,"AG", 65,"Genève","Tortuga Restaurante","4/1/2005","MX");
+ds.addRowWithValues(1005,"JP", 81.91,"Bergamo","Romero y tomillo","5/6/2005","SP");
+ds.addRowWithValues(1006,"US", 3.67,"Madrid","QUICK-Stop","6/7/2005","IN");
+ds.addRowWithValues(1007,"CN", 229,"Cunewalde","Que Delícia","3/12/2005","JP");
+ds.addRowWithValues(1008,"IN", 147,"Sao Paulo","Blondel père et fils","8/12/2008","CN");
+ds.addRowWithValues(1009,"US", 29.76,"Albuquerque","Rattlesnake Canyon","5/1/2008","CN");
+ds.addRowWithValues(1010,"BG", 17.68,"Seattle","White Clover","4/4/2005","WX");
+
+// create pivot data set
+var pivotTable = aqua.data.newPivotDataSet();
+
+// add pivot row fields
+pivotTable.addRowField("ShipCountry");
+pivotTable.addRowField("ShipCity");
+pivotTable.addRowField("ShipName");
+
+// add a column field to the pivot table
+pivotTable.addColumnField("ShipRegion");
+
+// set application data set
+pivotTable.setDataSet(ds);
+
+// calculate pivot data
+pivotTable.calculateGrid();
+
+// show pivot data
+aqua.response.write(pivotTable.renderHtml());
+

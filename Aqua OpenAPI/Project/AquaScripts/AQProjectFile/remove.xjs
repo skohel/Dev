@@ -1,0 +1,10 @@
+﻿var file        = "test.txt";
+var str         = "Aquafold inc.";
+var projectFile = aqua.project.getUserFile(file);
+
+aqua.console.println("Writing string [" + str + "] to file [" + file + "]");
+projectFile.write(str);
+
+aqua.console.println("Deleted file [" + file + "]");
+projectFile.remove();
+aqua.console.println("File removed");

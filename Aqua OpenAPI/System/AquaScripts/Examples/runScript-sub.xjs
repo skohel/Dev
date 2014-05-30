@@ -1,0 +1,22 @@
+﻿/*
+
+Description of method functionality
+
+Synopsys
+    [Return Data Type] functionName()  
+
+Description
+    Description of functionality
+
+Example
+    //
+
+
+*/
+
+if ( argument != null ) {
+    aqua.console.println("Arguments : " + argument);
+}
+
+var p = aqua.system.runCommand("notepad.exe c:\\test.txt");
+

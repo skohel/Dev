@@ -1,0 +1,16 @@
+﻿var server = "DB2 LUW 9.7 - 10.168.11.57 - SAMPLE - demo";
+var db     = "SAMPLE";
+var schema = "demo";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata     = conn.getMetadata();
+var scriptOption = conn.getScriptOptions();
+
+
+aqua.console.println("Sort table columns:     [" + scriptOption.getSortTableColumns() + "]");
+
+aqua.console.println("setSortTableColumns(true)");
+scriptOption.setSortTableColumns(true);
+
+aqua.console.println("Sort table columns:     [" + scriptOption.getSortTableColumns() + "]");

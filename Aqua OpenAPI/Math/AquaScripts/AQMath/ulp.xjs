@@ -1,0 +1,23 @@
+/*
+aqua.math.ulp
+
+Returns the size of an ulp of the argument. An ulp of a double value is the 
+positive distance between this floating-point value and the double value next 
+larger in magnitude. Note that for non-NaN x, ulp(-x) == ulp(x). 
+   
+Synopsys
+    double aqua.math.ulp(double)
+
+Description
+
+Example
+    see below
+*/
+
+// --- ulp() ---
+function show_ulp(value) {
+    aqua.console.println("ulp[" + value + "] --> [" + aqua.math.ulp(value) + "]");
+}
+show_ulp(-1);
+show_ulp(0);
+show_ulp(1);

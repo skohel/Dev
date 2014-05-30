@@ -1,0 +1,18 @@
+﻿var result = aqua.compare.compare("HealthCare\nString\nMethod\nDetail\nEnter\ntesting","String\n\Compare\nFirst\nEnter");
+var diff   = result.getChanges();
+
+aqua.console.println("************");
+
+for (var i=0; i < diff.length; i++) {
+    aqua.console.println(diff[i]);
+}
+aqua.console.println("************");
+
+// print result as a HTML document on the console
+aqua.console.println("HTML formatted representation: " + result.toHtml());
+
+// print the result as a HTML docuemnt in a browser
+aqua.response.write(result.toHtml());
+
+// print the result as a HTML docuemnt in a browser with legend.
+aqua.response.write(result.toHtml(true));

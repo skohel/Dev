@@ -1,0 +1,21 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        setUmask()
+ 
+   Synopsis:
+        void setUmask(String theUmask)
+
+   Description
+        Sets the default mask for file creation on a unix server. 
+
+   Parameters
+        theUmask - unix style umask for files created on the remote server
+
+   Throws
+        none
+ 
+   Example
+        See below.
+*/

@@ -1,0 +1,24 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        putDir()
+ 
+   Synopsis:
+        void putDir(String localdir, String remotedir) throws Exception
+        void putDir(String localdir, String remotedir, boolean includeSubdir) throws Exception
+
+   Description
+        Upload all files in a local directory to the remote FTP server, files in the subdirectories are not included. This method is equivalent to putDir(String localdir, String remotedir, false).    
+
+   Parameters
+        localdir - the name of the local directory
+        remotedir - the name of the directory on the remote FTP server where files to be saved
+        includeSubdir - includes all of files in the subdirectories if true  
+  
+   Throws
+        Exception - if failed to upload files
+ 
+   Example
+        See below.
+*/

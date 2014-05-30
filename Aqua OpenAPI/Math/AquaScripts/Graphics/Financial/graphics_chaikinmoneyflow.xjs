@@ -1,0 +1,81 @@
+﻿/*
+aqua.math.financial.chaikinmoneyflow
+
+Returns chaikin money flow.
+
+Synopsys
+    double[] aqua.financial.chaikinmoneyflow(double[],double[], double[], double[],int);
+
+Description
+    Compares closing price to price range and determines if data is under accumulation or distribution.
+
+Example
+    see below
+*/
+
+var high=new Array();
+var low = new Array();
+var open = new Array();
+var close = new Array();
+var volume = new Array();
+var time = new Array();
+var cmf=new Array();
+
+//generate stock data
+for(i=0;i<100;i++){
+   time[i]=i;
+//noise[i]=2*Math.random()-1;
+   high[i]=100+2*time[i] +10* Math.sin(time[i]/5)+ 4*Math.random()-2;
+   low[i]=high[i]-10+2*Math.random()-1;
+close[i]=high[i]/2+low[i]/2+(high[i]-low[i])*.5*(2*Math.random()-1);
+open[i]= close[i] + 2*Math.random()-1;
+volume[i]=1000*(100+ 10*Math.random()-5 + 20*Math.sin(time[i]/30));
+}
+
+cmf=aqua.math.financial.chaikinmoneyflow(high,low,close,volume,5);
+
+
+
+
+
+
+//chart commands
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+
+model.addSeries("CMF");
+
+
+for(i=0;i<100;i++){
+model.addCategory(i);
+model.setValue(0,i,cmf[i]);
+
+}
+
+chart.getProperties().setTitle("Chaikin Money Flow");
+chart.getProperties().setChartTypeLine(0);
+
+chart.getProperties().setMergeAxis(true);
+
+chart.getProperties().setRotationX(-45);
+chart.getProperties().setDepth(10);
+chart.getProperties().setWidth(20);
+chart.getProperties().setHeight(12);
+
+
+//chart.getProperties().setMergeSeriesMin(0);
+//chart.getProperties().setMergeSeriesMax(100);
+//chart.getProperties().setCategoryRange(9,100);
+
+
+chart.getProperties().setImageHeight(480);
+chart.getProperties().setImageWidth(800);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p style="font-size:200%">');
+
+
+

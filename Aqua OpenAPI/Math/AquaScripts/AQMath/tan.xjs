@@ -1,0 +1,22 @@
+/*
+aqua.math.tan
+
+Returns the trigonometric tangent of an angle. 
+
+Synopsys
+    double aqua.math.tan(double)
+
+Description
+    Nothing exciting to describe.
+
+Example
+    see below
+*/
+
+var pi = aqua.math.getPI();
+var pi_3 = pi / 3;
+
+aqua.console.println("PI is [" + pi + "]");
+value = aqua.math.tan(pi_3);
+
+aqua.console.println("tan[" + pi_3 + "] --> [" + value + "]");

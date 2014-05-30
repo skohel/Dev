@@ -1,0 +1,2 @@
+﻿aqua.console.println("getRequestURI [" + aqua.request.getRequestURI() + "]");
+aqua.console.println("getRemoteAddress [" + aqua.request.getRemoteAddr() + "]");

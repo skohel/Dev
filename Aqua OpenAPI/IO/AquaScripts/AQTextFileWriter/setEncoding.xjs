@@ -1,0 +1,7 @@
+﻿var writer   = aqua.io.newTextWriter();
+var encoding = "ISO-8859-1";
+
+aqua.console.println("Default file encoding [" + writer.getEncoding() + "]");
+aqua.console.println("Setting encoding to [" + encoding + "]");
+writer.setEncoding(encoding);
+aqua.console.println("New file encoding [" + writer.getEncoding() + "]");

@@ -1,0 +1,19 @@
+﻿
+//
+// This script demonstrates how to determine whether displaying a column divider in front of a column is desired or not.
+// Column divider is only applicable to a plain text grid and is turned off by default.
+//
+
+// create a settings for the data set, settings is used to describe how data set to be rendered
+var settings = aqua.report.newReportDataSetSettings();
+
+// check whether displaying a column divider at the specified column location is desired, column location is zero based
+var location = 0;
+var flag = settings.isCustomColumnDividerLocation(location);
+aqua.console.println("Default setting: displaying a column divider in front of column at index " + location + " is " + (flag ? "" : "not ") + "desired.");
+
+// set custom column divider
+settings.addCustomColumnDividerLocation(location);
+flag = settings.isCustomColumnDividerLocation(location);
+aqua.console.println("Custom setting: displaying a column divider in front of column at index " + location + " is " + (flag ? "" : "not ") + "desired.");
+

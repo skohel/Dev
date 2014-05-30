@@ -1,0 +1,25 @@
+﻿var server = "MySql 6.0 - 10.168.1.38 - demo";
+var db     = "mysql";
+var schema = null;
+var sql    = "select * from user";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+conn.changeDatabase(db);
+
+var resultSet = conn.executeQuery(sql);
+
+for (;resultSet.next();){
+
+    var row      = resultSet.getRow();    
+    var columns  = resultSet.getColumnStructure().getColumnNames();
+    var rowCount = resultSet.getCurrentRow();
+
+    for (var i=0; i<columns.length; i++){
+       // printing out the (1)column number, (2)column name, (3)row number, and (4)value of the field as a string
+       aqua.console.println("column[" + i + "]      [" + columns[i] + "]    row[" + rowCount + "]    [" + row.get(i).toString() + "]");
+    }
+    aqua.console.println("");
+}
+
+resultSet.close();
+conn.disconnect();

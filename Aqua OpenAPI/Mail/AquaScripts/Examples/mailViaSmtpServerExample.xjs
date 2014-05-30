@@ -1,0 +1,107 @@
+
+function newMailMessage() {
+    return aqua.mail.newMessage();
+}
+
+function println(message) {
+    aqua.console.println(message);
+}
+
+// get system's default SMTP server
+var smtpServer = aqua.mail.getDefaultSmtpServer();
+
+function sendMailMessage(sequence, email) {
+    println("Trying to send test email #" + sequence + " using default SMTP server...");
+    try {
+        smtpServer.sendMail(email);
+        println("  email successfully sent.");
+    } catch(ex) {
+        println("  Error sending email: " + ex.toString());
+    }
+}
+
+var mailMessage = newMailMessage();
+for( var i=0; i<3; i++ ) {
+    println("--- loop " + (i+1) + " ---");
+    var param = (i == 0 ? null : (i == 1 ? "" : "  "));
+    try { mailMessage.setFrom(param); } catch(ex) { println("setFrom() - " + ex.toString()) };
+    try { mailMessage.addToRecipient(param); } catch(ex) { println("addTo() - " + ex.toString()) };
+    try { mailMessage.addCCRecipient(param); } catch(ex) { println("addCC() - " + ex.toString()) };
+    try { mailMessage.addBCCRecipient(param); } catch(ex) { println("addBCC() - " + ex.toString()) };
+    try { mailMessage.setSubject(param); } catch(ex) { println("setSubject() - " + ex.toString()) };
+    try { mailMessage.setText(param); } catch(ex) { println("setText() - " + ex.toString()) };
+    try { mailMessage.setHtmlText(param); } catch(ex) { println("setHtmlText() - " + ex.toString()) };
+    try { mailMessage.addFileAttachment(param); } catch(ex) { println("addFileAttachment() - " + ex.toString()) };
+}
+println("");
+try { mailMessage.addFileAttachment("fileNotExists"); } catch(ex) { println("addFileAttachment() - " + ex.toString()) };
+
+var sequence = 0;
+sendMailMessage(++sequence, mailMessage);
+
+var from = "info@company.com";  // <------ replace this
+var to   = "info@company.com";  // <------ replace this
+
+mailMessage = newMailMessage();
+mailMessage.setFrom(from);
+sendMailMessage(++sequence, mailMessage);
+
+mailMessage.addToRecipient(to);
+sendMailMessage(++sequence, mailMessage);
+
+// should be able to successfully deliver emails created below
+
+mailMessage.setSubject("");
+sendMailMessage(++sequence, mailMessage);
+
+var srcDir = "C://tmp/aqmail_test/";
+var subDir = srcDir + "subdir/";
+mailMessage.setSubject("Attachments - smtp");
+mailMessage.addFileAttachment(srcDir + "tmp.txt");
+sendMailMessage(++sequence, mailMessage);
+
+mailMessage.addCCRecipient(from);
+mailMessage.addCCRecipient(to);
+mailMessage.addFileAttachment(srcDir + "tmp.txt");
+mailMessage.addFileAttachment(srcDir + "tmp.html");
+mailMessage.addFileAttachment(srcDir + "tmp.zip");
+mailMessage.addFileAttachment(srcDir + "tmp.png");
+mailMessage.addFileAttachment(srcDir + "tmp.png");
+mailMessage.addFileAttachment(srcDir + "tmp.xls");
+// mailMessage.addFileAttachment(subDir + "tmp.txt");
+// mailMessage.addFileAttachment(subDir + "tmp.html");
+
+// ------ file attachment with custom attachment name ------
+mailMessage.addFileAttachment(srcDir + "tmp.txt", "tmpAlias.txt");
+// mailMessage.addFileAttachment(srcDir + "tmp.txt", "tmpAlias.txt");
+// mailMessage.addFileAttachment(srcDir + "tmp.html", "tmpAlias.html");
+// mailMessage.addFileAttachment(srcDir + "tmp.xls", "tmpAlias.xls");
+
+// ------ byte array attachment ------
+// create a simple report and convert it to Excel in byte array
+var serverPath = "SQL Server 2000 - 54";
+var databaseName = "Northwind";
+var serverConnection = aqua.project.getServerConnection(serverPath);
+serverConnection.connect();
+serverConnection.changeDatabase(databaseName);
+var dataSet = serverConnection.executeSnapshot("select * from orders where CustomerId like 'AN%';");
+var settings = aqua.report.newReportDataSetSettings();
+settings.setTitle("Report: Customer ID starts with letter AN");
+var report = aqua.report.newReport();
+report.addDataSet(dataSet, settings);
+mailMessage.addByteArrayAttachment(report.getAsExcel2003(), "tmp.xls");
+// mailMessage.addByteArrayAttachment(report.getAsExcel2003(), "tmpReport.xls");
+// mailMessage.addByteArrayAttachment(report.getAsExcel2003(), "tmpReport2.xls");
+
+// ------ AQProjectFile attachment ------
+var pfEmpty = aqua.project.getAquaScript("test/empty.xjs");
+var pfIssue = aqua.project.getAquaScript("examples/qa-issue-3782.xjs");
+// mailMessage.addProjectFileAttachment(null);
+// mailMessage.addProjectFileAttachment(pfEmpty, "  ");
+mailMessage.addProjectFileAttachment(pfEmpty);
+mailMessage.addProjectFileAttachment(pfEmpty);
+mailMessage.addProjectFileAttachment(pfIssue, "i3782.xjs");
+
+sendMailMessage(++sequence, mailMessage);
+
+println("---End of Test---");

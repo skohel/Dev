@@ -1,0 +1,38 @@
+﻿
+
+var rawDataA=new Array();
+var rawDataB=new Array();
+var rawDataC=new Array();
+var allData= new Array();
+var out;
+var outM;
+var k = 20;
+
+
+
+//generate data
+for(i=0;i<30;i++){
+allData[i]=new Array();
+
+   rawDataA[i]=i+2*Math.random()-1;
+   rawDataB[i]=2*i+2*Math.random()-1;
+   rawDataC[i]=-3*i+2*Math.random()-1;
+   allData[i][0]=rawDataA[i];
+   allData[i][1]=rawDataB[i];
+   allData[i][2]=rawDataC[i];
+  
+}
+
+//single correlation coefficient
+out=aqua.math.stat.correlation(rawDataA, rawDataB);
+
+aqua.console.println("Correlation Coefficient = " +out);
+
+//correlation matrix
+outM = aqua.math.stat.correlation(allData);
+
+aqua.console.println("Correlation Matrix")
+
+for(i=0;i<3;i++){
+aqua.console.println(outM[0][i] +  ", " + outM[1][i] + ", "+ outM[2][i]);
+}

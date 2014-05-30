@@ -1,0 +1,18 @@
+﻿var server = "DB2 LUW 9.7 - 10.168.11.57 - SAMPLE - demo";
+var db     = "SAMPLE";
+var schema = "demo";
+
+var conn = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+
+var objs = metadata.extractNicknames(db, schema);
+
+for(var i=0; i<objs.length; i++){
+
+    var obj = metadata.extractNickname(db, schema, objs[i].getName());
+    aqua.console.println("Nickname Name:\t[" + obj.getName() + "]\t\tDROP script:\t[" + obj.scriptDROP() + "]");
+    aqua.console.println("");
+}
+conn.disconnect();

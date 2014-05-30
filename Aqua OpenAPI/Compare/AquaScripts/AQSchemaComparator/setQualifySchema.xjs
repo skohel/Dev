@@ -1,0 +1,17 @@
+﻿var schema1    = "dbo";
+var schema2    = "sys";
+var comparator = aqua.compare.newSchemaComparator();
+var options    = comparator.getOptions();
+var server     = aqua.project.getServerConnection("MSSQL");
+server.connect();
+
+var tableLeft  = server.getMetadata().extractTables("NORTHWIND", schema1);
+var tableRight = server.getMetadata().extractTables("NORTHWIND", schema2);
+
+comparator.addArrayLeft(tableLeft);
+comparator.addArrayRight(tableRight);
+comparator.setQualifySchema(true);
+
+var differences = comparator.compare();
+aqua.console.println("Are the tables from the 2 schemas [" + schema1 + "] [" + schema2 + "] different? " + (differences.hasChanges()? "YES" : "NO"));
+

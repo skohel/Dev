@@ -1,0 +1,22 @@
+
+
+var rawData=new Array();
+var out=0;
+
+//generate data
+for(i=0;i<30;i++){
+
+   rawData[i]=10+2*Math.random()-1;
+   
+}
+
+out=aqua.math.stat.zscore(rawData);
+
+aqua.console.println("raw data, zscore");
+
+for(i=0;i<30;i++){
+
+   aqua.console.println(rawData[i] + ",  " +out[i]);
+   
+}
+

@@ -1,0 +1,26 @@
+﻿importPackage(com.aquafold.openapi.chart);
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+model.addSeries("a");
+
+model.addCategory("US");
+model.addCategory("UK");
+model.addCategory("France");
+
+model.setValue(0, 0, 100);
+model.setValue(0, 1, 200);
+model.setValue(0, 2, 300);
+
+chart.getProperties().setChartTypeMap();
+
+chart.getProperties().setMergeAxis(true);
+        
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

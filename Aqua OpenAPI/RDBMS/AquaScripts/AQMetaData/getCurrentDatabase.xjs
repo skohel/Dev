@@ -1,0 +1,13 @@
+﻿var server = "MySql 6.0 - 10.168.1.38 - demo";
+var conn   = aqua.project.getServerConnection(server);
+var db     = "mysql";
+
+conn.connect();
+var metadata = conn.getMetadata();
+
+aqua.console.println("The current database is     [" + metadata.getCurrentDatabase() + "]");
+aqua.console.println("Extract tables from         [" + db + "]");
+metadata.extractTables(db, null);
+aqua.console.println("The new current database is [" + metadata.getCurrentDatabase() + "]");
+
+conn.disconnect();

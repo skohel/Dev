@@ -1,0 +1,7 @@
+﻿var validValue   = "123.123";
+var invalidValue = "EA12C0ED";
+var factory      = aqua.type.getDouble();
+
+aqua.console.println("Is [" + validValue   + "] a double? [" + factory.isValid(validValue) + "]");
+aqua.console.println("Is [" + invalidValue + "] a double? [" + factory.isValid(invalidValue) + "]");
+

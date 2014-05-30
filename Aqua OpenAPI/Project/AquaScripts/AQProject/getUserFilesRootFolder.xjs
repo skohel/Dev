@@ -1,0 +1,7 @@
+﻿var root = aqua.project.getUserFilesRootFolder();
+if(root == null) {
+    throw "Expected root != null but was " + root;
+}
+else{
+    aqua.console.println("Root is : [" + root.getName() + "]");
+}

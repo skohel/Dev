@@ -1,0 +1,19 @@
+
+//
+// This script demonstrates how to get/set the background color for showing alternate rows in hex.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// get default background color in hex
+var colorCode = settings.getAltRowBackgroundColorHexCode();
+aqua.console.println("Default alternate row backgroung color in hex is " + colorCode);
+
+// customize background color using RGB(255, 255, 0), i.e. yellow
+settings.setAltRowBackgroundColor(255, 255, 0);
+
+// get current background color in hex
+colorCode = settings.getAltRowBackgroundColorHexCode();
+aqua.console.println("Current setting of alternate row backgroung color in hex is " + colorCode);
+

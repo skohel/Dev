@@ -1,0 +1,52 @@
+﻿function fileIndex(directory){
+    this.directory = directory;
+    var map = new java.util.HashMap();   
+    
+    this.createMap = function(){
+        var fileset = aqua.filesystem.newFileSet();
+        fileset.setBaseDir(directory);
+        files = aqua.filesystem.scan(fileset);
+        for (var i=0; i< files.length; i++) {
+            map.put(files[i], 0);
+        }
+         print(map.size());
+    };
+
+    this.checkMap = function(){
+        var fileset = aqua.filesystem.newFileSet();
+        fileset.setBaseDir(directory);
+        files = aqua.filesystem.scan(fileset);
+        for (var i=0; i< files.length; i++) {
+            map.put(files[i], 1);
+       }
+   };
+
+    this.deleteFile = function(){
+        var AQFS = aqua.filesystem;
+        AQFS.deleteFile( "/home/sterling/Datastudio/test.txt");
+    }
+
+    this.findDeletedFiles = function(){
+        var key;
+        var value;
+        var iterator = map.keySet().iterator();
+        while(iterator.hasNext()){
+            key =iterator.next();
+            value = map.get(key);
+            if (value ==0.0){
+                print(key);
+            }
+
+        }
+    };
+}
+
+var test = new fileIndex("Datastudio/");
+
+test.createMap();
+test.deleteFile();
+test.checkMap();
+test.findDeletedFiles()
+
+
+

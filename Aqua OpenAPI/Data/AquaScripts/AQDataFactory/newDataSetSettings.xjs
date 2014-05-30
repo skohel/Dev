@@ -1,0 +1,4 @@
+﻿var dataSetSettings = aqua.data.newDataSetSettings();
+
+dataSetSettings.setNumericFormat("####,##");
+aqua.console.println("dataSetSettings.getNumericFormat() :[" + dataSetSettings.getNumericFormat() + "]");

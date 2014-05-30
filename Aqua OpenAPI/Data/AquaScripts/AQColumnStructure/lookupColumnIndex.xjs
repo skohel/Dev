@@ -1,0 +1,26 @@
+﻿var server      = "MySql 6.0 - 10.168.1.38 - demo";
+var db          = "mysql";
+var schema      = null;
+var sql         = "select * from user";
+
+var conn = aqua.project.getServerConnection(server);
+conn.connect();
+conn.changeDatabase(db);
+
+var resultSet = conn.executeQuery(sql);
+
+var columnStructure = resultSet.getColumnStructure();
+var columnNames     = columnStructure.getColumnNames();
+
+for (var i=0; i<columnStructure.getColumnCount(); i++){
+
+    // Calling AQColumnStructure.lookupColumnIndex()
+    var index = columnStructure.lookupColumnIndex(columnNames[i]);
+
+    aqua.console.println("column: [" + i + "]   AQColumnStructure.lookupColumnIndex(" + columnNames[i] + "): [" + index + "]");
+}
+
+// this is an invalid column name
+var index = columnStructure.lookupColumnIndex("xxxxxxxxxxxxxxxxxxxxx");
+resultSet.close();
+conn.disconnect();

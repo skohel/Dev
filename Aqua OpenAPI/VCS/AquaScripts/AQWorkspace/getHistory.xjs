@@ -1,0 +1,23 @@
+﻿var folder = "/tmp/SVNTEST";
+var svn     = aqua.vcs.newWorkspaceSubversion();
+svn.setPassword(aqua.crypto.getSecureField("svn.password"));
+svn.setUsername(aqua.crypto.getSecureField("svn.username"));
+
+
+aqua.console.println("Calling: svn.getHistory(folder);");
+var history = svn.getHistory(folder);
+
+for(i = 0; i < history.length; i++) {
+    aqua.console.println(history[i]);
+}
+
+aqua.console.println("");
+aqua.console.println("Calling: svn.getHistory(folder, startrevision, endRevision);");
+
+var startRevision = history[history.length-1].getRevision();
+var endRevision   = history[history.length-2].getRevision();
+var history = svn.getHistory(folder, startRevision, endRevision);
+
+for(i = 0; i < history.length; i++) {
+    aqua.console.println(history[i]);
+}

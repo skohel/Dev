@@ -1,0 +1,16 @@
+﻿var server = "MS SQLServer - 10.168.11.57 - msdb - dbo";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+var metadata = conn.getMetadata();
+
+aqua.console.println("Is connection [" + server + "] to an Mssql server? " + metadata.isMssql());
+conn.disconnect();
+
+
+var server = "Oracle 11G - 10.168.11.51 - HR";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+var metadata = conn.getMetadata();
+
+aqua.console.println("Is connection [" + server + "] to an Mssql server? " + metadata.isMssql());
+conn.disconnect();

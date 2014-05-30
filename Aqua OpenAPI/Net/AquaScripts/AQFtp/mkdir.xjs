@@ -1,0 +1,21 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        mkdir()
+ 
+   Synopsis:
+        void mkdir(String remotedir) throws Exception
+
+   Description
+        Creates a directory on the remote FTP server.  
+
+   Parameters
+        remotedir - the name of the remote directory to be created   
+  
+   Throws
+        Exception - if failed to create directory
+ 
+   Example
+        See below.
+*/

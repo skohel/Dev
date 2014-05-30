@@ -1,0 +1,29 @@
+
+// create a new server
+var smtpServer = aqua.mail.newSmtpServer();
+
+// set auth
+var useAuth = true;
+smtpServer.setUseAuthentication(useAuth);
+
+// validate auth
+var isAuth = smtpServer.isUseAuthentication();
+if ( isAuth != useAuth ) {
+    throw "Unexpected auth flag '" + isAuth + "' retrieved, expected value is '" + useAuth + "'";
+}
+
+
+// set auth
+useAuth = false;
+smtpServer.setUseAuthentication(useAuth);
+
+// validate auth
+isAuth = smtpServer.isUseAuthentication();
+if ( isAuth != useAuth ) {
+    throw "Unexpected auth flag '" + isAuth + "' retrieved, expected value is '" + useAuth + "'";
+}
+
+
+// done with test
+aqua.console.println("DONE");
+

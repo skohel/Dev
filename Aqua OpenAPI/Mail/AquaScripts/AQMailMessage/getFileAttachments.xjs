@@ -1,0 +1,44 @@
+
+importPackage(java.io);
+
+// create a new email message
+var email = aqua.mail.newMessage();
+
+// get file attachment list, should be empty at the moment
+var fileList = email.getFileAttachments();
+if ( fileList.length != 0 ) {
+    throw "Unexpected file attachment list length = " + fileList.length + ", empty list expected.";
+}
+
+var testDir = "C:\\tmp\\aqmail_test\\";
+var dirObject = new java.io.File(testDir);
+if ( dirObject.exists() ) {
+    var file1 = testDir + "tmp.txt";
+    var file2 = testDir + "tmp.html";
+
+    email.addFileAttachment(file1);
+    email.addFileAttachment(new java.io.File(file2))
+    email.addFileAttachment(file1);
+
+    // this is the list of files just added to the file attachment list
+    var originList = [ file1, file2, file1 ];
+
+    // get file attachment list and compare it with the original list
+    fileList = email.getFileAttachments();
+    aqua.console.println("Validating file attachment list...");
+
+    if ( fileList.length != originList.length ) {
+        throw "Unexpected file attachment list length = " + fileList.length + ", expected length = " + originList.length + ".";
+    }
+
+    for( var i=0; i<fileList.length; i++ ) {
+        var file = fileList[i];
+        var origin = originList[i];
+        if ( file != origin ) {
+            throw "Unexpected file attachment '" + file + "', expected path is '" + origin + "'";
+        }
+    }
+}
+
+// done with test
+aqua.console.println("DONE");

@@ -1,0 +1,36 @@
+﻿
+// create pivot data set
+var pivotTable = aqua.data.newPivotDataSet();
+
+// check sort order
+var isSorted = pivotTable.isSortGrandTotalColumnDescending();
+aqua.console.println("--- before setting sort order ---");
+aqua.console.println("sort by grand total column descending = " + isSorted);
+
+// data field name used to sort grand total column
+var fieldName = "Freight";
+
+// set sort order in ascending order
+pivotTable.sortGrandTotalColumnAscending(fieldName);
+
+// check sort order
+isSorted = pivotTable.isSortGrandTotalColumnDescending();
+aqua.console.println("--- after setting sort order in ascending order ---");
+aqua.console.println("sort by grand total column descending = " + isSorted);
+
+// set sort order in descending order
+pivotTable.sortGrandTotalColumnDescending(fieldName);
+
+// check sort order
+isSorted = pivotTable.isSortGrandTotalColumnDescending();
+aqua.console.println("--- after setting sort order in descending order ---");
+aqua.console.println("sort by grand total column descending = " + isSorted);
+
+// clear grand total sort settings
+pivotTable.clearGrandTotalColumnSortSettings();
+
+// check sort order
+isSorted = pivotTable.isSortGrandTotalColumnDescending();
+aqua.console.println("--- after sort order settings cleared ---");
+aqua.console.println("sort by grand total column descending = " + isSorted);
+

@@ -1,0 +1,10 @@
+﻿var factory  = aqua.type.getDouble();
+
+var value1   = 100.000000000000001;
+var value2   = 100;
+var distance = .000000000000001;
+
+aqua.console.println("Is the specified [" + distance + "] within the difference between [" + value1 + "] and [" + value2 + "]? " + factory.isCloseTo(value1, value2, distance));
+
+distance = 99;
+aqua.console.println("Is the specified [" + distance + "] within the difference between [" + value1 + "] and [" + value2 + "]? " + factory.isCloseTo(value1, value2, distance));

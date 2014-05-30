@@ -1,0 +1,35 @@
+﻿var server = "MySql 6.0 - 10.168.1.38 - demo";
+var db     = "mysql";
+var schema = null;
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+conn.changeDatabase("mysql");
+
+// 2 sql statements in this test script.  statements are separated by the "GO"
+// statement.
+var sql = "select * from user\n";
+sql += "GO\n";
+sql += "select * from proc\n";
+
+var scriptResult     = conn.executeScript(sql);
+var statementResults = scriptResult.getResults();
+
+aqua.console.println("Information on statementResults:");
+aqua.console.println("No. of AQStatementResult objects:     [" + statementResults.length + "]");
+aqua.console.println("");
+
+for (var i=0; i<statementResults.length; i++)
+{
+    var statementResult = statementResults[i];
+    var ex              = statementResult.getExceptions();
+    var warn            = statementResult.getWarnings();
+
+    aqua.console.println("AQStatementResult.getExceptions()     [" + ex + "]");
+    aqua.console.println("AQStatementResult.getExecTime()       [" + statementResult.getExecTime() + "]");
+    aqua.console.println("AQStatementResult.getStatement()      [" + statementResult.getStatement() + "]");
+    aqua.console.println("AQStatementResult.getTimeExecuted()   [" + statementResult.getTimeExecuted() + "]");
+    aqua.console.println("AQStatementResult.getWarnings()       [" + warn + "]");
+    aqua.console.println("AQStatementResult.getResultData()     [" + statementResult.getResultData() + "]");
+    aqua.console.println("");
+}
+conn.disconnect();

@@ -1,0 +1,21 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        setAccount()
+ 
+   Synopsis:
+        void setAccount(String account)
+
+   Description
+        Sets the login account to use on the specified server.    
+
+   Parameters
+        account - the account name on remote system 
+  
+   Throws
+        none
+ 
+   Example
+        See below.
+*/

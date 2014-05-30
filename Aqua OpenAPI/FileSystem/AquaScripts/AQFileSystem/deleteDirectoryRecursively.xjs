@@ -1,0 +1,37 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "/tmp/test/AQFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.filesystem;
+
+test_deleteDirectoryRecursively();
+
+function test_deleteDirectoryRecursively() {
+    var src_dir = test_data_dir + "files/";
+    var dest_dir = test_data_dir + "delete/delete_dest/";
+
+    AQFS.copy(src_dir, dest_dir);
+    
+    // testing error condition - file required
+    exec_deleteDirectoryRecursively(null);
+    // testing error condition - file to be deleted has to exist
+    exec_deleteDirectoryRecursively(dest_dir + "file.does.not.exist.txt");
+    // testing error condition - does not support wild card values
+    exec_deleteDirectoryRecursively(dest_dir + "src_base/");
+    // testing error condition - delete single file
+    exec_deleteDirectoryRecursively(dest_dir + "web.xml");
+    
+    // this should work - deleting directory
+    exec_deleteDirectoryRecursively(dest_dir + "blank_dir");
+    
+}
+function exec_deleteDirectoryRecursively(source) {
+    try {
+        aqua.console.println("deleteDirectory: deleting [" + source + "]...");
+        // NOTE: delete cannot be used as a method name; otherwise, would cause javascript error
+        aqua.console.println("deleteDirectory done? " + AQFS.deleteDirectoryRecursively(source));
+    } 
+    catch(ex) {
+        aqua.console.println("deleteDirectory failed - " + ex.toString());
+    }
+}

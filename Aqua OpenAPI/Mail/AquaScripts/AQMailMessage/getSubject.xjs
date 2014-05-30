@@ -1,0 +1,22 @@
+
+// create a new email message
+var email = aqua.mail.newMessage();
+
+// get email subject
+var subject = email.getHtmlText();
+if ( subject != null ) {
+    throw "Unexpected mail subject '" + subject + "', null expected.";
+}
+
+// set email subject
+var text = "subject";
+email.setSubject(text);
+
+// get email subject and validate it
+var subject = email.getSubject();
+if ( subject != text ) {
+    throw "Unexpected email subject '" + subject + "', expected text is '" + text + "'.";
+}
+
+// done with test
+aqua.console.println("DONE");

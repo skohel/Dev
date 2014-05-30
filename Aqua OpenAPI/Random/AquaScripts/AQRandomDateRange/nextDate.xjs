@@ -1,0 +1,31 @@
+
+importPackage(java.util);
+
+// an utility function to create a new Date object
+function createDate(year, month, day, hour, minute, second) {
+    // month: zero-based, 0 for January
+    var gc = new GregorianCalendar(year, month, day, hour, minute, second);
+    var date = gc.getTime();
+    return date;
+}
+
+// an utility function to generate dates from a date range generator
+function generateDates(generator) {
+    for( var i=0; i<6; i++ ) {
+        aqua.console.println("  " + generator.nextDate());
+    }
+}
+
+
+// create a date range generator using default range
+var randomRange = aqua.random.newRandomDateRange();
+aqua.console.println("Generate Date objects from a date range generator using default range:");
+generateDates(randomRange);
+
+// create a date range generator using custom range
+var fromDate = createDate(2010, 7, 15, 0, 0, 0);
+var toDate = createDate(2010, 7, 21, 23, 59, 59);
+randomRange = aqua.random.newRandomDateRange(fromDate, toDate);
+aqua.console.println("");
+aqua.console.println("Generate Date objects from a date range generator with range set from [" + fromDate + "] to [" + toDate + "]");
+generateDates(randomRange);

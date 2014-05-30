@@ -1,0 +1,45 @@
+﻿/*
+aqua.chart.chartModel.getMinimumValue
+
+Synopsis
+    double getMinimumValue(int seriesNumber);
+
+Description
+Returns the minimum value in a series
+
+Example
+    see below
+
+*/
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+model.addSeries("a");
+model.addSeries("b");
+
+model.addCategory(100);
+model.addCategory(1000);
+model.addCategory(3000);
+
+model.setValue(0, 0, 100);
+model.setValue(0, 1, 200);
+model.setValue(0, 2, 300);
+model.setValue(1, 0, 10);
+model.setValue(1, 1, 20);
+model.setValue(1, 2, 30);
+
+chart.getProperties().setChartTypeArea(0);
+chart.getProperties().setChartTypeColumn(1);
+
+chart.getProperties().setNumericCategoryAxis(true);
+
+aqua.response.write("Minimum value in series: ").write(model.getMinimumValue(0)).write("<p>");
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

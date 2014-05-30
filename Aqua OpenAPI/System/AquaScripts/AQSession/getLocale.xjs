@@ -1,0 +1,2 @@
+﻿var session = aqua.request.getSession();
+aqua.console.println("session.getLocale(): [" + session.getLocale() + "]");

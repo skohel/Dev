@@ -1,0 +1,45 @@
+﻿
+//
+// This script demonstrates how to display a column divider in front of a list of columns.
+// Column divider is only applicable to a plain text grid and is turned off by default.
+//
+
+// define a data set
+var columns = ["ShipCountry", "CustomerID", "ShipName", "Freight"];
+var dataSet = aqua.data.newDataSet(columns);
+
+// add rows to data set
+dataSet.addRowWithValues("Canada", "C039", "ABC Inc.",   200);
+dataSet.addRowWithValues("Canada", "C061", "Sunrise",    230);
+dataSet.addRowWithValues("France", "C123", "Joe Smith", 1620);
+dataSet.addRowWithValues("Japan",  "C375", "JPL Corp.", 4200);
+dataSet.addRowWithValues("UK",     "C028", "BUK",       1500);
+dataSet.addRowWithValues("US",     "C006", "AuqaFold",    35);
+dataSet.addRowWithValues("US",     "C257", "BOA",         89);
+
+// create a settings for the data set, settings is used to describe how data set to be rendered
+var settings = aqua.report.newReportDataSetSettings();
+
+// set title
+settings.setTitle("AquaFold Open API Example: default text grid");
+
+// create a report
+var report = aqua.report.newReport();
+
+// add data set and its settings to report
+report.addDataSet(dataSet, settings);
+
+// present report as a plain text grid in console
+aqua.console.print(report.renderText());
+aqua.console.println(""); aqua.console.println("");
+
+
+// display a column divider in front of the second and the fourth columns, column index is zero-based
+var indexes = [1, 3];
+settings.addCustomColumnDividerLocations(indexes);
+
+// update title
+settings.setTitle("AquaFold Open API Example: text grid with column dividers");
+
+// present report as a plain text grid in console
+aqua.console.print(report.renderText());

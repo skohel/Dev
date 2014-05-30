@@ -1,0 +1,5 @@
+﻿print("Generate a random GUID:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextGUID();
+    print("\t"+x);
+}

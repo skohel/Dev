@@ -1,0 +1,22 @@
+
+// create a report
+var report = aqua.report.newReport();
+
+// create a dataset
+var dataset = aqua.data.newDataSet(["ShipCountry", "Freight"]);
+dataset.addRowWithValues("US",       10);
+dataset.addRowWithValues("UK",      250);
+dataset.addRowWithValues("Japan",   300);
+dataset.addRowWithValues("Canada",   20);
+dataset.addRowWithValues("France",  200);
+dataset.addRowWithValues("Germany", 150);
+
+// create a dataset settings
+var settings = aqua.report.newReportDataSetSettings();
+settings.setTitle("Report with custom settings");
+
+// add dataset to report with custom settings
+report.addDataSet(dataset, settings);
+
+// present report as a plain text grid
+aqua.console.println(report.renderText());

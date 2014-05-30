@@ -1,0 +1,2 @@
+﻿var ti = aqua.util.formatTimeInterval(300550000);
+aqua.console.println(ti);

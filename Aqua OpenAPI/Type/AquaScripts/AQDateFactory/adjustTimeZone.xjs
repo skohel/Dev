@@ -1,0 +1,14 @@
+﻿// create a new dataset
+var ds = aqua.data.newDataSet(["id","number","date","date"]);
+
+// add dataset row with values
+ds.addRowWithValues(1, aqua.type.getDate().newDate());
+
+var factory = aqua.type.getDate();
+
+aqua.console.println(ds.get(0).get(1));
+
+// get current datetime
+var ds2 = factory.adjustTimeZone(ds, "PST", "GMT")
+
+aqua.console.println(ds2.get(0).get(1));

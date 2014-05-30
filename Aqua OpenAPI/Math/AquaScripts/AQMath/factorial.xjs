@@ -1,0 +1,28 @@
+/*
+aqua.math.factorial
+
+Returns the factorial value of a number.
+
+Synopsys
+    double aqua.math.factorial(double);
+
+Description
+    * The argument cannot be a negative number.
+    * If the argument is a double or a float, then the 
+      argument will be rounded down to the next lower integer value.
+ 
+Example
+    see below
+
+*/
+// --- factorial() ---
+function show_factorial(factor) {
+    var value = "ERROR!";
+    try { value = aqua.math.factorial(factor); } catch(ignore) { }
+    aqua.console.println("factorial[" + factor + "] --> [" + value + "]");
+}
+show_factorial(-1);
+show_factorial(0);
+show_factorial(1);
+show_factorial(5);
+show_factorial(9);

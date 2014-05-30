@@ -1,0 +1,12 @@
+﻿var server = "MS SQLServer - 10.168.11.57 - msdb - dbo";
+var db     = "msdb";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+var objs     = metadata.extractAsymmetricKeys(db);
+
+for(var i=0; i<objs.length; i++){
+    aqua.console.println("Object Name:\t[" + objs[i].getName() + "]\t\tThe DROP script:\t[" + objs[i].scriptDROP() + "]");
+}
+conn.disconnect();

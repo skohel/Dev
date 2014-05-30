@@ -1,0 +1,123 @@
+
+// importPackage(java.lang);
+importPackage(java.util);
+
+var CONSOLE = aqua.console;
+var RANDOM = aqua.random;
+
+// The report to which all generated data sets will be stored.
+var report = aqua.report.newReport();
+
+
+// Utility function - generate a data set.
+function generateDataSet(randomDataSet) {
+    var dataset = null;
+    try {
+        dataset = randomDataSet.nextDataSet();
+    } catch(ex) {
+        CONSOLE.println("Failed to generate data set: " + ex.name + " - " + ex.message);
+    }
+    return dataset;
+}
+
+// Utility function - add a data set to report.
+function addDataSetToReport(dataset, settings) {
+    if ( dataset != null ) {
+        report.addDataSet(dataset, settings);
+    }
+}
+
+// Utility function - create a new Date object
+function createDate(year, month, day, hour, minute, second) {
+    // month: zero-based, 0 for January
+    var gc = new GregorianCalendar(year, month, day, hour, minute, second);
+    var date = gc.getTime();
+    return date;
+}
+
+
+var randomDataSet = null;
+var dataset = null;
+var settings = null;
+
+// number of rows and columns to be generated
+var rows = 7;
+var columns = 3;
+
+// Creates a new ramdom data set factory and uses setter to set constraints
+randomDataSet = RANDOM.newRandomDataSet();
+randomDataSet.setRows(rows);
+randomDataSet.setColumns(columns);
+randomDataSet.setType("date");
+dataset = generateDataSet(randomDataSet);
+addDataSetToReport(dataset, null);
+
+// Generate a data set with all columns have the same data type (text).
+randomDataSet = RANDOM.newRandomDataSetByType(rows, columns, "text", null);
+dataset = generateDataSet(randomDataSet);
+addDataSetToReport(dataset, null);
+
+// Same as above, but with type set to number
+randomDataSet = RANDOM.newRandomDataSetByType(rows, columns, "number", null);
+dataset = generateDataSet(randomDataSet);
+addDataSetToReport(dataset, null);
+
+
+// Generate a data set with 3 columns, each column has different type:
+// - the length of column name will be: 3 <= length <= 9
+// - the length of generated data string will be:  0 <= length <= 12
+rows = 9;
+randomDataSet = RANDOM.newRandomDataSet(rows, new Array("text", "date", "number"), null);
+randomDataSet.setColumnNameLengthConstraints(3, 9);
+randomDataSet.setDataStringLengthConstraints(0, 12);
+dataset = generateDataSet(randomDataSet);
+addDataSetToReport(dataset, null);
+
+
+// Generate a data set with 8 columns
+// - the length of string contained in the first column will be:  12 <= length <= 18
+// - the string contained in the second column could be null; if not null, the length will be: 0 <= length <= 12
+// - the date generated in the 4th column should be between 01/10/2010 and 01/15/2010
+// - the number generated in the 6th column should be between -5 and 5
+// - the number generated in the 7th column should be between 10 and 15
+var types = new Array("text", "text", "date", "date", "date", "number", "number", "number");
+var ranges = new Array(
+    RANDOM.newRandomStringLength(12, 18),
+    RANDOM.newRandomStringLength(-1, 12),
+    RANDOM.newRandomDateRange(),
+    RANDOM.newRandomDateRange(createDate(2010, 0, 10, 0, 0, 0), createDate(2010, 0, 15, 23, 59, 59)),
+    null,
+    RANDOM.newRandomNumberRange(-5, 5),
+    RANDOM.newRandomNumberRange(10, 15),
+    null
+);
+randomDataSet = RANDOM.newRandomDataSet(rows, types, ranges);
+dataset = generateDataSet(randomDataSet);
+addDataSetToReport(dataset, null);
+
+
+// Reuse the random data set generator above, with variation constraints added
+var variations = new Array(
+    null,
+    null,
+    RANDOM.newRandomDateVariation(),                    // default variation is 12 hours
+    RANDOM.newRandomDateVariation(0, 0,  0, 0,  0, 0,   // 10 minutes variation moving forward
+                                  0, 0,  0, 0, 10, 0),
+    RANDOM.newRandomDateVariation(0, 0, -1, 0,  0, 0,   // 1 day variation and allow moving backward
+                                  0, 0,  1, 0,  0, 0),
+    null,
+    RANDOM.newRandomNumberVariation(5),
+    RANDOM.newRandomNumberVariation(3, 6)
+);
+randomDataSet.setVariations(variations);
+dataset = generateDataSet(randomDataSet);
+settings = aqua.report.newReportDataSetSettings();
+settings.setNumericFormat("#,###.###");
+settings.setDateTimeFormat("yyyy-MM-dd HH:mm:ss");
+addDataSetToReport(dataset, settings);
+
+
+// Generate a plain text report.
+aqua.console.print(report.renderText());
+// Generate a HTML report.
+aqua.response.write(report.renderHtml());

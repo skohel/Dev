@@ -1,0 +1,19 @@
+﻿
+//
+// This script demonstrates how to get/set the preferred page size when saving a data set to an Excel file.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// get default page size
+var size = settings.getLineCount();
+aqua.console.println("The default page size is " + size + ".");
+
+// customize page size
+settings.setPageSize(36);
+
+// get page size
+size = settings.getPageSize();
+aqua.console.println("The page size is currently set to " + size + ".");
+

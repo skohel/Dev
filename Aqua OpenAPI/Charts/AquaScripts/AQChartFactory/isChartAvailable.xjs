@@ -1,0 +1,16 @@
+﻿/*
+aqua.chart.isChartAvailable
+
+Synopsys
+    boolean isChartAvailable();
+
+Description
+Returns true if chart rendering is available; otherwise false (e.g. due to missing libraries or lack of support for PBuffers on graphics card)
+
+Example
+    see below
+
+*/
+
+aqua.response.write(aqua.chart.isChartAvailable());
+

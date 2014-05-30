@@ -1,0 +1,41 @@
+﻿
+//
+// This script demonstrates how to get/set the URL for data cells identified by a column index or by a column name.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// get URL by column index, index is zero based
+var index = 0;
+var url = settings.getHtmlDataLink(index);
+if ( url == null ) {
+    aqua.console.println("No URL defined for column at index " + index + ".");
+} else {
+    aqua.console.println("The URL at index " + index + " is '" + url + "'.");
+}
+
+// set URL by column index
+settings.addHtmlDataLink(index, "http://www.aquafold.com?type=i&sc=<ShipCountry>&f=<Freight>");
+
+// get URL by column index
+url = settings.getHtmlDataLink(index);
+aqua.console.println("The URL at index " + index + " is currently set to '" + url + "'.");
+
+
+// set URL by column name
+var name = "CustomerID";
+url = settings.getHtmlDataLink(name);
+if ( url == null ) {
+    aqua.console.println("No URL defined for column '" + name + "'.");
+} else {
+    aqua.console.println("The URL associated with column '" + name + "' is '" + url + "'.");
+}
+
+// set URL by column name
+settings.addHtmlDataLink(name, "http://www.aquafold.com?type=n&cid=<CustomerID>&f=<Freight>");
+
+// get URL by column name
+url = settings.getHtmlDataLink(name);
+aqua.console.println("The URL associated with column '" + name + "' is currently set to '" + url + "'.");
+

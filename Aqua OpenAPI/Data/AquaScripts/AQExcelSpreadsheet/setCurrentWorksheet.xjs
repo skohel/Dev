@@ -1,0 +1,30 @@
+﻿var ExlSp = aqua.data.excelSpreadsheet('C://SetCurrentWorksheet.xlsx');
+
+// example on how to set individual cells
+ExlSp.currentWorksheet = 'Company';
+ExlSp.setCell(6, 2, 'Created by:');
+ExlSp.setCell(6, 3, aqua.system.getProperty('user.name'));
+ExlSp.setCell(7, 2, 'Date:');
+ExlSp.setCell(7, 3, new java.util.Date());
+
+// insert dataset to append
+var ds = aqua.data.newDataSet(['Company','City']);
+ds.addRowWithValues("IBM", "Washington, D.C.");
+ds.addRowWithValues("Oracle", "Tokyo");
+
+ExlSp.row = 3;
+ExlSp.column = 0;
+ExlSp.insert(ds, true);
+
+ExlSp.autoResize = true;
+
+ExlSp.currentWorksheet = 'Sales';
+ExlSp.row = 0;
+ExlSp.column = 0;
+ExlSp.insert(ds, true);
+// save the excel spreadsheet
+ExlSp.save();
+
+aqua.console.print("The current worksheet of the excel spreadsheet is : " + ExlSp.getCurrentWorksheet());
+
+

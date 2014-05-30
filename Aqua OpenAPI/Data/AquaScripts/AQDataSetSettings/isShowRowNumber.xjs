@@ -1,0 +1,17 @@
+﻿
+//
+// This script demonstrates how to determine whether to display the column containing row number.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// check whether to display row number
+var flag = settings.isShowRowNumber();
+aqua.console.println("Default setting: row number is " + (flag ? "" : "not ") + "displayed by default.");
+
+
+// do not display row number
+settings.setShowRowNumber(false);
+flag = settings.isShowRowNumber();
+aqua.console.println("Custom setting: row number is " + (flag ? "" : "not ") + "displayed.");

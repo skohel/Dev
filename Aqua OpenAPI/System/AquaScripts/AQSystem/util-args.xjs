@@ -1,0 +1,13 @@
+﻿/*
+This is a sample script to define utility functions which can be used in other AquaScripts using runScript api.
+*/
+
+if(!argument) { 
+    print("This is utility functions collection only, execute run-script-args.xjs");
+} else {
+    var name = "tim berners-lee";
+    // invoking greet method defined in Greeting class. 
+    //print(argument["greet"].call(argument, name));
+    print(argument.greet(name));
+
+}

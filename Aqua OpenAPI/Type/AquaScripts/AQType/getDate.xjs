@@ -1,0 +1,8 @@
+﻿var validValue   = "2010-02-28";
+var invalidValue = "2010-02-XX";
+var pattern      = "yyyy-MM-d";
+var dateFactory  = aqua.type.getDate();
+
+aqua.console.println("Is [" + validValue   + "] a date? [" + dateFactory.isValid(validValue, pattern) + "]");
+aqua.console.println("Is [" + invalidValue + "] a date? [" + dateFactory.isValid(invalidValue, pattern) + "]");
+

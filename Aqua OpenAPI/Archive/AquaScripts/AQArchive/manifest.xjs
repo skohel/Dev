@@ -1,0 +1,40 @@
+﻿importPackage(java.util);
+
+// all test data will be created under this directory
+var test_data_dir = "c:\\tmp\\test\\AQArchive\\";
+
+test_manifest();
+
+// --- manifest() ---
+function test_manifest() {
+    
+    var dest_base = test_data_dir + "manifest\\manifest_dest\\";
+    exec_manifest(dest_base + "manifest_none.MF", null, null);
+
+    var attrMap = new HashMap();
+    attrMap.put("m-name-1", null);
+    exec_manifest(dest_base + "manifest_null_attr.MF", attrMap, null);
+
+    var sectionMap = new HashMap();
+    sectionMap.put("s-name-1", null);
+    exec_manifest(dest_base + "manifest_section_null.MF", null, sectionMap);
+    
+    var secAttrMap = new HashMap();
+    secAttrMap.put("sa-name-11", "value-11");
+    secAttrMap.put("sa-name-12", "value-12");
+
+    attrMap.put("m-name-2", "value-2");
+    sectionMap.put("s-name-2", secAttrMap);
+    exec_manifest(dest_base + "manifest.MF", attrMap, sectionMap);
+}
+
+function exec_manifest(manifestFile, attrMap, sectionMap) {
+    try {
+        aqua.console.println("manifest: creating [" + manifestFile + "]...");
+        aqua.archive.manifest(manifestFile, attrMap, sectionMap);
+        aqua.console.println("manifest: done.");
+    } catch(ex) {
+        aqua.console.println("manifest: failed - " + ex.toString());
+    }
+}
+

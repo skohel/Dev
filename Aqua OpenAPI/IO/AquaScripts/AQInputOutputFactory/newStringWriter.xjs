@@ -1,0 +1,12 @@
+﻿var str    = "Aquafold Inc.";
+var writer = aqua.io.newStringWriter();
+
+aqua.console.println("Write the String to internal memory buffer [" + str + "]");
+writer.write(str);
+
+aqua.console.println("Data Set written to Memory [" + writer.toString() + "]");
+
+var len = writer.getLength();
+aqua.console.println("The data length is : [" + len + "]");
+
+writer.close();

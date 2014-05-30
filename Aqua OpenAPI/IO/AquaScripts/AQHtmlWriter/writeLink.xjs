@@ -1,0 +1,8 @@
+﻿// define output file
+var saveFile = "/sampleHTMLWriter.htm";
+var writer   = aqua.io.newHtmlWriter();
+
+writer.writeLink("Aquafold inc.","http://www.aquafold.com");
+writer.saveToFile(saveFile);
+writer.close();
+aqua.console.println("Data Set written to HTML File:  " + saveFile);

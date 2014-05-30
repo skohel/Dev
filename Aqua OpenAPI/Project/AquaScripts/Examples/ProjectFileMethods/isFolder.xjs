@@ -1,0 +1,32 @@
+﻿/*
+
+Returns true if the underlying element is a folder. 
+
+Synopsys
+    boolean isFolder()
+
+Description
+    Returns true if the underlying element is a folder. 
+
+Example
+    //
+
+
+*/
+
+
+userFiles = aqua.project.collectUserFiles("/");
+for(i=0; i<userFiles.length; i++)
+{
+   if(userFiles[i].isFolder()) 
+   {
+       print("This is a file!");
+   } else {
+       print("This is not a file!");
+   }
+       
+}
+
+function print(m) {
+    aqua.console.println(m);
+}

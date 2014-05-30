@@ -1,0 +1,11 @@
+﻿var server = "MySql 6.0 - 10.168.1.38 - demo";
+var db     = "mysql";
+var schema = null;
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var versionString = conn.getVersionString();
+
+aqua.console.println("Calling AQServerConnection.getVersionString():         [" + versionString + "]");
+
+conn.disconnect();

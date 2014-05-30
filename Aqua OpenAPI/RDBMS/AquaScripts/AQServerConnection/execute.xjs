@@ -1,0 +1,20 @@
+﻿var server = "MySql 6.0 - 10.168.1.38 - demo";
+var db     = "mysql";
+var schema = null;
+var conn   = aqua.project.getServerConnection(server);
+
+conn.connect();
+
+var sql1 = "SELECT 1=1"
+var sql2 = "UPDATE mysql.host set host = null where host = \"dummy host\"";
+
+aqua.console.println("Calling method AQServerConnection.execute()");
+var result = conn.execute(sql1);
+aqua.console.println("Result of executing (" + sql1 + "):      [" + result + "]\n");
+
+aqua.console.println("Calling method AQServerConnection.execute()");
+var result = conn.execute(sql2);
+aqua.console.println("Result of executing (" + sql2 + "):      [" + result + "]\n");
+
+conn.disconnect();
+

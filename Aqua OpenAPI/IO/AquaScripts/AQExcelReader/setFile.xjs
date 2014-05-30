@@ -1,0 +1,17 @@
+﻿// define the input EXCEL file
+var excelFile = "/ExlWrtr.xls";
+
+
+aqua.console.println("Start ExcelFileReader getFile() test...");
+var reader = aqua.io.newExcelReader();
+
+reader.setFile(excelFile);
+
+var file = reader.getFile();
+
+if (file.exists()){
+    aqua.console.println("File [" + excelFile + "] exists");
+}
+else {
+    aqua.console.println("File [" + excelFile + "] doesn't exists");
+}

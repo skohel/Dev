@@ -1,0 +1,9 @@
+﻿var TextFile = "/access.log";
+var reader   = aqua.io.newTextReader();
+
+print("Start TextFileReader read() test...");
+reader.setFile(TextFile);
+
+var ds = reader.read();
+
+print(ds.renderText());

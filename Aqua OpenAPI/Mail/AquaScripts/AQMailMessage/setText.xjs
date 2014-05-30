@@ -1,0 +1,28 @@
+
+// create a new email message
+var email = aqua.mail.newMessage();
+
+// set text
+var text = "email test";
+email.setText(text);
+
+// provide a valid to-address below to enable sending email via the default SMTP server
+var toAddress = null;
+if ( toAddress != null ) {
+    email.setFrom("UnitTest");
+    email.addToRecipient(toAddress);
+    email.setSubject("AQMailMessage: setText");
+
+    // send email
+    aqua.console.println("Sending mail via the default SMTP server...");
+    try {
+        email.send();
+        aqua.console.println("Email successfully sent.");
+    } catch(ex) {
+        aqua.console.println("Failed to send email: " + ex.toString());
+    }
+}
+
+
+// done with test
+aqua.console.println("DONE");

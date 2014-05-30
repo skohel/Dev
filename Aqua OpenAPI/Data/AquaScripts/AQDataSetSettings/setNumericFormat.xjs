@@ -1,0 +1,90 @@
+﻿
+//
+// This script demonstrates how to override the default system numeric format used to render Number objects.
+//
+
+importPackage(java.math);
+importPackage(java.text);
+importPackage(java.sql);
+
+// a utility function to create a java.util.Date object from a string
+function toDate(text) {
+    var dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    var date = null;
+    try { date = dateFormat.parse(text); }
+    catch(ex) { aqua.console.println("Error converting [" + text + "] to Date object - " + ex.toString()); }
+    return date;
+}
+
+// a utility function to create a java.sql.Timestamp object from a string
+function toTimestamp(text) {
+    var date = toDate(text);
+    var timestamp = date;
+    try { timestamp = new java.sql.Timestamp(date.getTime()); }
+    catch(ex) { aqua.console.println("Error converting [" + text + "] to Timestamp object - " + ex.toString()); }
+    return timestamp;
+}
+
+// a utility function to create a java.math.BigDecimal object from a string
+function toBigDecimal(text) {
+    var number = text;
+    try { number = new java.math.BigDecimal(text); }
+    catch(ex) { aqua.console.println("Error converting [" + text + "] to BigDecimal object - " + ex.toString()); }
+    return number;
+}
+
+
+// define a data set
+var columnNames = ["EmployeeID", "ShipCountry", "CustomerID", "ShipName", "OrderDate", "ShippedDate", "Freight"];
+var dataSet = aqua.data.newDataSet(columnNames);
+
+// define column types: sql type and java type need to be defined in order to get formatting work correctly
+var columnStructure = dataSet.getColumnStructure();
+var columnDescriptor = null;
+columnDescriptor = columnStructure.getColumn(0);  columnDescriptor.setSqlType(java.sql.Types.INTEGER);  columnDescriptor.setJavaType("java.lang.Integer");
+columnDescriptor = columnStructure.getColumn(1);  columnDescriptor.setSqlType(java.sql.Types.VARCHAR);  columnDescriptor.setJavaType("java.lang.String");
+columnDescriptor = columnStructure.getColumn(2);  columnDescriptor.setSqlType(java.sql.Types.VARCHAR);  columnDescriptor.setJavaType("java.lang.String");
+columnDescriptor = columnStructure.getColumn(3);  columnDescriptor.setSqlType(java.sql.Types.VARCHAR);  columnDescriptor.setJavaType("java.lang.String");
+columnDescriptor = columnStructure.getColumn(4);  columnDescriptor.setSqlType(java.sql.Types.DATE);     columnDescriptor.setJavaType("java.sql.Timestamp");
+columnDescriptor = columnStructure.getColumn(5);  columnDescriptor.setSqlType(java.sql.Types.DATE);     columnDescriptor.setJavaType("java.sql.Timestamp");
+columnDescriptor = columnStructure.getColumn(6);  columnDescriptor.setSqlType(java.sql.Types.DECIMAL);  columnDescriptor.setJavaType("java.math.Double");
+
+// add rows to data set
+dataSet.addRowWithValues(10001, "Canada", "C039", "ABC Inc.",  toTimestamp("2010-03-12 00:00:00"), toTimestamp("2010-03-12 16:02:32"), 200);
+dataSet.addRowWithValues(10001, "Canada", "C061", "Sunrise",   toTimestamp("2010-01-31 23:59:59"), toTimestamp("2010-02-01 12:12:12"), 230);
+dataSet.addRowWithValues(10001, "France", "C123", "Joe Smith", toTimestamp("2009-10-02 12:00:00"), toTimestamp("2009-10-04 00:00:00"), 1620.35);
+dataSet.addRowWithValues(10002, "Japan",  "C375", "JPL Corp.", toTimestamp("2010-05-20 11:45:43"), toTimestamp("2010-05-20 23:59:59"), 4200.5);
+dataSet.addRowWithValues(10003, "UK",     "C028", "BUK",       toTimestamp("2010-05-20 17:03:21"), toTimestamp("2010-05-21 09:32:45"), 1500);
+dataSet.addRowWithValues(10001, "US",     "C006", "AuqaFold",  toTimestamp("2010-05-20 09:16:52"), toTimestamp("2010-05-21 08:45:33"), 35.12);
+dataSet.addRowWithValues(10002, "US",     "C257", "BA IT",     toTimestamp("2010-06-27 09:00:18"), toTimestamp("2010-06-27 18:09:57"), 89);
+dataSet.addRowWithValues(10003, "US",     "C257", "BA R&D",    toTimestamp("2010-07-15 15:36:07"), toTimestamp("2010-07-16 12:00:00"), 27.75);
+
+// create a settings for the data set, settings is used to describe how data set to be rendered
+var settings = aqua.report.newReportDataSetSettings();
+
+// set title
+settings.setTitle("AquaFold Open API Example: rendering Number objects in default format");
+
+// create a report
+var report = aqua.report.newReport();
+// add data set and its settings to report
+report.addDataSet(dataSet, settings);
+
+// present report in a text grid
+aqua.console.print(report.renderText());
+aqua.console.println(""); aqua.console.println("");
+// render report in HTML and display it in browser
+aqua.response.write(report.renderHtml());
+aqua.response.write("<br><br>");
+
+
+// define a system-wide custom date format
+settings.setNumericFormat("#,###");
+settings.setTitle("AquaFold Open API Example: rendering Number objects in custom format");
+
+// present report in a text grid, both EmployeeID and Freight columns should be rendered in custom format
+aqua.console.print(report.renderText());
+aqua.console.println(""); aqua.console.println("");
+// render report in HTML and display it in browser
+aqua.response.write(report.renderHtml());
+

@@ -1,0 +1,19 @@
+﻿
+//
+// This script demonstrates how to get/set the row index from where the row number calculation to be started.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// get default start row index
+var index = settings.getRowNumberStartRowIndex();
+aqua.console.println("The default start row index is " + index + ".");
+
+// customize start row index
+settings.setRowNumberStartRowIndex(7);
+
+// get start row index
+index = settings.getRowNumberStartRowIndex();
+aqua.console.println("The start row index is " + index + ".");
+

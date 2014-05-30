@@ -1,0 +1,21 @@
+﻿var result = aqua.compare.compare("aaa", "bbb");
+var diff   = result.getChanges();
+
+aqua.console.println("***********");
+for (var i=0; i < diff.length; i++) {
+    aqua.console.println(diff[i]);
+}
+aqua.console.println("***********");
+
+aqua.console.println("Changes Present? " + result.isDifferent());
+aqua.console.println("\n");
+
+result = aqua.compare.compare("aaa", "aaa");
+diff   = result.getChanges();
+
+aqua.console.println("***********");
+for (var i=0; i < diff.length; i++) {
+    aqua.console.println(diff[i]);
+}
+aqua.console.println("***********");
+aqua.console.println("Changes Present? " + result.isDifferent());

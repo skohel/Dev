@@ -1,0 +1,7 @@
+﻿var p = aqua.system.runCommand("notepad.exe");
+p.waitFor();
+aqua.console.println("notepad exit value: " + p.exitValue());
+
+var p = aqua.system.runCommand("notepad.exe", "/tmp/");
+p.waitFor();
+aqua.console.println("notepad.exe exit value: " + p.exitValue());

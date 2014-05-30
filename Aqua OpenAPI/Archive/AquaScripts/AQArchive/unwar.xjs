@@ -1,0 +1,30 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "c:\\tmp\\test\\AQArchive\\";
+
+test_unwar();
+
+// --- unwar() ---
+function test_unwar() {
+
+    var src_base = test_data_dir + "war\\war_dest\\";
+    var dest_base = test_data_dir + "war\\unwar_dest\\";
+    
+    // testing error condition - missing war file
+    exec_unwar(null, dest_base + "dir_xml");
+    // this should work
+    exec_unwar(src_base + "dir_xml.war", dest_base + "dir_xml");
+    exec_unwar(src_base + "fileset_without_xml.war", dest_base + "fileset_without_xml");
+    exec_unwar(src_base + "filesets_with_xml.war", dest_base + "filesets_with_xml");
+}
+
+function exec_unwar(warFile, destDir) {
+    try {
+        aqua.console.println("unwar: from [" + warFile + "] to [" + destDir + "]...");
+        aqua.archive.unwar(warFile, destDir);
+        aqua.console.println("unwar: done.");
+    } catch(ex) {
+        aqua.console.println("unwar: !!! failed - " + ex.toString());
+    }
+}
+
+

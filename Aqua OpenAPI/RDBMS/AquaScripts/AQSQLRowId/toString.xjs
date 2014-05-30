@@ -1,0 +1,22 @@
+﻿var server      = "Oracle 11G - 10.168.11.51 - HR";
+var db          = null;
+var schema      = "HR";
+var sql         = "select * from HR.ANGER where ID = 2991";
+var conn        = aqua.project.getServerConnection(server);
+conn.connect();
+
+var resultSet       = conn.executeQuery(sql);
+var columnStructure = resultSet.getColumnStructure();
+var columnNames     = columnStructure.getColumnNames();
+var rowIdOne;
+
+if (resultSet.next()){
+    rowIdOne = resultSet.getRowId(0);
+}
+        
+aqua.console.println("RowId from row 1 [" + rowIdOne + "]");
+
+aqua.console.println(rowIdOne.toString());
+
+resultSet.close();
+conn.disconnect();

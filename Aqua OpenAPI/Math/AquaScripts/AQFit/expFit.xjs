@@ -1,0 +1,39 @@
+﻿
+
+var rawDataX=new Array();
+var rawDataY = new Array();
+var noise = new Array();
+var fitY=new Array();
+var guess=new Array();
+
+guess[0]=1;
+guess[1]=1
+guess[2]=1;
+
+//generate noisy data
+for(i=0;i<30;i++){
+   rawDataX[i]=(i+1)/10.0;
+noise[i]=2*Math.random()-1;
+   rawDataY[i]=2*Math.exp(2*rawDataX[i]) + 3 +noise[i]/5;
+   
+}
+
+//perform smoothing
+fitY=aqua.math.fit.expFit(rawDataX,rawDataY);
+
+
+aqua.console.println("Raw Data, Fitted Data (no initial guess)");
+
+for(i=0;i<30;i++){
+aqua.console.println(rawDataY[i] +", " + fitY[i]);
+}
+
+//perform smoothing
+fitY=aqua.math.fit.expFit(rawDataX,rawDataY,guess);
+
+
+aqua.console.println("Raw Data, Fitted Data (with initial guess)");
+
+for(i=0;i<30;i++){
+aqua.console.println(rawDataY[i] +", " + fitY[i]);
+}

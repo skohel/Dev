@@ -1,0 +1,4 @@
+﻿var integer = 10;
+var math    = aqua.getMath();
+
+aqua.console.println("[" + integer + "!] = [" + math.factorial(integer) + "]");

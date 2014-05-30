@@ -1,0 +1,17 @@
+﻿// present the form
+var frm = aqua.form.newForm(6,2);
+frm.add(0,0,"Name:");
+//add a TextField
+frm.addTextField(0,1, "name", "");
+frm.add(1,0,"Title:");
+//add a TextField
+var area = frm.addTextArea(1,1,20,80);
+area.setName("area_name");
+area.setText("initial text\ntwo rows")
+
+// display in a browser -  if you click "Debug in browswer" or press "ctrl-shift-enter"
+aqua.response.write(frm);
+
+// display on console - if you just click run.
+aqua.console.print(frm.toHtml());
+

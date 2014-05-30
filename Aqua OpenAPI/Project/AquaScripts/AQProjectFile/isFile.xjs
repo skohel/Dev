@@ -1,0 +1,46 @@
+﻿testServerConnectionFolder();
+testAquaScriptFolder();
+testAquaScript();
+testUserFileFolder();
+testUserFile();
+
+function testServerConnectionFolder() {
+	aqua.console.println("[TEST] aqua.project.getServerConnectionsRootFolder().isFile()");
+    if(aqua.project.getServerConnectionsRootFolder().isFile()) {
+        throw "Expected: false but was true";
+    }
+	aqua.console.println("[OK]");
+}
+
+function testAquaScriptFolder() {
+	aqua.console.println("[TEST] aqua.project.getAquaScriptsRootFolder().isFile()");
+    if(aqua.project.getAquaScriptsRootFolder().isFile()) {
+        throw "Expected: false but was true";
+    }
+	aqua.console.println("[OK]");
+}
+
+function testAquaScript() {
+	aqua.console.println("[TEST] aqua.project.getAquaScript(\"AQProjectFile/exists.xjs\").isFile()");
+    if(!aqua.project.getAquaScript("AQProjectFile/exists.xjs").isFile()) {
+        throw "Expected: true but was false";
+    }
+	aqua.console.println("[OK]");
+}
+
+function testUserFileFolder() {
+	aqua.console.println("[TEST] aqua.project.getUserFilesRootFolder().isFile()");
+    if(aqua.project.getUserFilesRootFolder().isFile()) {
+        throw "Expected: false but was true";
+    }
+	aqua.console.println("[OK]");
+}
+
+function testUserFile() {
+	aqua.console.println("[TEST] aqua.project.getUserFile(\"testFile\").isFile()");
+	aqua.project.getUserFile("testFile").write("test text");
+    if(!aqua.project.getUserFile("testFile").isFile()) {
+        throw "Expected: true but was false";
+    }
+	aqua.console.println("[OK]");
+}

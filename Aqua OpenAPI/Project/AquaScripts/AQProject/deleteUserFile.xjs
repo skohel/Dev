@@ -1,0 +1,15 @@
+﻿aqua.console.println("Calling aqua.project.getUserFile().remove()");
+var userFile = aqua.project.getUserFile("test-userfile.txt");
+
+if(userFile == null) {
+    throw "Expected: userFile != null but was: " + userFile;
+}
+
+if(!userFile.exists()) {
+    userFile.write("test text");
+}
+
+var result = userFile.remove();
+if(!result) {
+    throw "Expected: result true but was: " + result;
+}

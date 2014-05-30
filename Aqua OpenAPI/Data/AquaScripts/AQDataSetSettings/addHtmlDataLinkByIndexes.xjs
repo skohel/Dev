@@ -1,0 +1,54 @@
+﻿
+//
+// This script demonstrates how to bind URL links to data cells by column indexes
+//
+
+// define a data set
+var columns = ["ShipCountry", "CustomerID", "ShipName", "Freight"];
+var dataSet = aqua.data.newDataSet(columns);
+
+// add rows to data set
+dataSet.addRowWithValues("Canada", "C039", "ABC Inc.",   200);
+dataSet.addRowWithValues("Canada", "C061", "Sunrise",    230);
+dataSet.addRowWithValues("France", "C123", "Joe Smith", 1620);
+dataSet.addRowWithValues("Japan",  "C375", "JPL Corp.", 4200);
+dataSet.addRowWithValues("UK",     "C028", "BUK",       1500);
+dataSet.addRowWithValues("US",     "C006", "AuqaFold",    35);
+dataSet.addRowWithValues("US",     "C257", "BOA",         89);
+
+// create a settings for the data set, settings is used to describe how data set to be rendered
+var settings = aqua.report.newReportDataSetSettings();
+
+// set title
+settings.setTitle("AquaFold Open API Example: default HTML grid");
+
+// create a report
+var report = aqua.report.newReport();
+
+// add data set and its settings to report
+report.addDataSet(dataSet, settings);
+
+// render report in HTML and display it in browser
+aqua.response.write(report.renderHtml());
+aqua.response.write("<br><br>");
+
+
+// define the list of columns where URL links to be created, column index is zero based
+var indexes = [0, 2, 1];
+
+// define the list URL links
+var urls = new Array(
+    "http://www.aquafold.com?type=0",  // no data substitution
+    "http://www.aquafold.com?type=1&sc=<ShipCountry>&sn=<ShipName>&f=<Freight>",    // with data substitution
+    "http://www.aquafold.com?type=2&sc=<ShipCountry>&cid=<CustomerID>&f=<Freight>"  // with data substitution
+);
+
+// bind URL links to columns
+settings.addHtmlDataLinkByIndexes(indexes, urls);
+
+// update title
+settings.setTitle("AquaFold Open API Example: data cells with URL links (by column indexes)");
+
+// render report in HTML and display it in browser
+aqua.response.write(report.renderHtml());
+

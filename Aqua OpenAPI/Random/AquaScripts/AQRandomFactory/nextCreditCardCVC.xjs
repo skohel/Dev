@@ -1,0 +1,14 @@
+﻿print("Generate a random credit card CVC");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextCreditCardCVC();
+    print("\t"+x);
+}
+
+var x = "";
+var validator = new org.apache.commons.validator.CreditCardValidator(org.apache.commons.validator.CreditCardValidator.AMEX);
+for ( i = 0; i < 100; i++ ) {
+x = aqua.random.nextCreditCardNumber();
+if(validator.isValid(x)) {
+print("credit card number: " + x + ", cvc: " + aqua.random.nextCreditCardCVC(x));
+}
+}

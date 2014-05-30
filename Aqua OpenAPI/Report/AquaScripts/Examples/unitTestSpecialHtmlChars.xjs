@@ -1,0 +1,173 @@
+// 
+// This script is created for testing HTML special characters embedded in AQDataSet and AQPivotDataSet.
+//
+
+importPackage(java.text);
+importPackage(java.sql);
+
+var dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+function toDate(text) {
+    var date = text;
+    try { date = dateFormat.parse(text); }
+    catch(ex) { aqua.console.println("Error converting [" + text + "] to Date object - " + ex.toString()); }
+    return date;
+}
+
+function toDouble(text) {
+    var number = text;
+    try { number = new java.lang.Double(text); }
+    catch(ex) { aqua.console.println("Error converting [" + text + "] to Double object - " + ex.toString()); }
+    return number;
+}
+
+function toInteger(text) {
+    var number = text;
+    try { number = new java.lang.Integer(text); }
+    catch(ex) { aqua.console.println("Error converting [" + text + "] to Integer object - " + ex.toString()); }
+    return number;
+}
+
+// --------- AQDataSet ---------
+
+// create data set
+var columnNames = ["<c1?>", "c2", "c3", "c4", "c5", "c6", "c7", "<c8?>", "c9", "<c10?>", "c11"];
+var dataSet = aqua.data.newDataSet(columnNames);
+// define column types
+//   . need to set sql type in order to get formatting work in both AQDataSet and AQPivotDataSet
+//   . once sql type is set, sorting also works in AQDataSet
+//   . sorting in AQPivotDataSet does not work, even java type is set, need to look into this
+var clmStructure = dataSet.getColumnStructure();
+var clmDescriptor = null;
+clmDescriptor = clmStructure.getColumn(0);  clmDescriptor.setSqlType(java.sql.Types.INTEGER);
+clmDescriptor = clmStructure.getColumn(3);  clmDescriptor.setSqlType(java.sql.Types.TIMESTAMP);
+clmDescriptor = clmStructure.getColumn(4);  clmDescriptor.setSqlType(java.sql.Types.TIMESTAMP);
+clmDescriptor = clmStructure.getColumn(5);  clmDescriptor.setSqlType(java.sql.Types.DOUBLE);
+clmDescriptor = clmStructure.getColumn(6);  clmDescriptor.setSqlType(java.sql.Types.DOUBLE);
+clmDescriptor = clmStructure.getColumn(9);  clmDescriptor.setSqlType(java.sql.Types.DOUBLE);    clmDescriptor.setJavaType("java.lang.Double");
+clmDescriptor = clmStructure.getColumn(10); clmDescriptor.setSqlType(java.sql.Types.INTEGER);   clmDescriptor.setJavaType("java.lang.Integer");
+
+// add rows to data set
+dataSet.addRowWithValues(toInteger(1), "text-1-1 ",     "text-1-1 ",     toDate("1999-01-01 00:00:00"), toDate("1999-01-01 00:00:00"), toDouble(1.2),         toDouble(1.2),         "<81?>", "<91?>", toDouble(101.2),         toInteger(111));
+dataSet.addRowWithValues(toInteger(2), "text<2-1 <",    "text<2-1 <",    toDate("2000-06-30 01:02:03"), toDate("2000-06-30 01:02:03"), toDouble(12.34),       toDouble(12.34),       "<82?>", "<92?>", toDouble(1012.34),       toInteger(1120));
+dataSet.addRowWithValues(toInteger(3), "text-3>1 >>",   "text-3>1 >>",   toDate("2002-12-31 01:02:30"), toDate("2002-12-31 01:02:30"), toDouble(345.123),     toDouble(123.456),     "<83?>", "<93?>", toDouble(10123.345),     toInteger(11300));
+dataSet.addRowWithValues(toInteger(4), "text<4>1 <?>",  "text<4>1 <?>",  toDate("2001-02-15 12:12:12"), toDate("2001-02-15 12:12:12"), toDouble(1234.5678),   toDouble(1234.5678),   "<84?>", "<94?>", toDouble(101234.5678),   toInteger(114000));
+dataSet.addRowWithValues(toInteger(5), "text<5?1 <<>>", "text<5?1 <<>>", toDate("2003-07-01 23:59:59"), toDate("2003-07-01 23:59:59"), toDouble(12345.67809), toDouble(12345.67809), "<85?>", "<95?>", toDouble(1012345.67809), toInteger(1150000));
+
+// create data set settings
+var settings = aqua.report.newReportDataSetSettings();
+
+// title and footer
+settings.setTitle("Test DataSet with HTML <special characters>");
+settings.setFooter("Footer <goes> here?");
+
+// format
+settings.setColumnDateTimeFormat("c4", "MM<dd>yyyy");
+settings.setColumnNumericFormat("c6", "<<?>> #,###.##");
+
+// links
+var testURI = "http://www.yahoo.com?";
+var c1URL = testURI + "cn=<<c1?>>";
+var c2URL = testURI + "oid=<<c1?>>&v=<c2>&t=<c4>&d=<c6>&s=<<c8?>>";
+var c3URL = testURI + "oid=<<c1?>>&v=<c3>&t=<c5>&d=<c7>&s=<<c10?>>";
+var c4URL = testURI + "oid=<<c1?>>&v=<c4>";
+var c5URL = testURI + "oid=<<c1?>>&v=<c5>";
+var c6URL = testURI + "oid=<<c1?>>&v=<c6>";
+var c7URL = testURI + "cn=<c7>";
+var c8URL = testURI + "oid=<<c1?>>&v=<<c8?>>";
+var c10URL = testURI + "oid=<<c1?>>&c2=<c2>&c4=<c4>&c6=<c6>&c10=<<c10?>>";
+var c11URL = testURI + "oid=<<c1?>>&c3=<c3>&c5=<c5>&c8=<<c8?>>&c11=<c11>";
+settings.addHtmlHeaderLink(0, c1URL);
+settings.addHtmlHeaderLink("c7", c7URL);
+settings.addHtmlDataLink("c2", c2URL);
+settings.addHtmlDataLink("c4", c4URL);
+settings.addHtmlDataLink("c6", c6URL);
+
+// sorting URLs
+settings.setHtmlDataColumnSortLink("http://www.yahoo.com?type=c1&order=<AQSO>&sid=<AQSID>");
+// sorting
+// dataSet.setSortingDescending("c6");
+// dataSet.setSortingDescending("c4");
+dataSet.setSortingDescending("c11");
+dataSet.sort();
+
+// --------- AQPivotDataSet ---------
+
+// create pivot data set and its settings
+var pivotDataSet = aqua.data.newPivotDataSet();
+var pivotSettings = aqua.report.newReportDataSetSettings();
+
+// define pivot tables
+pivotDataSet.addRowField("<c1?>");
+pivotDataSet.addRowField("c2");
+pivotDataSet.addRowField("c4");
+pivotDataSet.addColumnField("c3");
+pivotDataSet.addColumnField("c5");
+pivotDataSet.addColumnField("<c8?>");
+pivotDataSet.addDataField("<c10?>");
+pivotDataSet.addDataField("c11");
+
+// links
+var c2DataURL = c2URL + "&d1=<<c10?>>";
+var c3DataURL = c3URL + "&d1=<<c10?>>";
+var c4DataURL = c4URL + "&d1=<<c10?>>&d2=<c11>";
+var c5DataURL = c5URL + "&c3=<c3>&d1=<<c10?>>&d2=<c11>";
+var c8DataURL = c8URL + "c3=<c3>&c5=<c5>&c8=<<c8?>>";
+var c10DataURL = c10URL;
+var c11DataURL = c11URL;
+pivotSettings.addHtmlHeaderLink(0, c1URL);
+pivotSettings.addHtmlHeaderLink("c2", c2URL);
+pivotSettings.addHtmlHeaderLink("c3", c3URL);
+pivotSettings.addHtmlHeaderLink(3,  c4URL);
+pivotSettings.addHtmlHeaderLink(4,  c5URL);
+pivotSettings.addHtmlHeaderLink("<c10?>", c10URL);
+pivotSettings.addHtmlHeaderLink("c11",    c11URL);
+pivotSettings.addHtmlDataLink("c2", c2DataURL);
+pivotSettings.addHtmlDataLink("c3", c3DataURL);
+pivotSettings.addHtmlDataLink(3,    c4DataURL);
+pivotSettings.addHtmlDataLink(4,    c5DataURL);
+pivotSettings.addHtmlDataLink("<c8?>", c8DataURL);
+pivotSettings.addHtmlDataLink(9,       c10DataURL);
+pivotSettings.addHtmlDataLink("c11",   c11DataURL);
+
+// sorting URLs
+var sortURI = "http://www.yahoo.com?";
+var c1SortURL = sortURI + "clm=<<c1?>>&sort=<AQSO>";
+var c3SortURL = sortURI + "clm=<c3>&sort=<AQSO>";
+var c8SortURL = sortURI + "clm=<<c8?>>&sort=<AQSO>";
+var dataColumnSortLinkURL = sortURI + "sort=<AQSO>&columnId=<AQSID>";
+pivotSettings.addHtmlHeaderSortLink("<c1?>", c1SortURL);
+pivotSettings.addHtmlHeaderSortLink("c3", c3SortURL);
+// pivotSettings.addHtmlHeaderSortLink(7, c8SortURL);
+pivotSettings.setHtmlDataColumnSortLink(dataColumnSortLinkURL);
+
+// sorting
+pivotDataSet.sortGrandTotalColumnDescending("c11");
+// pivotDataSet.sortDataColumnDescending(10);
+pivotDataSet.setColumnFieldSortDescending("c3");
+// pivotDataSet.setRowFieldSortDescending("<c1?>");
+
+// format
+pivotSettings.setColumnDateTimeFormat("c4", "yy<MM>dd?E");
+pivotSettings.setColumnDateTimeFormat(4, "MM<dd>yyyy HH?mm?ss");
+pivotSettings.setColumnNumericFormat("c6", "<<?>> #,###.##");
+pivotSettings.setColumnNumericFormat("<c10?>", "<?> #,###.##");
+
+// trend chart
+pivotSettings.setShowRowTrendChart(true);
+
+// bind data set to pivot data set and calculate pivot data
+pivotDataSet.setDataSet(dataSet);
+pivotDataSet.calculateGrid();
+
+// --------- AQReport ---------
+
+// create report and add data sets to it
+var report = aqua.report.newReport();
+report.addDataSet(dataSet, settings);
+report.addDataSet(pivotDataSet, pivotSettings);
+
+// render an HTML report
+aqua.response.write(report.renderHtml());
+// render a text report
+aqua.console.println(report.renderText());

@@ -1,0 +1,33 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "/tmp/test/AQFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.filesystem;
+
+/* --- test sync --- */
+
+test_sync();
+
+// --- sync ---
+
+function test_sync() {
+    var src_base = test_data_dir + "files/";
+    var dest_base = test_data_dir + "sync/";
+
+    // testing error condition - source directory not defined
+    exec_sync(null, dest_base);
+    // testing error condition - source directory is not valid
+    exec_sync(src_base + "directory_doesnt_exist/", dest_base);
+    // this should work 
+    exec_sync(src_base, dest_base);
+}
+function exec_sync(fromDir, toDir) {
+    try {
+        aqua.console.println("sync: syncing [" + toDir + "] from [" + fromDir + "]...");
+        AQFS.sync(fromDir, toDir);
+        aqua.console.println("sync done.");
+    } 
+    catch(ex) {
+        aqua.console.println("sync failed - " + ex.toString());
+    }
+}

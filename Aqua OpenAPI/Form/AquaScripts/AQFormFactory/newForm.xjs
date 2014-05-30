@@ -1,0 +1,11 @@
+﻿// present the form
+var frm = aqua.form.newForm(3,2);
+frm.add(0,0,"Name:");
+frm.addTextField(0,1, "name", "");
+frm.add(1,0,"Title:");
+frm.addTextField(1,1, "title", "");
+frm.add(2,0,"Company:");
+frm.addTextField(2,1, "company", "");
+aqua.response.write(frm);
+
+

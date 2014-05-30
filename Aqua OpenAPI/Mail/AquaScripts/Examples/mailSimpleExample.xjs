@@ -1,0 +1,46 @@
+// This script demonstrates how to send out an email
+// using the default SMTP server and Mail Queue provided by the system.
+
+// a function that writes a string to the console
+function println(message) {
+    aqua.console.println(message);
+}
+
+// create an uninitialized email message 
+var email = aqua.mail.newMessage();
+
+// define email
+email.setFrom("your-email-account");          // replace this with your own email account
+email.addToRecipient("your-email-account");   // replace this with your own email account
+email.setSubject("Test - using default SMTP server");
+
+// deliver email using the default SMTP server provided by the system
+try {
+    println("Sending out email using SMTP server...");
+    email.send();  // <----- call send() to deliver this email
+    println("Email successfully sent.");
+} catch(ex) {
+    println("Failed to send email: " + ex.toString());
+}
+
+
+// display the status of the default Mail Queue provided by the system
+var mailQueue = aqua.mail.newMailQueue();
+println("------ Mail Queue state ------");
+println("Enabled:  " + (mailQueue.isEnabled()  ? "Yes" : "No"));
+println("Paused:   " + (mailQueue.isPaused()   ? "Yes" : "No"));
+println("Archived: " + (mailQueue.isArchived() ? "Yes" : "No"));
+println("------------------------------");
+
+// change email's subject
+email.setSubject("Test - using default Mail Queue");
+
+// deliver email using the default Mail Queue provided by the system
+try {
+    println("Sending out email using Mail queue...");
+    email.queue();  // <----- call queue() to deliver this email
+    println("Email successfully queued.");
+} catch(ex) {
+    println("Failed to enqueue email: " + ex.toString());
+}
+

@@ -1,0 +1,48 @@
+﻿/*
+aqua.chart.chartModel.getCategoryFields
+
+Synopsys
+    List <String> getCategoryFields();
+
+Description
+Returns the names of the category fields selected from the datasource
+
+Example
+    see below
+
+*/
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+var ds = aqua.data.newDataSet(["country","city","freight"]);
+
+ds.addRowWithValues("US", "New York", 100);
+ds.addRowWithValues("UK", "London", 10);
+ds.addRowWithValues("Japan", "Tokyo", 200);
+ds.addRowWithValues("Canada", "Montreal", 20);
+ds.addRowWithValues("France", "Paris", 300);
+ds.addRowWithValues("Germany", "Berlin", 30);
+
+model.setDataSource(ds);
+
+chart.getModel().setCategoryFields("country", "city");
+chart.getModel().addSeriesField("freight");
+
+chart.getProperties().setChartTypeArea(0);
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+
+var fields = chart.getModel().getCategoryFields();
+aqua.response.write('Category Fields<p>');
+for (i = 0; i < fields.size(); i++)
+{
+    aqua.response.write(fields.get(i)).write("<p>");
+}
+
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

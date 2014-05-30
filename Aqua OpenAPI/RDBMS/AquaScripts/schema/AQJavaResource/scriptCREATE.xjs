@@ -1,0 +1,17 @@
+﻿var server = "Oracle 11G - 10.168.11.51 - SYS";
+var db     = null;
+var schema = "SYS";
+
+var conn = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+
+var objs = metadata.extractJavaResources(db, schema);
+
+for(var i=0; i<objs.length; i++){
+
+    var obj = metadata.extractJavaResource(db, schema, objs[i].getName());
+    aqua.console.println("Java Resource Name:\t[" + obj.getName() + "]\t\tThe CREATE script:\t[" + obj.scriptCREATE() + "]");
+}
+conn.disconnect();

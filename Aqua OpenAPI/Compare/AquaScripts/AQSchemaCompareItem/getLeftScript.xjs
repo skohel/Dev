@@ -1,0 +1,27 @@
+﻿var database1  = "NORTHWIND";
+var database2  = "msdb";
+var schema1    = "dbo";
+var schema2    = "dbo";
+var comparator = aqua.compare.newSchemaComparator();
+var options    = comparator.getOptions();
+var server     = aqua.project.getServerConnection("MSSQL");
+server.connect();
+
+var tableLeft  = server.getMetadata().extractTables(database1, schema1);
+var tableRight = server.getMetadata().extractTables(database2, schema2);
+
+comparator.addArrayLeft(tableLeft);
+comparator.addArrayRight(tableRight);
+comparator.setQualifySchema(true);
+
+var differences = comparator.compare();
+differences.addSortingByTypeAscending();
+differences.sort();
+
+// getting items that have been added
+aqua.console.println("items that are addeded");
+var items = differences.getAddedItems();
+for (var i=0; i<items.length; i++){
+    aqua.console.println(items[i].getName());
+    aqua.console.println(items[i].getLeftScript());
+}

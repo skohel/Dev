@@ -1,0 +1,276 @@
+﻿/*
+aqua.math.curve
+
+Synopsyis
+    Summary of survival curve methods
+
+Description
+Demonstrates usage ofsurvival curve methods
+
+Example
+    see below
+
+*/
+var times=new Array(1, 5, 9, 9, 9, 10, 10, 10, 12, 12, 12, 12, 12, 13, 15, 16, 20, 24, 24, 27, 32, 34, 36, 36, 44);
+var censor= new Array(1,0,1,1,0,1,1,0,1,1,1,1,0,0,0,1,0,1,1,0,1,0,1,1,0);
+
+var times2=new Array(1,2,2,2,3,6,6,9,9,10,10,11,11,16,17,19,20,25,32,32, 34, 36, 36, 44);
+var censor2= new Array(1,1,1,0,1,1,1,0,1,0,0,1,0,1,0,0,0,1,0,0,1,1,0,1);
+
+var survival=new Array();
+var dataX = new Array();
+var dataY = new Array();
+var fitted = new Array();
+var guess = new Array();
+var coeff = new Array();
+var med = 0;
+
+var survival2=new Array();
+var dataX2 = new Array();
+var dataY2 = new Array();
+var fitted2 = new Array();
+var guess2 = new Array();
+var coeff2 = new Array();
+var med2=0;
+var weib = aqua.math.fit.newWEIBULL_Function();
+
+lrTest=aqua.math.curve.logRankTest(times,censor,times2,censor2);
+
+guess[0]=aqua.math.stat.max(times)/2;
+guess[1]=1;
+
+
+guess2[0]=aqua.math.stat.max(times2)/2;;
+guess2[1]=1;
+
+
+
+
+//calculate survival curve 1
+//survival[0][] is survival time
+//survival[1][] is relative fraction of survivors
+survival=aqua.math.curve.kaplanMeier(times,censor);
+
+//populate datasets for chart and fit
+for(i=0;i<survival[0].length;i++){
+dataX[i]=survival[0][i];
+dataY[i]=survival[1][i];
+}
+
+fitted=aqua.math.fit.weibullFit(dataX,dataY,guess);
+coeff=aqua.math.fit.weibullFitCoeff(dataX,dataY,guess);
+
+
+//calculate survival curve 2
+//surviva2l[0][] is survival time
+//survival2[1][] is relative fraction of survivors
+survival2=aqua.math.curve.kaplanMeier(times2,censor2);
+
+//populate datasets for chart and fit
+for(i=0;i<survival2[0].length;i++){
+dataX2[i]=survival2[0][i];
+dataY2[i]=survival2[1][i];
+}
+
+fitted2=aqua.math.fit.weibullFit(dataX2,dataY2,guess2);
+coeff2=aqua.math.fit.weibullFitCoeff(dataX2,dataY2,guess2);
+
+
+//median survival rate
+med=coeff[0]*aqua.math.pow(-aqua.math.log(.5),1.0/coeff[1]);
+med2=coeff2[0]*aqua.math.pow(-aqua.math.log(.5),1.0/coeff2[1]);
+aqua.console.println(med);
+aqua.console.println(med2);
+
+
+/////////chart 0
+var chart0 = aqua.chart.newChart();
+var model0 = chart0.getModel();
+
+model0.addSeries("Survival Fraction");
+
+
+for(i=0;i<dataX.length;i++){
+
+model0.addCategory(dataX[i]);
+model0.setValue(0,i,dataY[i]);
+
+
+}
+
+
+chart0.getProperties().setTitle("Treamtent 1");
+chart0.getProperties().setChartTypeLine(0);
+chart0.getProperties().setChartTypeLine(1);
+//chart.getProperties().setChartTypeLine(2);
+chart0.getProperties().setMergeAxis(true);
+
+chart0.getProperties().setRotationX(-45);
+chart0.getProperties().setDepth(10);
+chart0.getProperties().setWidth(20);
+chart0.getProperties().setHeight(12);
+
+chart0.getProperties().setShowSeriesAxis(false);
+
+//chart.getProperties().setMergeSeriesMin(0);
+//chart.getProperties().setMergeSeriesMax(130);
+//chart.getProperties().setCategoryRange(9,100);
+
+chart0.getProperties().setImageHeight(480);
+chart0.getProperties().setImageWidth(800);
+chart0.getProperties().setNumericCategoryAxis(true);
+
+
+/////////chart 1
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+model.addSeries("Survival Fraction");
+model.addSeries("Weibull Fit");
+
+for(i=0;i<dataX.length;i++){
+
+model.addCategory(dataX[i]);
+model.setValue(0,i,dataY[i]);
+model.setValue(1,i,fitted[i]);
+
+}
+
+
+chart.getProperties().setTitle("Treatment 1");
+chart.getProperties().setChartTypeLine(0);
+chart.getProperties().setChartTypeLine(1);
+chart.getProperties().setChartTypeLine(2);
+chart.getProperties().setMergeAxis(true);
+
+chart.getProperties().setRotationX(-45);
+chart.getProperties().setDepth(10);
+chart.getProperties().setWidth(20);
+chart.getProperties().setHeight(12);
+
+chart.getProperties().setShowSeriesAxis(false);
+
+//chart.getProperties().setMergeSeriesMin(0);
+//chart.getProperties().setMergeSeriesMax(130);
+//chart.getProperties().setCategoryRange(9,100);
+
+chart.getProperties().setImageHeight(480);
+chart.getProperties().setImageWidth(800);
+chart.getProperties().setNumericCategoryAxis(true);
+
+//////////chart 2
+var chart2 = aqua.chart.newChart();
+var model2 = chart2.getModel();
+
+model2.addSeries("Survival Fraction");
+model2.addSeries("Weibull Fit");
+
+for(i=0;i<dataX2.length;i++){
+
+model2.addCategory(dataX2[i]);
+model2.setValue(0,i,dataY2[i]);
+model2.setValue(1,i,fitted2[i]);
+
+}
+chart2.getProperties().setTitle("Treatment 2");
+chart2.getProperties().setChartTypeLine(0);
+chart2.getProperties().setChartTypeLine(1);
+chart2.getProperties().setChartTypeLine(2);
+chart2.getProperties().setMergeAxis(true);
+
+chart2.getProperties().setRotationX(-45);
+chart2.getProperties().setDepth(10);
+chart2.getProperties().setWidth(20);
+chart2.getProperties().setHeight(12);
+
+chart2.getProperties().setShowSeriesAxis(false);
+
+chart2.getProperties().setMergeSeriesMin(0);
+chart2.getProperties().setMergeSeriesMax(1);
+//chart.getProperties().setCategoryRange(9,100);
+
+chart2.getProperties().setImageHeight(480);
+chart2.getProperties().setImageWidth(800);
+chart2.getProperties().setNumericCategoryAxis(true);
+
+//////////chart 3
+var chart3 = aqua.chart.newChart();
+var model3 = chart3.getModel();
+
+model3.addSeries("Treatment 1");
+model3.addSeries("Treatment 2");
+
+for(i=0;i<44;i++){
+
+model3.addCategory(i);
+model3.setValue(0,i,aqua.math.fit.evaluate(i,weib,coeff));
+model3.setValue(1,i,aqua.math.fit.evaluate(i,weib,coeff2));
+
+}
+chart3.getProperties().setTitle("Comparison of Treatments");
+chart3.getProperties().setChartTypeLine(0);
+chart3.getProperties().setChartTypeLine(1);
+chart3.getProperties().setChartTypeLine(2);
+chart3.getProperties().setMergeAxis(true);
+
+chart3.getProperties().setRotationX(-45);
+chart3.getProperties().setDepth(10);
+chart3.getProperties().setWidth(20);
+chart3.getProperties().setHeight(12);
+
+chart3.getProperties().setShowSeriesAxis(false);
+
+//chart3.getProperties().setMergeSeriesMin(0);
+//chart3.getProperties().setMergeSeriesMax(1);
+//chart.getProperties().setCategoryRange(9,100);
+
+chart3.getProperties().setImageHeight(480);
+chart3.getProperties().setImageWidth(800);
+chart3.getProperties().setNumericCategoryAxis(true);
+
+// image will be available for 5 seconds
+var url0 = chart0.cache(5);
+var url = chart.cache(5);
+var url2 = chart2.cache(5);
+var url3 = chart3.cache(5);
+
+//introduction
+
+aqua.response.write(' <p><span style="color: #2778cb;"><big><strong>Aqua Curve Methods: Survival Analysis</strong></big></span></p>');
+
+aqua.response.write('Survival and failure estimates can be carried out using methods in aqua.curve.  For example, given subject survival times for a given treatment,<br>');
+
+aqua.response.write('<table>');
+aqua.response.write('<pre>         var times=new Array(1, 5, 9, 9, 9, 10, 10, 10, 12, 12, 12, 12, 12, 13, 15, 16, 20, 24, 24, 27, 32, 34, 36, 36, 44); //survival times for treatment 1</pre>');
+aqua.response.write('<pre>         var censor= new Array(1,0,1,1,0,1,1,0,1,1,1,1,0,0,0,1,0,1,1,0,1,0,1,1,0);  //censor data for treatment 1</pre>');
+
+aqua.response.write('we can calculate the cumulative survival fraction via kaplan meier estimator.<br>');
+aqua.response.write('<table>');
+aqua.response.write('<pre>         survival=aqua.math.curve.kaplanMeier(times,censor);  // calculate survival curve for first set of survival times, with censor data</pre> <br>');
+//fig 0
+aqua.response.write('<img src=').write(url0).write('>');
+aqua.response.write('<hr><br>We can also obtain a functional representation of the survival curve by using existing aqua.math.fit methods--namely the weibull distribution fit. <br>');
+aqua.response.write('<pre>         fitted=aqua.math.fit.weibullFit(dataX,dataY,guess); //  best fit Weibull distribution for survival curve.</pre>');
+//fig 1
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p style="font-size:150%">');
+aqua.response.write('Survival Curve 1 = e<sup>-(x/').write(coeff[0]).write(')<sup>').write(coeff[1]).write('</sup></sup></p><br>');
+aqua.response.write(' Once we have a function describing the survival curve, we can investigate specifics of the shape and behavior of the survival curve.  For example, we are often interested in a treatement\'s median survival time.  For the given weibull fit, we see median survival time is ').write(med).write('.<br><br><hr>');
+
+//fig 2
+aqua.response.write('If we repeat the calculations for a second set of survival times,<br> ');
+aqua.response.write('<img src=').write(url2).write('><br><br>');
+aqua.response.write('we can compare the survival data of the two treatements, either fitwise<br><br>'); 
+
+//fig 3
+aqua.response.write('<img src=').write(url3).write('>');
+//notes on fig 3
+aqua.response.write('<p style="font-size:150%">');
+aqua.response.write('Survival Curve 1 = e<sup>-(x/').write(coeff[0]).write(')<sup>').write(coeff[1]).write('</sup></sup>').write('  ,  Median Survival time = ').write(med).write('<br>');
+aqua.response.write('Survival Curve 2 = e<sup>-(x/').write(coeff2[0]).write(')<sup>').write(coeff2[1]).write('</sup></sup>').write('  ,  Median Survival time = ').write(med2).write('</p>');
+aqua.response.write('or via logrank test (Logrank test statistic = ').write(lrTest).write(').<br>');
+aqua.response.write('<table>');
+aqua.response.write('<pre>         lrTest=aqua.math.curve.logRankTest(times,censor,times2,censor2);  // logRank test value for pair of treatment survival sets</pre> <br>');
+aqua.response.write('In the absence of censor data, we can also tests such as Mann-Whitney and Wilcoxon signed-rank tests, which are available in aqua.math.stat.');
+
+

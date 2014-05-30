@@ -1,0 +1,51 @@
+
+importPackage(java.io);
+
+// utility function - abort execution
+function abort(api) {
+    aqua.console.println("!!! expected exception is not generated on execution of [" + api + "]");
+    aqua.exit();
+}
+
+// utility function - write expected exception to console
+function showExpectedError(ex) {
+    aqua.console.println("... expected exception received - " + ex.name + " - " + ex.message);
+}
+
+// utility function to validate file attachment list
+function validateList(email, length) {
+    var list = email.getFileAttachments();
+    if ( list.length != count ) {
+        var message = "!!! List length (" + list.length + ") does not match expected length (" + length + ")";
+        throw message;
+    }
+}
+
+
+// create a new email message
+var email = aqua.mail.newMessage();
+
+// test invalid arguments
+try { email.addFileAttachment(null); abort('addFileAttachment(null)'); } catch(ex) { showExpectedError(ex); } 
+try { email.addFileAttachment(""); abort('addFileAttachment("")'); } catch(ex) { showExpectedError(ex); } 
+try { email.addFileAttachment("  "); abort('addFileAttachment("  ")'); } catch(ex) { showExpectedError(ex); } 
+try { email.addFileAttachment("file-not-exists"); abort('addFileAttachment("file-not-exists")'); } catch(ex) { showExpectedError(ex); } 
+try { email.addFileAttachment(null, null); abort('addFileAttachment(null, null)'); } catch(ex) { showExpectedError(ex); } 
+
+// test valid arguments
+var testDir = "C:/tmp/aqmail_test/";
+var dirObject = new java.io.File(testDir);
+if ( dirObject.exists() ) {
+    aqua.console.println("Validating file attachments...");
+    var count = 0;
+    email.addFileAttachment(testDir + "tmp.txt");  validateList(email, ++count);
+    email.addFileAttachment(new java.io.File(testDir + "tmp.html"));  validateList(email, ++count);
+
+    // this is an object attachment, not file attachment
+    email.addFileAttachment(testDir + "tmp.png", "attachment.name");
+    try { validateList(email, ++count); abort('addFileAttachment(file, attachment)'); }
+    catch(ex) { aqua.console.println("... expected exception received - " + ex); }
+}
+
+// done with test
+aqua.console.println("DONE");

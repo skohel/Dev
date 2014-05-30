@@ -1,0 +1,27 @@
+
+// create a random data set generator
+var rows = 6;
+var types = [ "number", "number", "number" ];
+var ranges = [ 
+    null, 
+    aqua.random.newRandomNumberRange(-1000, 1000),
+    aqua.random.newRandomNumberRange()
+];
+var randomDataSet = aqua.random.newRandomDataSet(rows, types, ranges);
+
+
+// create a report
+var report = aqua.report.newReport();
+
+// create a dataset settings
+var settings = aqua.report.newReportDataSetSettings();
+settings.setNumericFormat("#,###.##");
+
+// generate some datasets and add them to report
+for( var i=0; i<2; i++ ) {
+    var dataset = randomDataSet.nextDataSet();
+    report.addDataSet(dataset, settings);
+}
+
+// show report
+aqua.console.println(report.renderText());

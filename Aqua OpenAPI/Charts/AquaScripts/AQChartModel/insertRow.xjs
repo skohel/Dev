@@ -1,0 +1,36 @@
+﻿/*
+aqua.chart.chartModel.insertRow
+
+Synopsys
+    void insertRow(int index, Object category, Number ... values);
+
+Description
+Insert a row of data at the specified index.  
+The row contains the specified category and an array of values, one value per series.
+
+Example
+    see below
+
+*/
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+model.addSeries("a");
+model.addSeries("b");
+
+model.addRow("US", 100, 10, 50);
+model.addRow("France", 300, 30, 150);
+model.insertRow(1, "UK", 200, 20, 100);
+
+chart.getProperties().setChartTypeArea(0);
+chart.getProperties().setChartTypeColumn(1);
+chart.getProperties().setChartTypeArea(2);
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

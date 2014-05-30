@@ -1,0 +1,69 @@
+﻿var factory       = aqua.type.getShort();
+
+var validObject   = 32767;
+var invalidObject = 32768;
+var validString   = "1,000";
+var invalidString = "1.000";
+var pattern       = "#,###";
+
+try{
+    aqua.console.println("Is object [" + validObject   + "] a short? [" + factory.parse(validObject) + "]");
+    aqua.console.println("Is object [" + invalidObject + "] a short? [" + factory.parse(invalidObject) + "]");
+    aqua.console.println("");
+}
+catch(e){
+    aqua.console.println(e);
+    aqua.console.println("");
+}
+
+try{
+    aqua.console.println("Is object [" + validString   + "] with pattern [" + pattern + "] a short? [" + factory.parse(validString, pattern) + "]");
+    aqua.console.println("Is object [" + invalidString + "] with pattern [" + pattern + "] a short? [" + factory.parse(invalidString, pattern) + "]");
+    aqua.console.println("");
+}
+catch(e){
+    aqua.console.println(e);
+    aqua.console.println("");
+}
+
+try{
+    // doing integer the way they do in Spain
+    var locale    = "ES";
+    var pattern   = null;
+    validString   = "1.000";
+    invalidString = "1,000";
+    aqua.console.println("Is object [" + validString   + "] with pattern [" + pattern + "] and locale [" + locale + "] a short? [" + factory.parse(validString, pattern, locale) + "]");
+    aqua.console.println("Is object [" + invalidString + "] with pattern [" + pattern + "] and locale [" + locale + "] a short? [" + factory.parse(invalidString, pattern, locale) + "]");
+    aqua.console.println("");
+}
+catch(e){
+    aqua.console.println(e);
+    aqua.console.println("");
+}
+
+
+try{
+    var locale    = null;
+    var pattern   = null;
+    validString   = "1,000,000"; // default locale (in the here in the US), uses "," as thousand separators.
+    invalidString = "1.000.000";
+    aqua.console.println("Is object [" + validString   + "] with pattern [" + pattern + "] and locale [" + locale + "] a short? [" + factory.parse(validString, pattern, locale) + "]");
+    aqua.console.println("Is object [" + invalidString + "] with pattern [" + pattern + "] and locale [" + locale + "] a short? [" + factory.parse(invalidString, pattern, locale) + "]");
+    aqua.console.println("");
+}
+catch(e){
+    aqua.console.println(e);
+    aqua.console.println("");
+}
+
+
+invalidString = 10000000000000000000001;
+
+try{
+    aqua.console.println("Is object [" + invalidObject + "] a short? [" + factory.parse(invalidObject) + "]");
+    aqua.console.println("");
+}
+catch(e){
+    aqua.console.println(e);
+    aqua.console.println("");
+}

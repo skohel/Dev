@@ -1,0 +1,23 @@
+﻿var test_file = "/tmp/test/AQFileSet";
+// get instance of filesystem object
+var AQFS = aqua.filesystem;
+var fileset = AQFS.newFileSet();
+fileset.setBaseDir(test_file);
+
+// this is to demostrate setting of include patterns
+fileset.setIncludes("**/*txt **/*.pdf");
+fileset.setIncludes("**/*xed");
+fileset.setIncludes("**/*.htm");
+
+files = AQFS.scan(fileset);
+try {
+    aqua.console.println("_____ Setting Include & Scanning Files _____ : ");
+    for (var i=0; i<files.length; i++) {
+        aqua.console.println(files[i]);
+    }
+    aqua.console.println("_____________________________________________ ");
+}
+catch(ex) {
+    aqua.console.println("Setting Include & Printing Files: Failed - " + ex.toString() + "\n");
+}
+   

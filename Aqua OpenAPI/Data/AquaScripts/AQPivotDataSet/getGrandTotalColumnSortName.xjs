@@ -1,0 +1,34 @@
+﻿//
+// This script demonstrates how to get the data field name used to sort the grand total column.
+//
+
+// an utility function to write a data field name to the console 
+function printName(name) {
+    if ( name == null ) {
+        aqua.console.println("Data field name is null, i.e. not defined.");
+    } else {
+        aqua.console.println("Data field name is '" + name + "'.");
+    }
+}
+
+// create pivot data set
+var pivotTable = aqua.data.newPivotDataSet();
+
+// get the data field name used to sort the grand total column; should be null initially
+var fieldName = pivotTable.getGrandTotalColumnSortName();
+
+// show data field name
+aqua.console.println("------ before setting data field ------");
+printName(fieldName);
+
+
+// set the data field name used to sort the grand total column
+pivotTable.sortGrandTotalColumnDescending("Freight");
+
+// get the data field name used to sort the grand total column
+fieldName = pivotTable.getGrandTotalColumnSortName();
+
+// show data field name
+aqua.console.println("");
+aqua.console.println("------ after setting data field ------");
+printName(fieldName);

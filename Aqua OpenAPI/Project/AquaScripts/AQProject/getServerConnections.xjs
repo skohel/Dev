@@ -1,0 +1,25 @@
+﻿var folder    = "master";
+var recursive = true;
+testGetServerConnections();
+testGetServerConnectionsWithParameters(folder, recursive);
+
+function testGetServerConnections() {
+	aqua.console.println('[TEST] aqua.project.getServerConnections()');
+    var connectionList = aqua.project.getServerConnections();
+    if(connectionList == null) {
+        throw "Expected: root folder != null but was: " + connectionList;
+    }
+    aqua.console.println(connectionList.length);
+   	aqua.console.println('[OK]\n');
+}
+
+
+function testGetServerConnectionsWithParameters(folder, recursive) {
+	aqua.console.println('[TEST] aqua.project.getServerConnections()');
+    var connectionList = aqua.project.getServerConnections(folder, recursive);
+    if(connectionList == null) {
+        throw "Expected: root folder != null but was: " + connectionList;
+    }
+    aqua.console.println(connectionList.length);
+   	aqua.console.println('[OK]');
+}

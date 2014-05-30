@@ -1,0 +1,16 @@
+﻿var result = aqua.compare.compare("HealthCare\nString\nMethod\nDetail\n\Enter\ntesting","String\n\Compare\nFirst\nEnter");
+var diff   = result.getChanges();
+
+aqua.console.println("***** ALL ******");
+for (var i=0; i < diff.length; i++) {
+    aqua.console.println(diff[i]);
+}
+aqua.console.println("***** ALL ******");
+aqua.console.println("");
+
+aqua.console.println("***** CHANGES ******");
+diff = result.getModificationsOnly();
+for (var i=0; i < diff.length; i++) {
+    aqua.console.println(diff[i]);
+}
+aqua.console.println("***** CHANGES ******");

@@ -1,0 +1,10 @@
+﻿var writer = aqua.io.newStringWriter();
+var str    = "Aquafold inc.";
+
+aqua.console.println("Write the String [" + str + "] to internal memory buffer");
+writer.write(str);
+aqua.console.println("writer.toString() [" + writer.toString() + "]");
+writer.close();
+
+
+

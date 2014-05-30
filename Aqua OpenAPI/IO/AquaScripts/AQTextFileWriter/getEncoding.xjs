@@ -1,0 +1,10 @@
+﻿var writer   = aqua.io.newTextWriter();
+var encoding = "UTF-16";
+
+aqua.console.println("Default file encoding [" + writer.getEncoding() + "]");
+aqua.console.println("Setting encoding to [" + encoding + "]");
+writer.setEncoding(encoding);
+aqua.console.println("New file encoding [" + writer.getEncoding() + "]");
+
+
+

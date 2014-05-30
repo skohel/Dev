@@ -1,0 +1,96 @@
+﻿/*
+aqua.math.curve.interpolate
+
+Interpolates data point based on cubic splines.
+
+Synopsys
+    double aqua.curve.interpolate(double[],double[],string);
+
+Description
+    Returns data point calculated via natural cubic splines.  string defines type of interpolation used.
+    type:  "spline" :  natural cubic splines (default, if no string specified)
+           "divided":  divided difference
+           "loess"  :  Loess, local regression
+Example
+    see below
+*/
+
+var rawDataX=new Array();
+var rawDataY=new Array();
+var interpolatedPoint=0;
+var noise = new Array();
+var desiredX=0;
+
+//generate noisy data with gap
+for(i=0;i<15;i++){
+   rawDataX[i]=i;
+noise[i]=2*Math.random()-1;
+   rawDataY[i]=.02*Math.pow(rawDataX[i],3)+10+noise[i]*10;
+   
+}
+
+for(i=15;i<30;i++){
+   rawDataX[i]=i+5;
+noise[i]=2*Math.random()-1;
+   rawDataY[i]=.02*Math.pow(rawDataX[i],3)+10+noise[i]*10;
+   
+}
+
+
+
+//perform spline interpolation
+//interpolatedPoint=aqua.math.curve.interpolate(rawDataX,rawDataY,desiredX);
+
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+var testFit = aqua.math.getFit();
+
+
+model.addSeries("raw");
+model.addSeries("interpolated");
+
+
+for(i=0;i<25;i++){
+model.addCategory(rawDataX[i]);
+model.setValue(0,rawDataX[i],rawDataY[i]);
+model.setValue(1,rawDataX[i],NaN);
+
+}
+
+//perform interpolation
+for(i=15;i<20;i++){
+interpolatedPoint=aqua.math.curve.interpolate(rawDataX,rawDataY,i);
+model.setValue(1,i  ,interpolatedPoint);
+}
+
+
+
+chart.getProperties().setTitle("Gap-filling using interpolation.");
+chart.getProperties().setChartTypeLine(0);
+chart.getProperties().setChartTypeScatter(1);
+chart.getProperties().setChartTypeScatter(2);
+chart.getProperties().setMergeAxis(true);
+
+
+chart.getProperties().setView2D(true);
+
+chart.getProperties().setWidth(20);
+chart.getProperties().setHeight(12);
+
+
+//chart.getProperties().setMergeSeriesMin(0);
+//chart.getProperties().setMergeSeriesMax(100);
+//chart.getProperties().setCategoryRange(9,100);
+
+
+chart.getProperties().setImageHeight(480);
+chart.getProperties().setImageWidth(800);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p style="font-size:200%">');
+
+aqua.response.write('Missing data in raw set filled via interpolation.<br>');
+

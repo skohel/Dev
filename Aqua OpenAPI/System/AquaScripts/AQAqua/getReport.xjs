@@ -1,0 +1,4 @@
+﻿var rpt    = aqua.getReport();
+var report = rpt.newReport();
+
+// now the report object is ready to be used. 

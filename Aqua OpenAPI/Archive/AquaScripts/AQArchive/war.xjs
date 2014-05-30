@@ -1,0 +1,72 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "c:\\tmp\\test\\AQArchive\\";
+
+test_war_dir();
+test_war_filesets();
+
+// --- war directory ---
+function test_war_dir() {
+
+    var src_base  = test_data_dir + "files\\src_base\\";
+    var dest_base = test_data_dir + "war\\war_dest\\";
+
+    // testing error condition
+    exec_war_dir(src_base, dest_base + "dir_NE.war", src_base + "file_does_not_exist.xml");
+    // testing error condition
+    exec_war_dir(src_base + "test_file.txt", dest_base + "file.war", null);
+    // war archive will work without an xml file
+    exec_war_dir(src_base, dest_base + "dir.war", null);
+    // testing error condition
+    exec_war_dir(src_base, dest_base + "dir_xml.war", test_data_dir + "files\\web.xml");
+
+}
+function exec_war_dir(srcDir, warFile, appxmlFile) {
+    try {
+        aqua.console.println("war dir: from [" + srcDir + "] to [" + warFile + "] with appXMLFile=[" + appxmlFile + "]...");
+        aqua.archive.war(srcDir, warFile, appxmlFile);
+        aqua.console.println("war dir: done.\n");
+    } catch(ex) {
+        aqua.console.println("war dir: failed - " + ex.toString() + "\n");
+    }
+}
+
+// --- war filesets ---
+function test_war_filesets() {
+
+    var src_base1 = test_data_dir + "files\\src_base1\\";
+    var src_base2 = test_data_dir + "files\\src_base2\\";
+    var dest_base = test_data_dir + "war\\war_dest\\";
+    var fileset1  = aqua.filesystem.newFileSet();
+    var fileset2  = aqua.filesystem.newFileSet();
+    
+    fileset1.setBaseDir(src_base1);
+    fileset1.setIncludes("**/*");
+    fileset1.setExcludes("**/*.txt");
+
+    fileset2.setBaseDir(src_base2);
+    fileset2.setIncludes("**/*");
+    fileset2.setExcludes("**/*.html");
+
+    var fileset_array = new Array(fileset1, fileset2);
+    
+    // testing error condition
+    exec_war_filesets(fileset_array, dest_base + "filesets_NE.war", src_base1 + "file_does_not_exist.xml");
+    // war archive will work without an xml file
+    exec_war_filesets(fileset_array, dest_base + "filesets_without_xml.war", null);
+    // archiving a single fileset
+    exec_war_filesets(fileset_array, dest_base + "filesets_with_xml.war", test_data_dir + "files\\web.xml");
+
+}
+function exec_war_filesets(filesets, warFile, appxmlFile) {
+    try {
+        aqua.console.println("war filesets from directories: ");
+        for(var i=0; i < filesets.length; i++){
+           aqua.console.println("\t[" + filesets[i].getBaseDir() + "] ");
+        }
+        aqua.console.println("to [" + warFile + "] with appXMLFile=[" + appxmlFile + "]...");
+        aqua.archive.war(filesets, warFile, appxmlFile);
+        aqua.console.println("war fileset: done.\n");
+    } catch(ex) {
+        aqua.console.println("war fileset: failed - " + ex.toString() + "\n");
+    }
+}

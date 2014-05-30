@@ -1,0 +1,5 @@
+﻿print("Generate a random zipcode:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextZipCode();
+    print("\t"+x);
+}

@@ -1,0 +1,20 @@
+
+var rawDataX=new Array();
+var rawDataY = new Array();
+var noise = new Array();
+var fitCoeff=new Array();
+
+//generate noisy data
+for(i=0;i<30;i++){
+   rawDataX[i]=(i+1)/10.0;
+noise[i]=2*Math.random()-1;
+   rawDataY[i]=2*rawDataX[i] + 3 +noise[i]/5;
+   
+}
+
+//perform smoothing
+fitCoeff=aqua.math.fit.linFitCoeff(rawDataX,rawDataY);
+
+
+aqua.console.println("Equation of Fit, y = " +fitCoeff[0] + " + " + fitCoeff[1]+ " x");
+

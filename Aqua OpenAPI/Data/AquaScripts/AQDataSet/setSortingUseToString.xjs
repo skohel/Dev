@@ -1,0 +1,21 @@
+﻿var dataSet = generateDataSet();
+
+aqua.console.println("Default sort order, same as ds.setSortingUsingToString(true)");  
+dataSet.sort();
+aqua.console.println(dataSet.renderText());
+
+aqua.console.println("Sort by using Sort by binary, same as ds.setSortingUsingToString(false)");
+dataSet.setSortingUseToString(2, false);
+dataSet.sort();
+aqua.console.println(dataSet.renderText());
+
+//------------------------------------------------------------------------------
+function generateDataSet(){
+
+    var ds = aqua.data.newDataSet(["shipcountry","freight","description"]);
+    ds.addRowWithValues(aqua.random.nextCountry(),    "10", 1);
+    ds.addRowWithValues(aqua.random.nextCountry(),   "100", 2);
+    ds.addRowWithValues(aqua.random.nextCountry(),  "1000", 3);
+    ds.addRowWithValues(aqua.random.nextCountry(), "10000", "100004");
+    return ds;
+}

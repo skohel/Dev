@@ -1,0 +1,14 @@
+﻿var server = "MySql 6.0 - 10.168.1.38 - demo";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+var databases = metadata.extractDatabases();
+
+for(var i=0; i<databases.length; i++){
+    var database = metadata.extractDatabase(databases[i].getName());
+    // calling AQDatabase.scriptDROP()
+    aqua.console.println("Name: [" + database.getName() + "]    DROP script: [" + database.scriptDROP() + "]");
+    aqua.console.println("");
+}
+conn.disconnect();

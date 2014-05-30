@@ -1,0 +1,23 @@
+/*
+aqua.math.signum
+
+Returns the signum function of the argument; zero if the argument is zero, 
+1.0 if the argument is greater than zero, -1.0 if the argument is less than zero. 
+   
+Synopsys
+    double aqua.math.signum(double)
+
+Description
+    Nothing exciting to describe.
+
+Example
+    see below
+*/
+
+// --- signum() ---
+function show_signum(value) {
+    aqua.console.println("signum[" + value + "] --> [" + aqua.math.signum(value) + "]");
+}
+show_signum(-3.2);
+show_signum(0);
+show_signum(3.2);

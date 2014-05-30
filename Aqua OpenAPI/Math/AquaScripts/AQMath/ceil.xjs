@@ -1,0 +1,25 @@
+/*
+aqua.math.ceil
+
+    Returns the smallest (closest to negative infinity) double value that is greater than or 
+    equal to the argument and is equal to a mathematical integer. 
+
+Synopsys
+    double aqua.math.ceil(double);
+
+Description
+    * If the argument value is already equal to a mathematical integer, then the result is the same as the argument.
+    * If the argument is NaN or an infinity or positive zero or negative zero, then the result is the same as the argument.
+    * If the argument value is less than zero but greater than -1.0, then the result is negative zero.
+    Note that the value of aqua.math.ceil(x) is exactly the value of -aqua.math.floor(-x). 
+
+Example
+    see below
+*/
+
+// --- ceil() ---
+function show_ceil(value) {
+    aqua.console.println("ceil[" + value + "] --> [" + aqua.math.ceil(value) + "]");
+}
+show_ceil(12345);
+show_ceil(6789.12345);

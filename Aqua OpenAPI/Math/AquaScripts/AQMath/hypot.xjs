@@ -1,0 +1,21 @@
+/*
+aqua.math.hypot
+
+Returns sqrt(x^2 + y^2) without intermediate overflow or underflow. 
+   
+Synopsys
+    double aqua.math.hypot(int x, int y)
+
+Description
+    * If either argument is infinite, then the result is positive infinity.
+
+Example
+    see below
+*/
+// --- hypot() ---
+function show_hypot(x, y) {
+    aqua.console.println("hypot[" + x + ", " + y + "] --> [" + aqua.math.hypot(x, y) + "]");
+}
+show_hypot(3, 4);
+show_hypot(3, 3);
+

@@ -1,0 +1,73 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "c:\\tmp\\test\\AQArchive\\";
+
+test_tar_dir();
+test_tar_filesets();
+
+// --- tar directory ---
+function test_tar_dir() {
+
+    var src_base  = test_data_dir + "files\\src_base\\";
+    var dest_base = test_data_dir + "tar\\tar_dest\\";
+
+    // testing error condition
+    exec_tar_dir(src_base, null);
+    // testing error condition
+    exec_tar_dir(null, dest_base + "file.tar");
+    // testing error condition
+    exec_tar_dir(src_base + "test_file.txt", dest_base + "file.tar");
+    // archiving a directory
+    exec_tar_dir(src_base, dest_base + "dir.tar");
+
+}
+function exec_tar_dir(srcDir, tarFile) {
+    try {
+        aqua.console.println("tar dir: from [" + srcDir + "] to [" + tarFile + "]...");
+        aqua.archive.tar(srcDir, tarFile);
+        aqua.console.println("tar dir: done.\n");
+    } catch(ex) {
+        aqua.console.println("tar dir: failed - " + ex.toString() + "\n");
+    }
+}
+
+
+// --- tar filesets ---
+function test_tar_filesets() {
+
+    var src_base1 = test_data_dir + "files\\src_base1\\";
+    var src_base2 = test_data_dir + "files\\src_base2\\";
+    var dest_base = test_data_dir + "tar\\tar_dest\\";
+    var fileset1  = aqua.filesystem.newFileSet();
+    var fileset2  = aqua.filesystem.newFileSet();
+    
+    fileset1.setBaseDir(src_base1);
+    fileset1.setIncludes("**/*");
+    fileset1.setExcludes("**/*.txt");
+
+    fileset2.setBaseDir(src_base2);
+    fileset2.setIncludes("**/*");
+    fileset2.setExcludes("**/*.html");
+
+    var fileset_array = new Array(fileset1, fileset2);
+    
+    // testing error condition
+    exec_tar_filesets(fileset_array, null);
+    // testing error condition
+    exec_tar_filesets(null, dest_base + "filesets.tar");
+    // archiving a single fileset
+    exec_tar_filesets(fileset_array, dest_base + "filesets.tar");
+
+}
+function exec_tar_filesets(filesets, tarFile) {
+    try {
+        aqua.console.println("tar filesets from the directories :");
+        for(var i=0; i < filesets.length; i++){
+           aqua.console.println("\t[" + filesets[i].getBaseDir() + "] ");
+        }
+        aqua.console.println("to [" + tarFile + "]...");
+        aqua.archive.tar(filesets, tarFile);
+        aqua.console.println("tar fileset: done.\n");
+    } catch(ex) {
+        aqua.console.println("tar fileset: failed - " + ex.toString() + "\n");
+    }
+}

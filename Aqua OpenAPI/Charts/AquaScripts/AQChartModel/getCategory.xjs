@@ -1,0 +1,25 @@
+﻿/*
+aqua.chart.chartModel.getCategory
+
+Synopsys
+    Object getCategory(int categoryNumber);
+
+Description
+Returns the specified category object
+
+Example
+    see below
+
+*/
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+model.addSeries("a");
+model.addSeries("b");
+
+model.addCategory("US");
+model.addCategory("UK");
+model.addCategory("France");
+
+aqua.response.write(model.getCategory(2));

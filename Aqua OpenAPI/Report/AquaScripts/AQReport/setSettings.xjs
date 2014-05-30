@@ -1,0 +1,41 @@
+
+// create a report
+var report = aqua.report.newReport();
+
+// get default report settings
+var settings = report.getSettings();
+
+aqua.console.println("Default settings:");
+aqua.console.println("  generate HTML document header: " + settings.isGenerateHtmlDocHeader());
+aqua.console.println("  generate HTML document footer: " + settings.isGenerateHtmlDocFooter());
+
+// create a dataset
+var dataset = aqua.data.newDataSet(["ShipCountry", "Freight"]);
+dataset.addRowWithValues("US", 100);
+dataset.addRowWithValues("UK", 10);
+dataset.addRowWithValues("Japan", 200);
+dataset.addRowWithValues("Canada", 20);
+dataset.addRowWithValues("France", 300);
+dataset.addRowWithValues("Germany", 30);
+
+// add dataset to report without custom settings
+report.addDataSet(dataset, null);
+
+// write report as an HTML document to console
+aqua.console.println("\n");
+aqua.console.println("Report as an HTML document with default settings:");
+aqua.console.println(report.renderHtml());
+
+
+// create a custom settings
+settings = aqua.report.newReportSettings();
+settings.setGenerateHtmlDocHeader(true);
+settings.setGenerateHtmlDocFooter(true);
+
+// bind custom settings to report
+report.setSettings(settings);
+
+// write report as an HTML document to console
+aqua.console.println("\n");
+aqua.console.println("Report as an HTML document with custom settings:");
+aqua.console.println(report.renderHtml());

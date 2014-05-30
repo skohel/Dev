@@ -1,0 +1,38 @@
+﻿var username = aqua.crypto.getSecureField('ftp.username');
+var password = aqua.crypto.getSecureField('ftp.password');
+
+// get instance of filesystem object
+var AQLOCALFS = aqua.filesystem;
+//var AQFS = aqua.net.newFtpFileSystem("ftp://anonymous:qwqw@10.168.2.138/");
+var AQFS = aqua.net.newFtpFileSystem("ftp://10.168.2.138/", username, password);
+//var AQFS = aqua.net.newHadoopFileSystem("hdfs://10.168.6.10:54310");
+
+test_copyFromLocalFileSets();
+
+//--- copy files specified in a fileset to a directory ---
+function test_copyFromLocalFileSets() {
+
+    var fileset1 = AQFS.newFileSet();
+    
+    fileset1.setBaseDir("C:\\Documents and Settings\\Administrator\\attachments\\")
+    fileset1.setIncludes("**");
+    
+    var filesets = new Array(fileset1);
+    
+    exec_copyFromLocalFileSets(filesets, "/files/");
+
+}
+
+function exec_copyFromLocalFileSets(filesets, destDir) {
+    try {
+        aqua.console.println("copyFromLocalFileSets: copying " );
+        for (var i=0; i<filesets.length; i++){
+           aqua.console.println("["+ (filesets[i] == null? 'null' : filesets[i].getBaseDir()) + "]");
+        }
+        aqua.console.println(" to [" + destDir + "]...");
+        AQFS.copyFromLocalFileSets(filesets, destDir);
+        aqua.console.println("copyFromLocalFileSets done.");
+    } catch(ex) {
+        aqua.console.println("copyFromLocalFileSets failed - " + ex.toString());
+    }
+}

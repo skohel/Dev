@@ -1,0 +1,46 @@
+﻿/*
+aqua.chart.properties.setStackedPercent
+
+Synopsys
+    void setStackedPercent(boolean isPercent);
+
+Description
+Set True if stacked charts should render each series value as a percentage of the total value for all series
+
+Example
+    see below
+
+*/
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+model.addSeries("a");
+model.addSeries("b");
+
+model.addCategory("US");
+model.addCategory("UK");
+model.addCategory("France");
+
+model.setValue(0, 0, 100);
+model.setValue(0, 1, 200);
+model.setValue(0, 2, 300);
+model.setValue(1, 0, 10);
+model.setValue(1, 1, 20);
+model.setValue(1, 2, 30);
+
+chart.getProperties().setChartTypeStacked();
+chart.getProperties().setMergeAxis(true);
+
+chart.getProperties().setStackedPercent(true);
+
+var value = chart.getProperties().isStackedPercent();
+aqua.response.write('Is Stacked Percent Chart: ').write(value).write("<p>");
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

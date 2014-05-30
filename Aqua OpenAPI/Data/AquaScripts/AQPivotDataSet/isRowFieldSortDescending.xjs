@@ -1,0 +1,20 @@
+﻿
+// create pivot data set
+var pivotTable = aqua.data.newPivotDataSet();
+
+// data field name
+var fieldName = "ShipCountry";
+
+// check sort order
+var isDescending = pivotTable.isRowFieldSortDescending(fieldName);
+aqua.console.println("--- before setting sort order ---");
+aqua.console.println("row field sort descending = " + isDescending);
+
+// set sort order
+pivotTable.setRowFieldSortDescending(fieldName);
+
+// check sort order
+isDescending = pivotTable.isRowFieldSortDescending(fieldName);
+aqua.console.println("--- after setting sort order ---");
+aqua.console.println("row field sort descending = " + isDescending);
+

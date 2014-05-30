@@ -1,0 +1,24 @@
+
+
+var rawData=new Array();
+var smoothData = new Array();
+var noise = new Array();
+
+
+//generate noisy data
+for(i=0;i<30;i++){
+   //rawx[i]=(i+1)/10.0;
+noise[i]=2*Math.random()-1;
+   rawData[i]=2*Math.pow(i/10,1.5)+10+noise[i]/.1;
+   
+}
+
+//perform smoothing
+smoothData=aqua.math.curve.smooth(rawData,5);
+
+
+aqua.console.println("Raw Data, Smoothed Data");
+
+for(i=0;i<30;i++){
+aqua.console.println(rawData[i] +", " + smoothData[i]);
+}

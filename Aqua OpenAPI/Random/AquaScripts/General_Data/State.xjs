@@ -1,0 +1,21 @@
+/*
+
+Description of method functionality
+
+Synopsys
+    [Return Data Type] functionName()  
+
+Description
+    Description of functionality
+
+Example
+    //
+
+
+*/
+
+print("Generate a random state name:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextState();  // seems that this method only returns a state name of the 50 U.S. states???
+    print("\t"+x);
+}

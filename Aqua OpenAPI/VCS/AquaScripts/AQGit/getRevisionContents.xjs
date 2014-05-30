@@ -1,0 +1,18 @@
+﻿var gitWS    = aqua.vcs.newGit();
+
+try {
+// set the git workspace in your local machine
+gitWS.setWorkspace("c://git_clone");
+
+bytes = gitWS.getRevisionContents("c://git_clone/Rfizzy.gemspec","c4123bfb54948e2df26169f30c07e64ac96f2620");
+for (var i=0; i <  bytes.length; i++)
+{
+   // print the binary revision contents
+   aqua.console.println(bytes[i]);
+}
+}
+
+catch(ex) {
+// print if failure in get revision
+aqua.console.println("Error in get revision..." +ex.toString() + "\n");
+}

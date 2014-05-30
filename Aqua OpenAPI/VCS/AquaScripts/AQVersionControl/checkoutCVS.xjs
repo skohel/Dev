@@ -1,0 +1,46 @@
+﻿var url      = ":pserver:10.168.2.88:/myrepo";
+var folder   = "/tmp/CVSTEST/";
+var module   = "cvstest";
+var username = "cvs.username";
+var password = "cvs.password";
+var revision = null;
+var newFile  = folder + "newfile3.txt";
+var file     = folder + "aquafold.txt";
+var ws       = aqua.vcs.checkoutCVS(folder, url, module, revision, aqua.crypto.getSecureField(username), aqua.crypto.getSecureField(password), true);
+
+ws.setVerbose(true);
+ws.setUsername(aqua.crypto.getSecureField(username));
+ws.setPassword(aqua.crypto.getSecureField(password));
+
+// getHistory
+var history = ws.getHistory(folder);
+for(i = 0; i < history.length; i++) {
+    aqua.console.println(history[i]);
+}
+aqua.console.println("\n");
+
+// getProvider
+aqua.console.println("The Provider is : " +  ws.getProvider() + "\n");
+
+// getRevision
+aqua.console.println("The Revision of the file is : " +  ws.getRevision(file) + "\n");
+
+// getRevisionContentsAsString
+aqua.console.println("Content of file [" + file + "] is [" + ws.getRevisionContentsAsString(file, ws.getRevision(file), "UTF-8") + "]\n");
+
+// isVerbose
+aqua.console.println("isVerbose? [" + ws.isVerbose() + "]\n");
+
+// update 
+aqua.console.println("calling update: [" + folder + "]");
+ws.update(folder);
+
+// commit - new file
+aqua.console.println("commiting new file: [" + newFile + "]");
+aqua.filesystem.touch(newFile, null);
+ws.commit(newFile, "Testing commit through API");
+
+// commit - existing file
+aqua.filesystem.touch(file, null);
+aqua.console.println("commiting file: [" + file + "]");
+ws.commit(file, "test");

@@ -1,0 +1,48 @@
+﻿/*
+aqua.chart.properties.isView2D
+
+Synopsys
+    boolean isView2D();
+
+Description
+Return True if the chart is rendered in 2D, False if rendered in 3D
+
+Example
+    see below
+
+*/
+
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+model.addSeries("a");
+model.addSeries("b");
+
+model.addCategory("US");
+model.addCategory("UK");
+model.addCategory("France");
+
+model.setValue(0, 0, 100);
+model.setValue(0, 1, 200);
+model.setValue(0, 2, 300);
+model.setValue(1, 0, 10);
+model.setValue(1, 1, 20);
+model.setValue(1, 2, 30);
+
+chart.getProperties().setChartTypeBar();
+chart.getProperties().setMergeAxis(true);
+
+chart.getProperties().setView2D(true);
+
+var value = chart.getProperties().isView2D();
+aqua.response.write('Is 2D Chart View: ').write(value).write("<p>");
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');
+

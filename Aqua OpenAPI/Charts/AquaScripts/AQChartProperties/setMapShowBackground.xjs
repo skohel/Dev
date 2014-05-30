@@ -1,0 +1,44 @@
+﻿/*
+aqua.chart.properties.setMapShowBackground
+
+Synopsys
+    void setMapShowBackground(boolean show);
+
+Description
+Set True if the map background should be displayed
+
+Example
+    see below
+
+*/
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+model.addSeries("a");
+model.addSeries("b");
+
+model.addCategory("US");
+model.addCategory("UK");
+model.addCategory("France");
+
+model.setValue(0, 0, 50);
+model.setValue(0, 1, 150);
+model.setValue(0, 2, 250);
+
+chart.getProperties().setChartTypeMap();
+
+chart.getProperties().setMapRange("0, 100, 200, 300");
+chart.getProperties().setMapRangeColors("green, blue, red");
+chart.getProperties().setMapShowBackground(true);
+
+var value = chart.getProperties().isMapShowBackground();
+aqua.response.write('Show Map Background: ').write(value).write("<p>");
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

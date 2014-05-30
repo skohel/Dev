@@ -1,0 +1,68 @@
+﻿//------------------------------------------------------------------------------
+// Class:  
+//      AQDataRow
+// Method:
+//      set()
+//
+// Synopsis:
+//      set()
+//
+// Description
+//      To set the data in the specified column.
+//    
+// Parameters
+//      int    - The column index.
+//      object - The new value.
+//
+// Throws
+//      AQException - if the name of the column cannot be found.s
+//
+// Return
+//      None.
+//
+// Example
+//      This example executes a query, get 1 row of data, get a list of column
+//      names, prints out the original value, call set() on every column and print
+//      out the the new value.
+//------------------------------------------------------------------------------
+var server      = "MySql 6.0 - 10.168.1.38 - demo";
+var db          = "mysql";
+var schema      = null;
+var sql         = "select * from user";
+
+var conn = aqua.project.getServerConnection(server);
+conn.connect();
+conn.changeDatabase(db);
+
+var resultSet = conn.executeQuery(sql);
+
+var columnStructure = resultSet.getColumnStructure();
+var columnNames     = columnStructure.getColumnNames();
+var columnCount     = columnStructure.getColumnCount();
+
+// getNextRow() returns an AQDataRow object
+resultSet.next();
+var dataRow = resultSet.getRow()
+
+if (dataRow != null){
+
+    aqua.console.println("Printing original value");
+    for (var i=0; i<columnCount; i++){
+        aqua.console.println("columnName: [" + columnNames[i] + "]   get(" + i + "): [" + dataRow.get(i) + "]");
+    }
+    
+    for (var i=0; i<columnCount; i++){
+        // calling set to set value on every data column.
+        dataRow.set(i, "1");
+    }
+    aqua.console.println("");
+
+    aqua.console.println("Printing new value");
+    for (var i=0; i<columnCount; i++){
+        aqua.console.println("columnName: [" + columnNames[i] + "]   get(" + i + "): [" + dataRow.get(i) + "]");
+    }
+
+}
+
+resultSet.close();
+conn.disconnect();

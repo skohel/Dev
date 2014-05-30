@@ -1,0 +1,46 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "c:/tmp/test/AQFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.filesystem;
+
+test_deleteFileSets();
+
+// --- delete multiple files or directories ---
+function test_deleteFileSets(){
+
+    var src_base = test_data_dir + "files/src_base/";
+    var dest_base = test_data_dir + "copy/copy_dest/fileset/";
+    var fileset1 = AQFS.newFileSet();
+    var fileset2 = AQFS.newFileSet();
+    
+    fileset1.setBaseDir(test_data_dir + "files/src_base1/")
+    fileset1.setIncludes("**/*");
+    fileset1.setExcludes("**/*.html");
+    
+    fileset2.setBaseDir(test_data_dir + "files/src_base2/")
+    fileset2.setIncludes("**/*");
+    fileset2.setExcludes("**/*.txt");
+    
+    var filesets = new Array(fileset1, fileset2);
+    
+    // testing error condition - source file is required
+    exec_deleteFileSets(null);
+    // this should work
+    exec_deleteFileSets(filesets);
+    
+}
+
+function exec_deleteFileSets(filesets){
+    try {
+        aqua.console.println("deletefileSets: deleting files and directory in " );
+        for (var i=0; i<filesets.length; i++){
+           aqua.console.println("["+ (filesets[i] == null? 'null' : filesets[i].getBaseDir()) + "]");
+        }
+        AQFS.deleteFileSets(filesets);
+        aqua.console.println("deletefileSets done.");
+    }
+    catch(ex) {
+        aqua.console.println("deletefileSets failed - " + ex.toString());
+    }
+}

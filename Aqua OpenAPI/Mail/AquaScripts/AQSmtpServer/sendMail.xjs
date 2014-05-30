@@ -1,0 +1,40 @@
+
+// get default SMTP server
+var defaultServer = aqua.mail.getDefaultSmtpServer();
+
+// create a new server
+var smtpServer = aqua.mail.newSmtpServer();
+
+// configure newly created server
+smtpServer.setHost(defaultServer.getHost());
+smtpServer.setPort(defaultServer.getPort());
+smtpServer.setUseAuthentication(defaultServer.isUseAuthentication());
+smtpServer.setUseSSL(defaultServer.isUseSSL());
+var userName = aqua.console.readLine("Please enter SMTP server user account: ");
+var password = aqua.console.readPassword("Please enter SMTP server user password: ");
+smtpServer.setUserName(userName);
+smtpServer.setPassword(password);
+
+// provide a valid to-address below to enable sending email via new SMTP server
+var toAddress = aqua.console.readLine("Please enter mail-to address: ");
+toAddress = (toAddress == null ? "" : toAddress.trim());
+if ( toAddress.length() > 0 ) {
+    email = aqua.mail.newMessage();
+    email.setFrom("UnitTest");
+    email.addToRecipient(toAddress);
+    email.setSubject("AQSmtpServer: sendMail");
+    email.setText("email test");
+
+    // send email
+    aqua.console.println("Sending mail via SMTP server...");
+    try {
+        smtpServer.sendMail(email);
+        aqua.console.println("Email successfully sent.");
+    } catch(ex) {
+        aqua.console.println("Failed to send email: " + ex.toString());
+    }
+}
+
+// done with test
+aqua.console.println("DONE");
+

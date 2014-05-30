@@ -1,0 +1,26 @@
+﻿
+var smtpServer = aqua.mail.newSmtpServer();
+smtpServer.setHost('yourhost');
+smtpServer.setPort(465);
+smtpServer.setUserName('your-name@your-company.com');  // replace this with your email-account name
+smtpServer.setPassword('your-password');           // replace this with your email-account password
+smtpServer.setUseSSL(true);
+smtpServer.setUseAuthentication(true);
+
+var hadoopFS = aqua.net.newHadoopDistributedFileSystem("hdfs://localhost:9100");  // replace this with the Hadoop file system name 
+var hadoopFile = "/a-pathname-to-a-dadoop-file";   // replace this with a Hadoop file name
+var attachmentName = "test.txt";
+
+var email = aqua.mail.newMessage();
+email.setFrom("Sender");
+email.addToRecipient("your-name@service.com");     // replace this with your another email-account name
+email.setSubject("Hadoop file attachment");
+email.addHadoopFileAttachment(hadoopFS, hadoopFile, attachmentName);
+
+try {
+    smtpServer.sendMail(email);
+
+    aqua.console.println("Email successfully delivered.");
+} catch(error) {
+    aqua.console.println("Failed to deliver email: " + error.toString());
+}

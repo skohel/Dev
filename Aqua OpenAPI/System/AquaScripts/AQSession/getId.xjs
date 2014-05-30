@@ -1,0 +1,3 @@
+﻿var session = aqua.request.getSession();
+
+aqua.console.println("session.getId(): [" + session.getId() + "]");

@@ -1,0 +1,26 @@
+﻿var TextFile = "/text.out";
+var ds       = aqua.data.newDataSet(["country", "state", "county", "city"]);
+
+// fill dataset row with values
+var row = ds.addRow();
+row.set(0, null);
+row.set(1, "California");
+row.set(2, null);
+row.set(3, "Sunnyvale");
+
+var writer = aqua.io.newTextWriter();
+writer.setCellDelimiter("\t");
+writer.setFile(TextFile);
+writer.setNullString(0, "United States");
+
+writer.write(ds);
+writer.close();
+readFile();
+
+
+function readFile() {
+    var reader = aqua.io.newTextReader();
+    reader.setFile(TextFile);
+    print(reader.readNextRow());
+    print();
+}

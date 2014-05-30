@@ -1,0 +1,17 @@
+﻿
+//
+// This script demonstrates how to determine whether to display the report time.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// check whether to display report time
+var flag = settings.isShowReportTime();
+aqua.console.println("Default setting: report time is " + (flag ? "" : "not ") + "displayed by default.");
+
+
+// do not display report time
+settings.setShowReportTime(false);
+flag = settings.isShowReportTime();
+aqua.console.println("Custom setting: report time is " + (flag ? "" : "not ") + "displayed.");

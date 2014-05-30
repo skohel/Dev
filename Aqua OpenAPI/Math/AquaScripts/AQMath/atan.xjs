@@ -1,0 +1,22 @@
+/*
+aqua.math.atan
+
+Get the arc tangent of an angle, in the range of -pi/2 through pi/2. Special cases: 
+
+Synopsys
+    double aqua.math.atan(double);
+
+Description
+        * If the argument is NaN, then the result is NaN.
+        * If the argument is zero, then the result is a zero with the same sign as the argument.
+        The computed result must be within 1 ulp of the exact result. Results must be semi-monotonic. 
+
+Example
+    see below
+*/
+
+aqua.console.println("atan[-1] --> [" + aqua.math.atan(-1) + "]");
+aqua.console.println("atan[-0.5] --> [" + aqua.math.atan(-0.5) + "]");
+aqua.console.println("atan[" + 0 + "] --> [" + aqua.math.atan(0) + "]");
+aqua.console.println("atan[0.5] --> [" + aqua.math.atan(0.5) + "]");
+aqua.console.println("atan[1] --> [" + aqua.math.atan(1) + "]");

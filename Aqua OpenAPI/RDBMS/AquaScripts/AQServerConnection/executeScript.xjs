@@ -1,0 +1,21 @@
+﻿var server = "MySql 6.0 - 10.168.1.38 - demo";
+var db     = "mysql";
+var schema = null;
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+conn.changeDatabase(db);
+
+// 2 SQL statements in this SQL script.  statements are separated by the "GO"
+// statement.
+var sql = "select * from user limit 1\n";
+sql += "GO\n";
+sql += "select * from proc limit 1\n";
+
+var scriptResult = conn.executeScript(sql);
+
+var textResults = scriptResult.getTextResults();
+
+aqua.console.println("The text result of the execution of the script:   [" + textResults + "]");
+
+conn.disconnect();

@@ -1,0 +1,5 @@
+﻿/*
+This is a sample script which shows how to run an external AquaScript from the current AquaScript.
+*/
+
+aqua.system.runScript("AQSystem/aquafold.xjs");

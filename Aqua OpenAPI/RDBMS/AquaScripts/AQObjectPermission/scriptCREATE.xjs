@@ -1,0 +1,32 @@
+﻿var server = "DB2 LUW 9.7 - 10.168.11.57 - SAMPLE - demo";
+var db     = "SAMPLE";
+var schema = "demo";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+var views    = metadata.extractViews(db, schema);
+
+for(var i=0; i<views.length; i++){
+
+    var obj = metadata.extractView(db, schema, views[i].getName());
+
+    var permissions = obj.extractPermissions();
+
+    for (var j=0; j<permissions.length; j++){
+
+        var permission = permissions[j];
+
+        aqua.console.println("CREATE PERMISSION FOR VIEW:[" + permission.getName() + "]");
+        try {
+            aqua.console.println("Script CREATE:             [" + permission.scriptCREATE() + "]");
+        }
+        catch(ex){
+            aqua.console.println("EXCEPTION:                 [" + ex.toString() + "]");
+        }
+        aqua.console.println("");
+        aqua.console.println("");
+    }
+}
+
+conn.disconnect();

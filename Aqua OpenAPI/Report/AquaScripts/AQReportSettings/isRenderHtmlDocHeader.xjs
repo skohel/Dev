@@ -1,0 +1,16 @@
+
+// create a report settings
+var settings = aqua.report.newReportSettings();
+
+// get default settings
+var flag = settings.isGenerateHtmlDocHeader();
+
+aqua.console.println("Default setting:");
+aqua.console.println("  generate HTML document header = " + flag);
+
+// alter default settings
+settings.setGenerateHtmlDocHeader((! flag));
+flag = settings.isGenerateHtmlDocHeader();
+
+aqua.console.println("Default setting altered:");
+aqua.console.println("  generate HTML document header = " + flag);

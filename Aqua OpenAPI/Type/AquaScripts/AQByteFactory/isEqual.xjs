@@ -1,0 +1,12 @@
+﻿var factory  = aqua.type.getByte();
+
+var value1   = 64;
+var value2   = 64;
+
+aqua.console.println("Is [" + value1 + "] equal to [" + value2 + "]? " + factory.isEqual(value1, value2));
+
+value2 = 65;
+aqua.console.println("Is [" + value1 + "] equal to [" + value2 + "]? " + factory.isEqual(value1, value2));
+
+value2 = 512;
+aqua.console.println("Is [" + value1 + "] equal to [" + value2 + "]? " + factory.isEqual(value1, value2));

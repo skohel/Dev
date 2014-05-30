@@ -1,0 +1,40 @@
+﻿
+//
+// This script demonstrates how to get/set the header for a column by column index or by column name.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// get header by index, index is zero based
+var index = 0;
+var header = settings.getColumnHeader(index);
+if ( header == null ) {
+    aqua.console.println("No custom header found at index " + index + ".");
+} else {
+    aqua.console.println("The custom header at index " + index + " is '" + header + "'.");
+}
+
+// set header by index, index is zero based
+settings.setColumnHeader(index, "Custom-Header-By-Index");
+
+// get new header by index
+header = settings.getColumnHeader(index);
+aqua.console.println("The header at index " + index + " is currently set to '" + header + "'.");
+
+
+// get header by name
+var name = "ColumnName";
+header = settings.getColumnHeader(name);
+if ( header == null ) {
+    aqua.console.println("No custom header found for column '" + name + "'.");
+} else {
+    aqua.console.println("The custom header for column '" + name + "' is '" + header + "'.");
+}
+
+// set header by name
+settings.setColumnHeader(name, "Custom-Header-By-Name");
+
+// get new header by name
+header = settings.getColumnHeader(name);
+aqua.console.println("The header for column '" + name + "' is currently set to '" + header + "'.");

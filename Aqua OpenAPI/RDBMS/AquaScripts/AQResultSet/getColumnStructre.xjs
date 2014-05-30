@@ -1,0 +1,25 @@
+﻿var server      = "MySql 6.0 - 10.168.1.38 - demo";
+var db          = "mysql";
+var schema      = null;
+var sql         = "select * from user";
+
+var conn = aqua.project.getServerConnection(server);
+conn.connect();
+conn.changeDatabase(db);
+
+var resultSet = conn.executeQuery(sql);
+
+var obj = resultSet.getColumnStructure();
+
+aqua.console.println("AQColumnStructure:");
+for (var i=0; i<obj.getColumnCount(); i++){
+    aqua.console.println("AQColumnStructure.getColumn(" + i + ")                                [" + obj.getColumn(i) + "]");
+    aqua.console.println("AQColumnStructure.getColumnName(" + i + ")                            [" + obj.getColumnName(i) + "]");
+    aqua.console.println("AQColumnStructure.lookupColumnIndex(" + obj.getColumnName(i) + ")     [" + obj.lookupColumnIndex(obj.getColumnName(i)) + "]");
+
+    aqua.console.println("");
+    aqua.console.println("");
+}
+
+resultSet.close();
+conn.disconnect();

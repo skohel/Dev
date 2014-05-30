@@ -1,0 +1,58 @@
+﻿//------------------------------------------------------------------------------
+// Class:  
+//      CoreHadoopFileSystem
+// Method:
+//      lastModified()
+//
+// Synopsis:
+//      lastModified()
+//
+// Description
+//      Returns the time that the file denoted by source was last modified.
+//    
+// Parameters
+//      string - The name of the file; required.
+//
+// Throws
+//      Exception - on error
+//
+// Return
+//      A string value representing the time the file was last
+//      modified, display in default time zone with the given system
+//      locale. or null if the file does not exist or if an I/O error
+//      occurs
+//
+// Example
+//      See below.
+//------------------------------------------------------------------------------
+// all test data will be created under this directory
+var fs_data_dir = "/test/AQHadoopFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.net.newHadoopDistributedFileSystem("hdfs://localhost:9100");
+
+/* --- lastModified --- */
+
+test_lastModified();
+
+// --- test lastModified ---
+
+function test_lastModified(){
+
+   var src_file = fs_data_dir + "files/license.txt";
+   var file_doesnt_exist = fs_data_dir + "file_doesnt_exist";
+
+   exec_lastModified(src_file);
+   exec_lastModified(file_doesnt_exist);
+   exec_lastModified(fs_data_dir);
+ 
+}
+
+function exec_lastModified(src_file) {
+    try {
+        aqua.console.println("lastModified: [" + src_file + "] on " + AQFS.lastModified(src_file));
+        aqua.console.println("lastModified done");
+    } catch(ex) {
+        aqua.console.println("lastModified failed - " + ex.toString());
+    }
+}

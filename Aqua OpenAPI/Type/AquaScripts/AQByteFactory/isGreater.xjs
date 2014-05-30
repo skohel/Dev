@@ -1,0 +1,12 @@
+﻿var factory  = aqua.type.getByte();
+
+var value1   = 64;
+var value2   = 63;
+
+aqua.console.println("Is [" + value1 + "] greater then [" + value2 + "]? " + factory.isGreater(value1, value2));
+
+value2 = 64;
+aqua.console.println("Is [" + value1 + "] greater then [" + value2 + "]? " + factory.isGreater(value1, value2));
+
+value2 = 128;
+aqua.console.println("Is [" + value1 + "] greater then [" + value2 + "]? " + factory.isGreater(value1, value2));

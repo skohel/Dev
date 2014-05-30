@@ -1,0 +1,7 @@
+﻿var comp1  = aqua.compare.newComparator();
+var result = comp1.compareText("AAA\nBBB\nCCC","AAA\nCCC");
+var diffi  = result.getChanges();
+
+for (var i=0; i < diffi.length; i++) {
+    aqua.console.println("Right side --> [" + diffi[i].getRight() +"]");
+}

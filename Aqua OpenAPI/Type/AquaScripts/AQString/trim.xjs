@@ -1,0 +1,5 @@
+﻿var value   = " 111111 ";
+var factory = aqua.type.getString();
+
+aqua.console.println("Before trim: [" + value + "]");
+aqua.console.println("After trim:  [" + factory.trim(value) + "]");

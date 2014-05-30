@@ -1,0 +1,19 @@
+﻿
+//
+// This script demonstrates how to get/set the maximum column width when saving a data set to an Excel file.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// get default width
+var width = settings.getMaxColumnWidth();
+aqua.console.println("The default maximum column width is " + width + ".");
+
+// customize maximum column width
+settings.setMaxColumnWidth(27);
+
+// get current width
+var width = settings.getMaxColumnWidth();
+aqua.console.println("The maximum column width is currently set to " + width + ".");
+

@@ -1,0 +1,7 @@
+﻿var folder = "/tmp/SVNTEST";
+var file   = folder + "/test.txt";
+var svn    = aqua.vcs.getWorkspaceSubversion(folder);
+svn.setPassword(aqua.crypto.getSecureField("svn.password"));
+svn.setUsername(aqua.crypto.getSecureField("svn.username"));
+
+aqua.console.println("Is verbose [" + svn.isVerbose() + "]");

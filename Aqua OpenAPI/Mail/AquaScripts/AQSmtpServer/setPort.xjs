@@ -1,0 +1,34 @@
+
+// utility function - abort execution
+function abort(api) {
+    aqua.console.println("!!! expected exception is not generated on execution of [" + api + "]");
+    aqua.exit();
+}
+
+// utility function - write expected exception to console
+function showExpectedError(ex) {
+    aqua.console.println("... expected exception received - " + ex.name + " - " + ex.message);
+}
+
+
+// create a new server
+var smtpServer = aqua.mail.newSmtpServer();
+
+// test invalid arguments
+try { smtpServer.setPort(-1); abort('setPort(-1)'); } catch(ex) { showExpectedError(ex); }
+try { smtpServer.setPort(0); abort('setPort(0)'); } catch(ex) { showExpectedError(ex); }
+
+// set port
+var port = 108;
+smtpServer.setPort(port);
+
+// validate port
+var portNumber = smtpServer.getPort();
+if ( portNumber != port ) {
+    throw "Unexpected port '" + portNumber + "' retrieved, expected value is '" + port + "'";
+}
+
+
+// done with test
+aqua.console.println("DONE");
+

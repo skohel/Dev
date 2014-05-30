@@ -1,0 +1,14 @@
+﻿importPackage(java.io);
+
+var c       = aqua.compare.newFileComparator();
+var folder1 = new File("/tmp/compare/folder1");
+var folder2 = new File("/tmp/compare/folder2");
+var result  = c.compare(folder1, folder2, true);
+result.addSortingBySizeDescending();
+result.sort();
+
+aqua.console.println("files that were unchanged");
+var files = result.getUnchangedFiles();
+for (var i=0; i < files.length; i++) {
+    aqua.console.println(files[i].getName());
+}

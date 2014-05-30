@@ -1,0 +1,318 @@
+
+// the path in the local "Servers" folder
+var serverPath = "SQL Server 2000 - 54";
+// the database in which we are interested
+var databaseName = "Northwind";
+
+// open connection to server
+var serverConnection = aqua.project.getServerConnection(serverPath);
+
+// establish SQL connection
+serverConnection.connect();
+
+// change database
+serverConnection.changeDatabase(databaseName);
+
+// execute query
+var dataSet = serverConnection.executeSnapshot("select * from orders;");
+// var dataGrid = dataSet.getFormattedGrid(dataSet.getRowCount());
+// aqua.console.print(dataGrid);
+
+// create pivot data set
+var pivotDataSet = aqua.data.newPivotDataSet();
+
+// define pivot row fields
+pivotDataSet.addRowField(" ShipCountry  ");
+pivotDataSet.addRowField("ShipCity");
+pivotDataSet.addRowField("ShipName");
+pivotDataSet.clearRowFields();
+pivotDataSet.addRowField("ShipCountry");
+// pivotDataSet.addRowField("ShipName");
+// pivotDataSet.addRowField("ShipVia");
+// pivotDataSet.addRowField("ShippedDate");
+
+// define pivot column fields
+pivotDataSet.addColumnField("OrderDate");
+pivotDataSet.addColumnField("ShipRegion");
+pivotDataSet.clearColumnFields();
+pivotDataSet.addColumnField("ShipRegion");
+// pivotDataSet.addColumnField("ShipCity");
+// pivotDataSet.addColumnField("OrderDate");
+
+// define pivot data fields
+pivotDataSet.addDataField("Freight");
+pivotDataSet.addDataField("EmployeeID");
+pivotDataSet.clearDataFields();
+pivotDataSet.addDataField("Freight");
+// pivotDataSet.addDataField("EmployeeID");
+// pivotDataSet.addDataField("OrderID");
+// pivotDataSet.addDataField("CustomerID");
+
+// set row field sort order
+pivotDataSet.setRowFieldSortDescending("ShipCountry");
+pivotDataSet.clearRowFieldSortOrderSettings();
+// pivotDataSet.setRowFieldSortAscending("ShipCountry");
+// pivotDataSet.setRowFieldSortDescending("ShipCountry");
+// pivotDataSet.setRowFieldSortNone("ShipCountry");
+// pivotDataSet.setRowFieldSortAscending("ShipName");
+pivotDataSet.setRowFieldSortDescending("ShipName");
+// pivotDataSet.setRowFieldSortNone("ShipName");
+
+// set column field sort order
+pivotDataSet.setColumnFieldSortDescending("ShipRegion");
+pivotDataSet.clearColumnFieldSortOrderSettings();
+// pivotDataSet.setColumnFieldSortAscending("ShipRegion");
+pivotDataSet.setColumnFieldSortDescending("ShipRegion");
+// pivotDataSet.setColumnFieldSortNone("ShipRegion");
+// pivotDataSet.setColumnFieldSortAscending("ShipCity");
+// pivotDataSet.setColumnFieldSortDescending("ShipCity");
+pivotDataSet.setColumnFieldSortNone("ShipCity");
+
+// --- xxxDataCellxxx APIs are no longer accessible by application ---
+// set data cell sort order
+// pivotDataSet.sortDataCell(0, 0, false);
+// pivotDataSet.clearDataCellSortSettings();
+// pivotDataSet.sortDataCell(0, 0, true);
+
+// set data column sort order
+pivotDataSet.sortDataColumnDescending(0);
+pivotDataSet.clearDataColumnSortSettings();
+// pivotDataSet.sortDataColumnAscending(0);
+// pivotDataSet.sortDataColumnDescending(0);
+
+// set grand total column sort order
+pivotDataSet.sortGrandTotalColumnDescending("");
+pivotDataSet.clearGrandTotalColumnSortSettings();
+// pivotDataSet.sortGrandTotalColumnAscending("");
+// pivotDataSet.sortGrandTotalColumnDescending("");
+// pivotDataSet.sortGrandTotalColumnAscending("Freight");
+// pivotDataSet.sortGrandTotalColumnAscending("EmployeeID");
+// pivotDataSet.sortGrandTotalColumnDescending("EmployeeID");
+pivotDataSet.sortGrandTotalColumnDescending("Freight");
+
+// override grand total column sort settings
+// pivotDataSet.sortDataCell(0, 2, false);
+// pivotDataSet.clearDataCellSortSettings();
+// pivotDataSet.sortDataColumnDescending(3);
+// pivotDataSet.sortDataColumnAscending(3);
+// pivotDataSet.clearDataColumnSortSettings();
+
+// override data column and grand total column settings
+// pivotDataSet.setRowFieldSortAscending("ShipCountry");
+// pivotDataSet.setRowFieldSortDescending("ShipCountry");
+// pivotDataSet.setRowFieldSortNone("ShipCountry");
+// pivotDataSet.setRowFieldSortAscending("ShipName");
+// pivotDataSet.setRowFieldSortDescending("ShipName");
+// pivotDataSet.setRowFieldSortNone("ShipName");
+
+// set data field summary type
+pivotDataSet.setDataFieldSummaryMean("Freight");
+pivotDataSet.clearDataFieldSummaryTypeSettings();
+// pivotDataSet.setDataFieldSummaryCount("Freight");
+// pivotDataSet.setDataFieldSummaryMax("Freight");
+// pivotDataSet.setDataFieldSummaryMean("Freight");
+// pivotDataSet.setDataFieldSummaryMin("Freight");
+// pivotDataSet.setDataFieldSummaryStdDev("Freight");
+// pivotDataSet.setDataFieldSummarySum("Freight");
+// pivotDataSet.setDataFieldSummaryVar("Freight");
+
+// set application data
+pivotDataSet.setDataSet(dataSet);
+
+// create a report
+var report = aqua.report.newReport();
+
+// create a report settings to customize report's look and feel
+var settings = aqua.report.newReportDataSetSettings();
+settings.setTitle("Report : Pivot Data Set &<Demo>&");
+settings.setRowNumberHeader("<Row #>");
+// settings.setShowRowNumber(false);
+// settings.setShowHeader(false);
+// settings.setShowHeaderDivider(false);
+// settings.setFooter("Report: Footer goes here if defined.");
+
+// set custom headers
+settings.setColumnHeader("ShipCountry", "Ship Country");
+settings.setColumnHeader("ShipRegion", "Ship Region");
+settings.setColumnHeader("Freight", "-Freight-");
+
+// set hidden columns; note that hidden columns only affect grid results but not pivot results
+settings.hideColumn("ShipRegion");
+
+// format output
+settings.setNumericFormat("#,##0.##");
+// settings.setNumericFormatNone();
+// settings.setPercentFormat("#0.#########%");
+settings.setColumnDateTimeFormat("ShippedDate", "yy-MM-dd E");
+settings.setColumnDateTimeFormat(3, "yyyy-MM-dd");  // OrderDate
+settings.setColumnNumericFormat("Freight", "#,##0.00");
+settings.setColumnNumericFormat("OrderID", "#,##0");
+settings.setColumnNumericFormat("EmployeeID", "[#0]");
+// these will take effect only if no data fields defined, empty string is used as column name
+// settings.setColumnNumericFormat("", "ND(#,##0)");
+// settings.setColumnNumericFormatNone("");
+
+// calculate pivot data
+pivotDataSet.calculateGrid();
+
+// chart
+var chart = aqua.chart.newChart();
+chart.setDataSource(pivotDataSet);
+chart.getProperties().setImageHeight(400);
+chart.getProperties().setImageWidth(600);
+
+// add pivot data set and its settings to report
+// report.addDataSet(pivotDataSet, settings);
+// report.addDataSet(pivotDataSet, settings, null);
+report.addDataSet(pivotDataSet, settings, chart);
+
+// display raw data set in the report as well
+// report.addDataSet(dataSet, null);
+// report.addDataSet(dataSet, settings);
+
+// generate a plain text report
+aqua.console.print(report.renderText());
+
+// ----- Column Name Index Map -----
+//   0 - OrderID
+//   1 - CustomerID
+//   2 - EmployeeID
+//   3 - OrderDate
+//   4 - RequiredDate
+//   5 - ShippedDate
+//   6 - ShipVia
+//   7 - Freight
+//   8 - ShipName
+//   9 - ShipAddress
+//  10 - ShipCity
+//  11 - ShipRegion
+//  12 - ShipPostalCode
+//  13 - ShipCountry
+
+// ===== define header URL links =====
+var headerURI = "http://www.yahoo.com?";
+// --- row field headers
+var urlHeaderShipCountry = headerURI + "ty=fn&n=shipCountry";
+var urlHeaderShipName = headerURI + "ty=fn&n=shipName";
+var urlHeaderShipVia = headerURI + "ty=fn&n=shipVia";
+settings.addHtmlHeaderLink(6, urlHeaderShipVia);
+settings.addHtmlHeaderLink("ShipName", urlHeaderShipName);
+settings.addHtmlHeaderLink("ShipCountry", urlHeaderShipCountry);
+// --- column field headers
+var urlHeaderShipRegion = headerURI + "ty=fn&n=shipRegion";
+var urlHeaderShipCity = headerURI + "ty=fn&n=shipCity";
+settings.addHtmlHeaderLinkByNames(new Array("ShipRegion", "ShipCity"), new Array(urlHeaderShipRegion, urlHeaderShipCity));
+// settings.addHtmlHeaderLink("ShipRegion", urlHeaderShipRegion);
+// --- data field headers
+var urlHeaderFreight = headerURI + "ty=fn&n=freight";
+var urlHeaderEmployeeID = headerURI + "ty=fn&n=employeeID";
+settings.addHtmlHeaderLinkByIndexes(new Array(7, 2), new Array(urlHeaderFreight, urlHeaderEmployeeID));
+// settings.addHtmlHeaderLink(7, urlHeaderFreight);
+
+// ===== define data URL links =====
+var dataURI = "http://www.yahoo.com?";
+// --- row field values
+// var urlDataShipCountry = dataURI + "ty=dt&sc=<ShipCountry>";  // this is the correct definition; the one defined below is for unit test purpose
+var urlDataShipCountry = dataURI + "ty=dt&sc=<ShipCountry>&sn=<ShipName>&sv=<ShipVia>";
+// var urlDataShipName = dataURI + "ty=dt&sc=<ShipCountry>&sn=<ShipName>"; // this is the correct one, the one defined below is for unit test purpose
+var urlDataShipName = dataURI + "ty=dt&sc=<ShipCountry>&sn=<ShipName>&sv=<ShipVia>";
+var urlDataShipVia = dataURI + "ty=dt&sc=<ShipCountry>&sn=<ShipName>&sv=<ShipVia>";
+settings.addHtmlDataLink("ShipVia", urlDataShipVia);
+settings.addHtmlDataLink(8, urlDataShipName);
+settings.addHtmlDataLink(13, urlDataShipCountry);
+// --- column field values
+var urlDataShipRegion = dataURI + "ty=dt&sr=<ShipRegion>&sc=<ShipCity>";
+var urlDataShipCity = dataURI + "ty=dt&sr=<ShipRegion>&sc=<ShipCity>";
+settings.addHtmlDataLinkByNames(new Array("ShipRegion", "ShipCity"), new Array(urlDataShipRegion, urlDataShipCity));
+// settings.addHtmlDataLink("ShipCity", urlDataShipCity);
+// --- data field values
+var urlDataFreight = dataURI + "ty=dt&rsc=<ShipCountry>&rsn=<ShipName>&rsv=<ShipVia>&csr=<ShipRegion>&csc=<ShipCity>&f=<Freight>";
+var urlDataEmployeeID = dataURI + "ty=dt&rsc=<ShipCountry>&rsn=<ShipName>&rsv=<ShipVia>&csr=<ShipRegion>&csc=<ShipCity>&eid=<EmployeeID>";
+settings.addHtmlDataLinkByIndexes(new Array(7, 2), new Array(urlDataFreight, urlDataEmployeeID));
+// settings.addHtmlDataLink(2, urlDataEmployeeID);
+
+// ===== define sort URL links for headers =====
+var sortURI = "http://www.yahoo.com?";
+// --- row fields
+var urlSortShipCountry = sortURI + "ty=so&n=ShipCountry&sort=<AQSO>";
+var urlSortShipName = sortURI + "ty=so&n=ShipName&sort=<AQSO>";
+settings.addHtmlHeaderSortLink("ShipCountry", urlSortShipCountry);
+settings.addHtmlHeaderSortLink(8, urlSortShipName);
+// --- column fields
+var urlSortShipRegion = sortURI + "ty=so&n=ShipRegion&sort=<AQSO>";
+var urlSortShipCity = sortURI + "ty=so&n=ShipCity&sort=<AQSO>";
+settings.addHtmlHeaderSortLink("ShipRegion", urlSortShipRegion);
+settings.addHtmlHeaderSortLink(10, urlSortShipCity);
+settings.clearHtmlHeaderSortLinks();
+settings.addHtmlHeaderSortLink("ShipCountry", urlSortShipCountry);
+settings.addHtmlHeaderSortLink(8, urlSortShipName);
+settings.addHtmlHeaderSortLink("ShipRegion", urlSortShipRegion);
+settings.addHtmlHeaderSortLink(10, urlSortShipCity);
+
+// ===== define sort URL link for data columns =====
+var urlSortDataColumn = sortURI + "ty=sortColumn&sort=<AQSO>&columnId=<AQSID>";
+settings.setHtmlDataColumnSortLink(urlSortDataColumn);
+settings.clearHtmlDataColumnSortLink();
+settings.setHtmlDataColumnSortLink(urlSortDataColumn);
+
+// ===== alternate row colors =====
+// settings.setShowAltRowColor(false);
+settings.setAltRowBackgroundColor("f1f1e4");
+settings.setAltRowBackgroundColor("fefe00");
+settings.setAltRowBackgroundColor("fEfE00");
+settings.setAltRowBackgroundColor("FeFe00");
+settings.setAltRowBackgroundColor("FEFE00");
+settings.setAltRowForegroundColor("#fe00fe");
+settings.setAltRowForegroundColor("#fE00fE");
+settings.setAltRowForegroundColor("#Fe00Fe");
+settings.setAltRowForegroundColor("#FE00FE");
+
+// ===== chart =====
+settings.setShowRowTrendChart(true);
+// settings.setShowRowTrendChart(false);
+// settings.setRowTrendChartCacheTime(0);
+// settings.setRowTrendChartCacheTime(-1);
+// settings.setRowTrendChartCacheTime(15);
+
+// ===== cell percentage =====
+// settings.setShowCellPercentageByRow(true);
+// settings.setShowCellPercentageByRow(false);
+// settings.setShowCellPercentageByColumn(true);
+// settings.setShowCellPercentageByColumn(false);
+
+var reportSettings = aqua.report.newReportSettings();
+report.setSettings(reportSettings);
+
+reportSettings.setGenerateHtmlDocHeader(false);
+reportSettings.setGenerateHtmlDocFooter(false);
+
+// generate a HTML report
+// aqua.console.print(report.renderHtml());
+
+// generate a HTML report in the embedded browser
+aqua.response.write(report.renderHtml());
+
+// --- save report to Excel
+// settings.setPageSize(12);
+// settings.setMaxColumnWidth(25);
+function saveToExcel() {
+    var excel2003File = "C:/temp/temp3PivotReport.xls";
+    var excel2007File = "C:/temp/temp7PivotReport.xlsx";
+    report.saveAsExcel2003(excel2003File);
+    aqua.console.println("Report is saved to " + excel2003File + ".");
+//  report.saveAsExcel2007(excel2007File);
+//  aqua.console.println("Report is saved to " + excel2007File + ".");
+}
+// saveToExcel();
+
+// --- convert report to Excel as a byte array
+function toExcelAsByteArray(is2k7) {
+    var byteArray = (is2k7 ? report.getAsExcel2007() : report.getAsExcel2003());
+    var fileName = (is2k7 ? "ExcelReport.xlsx" : "ExcelReport.xls");
+    aqua.response.sendBinary("application/excel", fileName, byteArray);
+}
+// toExcelAsByteArray(false);
+
+// done, disconnect from server
+serverConnection.disconnect();
+

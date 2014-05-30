@@ -1,0 +1,10 @@
+﻿var folder = "/Aqua-rdbms-docs";
+var ws     = aqua.vcs.newWorkspaceSubversion();
+ws.setUsername(aqua.crypto.getSecureField('svn.username'));
+ws.setPassword(aqua.crypto.getSecureField('svn.password'));
+
+var diff = ws.getHistory(folder);
+
+for (var i=0; i<diff.length; i++){
+    aqua.console.println("Author for revision [" + diff[i].getRevision() + "]: [" + diff[i].getAuthor() + "]");
+}

@@ -1,0 +1,60 @@
+﻿var TextFile = "/out.txt";
+var locale   = aqua.random.nextLocale();
+var format   = "#,#";
+var number   = 1000000.01;
+
+numberFormatWithLocale(locale);
+numberFormat();
+
+//------------------------------------------------------------------------------
+function numberFormat(){
+    // define a data set
+    var columns = ["country", "count"];
+    var ds = aqua.data.newDataSet(columns);
+
+    // fill dataset row with values
+    var row = ds.addRow();
+    row.set(0, "Russia");
+    row.set(1, number);
+    ds.columnStructure.getColumn(0).setSqlType(java.sql.Types.VARCHAR);
+    ds.columnStructure.getColumn(1).setSqlType(java.sql.Types.NUMERIC);
+
+    var writer = aqua.io.newTextWriter();
+    writer.setFile(TextFile);
+    writer.setCellDelimiter("\t");
+    aqua.console.println("Setting default number format [" + format + "] for column 1");
+    writer.setNumberFormat(1);
+    writer.write(ds);
+    writer.close();
+    readFile();
+}
+
+function numberFormatWithLocale(locale){
+
+    // define a data set
+    var columns = ["country", "count"];
+    var ds = aqua.data.newDataSet(columns);
+
+    // fill dataset row with values
+    var row = ds.addRow();
+    row.set(0, "Russia");
+    row.set(1, number);
+    ds.columnStructure.getColumn(0).setSqlType(java.sql.Types.VARCHAR);
+    ds.columnStructure.getColumn(1).setSqlType(java.sql.Types.NUMERIC);
+
+    var writer = aqua.io.newTextWriter();
+    writer.setFile(TextFile);
+    writer.setCellDelimiter("\t");
+    aqua.console.println("Setting number format [" + format + "] to locale [" + locale + "] for column 1");
+    writer.setNumberFormat(1, locale);
+    writer.write(ds);
+    writer.close();
+    readFile();
+}
+
+function readFile() {
+    var reader = aqua.io.newTextReader();
+    reader.setFile(TextFile);
+    print(reader.readNextRow());
+    print();
+}

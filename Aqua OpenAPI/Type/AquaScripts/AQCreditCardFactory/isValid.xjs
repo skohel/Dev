@@ -1,0 +1,7 @@
+﻿var validValue   = "4719111111111117";
+var invalidValue = "4719111111111116";
+var creditCardFactory  = aqua.type.getCreditCard();
+
+aqua.console.println("Is [" + validValue   + "] a credit card number? [" + creditCardFactory.isValid(validValue) + "]");
+aqua.console.println("Is [" + invalidValue + "] a credit card number? [" + creditCardFactory.isValid(invalidValue) + "]");
+

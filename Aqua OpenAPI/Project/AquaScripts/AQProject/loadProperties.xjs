@@ -1,0 +1,13 @@
+﻿//RUN THIS SCRIPT AFTER saveProperties.xjs
+testSaveProperties();
+
+function testSaveProperties() {
+    aqua.console.println('[TEST] aqua.project.loadProperties()');
+    var properties = aqua.project.loadProperties("testProperties");
+
+    if(properties == null) {
+        throw "Expected: properties != null but was: " + properties;
+    }
+    aqua.console.println('[OK] content of property file');
+    aqua.console.list(properties.stringPropertyNames());
+}

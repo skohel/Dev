@@ -1,0 +1,34 @@
+﻿var dataSet = generateDataSet();
+var bytes   = dataSet.getAsExcel2003();
+printByteArray(bytes);
+
+
+var settings = aqua.data.newDataSetSettings();
+var chart    = aqua.chart.newChart();
+bytes = dataSet.getAsExcel2003(settings, chart);
+
+printByteArray(bytes);
+
+
+//------------------------------------------------------------------------------
+function generateDataSet(){
+
+    var ds = aqua.data.newDataSet(["shipcountry","freight","id"]);
+    ds.addRowWithValues(aqua.random.nextCountry(),    "10", "100001");
+    ds.addRowWithValues(aqua.random.nextCountry(),   "100", "100002");
+    ds.addRowWithValues(aqua.random.nextCountry(),  "1000", "100003");
+    ds.addRowWithValues(aqua.random.nextCountry(), "10000", "100004");
+    return ds;
+}
+
+function printByteArray(bytes){
+
+    aqua.console.println("Printing Data Set as an array:");
+
+    for (var i=0; i<bytes.length; i++){
+        aqua.console.print("[" + bytes[i] + "]");
+        if ( (i % 50) == 49){
+            aqua.console.println("");
+        }
+    }
+}

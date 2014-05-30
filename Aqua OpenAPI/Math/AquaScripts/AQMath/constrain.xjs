@@ -1,0 +1,27 @@
+/*
+aqua.math.constrain
+
+   Constrains a value to not exceed a maximum and minimum value.
+
+Synopsys
+    double aqua.math.constrain(double value, double min, double max);
+
+Description
+    * If the argument value is already equal to a mathematical integer, then the result is the same as the argument.
+    * If the argument is NaN or an infinity or positive zero or negative zero, then the result is the same as the argument.
+    * If the argument value is less than zero but greater than -1.0, then the result is negative zero.
+    Note that the value of aqua.math.constrain(x) is exactly the value of -aqua.math.floor(-x). 
+
+Example
+    see below
+*/
+
+// --- constrain() ---
+function show_constrain(value, min, max) {
+    aqua.console.println("constrain[" + value + ", " + min + ", " + max + "] --> [" + aqua.math.constrain(value, min, max) + "]");
+}
+show_constrain(-10, 0, 10);
+show_constrain(20, 0, 10);
+show_constrain(0, 0, 10);
+show_constrain(10, 0, 10);
+show_constrain(5.01, 0, 10);

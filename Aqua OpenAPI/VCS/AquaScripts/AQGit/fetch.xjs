@@ -1,0 +1,16 @@
+﻿var gitWS    = aqua.vcs.newGit();
+gitWS.setVerbose(false);
+
+try {
+// set the git workspace in your local machine
+gitWS.setWorkspace("c://git_clone");
+
+gitWS.fetch();
+
+// print after committing the file successfully
+aqua.console.println("Fetch successfully...");
+}
+catch(ex) {
+// print if commit to git repo is a failure
+aqua.console.println("Fetch error......" +ex.toString() + "\n");
+}

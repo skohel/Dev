@@ -1,0 +1,9 @@
+importPackage(java.lang);
+
+print("Generate random integer numeric value with Min & Max values");
+min = new Integer("1");
+max = new Integer("150");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextInteger(min, max);
+    print("\t"+x);
+}

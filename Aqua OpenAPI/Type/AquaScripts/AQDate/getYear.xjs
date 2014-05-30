@@ -1,0 +1,6 @@
+﻿var factory = aqua.type.getDate();
+var date    = factory.newDate();
+
+aqua.console.println("Current datetime:                    [" + date + "]");
+
+aqua.console.println("Current year for this date instance: [" + date.getYear() + "]");

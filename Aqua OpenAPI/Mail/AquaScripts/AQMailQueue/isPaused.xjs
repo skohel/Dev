@@ -1,0 +1,9 @@
+
+var mailQueue = aqua.mail.newMailQueue();
+
+aqua.console.println("------ Mail Queue state ------");
+aqua.console.println("Enabled:  " + (mailQueue.isEnabled()  ? "Yes" : "No"));
+aqua.console.println("Paused:   " + (mailQueue.isPaused()   ? "Yes" : "No"));
+aqua.console.println("Archived: " + (mailQueue.isArchived() ? "Yes" : "No"));
+aqua.console.println("------------------------------");
+

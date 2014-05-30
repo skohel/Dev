@@ -1,0 +1,19 @@
+﻿
+//
+// This script demonstrates how to get/set the header for the column containing row number.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// get default header
+var header = settings.getRowNumberHeader();
+aqua.console.println("The default header for the row number column is '" + header + "'.");
+
+// customize row number header
+settings.setRowNumberHeader("Row");
+
+// get current row number header
+header = settings.getRowNumberHeader();
+aqua.console.println("The header of the row number column is currently set to '" + header + "'.");
+

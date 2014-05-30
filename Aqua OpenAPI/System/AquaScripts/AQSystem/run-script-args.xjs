@@ -1,0 +1,14 @@
+﻿/*
+This is a sample script which shows how to run an external AquaScript from the current AquaScript with a argument object passed in.
+*/
+
+// creates an AquaScript object to greet with "Hello"
+var greeting = {
+    title : "Hello",
+    greet : function (name) {  
+        return  this.title + " " + name;
+    }
+};
+
+aqua.system.runScript("AQSystem/util-args.xjs", greeting);
+

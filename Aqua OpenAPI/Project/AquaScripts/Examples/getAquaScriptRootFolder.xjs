@@ -1,0 +1,27 @@
+﻿/*
+aqua.project.getAquaScriptsRootFolder
+
+Returns a file object corresponding to the "AquaScripts" folder. Files in this folder and the folder itself are read-only.   
+
+Synopsys
+    AQProjectFile getAquaScriptsRootFolder()
+
+Description
+    Returns a file object corresponding to the "AquaScripts" folder. Files in this folder and the folder itself are read-only.  
+
+Example
+    //Returns a file object with the specified path ProjectFileMethods under the "AquaScripts" project folder. 
+    aqua.project.getAquaScriptsRootFolder();
+
+*/
+
+
+ap = aqua.project;
+
+objFile = ap.getAquaScriptsRootFolder();
+
+print("Root Folder: [" + objFile.getName() + "]");
+
+function print(m) {
+    aqua.console.println(m);
+}

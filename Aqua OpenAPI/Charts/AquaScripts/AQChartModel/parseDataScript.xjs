@@ -1,0 +1,32 @@
+﻿/*
+chart.parseDataScript
+
+Synopsys
+    parseDataScript(String script);
+
+Description
+Parses a formatted string into data values for the AQChartModel
+The format is as follows:
+"category='[CATEGORY_NAME],[CATEGORY_NAME]'
+series='[SERIES_NAME], [SERIES_NAME]'
+values='[1,2,3,4,5,...], [3,4,5,6,7...]'"
+
+Example
+    see below
+
+*/
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+model.parseDataScript("category='[US],[UK],[Japan],[Canada],[France],[Germany]' series='[freight]' values='[100,10,200,20,300,30]'");
+
+chart.getProperties().setChartTypeArea();
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

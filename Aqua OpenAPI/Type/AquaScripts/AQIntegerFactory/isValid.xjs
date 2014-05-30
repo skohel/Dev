@@ -1,0 +1,12 @@
+﻿var validValue   = "10000000";
+var invalidValue = "a1111111";
+var factory      = aqua.type.getInteger();
+
+aqua.console.println("Is [" + validValue   + "] an integer? [" + factory.isValid(validValue) + "]");
+aqua.console.println("Is [" + invalidValue + "] an integer? [" + factory.isValid(invalidValue) + "]");
+
+var validValue = "2147483647";
+aqua.console.println("Is [" + validValue + "] an integer? [" + factory.isValid(validValue) + "]");
+
+var invalidValue = "2147483648";
+aqua.console.println("Is [" + invalidValue + "] an integer? [" + factory.isValid(invalidValue) + "]");

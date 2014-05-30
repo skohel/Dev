@@ -1,0 +1,25 @@
+﻿/*
+This is a sample script which shows how custom jars can be used inside AquaScript.
+This uses a Java class, com.example.Greeting which is bundled in jar-example-1.0.jar. 
+Please make sure you do the following steps before executing this script,
+
+Aqua Data Server:
+    Step 1) Copy jar-example-1.0.jar to <aquadataserver install dir>/tomcat/lib
+    Step 2) Restart Aqua Data Server
+
+Aqua Data Studio:
+    Step 1) Copy jar-example-1.0.jar to <aquadatastudio install dir>/lib
+    Step 2) Restart Aqua Data Studio
+
+*/
+
+// creates an object of Java class com.example.Greeting to greet with "Hello"
+var hello = com.example.Greeting("Hello");
+// invokes greet method on the object created in the above step with a name "Aqua Data User"
+aqua.console.println("Greeting: " + hello.greet("Aqua Data User"));
+
+// creates another object of Java class com.example.Greeting to greet with "Dear"
+var formal = com.example.Greeting("Dear");
+// invokes greet method on the object created in the above step with a name "Aqua Data User"
+aqua.console.println("Greeting: " + formal.greet("Aqua Data User"));
+

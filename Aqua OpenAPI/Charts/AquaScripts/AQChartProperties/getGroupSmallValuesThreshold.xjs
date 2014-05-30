@@ -1,0 +1,46 @@
+﻿/*
+aqua.chart.properties.getGroupSmallValuesThreshold
+
+Synopsys
+    float getGroupSmallValuesThreshold();
+
+Description
+Return the threshold value used to group together smaller values in Pie charts.  The threshold value is a percent of the sum of all values in the series. (e.g. a threshold of 15.0 = 15.0%)
+
+Example
+    see below
+
+*/
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+model.addSeries("a");
+
+model.addCategory("US");
+model.addCategory("UK");
+model.addCategory("France");
+model.addCategory("Spain");
+model.addCategory("Italy");
+
+model.setValue(0, 0, 100);
+model.setValue(0, 1, 200);
+model.setValue(0, 2, 300);
+model.setValue(0, 3, 2);
+model.setValue(0, 4, 20);
+
+chart.getProperties().setChartTypePie();
+
+chart.getProperties().setGroupSmallValues(true);
+chart.getProperties().setGroupSmallValuesThreshold(5);
+
+var groupby = chart.getProperties().getGroupSmallValuesThreshold();
+aqua.response.write('Group Threshold: ').write(groupby).write("<p>");
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

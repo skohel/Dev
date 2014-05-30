@@ -1,0 +1,80 @@
+﻿
+//
+// This script demonstrates how to bind URL links to column headers by column indexes
+//
+
+// define a data set
+var columns = ["ShipCountry", "CustomerID", "ShipName", "Freight"];
+var dataSet = aqua.data.newDataSet(columns);
+
+// add rows to data set
+dataSet.addRowWithValues("Canada", "C039", "ABC Inc.",   200);
+dataSet.addRowWithValues("Canada", "C061", "Sunrise",    230);
+dataSet.addRowWithValues("France", "C123", "Joe Smith", 1620);
+dataSet.addRowWithValues("Japan",  "C375", "JPL Corp.", 4200);
+dataSet.addRowWithValues("UK",     "C028", "BUK",       1500);
+dataSet.addRowWithValues("US",     "C006", "AuqaFold",    35);
+dataSet.addRowWithValues("US",     "C257", "BA IT",       89);
+dataSet.addRowWithValues("US",     "C257", "BA R&D",      89);
+
+// create a settings for the data set, settings is used to describe how data set to be rendered
+var settings = aqua.report.newReportDataSetSettings();
+
+// define the list URL links, note that data substitution does not apply to header link;
+// if data substitution is specified, it is always expanded to the column name itself
+
+// define the list of column indexes where URL links to be created, column index is zero based
+var indexes = [0, 2];
+// define the list of URL links
+var urls = new Array(
+    "http://www.aquafold.com?type=0",  // no data substitution
+    "http://www.aquafold.com?type=2&sc=<ShipCountry>&f=<Freight>"  // with data substitution specified
+);
+// bind URL links to columns 
+settings.addHtmlHeaderLinkByIndexes(indexes, urls);
+
+// define the list of column names where URL links to be created
+var names = [ "CustomerID", "Freight" ];
+// define the list of URL links
+urls = new Array(
+    "http://www.aquafold.com?type=1",  // no data substitution
+    "http://www.aquafold.com?type=3&sc=<ShipCountry>&f=<Freight>"  // with data substitution specified
+);
+// bind URL links to columns 
+settings.addHtmlHeaderLinkByNames(names, urls);
+
+// set title
+settings.setTitle("AquaFold Open API Example: grid with header links");
+
+// create a report
+var report = aqua.report.newReport();
+
+// add data set and its settings to report
+report.addDataSet(dataSet, settings);
+
+// render report in HTML and display it in browser
+aqua.response.write(report.renderHtml());
+aqua.response.write("<br><br>");
+
+
+// remove header link by column index
+settings.removeHtmlHeaderLink(0);
+
+// update title
+settings.setTitle("AquaFold Open API Example: header links adjusted (by column index)");
+
+// render report in HTML and display it in browser
+aqua.response.write(report.renderHtml());
+aqua.response.write("<br><br>");
+
+
+// remove header link by column name
+settings.removeHtmlHeaderLink("Freight");
+
+// update title
+settings.setTitle("AquaFold Open API Example: header links adjusted (by column name)");
+
+// render report in HTML and display it in browser
+aqua.response.write(report.renderHtml());
+
+

@@ -1,0 +1,9 @@
+﻿var reader = aqua.io.newTextReader();
+
+
+aqua.console.println("Column structure: [" + reader.getColumnStructure() + "]");
+
+aqua.console.println("Setting columns:");
+reader.setColumnNames(["column A", "column B"]);
+aqua.console.println("Column structure: [" + reader.getColumnStructure() + "]");
+aqua.console.println("Column count: [" + reader.getColumnStructure().getColumnCount() + "]");

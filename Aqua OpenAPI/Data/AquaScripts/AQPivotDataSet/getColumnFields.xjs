@@ -1,0 +1,38 @@
+﻿//
+// This script demonstrates how to get column field names as an array.
+//
+
+// an utility function to write a name array to the console 
+function printNameList(nameList) {
+    if ( nameList.length <= 0 ) {
+        aqua.console.println("No column fields defined.");
+    } else {
+        aqua.console.println("List of column fields:");
+        for( var i=0; i<nameList.length; i++ ) {
+            aqua.console.println("  " + nameList[i]);
+        }
+    }
+}
+
+// create pivot data set
+var pivotTable = aqua.data.newPivotDataSet();
+
+// get column fields; initially, should be empty
+var fieldNames = pivotTable.getColumnFields();
+
+// show column field names
+aqua.console.println("------ before adding column fields ------");
+printNameList(fieldNames);
+
+
+// add column fields to the pivot table
+pivotTable.addColumnField("ShipRegion");
+pivotTable.addColumnField("ShipCity");
+
+// get column field names
+fieldNames = pivotTable.getColumnFields();
+
+// show column field names
+aqua.console.println("");
+aqua.console.println("------ after adding column fields ------");
+printNameList(fieldNames);

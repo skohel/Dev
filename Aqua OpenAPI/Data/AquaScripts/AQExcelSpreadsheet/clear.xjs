@@ -1,0 +1,69 @@
+﻿// define the output EXCEL file
+var ExlFile = "C://Excel_SS_10_15_14.xls";
+
+var pivotTable = aqua.data.newPivotDataSet();
+pivotTable.addColumnField("shiporder");
+pivotTable.addColumnField("date");
+pivotTable.setDataSet(generateDataSet());
+pivotTable.calculateGrid();
+
+// create an Spreadsheet Writer
+var ExlSp = aqua.data.excelSpreadsheet(ExlFile);
+
+ExlSp.insertPivotTable(pivotTable);
+ExlSp.save(ExlFile);
+aqua.console.println("Data Set written to EXCEL File:  " + ExlFile);
+
+// clear the spreadsheet
+ExlSp.clear();
+aqua.console.println("Spreadsheet is cleared");
+
+// save the spreadsheet again
+ExlSp.save(ExlFile);
+aqua.exit();
+
+function generateDataSet(){
+
+    // define a data set
+    var columns = ["shiporder", "date"];
+    var ds = aqua.data.newDataSet(columns);
+
+    // add dataset row with values
+    ds.addRowWithValues("Alappuzha", "12-12-2012");
+    ds.addRowWithValues("Alappuzha", "12-11-2012");
+    ds.addRowWithValues("Ernakulam", "07-05-1998");
+    ds.addRowWithValues("Idukki", "01-02-1999");
+    ds.addRowWithValues("Kalady","03-04-2000");
+    ds.addRowWithValues("Kollam", "05-06-2001");
+    ds.addRowWithValues("Kannur", "07-08-2002");
+    ds.addRowWithValues("Kasaragod", "09-10-2003");
+    ds.addRowWithValues("Kottayam", "11-12-2004");
+    ds.addRowWithValues("Kozhikode", "03-03-2005");
+    ds.addRowWithValues("Malappuram","06-06-2006");
+    ds.addRowWithValues("Palakkad", "08-08-2007");
+    ds.addRowWithValues("Pathanamthitta", "07-08-2002");
+    ds.addRowWithValues("Thrissur", "09-10-2003");
+    ds.addRowWithValues("Thiruvananthapuram", "11-12-2004");
+    ds.addRowWithValues("Wayanad", "03-03-2005");
+
+    // to convert the date from string to a AQDate object
+    format = new java.text.SimpleDateFormat("MM-dd-yyyy");
+
+    for(i=0; i<ds.rowCount; i++)
+    {
+        row = ds.get(i);
+        value = row.get(1);
+        try
+        {
+            date = format.parse(value);
+            row.set(1, date)
+        }
+        catch(e)
+        {
+            // Exceptions if any
+            print(e + " " + value);
+        }
+    }
+
+    return ds;
+}

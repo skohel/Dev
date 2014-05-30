@@ -1,0 +1,5 @@
+﻿var str1 = "DCBA";
+var str2 = "ABCD";
+var diff = aqua.getCompare().compare(str1, str2);
+
+aqua.console.println("Modification count for [" + str1 + "] and [" + str2 + "] is [" + diff.getModificationCount() + "]");

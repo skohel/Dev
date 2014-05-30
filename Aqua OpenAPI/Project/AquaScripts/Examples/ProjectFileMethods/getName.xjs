@@ -1,0 +1,26 @@
+﻿/*
+
+Returns file name.
+
+Synopsys
+    String getName()
+
+Description
+    Returns file name
+
+Example
+    //
+
+
+*/
+
+
+userFiles = aqua.project.collectUserFiles("/");
+for(i=0; i<userFiles.length; i++)
+{
+   print("File Name: " + userFiles[i].getName());
+}
+
+function print(m) {
+    aqua.console.println(m);
+}

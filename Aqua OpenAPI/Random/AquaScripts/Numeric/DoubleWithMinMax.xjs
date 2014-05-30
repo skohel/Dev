@@ -1,0 +1,17 @@
+importPackage(java.math);
+importPackage(java.lang);
+
+//   Javascript is not a typed language so it should come as no surprise that there are no specific integer
+// or floating-point types, no short, long, byte, double, or any other type other languages use to define numbers. 
+// All numbers in Javascript are 64bit (8 bytes) floating point numbers which yields an effective range of 5e-324
+// (negative) to 1.7976931348623157e+308 (positive).
+
+// I am not sure how to pass a none java double
+
+print("Random Double with Min / Max values");
+min = new Double(1);
+max = new Double(150);
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextDouble(min, max);
+    print("t"+x);
+}

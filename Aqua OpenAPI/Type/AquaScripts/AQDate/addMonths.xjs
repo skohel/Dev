@@ -1,0 +1,10 @@
+﻿var factory = aqua.type.getDate();
+var date    = factory.newDate();
+var unit    = 1;
+
+aqua.console.println("Current datetime:                 [" + date + "]");
+
+aqua.console.println("Current datetime + [" + unit + "] month(s):  [" + date.addMonths(unit) + "]");
+
+unit = -1;
+aqua.console.println("Current datetime + [" + unit + "] month(s): [" + date.addMonths(unit) + "]");

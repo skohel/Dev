@@ -1,0 +1,61 @@
+﻿//------------------------------------------------------------------------------
+// Class:  
+//      CoreHadoopFileSystem
+// Method:
+//      createDirectory()
+//
+// Synopsis:
+//      createDirectory()
+//
+// Description
+//      Creates a directory. Non-existent parent directories are created, when
+//      necessary.
+//    
+// Parameters
+//      string - The directory to create; required.
+//
+// Throws
+//      Exception - on error
+//
+// Return
+//      None.
+//
+// Example
+//      See below.
+//------------------------------------------------------------------------------
+// all test data will be created under this directory
+var fs_data_dir = "/test/AQHadoopFileSystem/";
+
+// get instance of filesystem object
+//var url = "hdfs://localhost:54310";
+var url = "ftp://10.168.2.138";
+var AQFS = aqua.net.newFtpFileSystem(url, "anonymous", "user");
+
+/* --- createDirectory --- */
+test_createDirectory();
+
+// --- test createDirectory ---
+
+function test_createDirectory() {
+    
+    var dest_base = fs_data_dir + "createDirectory/";
+
+    // testing error condition - directory has to exist.
+    exec_createDirectory(null);
+    // this should work
+    exec_createDirectory(dest_base);
+    exec_createDirectory("/test/AQHadoopFileSystem/other_dir");
+    exec_createDirectory("/test/AQHadoopFileSystem/other_dir/tmp_dir_1/tmp_dir_2/tmp_dir_3");
+    
+    // Clean up
+    AQFS.deleteDirectory(dest_base, true);
+}
+function exec_createDirectory(dirName) {
+    try {
+        aqua.console.println("createDirectory: creating [" + dirName + "]...");
+        AQFS.createDirectory(dirName);
+        aqua.console.println("createDirectory done.");
+    } catch(ex) {
+        aqua.console.println("createDirectory failed - " + ex.toString());
+    }
+}

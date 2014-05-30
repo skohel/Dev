@@ -1,0 +1,21 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        setDepends()
+ 
+   Synopsis:
+        void setDepends(boolean depends)
+
+   Description
+        Sets to true to transmit only files that are new or changed from their remote counterparts. The default is to transmit all files.    
+
+   Parameters
+        depends - if true only transfer newer files 
+  
+   Throws
+        none
+ 
+   Example
+        See below.
+*/

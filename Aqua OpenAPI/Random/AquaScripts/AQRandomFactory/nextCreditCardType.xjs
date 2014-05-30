@@ -1,0 +1,5 @@
+﻿print("Generate a random credit card type:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextCreditCardType();
+    print("\t"+x);
+}

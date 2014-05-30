@@ -1,0 +1,24 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        get()
+ 
+   Synopsis:
+        void get(AQFileSet[] filesets, String remotedir) throws Exception
+        void get(AQFileSet fileset, String remotedir) throws Exception
+
+   Description
+        Downloads files defined by a file set(s) from a remote directory to a local directory. The base directory of the file set must be set and point to a local directory. 
+        Each file set defines a set of files to be retrieved from the remote directory; the base directory belongs to each file set must point to a local directory. 
+
+   Parameters
+        fileset - defines the set of files to be retrieved from the remote directory
+        remotedir - the name of the remote directory  
+  
+   Throws
+        Exception - if failed to download files
+ 
+   Example
+        See below.
+*/

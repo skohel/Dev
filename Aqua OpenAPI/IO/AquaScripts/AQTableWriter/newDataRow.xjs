@@ -1,0 +1,15 @@
+﻿var server = aqua.project.getServerConnection("SQL Server 2000");
+server.connect();
+var table = server.getMetaData().extractTable("Northwind","dbo","test");
+var writer = table.getWriter();
+
+var row = writer.newDataRow();
+row.set(0, 2);
+row.set(1, 1);
+row.set(2, "text");
+row.set(3, "text #2");
+row.set(4, "txt #3");
+
+writer.write(row);
+writer.close();
+server.disconnect();

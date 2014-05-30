@@ -1,0 +1,30 @@
+/*
+aqua.math.expm1
+
+Returns (e^x)-1. Note that for values of x near 0, the exact sum of expm1(x) + 1 is much closer to the true result of ex than exp(x). 
+
+Synopsys
+    double aqua.math.expm1(double);
+
+Description
+    * If the argument is NaN, the result is NaN.
+    * If the argument is positive infinity, then the result is positive infinity.
+    * If the argument is negative infinity, then the result is -1.0.
+    * If the argument is zero, then the result is a zero with the same sign as the argument. 
+    The computed result must be within 1 ulp of the exact result. Results must be semi-monotonic.
+    The result of expm1 for any finite input must be greater than or equal to -1.0. Note that once
+    the exact result of ex - 1 is within 1/2 ulp of the limit value -1, -1.0 should be returned. 
+
+Example
+    see below
+
+*/
+// --- expm1() ---
+function show_expm1(power) {
+    aqua.console.println("expm1[" + power + "] --> [" + aqua.math.expm1(power) + "]");
+}
+show_expm1(-3.5);
+show_expm1(-2);
+show_expm1(0);
+show_expm1(2);
+show_expm1(3.5);

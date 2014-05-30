@@ -1,0 +1,21 @@
+
+
+var rawDataX=new Array();
+var rawDataY = new Array();
+var noise = new Array();
+var fitY=new Array();
+
+//generate noisy data
+for(i=0;i<30;i++){
+   rawDataX[i]=(i/10.0);
+noise[i]=2*Math.random()-1;
+   rawDataY[i]=2*Math.pow(rawDataX[i],2) + 3*rawDataX[i] + 1 +noise[i]/5;
+   
+}
+
+//perform smoothing
+fitY=aqua.math.fit.polyFitCoeff(rawDataX,rawDataY,2);
+
+
+aqua.console.println("y = " + fitY[0] + " + " +fitY[1] + " x +  " + fitY[2] +" x^2");
+

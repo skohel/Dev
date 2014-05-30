@@ -1,0 +1,15 @@
+﻿var validValue   = "32767";
+var invalidValue = "a1111";
+var factory      = aqua.type.getShort();
+
+aqua.console.println("Is [" + validValue   + "] a short? [" + factory.isValid(validValue) + "]");
+aqua.console.println("Is [" + invalidValue + "] a short? [" + factory.isValid(invalidValue) + "]");
+
+var validValue = "2993372036854775807";
+aqua.console.println("Is [" + validValue + "] a short? [" + factory.isValid(validValue) + "]");
+
+var invalidValue = "32768";
+aqua.console.println("Is [" + invalidValue + "] a short? [" + factory.isValid(invalidValue) + "]");
+
+var invalidValue = "-32769";
+aqua.console.println("Is [" + invalidValue + "] a short? [" + factory.isValid(invalidValue) + "]");

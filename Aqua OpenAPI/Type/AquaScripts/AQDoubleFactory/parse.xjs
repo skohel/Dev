@@ -1,0 +1,53 @@
+﻿var factory       = aqua.type.getDouble();
+var validString   = "1000";
+var invalidString = "1,000.23";
+
+try{
+    aqua.console.println("Is object [" + validString   + "] a double? [" + factory.parse(validString) + "]");
+    aqua.console.println("Is object [" + invalidString + "] a double? [" + factory.parse(invalidString) + "]");
+    aqua.console.println("");
+}
+catch(e){
+    aqua.console.println(e);
+    aqua.console.println("");
+}
+
+try{
+    aqua.console.println("Is object [" + validString   + "] with pattern [" + pattern + "] a double? [" + factory.parse(validString, pattern) + "]");
+    aqua.console.println("Is object [" + invalidString + "] with pattern [" + pattern + "] a double? [" + factory.parse(invalidString, pattern) + "]");
+    aqua.console.println("");
+}
+catch(e){
+    aqua.console.println(e);
+    aqua.console.println("");
+}
+
+try{
+    // doing integer the way they do in Spain
+    var locale    = "ES";
+    var pattern   = null;
+    validString   = "1.000.000";
+    invalidString = "1,000,000";
+    aqua.console.println("Is object [" + validString   + "] with pattern [" + pattern + "] and locale [" + locale + "] a double? [" + factory.parse(validString, pattern, locale) + "]");
+    aqua.console.println("Is object [" + invalidString + "] with pattern [" + pattern + "] and locale [" + locale + "] a double? [" + factory.parse(invalidString, pattern, locale) + "]");
+    aqua.console.println("");
+}
+catch(e){
+    aqua.console.println(e);
+    aqua.console.println("");
+}
+
+
+try{
+    var locale    = null;
+    var pattern   = null;
+    validString   = "1,000,000"; // default locale (in the here in the US), uses "," as thousand separators.
+    invalidString = "1.000.000";
+    aqua.console.println("Is object [" + validString   + "] with pattern [" + pattern + "] and locale [" + locale + "] a double? [" + factory.parse(validString, pattern, locale) + "]");
+    aqua.console.println("Is object [" + invalidString + "] with pattern [" + pattern + "] and locale [" + locale + "] a double? [" + factory.parse(invalidString, pattern, locale) + "]");
+    aqua.console.println("");
+}
+catch(e){
+    aqua.console.println(e);
+    aqua.console.println("");
+}

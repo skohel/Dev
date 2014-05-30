@@ -1,0 +1,19 @@
+
+
+var rawDataA=new Array();
+var rawDataB=new Array();
+var out=0;
+
+//generate data
+for(i=0;i<30;i++){
+
+   rawDataA[i]=10+2*Math.random()-1;
+   rawDataB[i]=1+2*Math.random()-1;
+}
+
+out=aqua.math.stat.pairedTTest(rawDataA,rawDataB);
+
+aqua.console.println("t value = " + out);
+
+
+

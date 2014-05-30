@@ -1,0 +1,10 @@
+﻿testGetDashboardURL();
+
+function testGetDashboardURL() {
+	aqua.console.println('[TEST] aqua.project.getDashboardURL(()');
+	var url = aqua.project.getDashboardURL();
+	if(url == null) {
+		throw "Expected url != null but was: " + url;
+	}
+	aqua.console.println('[OK]');	
+}

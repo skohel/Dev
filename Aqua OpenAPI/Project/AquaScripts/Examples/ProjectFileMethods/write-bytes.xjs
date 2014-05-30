@@ -1,0 +1,45 @@
+﻿/*
+
+Writes a byte array to a file.
+
+Synopsys
+    void write(byte[] bytes) Writes the byte array to a file.
+
+Description
+    Writes the byte array to a file.
+
+Example
+    //
+
+
+*/
+
+
+ap = aqua.project;
+
+userFile = ap.getUserFile("jon-bytes.dat");
+
+var javaString = new java.lang.String("Hello world!");
+var byteArray = javaString.getBytes();
+byteArray[0] // returns 72
+byteArray[1] // returns 101
+
+fordisplay = "[";
+for(i=0;i<byteArray.length;i++) {
+    if(i==byteArray.length-1) {
+        fordisplay = fordisplay + byteArray[i];
+    } else {
+        fordisplay = fordisplay + byteArray[i] + ",";
+    }
+}
+fordisplay = fordisplay +"]";
+
+print("Write these bytes " +fordisplay+ " to the jon-bytes.dat file");
+
+userFile.write(byteArray);
+//userFile.write([72,101,108,108,111,32,119,111,114,108,100,33]);
+
+
+function print(m) {
+    aqua.console.println(m);
+}

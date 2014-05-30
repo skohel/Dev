@@ -1,0 +1,13 @@
+﻿var gitWS    = aqua.vcs.newGit();
+
+try {
+// set the git workspace in your local machine
+gitWS.setWorkspace("c://git_clone");
+
+aqua.console.println("Revision is : " + gitWS.getRevision("c://git_clone/README.rdoc"));
+}
+
+catch(ex) {
+// print if failure in get revision
+aqua.console.println("Error in get revision..." +ex.toString() + "\n");
+}

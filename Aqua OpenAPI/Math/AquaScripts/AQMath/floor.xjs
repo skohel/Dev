@@ -1,0 +1,24 @@
+/*
+aqua.math.floor
+
+Returns the largest (closest to positive infinity) double value that is less than or equal to the argument and is equal to a mathematical integer
+
+Synopsys
+    double aqua.math.floor(double);
+
+Description
+    * If the argument value is already equal to a mathematical integer, then the result is the same as the argument. 
+    
+Example
+    see below
+
+*/
+// --- floor() ---
+function show_floor(power) {
+    aqua.console.println("floor[" + power + "] --> [" + aqua.math.floor(power) + "]");
+}
+show_floor(-3.5);
+show_floor(-2);
+show_floor(0)
+show_floor(2);
+show_floor(3.5);

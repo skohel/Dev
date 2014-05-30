@@ -1,0 +1,29 @@
+﻿
+//
+// This script demonstrates how to determine whether formatting time values in a column is desired or not.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// check whether formatting is desired by column index, column index is zero based
+var index = 0;
+var flag = settings.isColumnTimeFormatNone(index);
+aqua.console.println("Default setting: time formatting for column at index " + index + " is " + (flag ? "not " : "") + "desired.");
+
+// turn off formatting by column index
+settings.setColumnTimeFormatNone(index);
+flag = settings.isColumnTimeFormatNone(index);
+aqua.console.println("Custom setting: time formatting for column at index " + index + " is " + (flag ? "not " : "") + "desired.");
+
+
+
+// check whether formatting is desired by column name
+var name = "CustomerID";
+flag = settings.isColumnTimeFormatNone(name);
+aqua.console.println("Default setting: time formatting for column '" + name + "' is " + (flag ? "not " : "") + "desired.");
+
+// turn off formatting by column name
+settings.setColumnTimeFormatNone(name);
+flag = settings.isColumnTimeFormatNone(name);
+aqua.console.println("Custom setting: time formatting for column '" + name + "' is " + (flag ? "not " : "") + "desired.");

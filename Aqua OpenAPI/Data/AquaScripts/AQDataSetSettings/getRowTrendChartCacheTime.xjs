@@ -1,0 +1,19 @@
+﻿
+//
+// This script demonstrates how to get/set the cache time of a row trend chart.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// get default cache time
+var cacheTime = settings.getRowTrendChartCacheTime();
+aqua.console.println("The default cache time is " + cacheTime + ".");
+
+// customize cache time
+settings.setRowTrendChartCacheTime(150);
+
+// get cache time
+cacheTime = settings.getRowTrendChartCacheTime();
+aqua.console.println("The cache time is currently et to " + cacheTime + ".");
+

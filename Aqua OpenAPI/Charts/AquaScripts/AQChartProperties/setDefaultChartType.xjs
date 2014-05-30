@@ -1,0 +1,42 @@
+﻿/*
+aqua.chart.properties.setDefaultChartType
+
+Synopsys
+    void setDefaultChartType(int seriesNumber, String type);
+
+Description
+Set the default chart type (originally set to AQChartConstants.COLUMN; subsequent calls to setChartType() also change the default chart type to match)
+
+Example
+    see below
+
+*/
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+var type = chart.getProperties().setDefaultChartType(6);
+
+model.addSeries("a");
+model.addSeries("b");
+
+model.addCategory("US");
+model.addCategory("UK");
+model.addCategory("France");
+
+model.setValue(0, 0, 100);
+model.setValue(0, 1, 200);
+model.setValue(0, 2, 300);
+model.setValue(1, 0, 10);
+model.setValue(1, 1, 20);
+model.setValue(1, 2, 30);
+
+chart.getProperties().setMergeAxis(true);
+
+var type = chart.getProperties().getDefaultChartTypeString();
+aqua.response.write('Default Chart Type: ').write(type).write("<p>");
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

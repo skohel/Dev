@@ -1,0 +1,58 @@
+﻿var factory       = aqua.type.getByte();
+
+var validObject   = 32;
+var invalidObject = 128;
+var validString   = "32";
+var invalidString = "1.000";
+var pattern       = "$###";
+
+try{
+    aqua.console.println("Is object [" + validObject   + "] a byte? [" + factory.parse(validObject) + "]");
+    aqua.console.println("Is object [" + invalidObject + "] a byte? [" + factory.parse(invalidObject) + "]");
+    aqua.console.println("");
+}
+catch(e){
+    aqua.console.println(e);
+    aqua.console.println("");
+}
+
+try{
+    validString = "$32";
+    aqua.console.println("Is object [" + validString   + "] with pattern [" + pattern + "] a byte? [" + factory.parse(validString, pattern) + "]");
+    aqua.console.println("Is object [" + invalidString + "] with pattern [" + pattern + "] a byte? [" + factory.parse(invalidString, pattern) + "]");
+    aqua.console.println("");
+}
+catch(e){
+    aqua.console.println(e);
+    aqua.console.println("");
+}
+
+try{
+    // doing integer the way they do in Spain
+    var locale    = "ES";
+    var pattern   = "€###";
+    validString   = "€32";
+    invalidString = "1,000,000";
+    aqua.console.println("Is object [" + validString   + "] with pattern [" + pattern + "] and locale [" + locale + "] a byte? [" + factory.parse(validString, pattern, locale) + "]");
+    aqua.console.println("Is object [" + invalidString + "] with pattern [" + pattern + "] and locale [" + locale + "] a byte? [" + factory.parse(invalidString, pattern, locale) + "]");
+    aqua.console.println("");
+}
+catch(e){
+    aqua.console.println(e);
+    aqua.console.println("");
+}
+
+
+try{
+    var locale    = null;
+    var pattern   = null;
+    validString   = "32"; 
+    invalidString = "128";
+    aqua.console.println("Is object [" + validString   + "] with pattern [" + pattern + "] and locale [" + locale + "] a byte? [" + factory.parse(validString, pattern, locale) + "]");
+    aqua.console.println("Is object [" + invalidString + "] with pattern [" + pattern + "] and locale [" + locale + "] a byte? [" + factory.parse(invalidString, pattern, locale) + "]");
+    aqua.console.println("");
+}
+catch(e){
+    aqua.console.println(e);
+    aqua.console.println("");
+}

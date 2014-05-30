@@ -1,0 +1,20 @@
+﻿
+// create pivot data set
+var pivotTable = aqua.data.newPivotDataSet();
+
+// data field name
+var fieldName = "Freight";
+
+// check summary type
+var isCount = pivotTable.isDataFieldSummaryCount(fieldName);
+aqua.console.println("--- before setting summary type ---");
+aqua.console.println("data field summary count = " + isCount);
+
+// set summary type
+pivotTable.setDataFieldSummaryCount(fieldName);
+
+// check summary type
+var isCount = pivotTable.isDataFieldSummaryCount(fieldName);
+aqua.console.println("--- after setting summary type ---");
+aqua.console.println("data field summary count = " + isCount);
+

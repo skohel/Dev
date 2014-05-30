@@ -1,0 +1,32 @@
+
+var mailQueue = aqua.mail.newMailQueue();
+
+aqua.console.println("------ Mail Queue state ------");
+aqua.console.println("Enabled:  " + (mailQueue.isEnabled()  ? "Yes" : "No"));
+aqua.console.println("Paused:   " + (mailQueue.isPaused()   ? "Yes" : "No"));
+aqua.console.println("Archived: " + (mailQueue.isArchived() ? "Yes" : "No"));
+aqua.console.println("------------------------------");
+
+// provide a valid to-address below to enable sending email via mail queue
+var toAddress = aqua.console.readLine("Please enter mail-to address: ");
+toAddress = (toAddress == null ? "" : toAddress.trim());
+if ( toAddress.length() > 0 ) {
+    email = aqua.mail.newMessage();
+    email.setFrom("UnitTest");
+    email.addToRecipient(toAddress);
+    email.setSubject("AQMailQueue: sendMail");
+    email.setText("email test");
+
+    // send email
+    aqua.console.println("Sending mail via mail queue...");
+    try {
+        mailQueue.sendMail(email);
+        aqua.console.println("Email successfully sent.");
+    } catch(ex) {
+        aqua.console.println("Failed to send email: " + ex.toString());
+    }
+}
+
+// done with test
+aqua.console.println("DONE");
+

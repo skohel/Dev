@@ -1,0 +1,9 @@
+﻿var validValue   = "100.001";
+var invalidValue = "AD32DEF";
+var factory      = aqua.type.getFloat();
+
+aqua.console.println("Is [" + validValue   + "] a float? [" + factory.isValid(validValue) + "]");
+aqua.console.println("Is [" + invalidValue + "] a float? [" + factory.isValid(invalidValue) + "]");
+
+var invalidValue = 1231111111111111111111111111111111.111111111111111111111111111;
+aqua.console.println("Is [" + invalidValue + "] a float? [" + factory.isValid(invalidValue) + "]");

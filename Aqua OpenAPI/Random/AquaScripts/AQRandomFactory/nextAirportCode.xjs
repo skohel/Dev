@@ -1,0 +1,5 @@
+﻿print("Generate a random airport code:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextAirportCode();
+    print("\t"+x);
+}

@@ -1,0 +1,12 @@
+﻿var validValue   = "10000000";
+var invalidValue = "a1111111";
+var factory      = aqua.type.getLong();
+
+aqua.console.println("Is [" + validValue   + "] a long? [" + factory.isValid(validValue) + "]");
+aqua.console.println("Is [" + invalidValue + "] a long? [" + factory.isValid(invalidValue) + "]");
+
+var validValue = "2993372036854775807";
+aqua.console.println("Is [" + validValue + "] a long? [" + factory.isValid(validValue) + "]");
+
+var invalidValue = 2993372036854775808;
+aqua.console.println("Is [" + invalidValue + "] a long? [" + factory.isValid(invalidValue) + "]");

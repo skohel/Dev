@@ -1,0 +1,17 @@
+﻿
+//
+// This script demonstrates how to determine whether formatting time values is desired or not.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// check whether formatting is desired
+var flag = settings.isTimeFormatNone();
+aqua.console.println("Default setting: time formatting is " + (flag ? "not " : "") + "desired.");
+
+// turn off formatting
+settings.setTimeFormatNone();
+flag = settings.isTimeFormatNone();
+aqua.console.println("Custom setting: time formatting is " + (flag ? "not " : "") + "desired.");
+

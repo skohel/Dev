@@ -1,0 +1,27 @@
+/*
+aqua.math.IEEEremainder
+
+Computes the remainder operation on two arguments as prescribed by the IEEE 754 standard.
+The remainder value is mathematically equal to f1 - f2 × n, where n is the mathematical integer
+closest to the exact mathematical value of the quotient f1/f2, and if two mathematical integers 
+are equally close to f1/f2, then n is the integer that is even. If the remainder is zero, its 
+sign is the same as the sign of the first argument. 
+   
+Synopsys
+    double aqua.math.IEEEremainder(double v1, double v2)
+
+Description
+    * If the first argument is finite and the second argument is infinite, then the result is the same as the first argument.
+  
+Example
+    see below
+*/
+// --- IEEEremainder() ---
+function show_IEEEremainder(v1, v2) {
+    aqua.console.println("IEEEremainder[" + v1 + ", " + v2 + "] --> [" + aqua.math.IEEEremainder(v1, v2) + "]");
+}
+show_IEEEremainder(3, 8);
+show_IEEEremainder(3.1, 8);
+show_IEEEremainder(8, 3);
+show_IEEEremainder(8.1, 3);
+

@@ -1,0 +1,182 @@
+﻿/*
+ *  This script is a utility script that can be modified to backup an
+ *  SVN repository
+ */
+
+/**** Start of Options ****/
+
+//an array of folders to be backed up
+var folders_to_backup = ["C:\\Test.aquascript\\test.svn\\archive",
+                         "C:\\Test.aquascript\\test.svn\\empty",
+                         "C:\\Test.aquascript\\test.svn\\project"
+                         ];
+//a resulting file name
+var encrypted_archive_file_name = "\\local_backup\\svn_snapshot-encrypt.zip";
+
+
+
+// Name of the final file archive without the extension
+var archive_name = "aquafold_source_repo";
+// Folder location where to put the archive file;
+var archive_folder = "\\local_backup\\svn_snapshot\\";
+// This is the root folder where the repository is located
+var svn_repository_to_archive = "\\bingbong\\share\\l33t-src";
+// Indicate what type of compression : bzip2, gzip, zip
+var archive_compression = "zip";
+// Indicate whether to do an SVN Update before backup
+var do_svn_update = true;
+
+/**** End of Options ****/
+
+aqua.console.println("Please enter the password you want to use to encrypt the zip file.");
+var encrypt_password = aqua.console.readPassword("Password: ");
+//uncomment this if you prefer to get the password from Secure Storage
+//var encrypt_password = aqua.crypto.getSecureField("encrypt_password");
+
+backup_directories(folders_to_backup);
+
+//=============================================================================================
+function backup_directories(directory_array) {
+    for(i = 0; i < directory_array.length; i++) {
+        var dir = directory_array[i];
+        var archive_name = new java.lang.String(dir);
+        aqua.console.println(archive_name);
+        archive_name = archive_name.replace(new java.lang.String("\\"), "-");
+        archive_name = archive_name.replace(new java.lang.String("/"), "-");
+        archive_name = archive_name.replace(new java.lang.String(":"), "-");
+        aqua.console.println(archive_name);
+        backup_now(archive_name, archive_folder, dir, archive_compression, do_svn_update);
+    }
+
+    var dir = "\\local_backup\\svn_snapshot";
+    backup_now("svn_snapshot", "\\local_backup\\", "\\local_backup\\svn_snapshot\\", archive_compression, false);
+
+    encrypt_zip("\\local_backup\\svn_snapshot.zip", encrypted_archive_file_name, encrypt_password);
+
+    aqua.filesystem.deleteFile("\\local_backup\\svn_snapshot.zip");
+    var fileSet = aqua.filesystem.newFileSet();
+    fileSet.setBaseDir(dir);
+    fileSet.setIncludes("**/*");
+    var filesets = new Array();
+    filesets[0] = fileSet;
+    aqua.filesystem.deleteFileSets(filesets);
+
+    aqua.console.println("Completed ... in " + aqua.util.formatTimeInterval(aqua.system.currentTime - aqua.startTime));
+}
+
+function backup_now(archive_name, archive_folder, svn_repository_to_archive, archive_compression, do_svn_update) {
+
+    if ( do_svn_update == true ) {
+        var ws = aqua.vcs.getWorkspaceSubversion(svn_repository_to_archive);    
+        aqua.console.println("svn-update [Revision:" + ws.getRevision(svn_repository_to_archive).getRevision() + "]: [" + svn_repository_to_archive + "]... ");
+
+        try {
+            ws.update(svn_repository_to_archive);
+            aqua.console.print();
+        } catch ( ex ) {
+
+        }
+
+        aqua.console.println("svn-update [Revision:" + ws.getRevision(svn_repository_to_archive).getRevision() + "]: done.");
+    }
+
+    try {
+        backup_svn_to_archive(svn_repository_to_archive, archive_name, archive_folder, archive_compression);
+    } catch ( ex ) {
+        aqua.console.println("SVN Backup : failed - " + ex.toString());
+    }
+
+    aqua.console.println("");
+}
+
+function backup_svn_to_archive(repo_folder, backup_name, backup_folder, compression_type) {
+
+    aqua.filesystem.createDirectory(backup_folder);
+
+    var fileset   = aqua.filesystem.newFileSet();
+    
+    fileset.setBaseDir(repo_folder);
+    fileset.setIncludes("**/*");
+    fileset.setExcludes("**/*.svn");
+    // We can exclude more files by calling .setExcludes more times.
+    // fileset.setExcludes("**/CVS");
+
+    var full_tararchive_path = backup_folder + backup_name + ".tar";
+    var full_ziparchive_path = backup_folder + backup_name;
+    
+    if ( compression_type != null && compression_type.equals("bzip2") ) {
+        try {
+            exec_tar(full_tararchive_path, fileset);
+        } catch ( ex ) {
+            aqua.console.println("Tar of Repo : failed - " + ex.toString());
+            throw ex;
+        }
+        try {
+            exec_bzip2(full_tararchive_path)
+        } catch ( ex ) {
+            aqua.console.println("bzip2 of Repo Tar : failed - " + ex.toString());
+            throw ex;
+        }
+    } else if ( compression_type != null && compression_type.equals("zip") ) {
+        try {
+            exec_zip(full_ziparchive_path, fileset)
+        } catch ( ex ) {
+            aqua.console.println("Gzip of Repo Tar : failed - " + ex.toString());
+            throw ex;
+        }
+    } else {
+        try {
+            exec_tar(full_tararchive_path, fileset);
+        } catch ( ex ) {
+            aqua.console.println("Tar of Repo : failed - " + ex.toString());
+            throw ex;
+        }
+        try {
+            exec_gzip(full_tararchive_path)
+        } catch ( ex ) {
+            aqua.console.println("Gzip of Repo Tar : failed - " + ex.toString());
+            throw ex;
+        }
+    }
+    
+    if ( aqua.filesystem.exists(full_tararchive_path) ) {
+        aqua.filesystem.deleteFile(full_tararchive_path);    
+    }
+
+}
+function exec_tar(tarFile, fileset) {
+    var startT = aqua.system.currentTime;
+    aqua.console.print("tar : from [" + fileset.getBaseDir() + "] to [" + tarFile + "]... ");
+    aqua.archive.tar(fileset, tarFile);
+    aqua.console.print("tar : done");
+    aqua.console.println(" ... in " + aqua.util.formatTimeInterval(aqua.system.currentTime - startT));
+}
+function exec_gzip(tarFile) {
+    var startT = aqua.system.currentTime;
+    aqua.console.print("gzip : from [" + tarFile + "] to [" + tarFile + ".gz" + "]... ");
+    aqua.archive.gzip(tarFile, tarFile + ".gz");
+    aqua.console.print("gzip : done.");
+    aqua.console.println(" ... in " + aqua.util.formatTimeInterval(aqua.system.currentTime - startT));
+}
+function exec_bzip2(tarFile) {
+    var startT = aqua.system.currentTime;
+    aqua.console.print("bzip2 : from [" + tarFile + "] to [" + tarFile + ".bz2" + "]... ");
+    aqua.archive.bzip2(tarFile, tarFile + ".bz2");
+    aqua.console.print("bzip2 : done.");
+    aqua.console.println(" ... in " + aqua.util.formatTimeInterval(aqua.system.currentTime - startT));
+}
+function exec_zip(zipFile, fileset) {
+    var startT = aqua.system.currentTime;
+    aqua.console.print("zip : from [" + fileset.getBaseDir() + "] to [" + zipFile + ".zip" + "]... ");
+    aqua.archive.zip(fileset, zipFile + ".zip");
+    aqua.console.print("zip : done.");
+    aqua.console.println(" ... in " + aqua.util.formatTimeInterval(aqua.system.currentTime - startT));
+}
+
+function encrypt_zip(source, destination, password) {
+    var startT = aqua.system.currentTime;
+    aqua.console.print("encrypt zip : from [" + source + "] to [" + destination + "]... ");
+    aqua.crypto.encryptZipAES(source, destination, password);
+    aqua.console.print("encrypt zip : done.");
+    aqua.console.println(" ... in " + aqua.util.formatTimeInterval(aqua.system.currentTime - startT));
+}

@@ -1,0 +1,188 @@
+﻿/*
+aqua.math.curve
+
+Synopsyis
+    Summary of interpolation and evaluation methods for resampling
+
+Description
+Demonstrates usage of interpolation methods
+
+Example
+    see below
+
+*/
+var rawDataX=new Array();
+var rawDataXS = new Array();
+var rawDataY=new Array();
+var rawDataYClean = new Array();
+
+var interpolatedPoint=0;
+var noise = new Array();
+var desiredX=0;
+
+//generate noise
+for(i=0;i<30;i++){
+noise[i]=2*Math.random()-1;
+noise[i]=noise[i]*10;
+desiredX+=Math.random()*2;
+rawDataX[i]=desiredX;
+}
+
+rawDataX[0]=0;
+
+if(rawDataX[29]<30) {
+noise[30]=2*Math.random()-1;
+rawDataX[30]=30;
+} else {
+noise[30]=2*Math.random()-1;
+rawDataX[30]=rawDataX[29]+1;
+}
+
+
+//generate noisy data 
+for(i=0;i<31;i++){
+
+   rawDataY[i]=.2*Math.pow(rawDataX[i],2)+15+noise[i];
+ rawDataYClean[i]=.2*Math.pow(rawDataX[i],2)+15;
+}
+
+
+
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+
+
+
+
+model.addSeries("raw");
+model.addSeries("raw with noise");
+
+for(i=0;i<30;i++){
+model.addCategory(rawDataX[i]);
+model.setValue(1,i,rawDataY[i]);
+model.setValue(0,i,rawDataYClean[i]);
+
+}
+
+
+
+chart.getProperties().setNumericCategoryAxis(true);
+
+chart.getProperties().setTitle("Unevenly sampled raw data.");
+chart.getProperties().setChartTypeLine(0);
+chart.getProperties().setChartTypeLine(1);
+chart.getProperties().setLineWidth(2);
+chart.getProperties().setMergeAxis(true);
+
+
+chart.getProperties().setView2D(true);
+
+chart.getProperties().setWidth(20);
+chart.getProperties().setHeight(12);
+
+
+//chart.getProperties().setMergeSeriesMin(0);
+//chart.getProperties().setMergeSeriesMax(200);
+//chart.getProperties().setCategoryRange(9,100);
+
+
+chart.getProperties().setImageHeight(480);
+chart.getProperties().setImageWidth(800);
+
+
+//get fit to resample
+
+var chart2 = aqua.chart.newChart();
+var model2 = chart2.getModel();
+
+var testFit = aqua.math.getFit();
+var fitY = new Array();
+var rawResampleY = new Array();
+
+//polynomial fit
+var fitYGraphPoly = new Array();
+var polyCoeff = new Array();
+var newPoly = testFit.newPOLY_Function();
+
+fitPolyY=testFit.polyFit(rawDataX,rawDataY,2);
+polyCoeff=testFit.polyFitCoeff(rawDataX,rawDataY,2);
+
+
+
+//resample
+for(i=0;i<30;i++){
+fitPolyY[i]=testFit.evaluate(i,newPoly,polyCoeff);  //resample via fit and evaluate
+rawResampleY[i]=aqua.math.curve.interpolate(rawDataX,rawDataY,i,"loess");
+
+}
+
+
+model2.addSeries("Resampled (fit)");
+model2.addSeries("Resampled (interpolate)");
+
+
+
+//predict future data using fit and evaluate
+for(i=0;i<30;i++){
+model2.addCategory(i);
+model2.setValue(0,i,fitPolyY[i]);
+model2.setValue(1,i,rawResampleY[i]);
+
+}
+
+chart2.getProperties().setTitle("Uniform Resampling");
+chart2.getProperties().setChartTypeLine(0);
+chart2.getProperties().setLineWidth(2);
+chart2.getProperties().setChartTypeLine(1);
+
+chart2.getProperties().setMergeAxis(true);
+
+chart2.getProperties().setRotationX(-45);
+chart2.getProperties().setDepth(10);
+chart2.getProperties().setWidth(20);
+chart2.getProperties().setHeight(12);
+chart2.getProperties().setView2D(true);
+
+chart2.getProperties().setNumericCategoryAxis(true);
+
+//chart2.getProperties().setMergeSeriesMin(-10);
+//chart2.getProperties().setMergeSeriesMax(200);
+//chart2.getProperties().setCategoryRange(0,32);
+
+
+chart2.getProperties().setImageHeight(480);
+chart2.getProperties().setImageWidth(800);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+var url2 = chart2.cache(5);
+
+//introduction
+
+aqua.response.write(' <p><span style="color: #2778cb;"><big><strong>Non-uniform Data:  Aqua resampling methods.</strong></big></span></p>');
+aqua.response.write('The way a data set is sampled can often be a problem.  Sometimes the data is non-uniform or simply too dense to analyze conveniently.  These issues can be mediated by resampling.  ');
+
+aqua.response.write('The following data set is noisy and non-uniformly sampled.  The x intervals vary in size between 0 and 2.  The non-noisy version is included to highlight the changing intervals.<br>');
+//fig 1
+aqua.response.write('<img src=').write(url).write('>');
+
+//notes on fig 1
+
+aqua.response.write('<hr> Aqua.math.curve and Aqua.math.fit have two methods to address this issue.  We can find a best fit function and evaluate at uniform intervals');
+
+aqua.response.write('<table>');
+aqua.response.write('<pre>         fitY=testFit.polyFit(rawDataX,rawDataY,2);  //best fit polynomial of order 2</pre>');
+aqua.response.write('<pre>         polyCoeff=testFit.polyFitCoeff(rawDataX,rawDataY,2);  //recover polynomial coefficients for evaluation</pre>');
+aqua.response.write('<pre>         evaluatedPoint = testFit.evaluate(desiredX,newPoly,polyCoeff);  //evaluate fit at desiredX</pre>');
+ aqua.response.write('or simply interpolate uniformly throughout the data set. ') ; 
+aqua.response.write('<pre>         interpolatedPoint=aqua.math.curve.interpolate(rawDataX,rawDataY,desiredX);  // calculate missing data point at x = desiredX</pre> ');
+
+
+
+//fig 2
+aqua.response.write('<img src=').write(url2).write('>');
+aqua.response.write('<hr> The same code can be used to down-sample, or decimate a large data set.');
+
+

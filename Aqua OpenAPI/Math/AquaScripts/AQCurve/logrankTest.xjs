@@ -1,0 +1,15 @@
+
+
+//event times for group 1
+var times1=new Array(1, 5, 6, 6, 9, 10, 10, 10, 12, 12, 12, 12, 12, 13, 15, 16, 20, 24, 24, 27, 32, 34, 36, 36, 44);
+//censor data for group 1
+var censor1= new Array(1,0,1,1,0,1,1,0,1,1,1,1,0,1,0,1,0,1,0,0,1,0,1,1,0);
+
+//event and censor data for group 2. 
+var times2=new Array(1, 5, 6, 7, 9, 10, 10, 10, 11, 11, 12, 12, 12, 13, 15, 16, 20, 24);
+var censor2= new Array(1,0,1,0,0,1,1,0,1,1,0,1,0,1,0,1,0,1);
+var lrTest = 0;
+
+lrTest=aqua.math.curve.logRankTest(times1,censor1,times2,censor2);
+
+aqua.console.println(lrTest);

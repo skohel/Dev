@@ -1,0 +1,27 @@
+/*
+aqua.math.cbrt
+
+    Returns the cube root of a double value. For positive finite x, cbrt(-x) == -cbrt(x); 
+    that is, the cube root of a negative value is the negative of the cube root of that value's magnitude
+
+Synopsys
+    double aqua.math.cbrt(double);
+
+Description
+    * If the argument is NaN, then the result is NaN.
+    * If the argument is infinite, then the result is an infinity with the same sign as the argument.
+    * If the argument is zero, then the result is a zero with the same sign as the argument. 
+    The computed result must be within 1 ulp of the exact result. 
+
+Example
+    see below
+*/
+
+// --- cbrt() ---
+function show_cbrt(value) {
+    aqua.console.println("cbrt[" + value + "] --> [" + aqua.math.cbrt(value) + "]");
+}
+show_cbrt(8);
+show_cbrt(10);
+show_cbrt(27);
+show_cbrt(-27);

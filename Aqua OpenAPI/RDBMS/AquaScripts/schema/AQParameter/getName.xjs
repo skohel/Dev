@@ -1,0 +1,25 @@
+﻿var server = "Oracle 11G - 10.168.11.51 - HR";
+var db     = null;
+var schema = "HR";
+
+var conn = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+
+var functions = metadata.extractFunctions(db, schema);
+
+for (var i=0; i<functions.length; i++){
+
+    var func = functions[i];
+
+    var parameters = func.extractParameters();
+
+    aqua.console.println("Function Name: [" + func.getName() + "]");
+    for (var j=0; j<parameters.length; j++){
+        // calling AQParameter.getName()
+        aqua.console.println("Parameter no.: [" + j + "]    Parameter Name: [" + parameters[j].getName() + "]");
+    }
+    aqua.console.println("");
+}
+conn.disconnect();

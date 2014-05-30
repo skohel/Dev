@@ -1,0 +1,70 @@
+﻿testCollectUserFiles();
+testCollectAquaScripts();
+testCollectConnections();
+
+function testCollectUserFiles() {
+	print('[TEST] aqua.project.getUserFile().collectFilesRecursively()');
+    var userFile = aqua.project.getUserFile("testFile");
+    var files = userFile.collectFilesRecursively();
+    if(files == null) {
+        throw "Expected files != null but was " + files;
+    }
+    if(files.length != 0) {
+        throw "Expected files.length == 0 but was " + files.length;
+    }
+    var userFile = aqua.project.getUserFile("");
+    var files = userFile.collectFilesRecursively();
+    if(files == null) {
+        throw "Expected files != null but was " + files;
+    }
+    if(files.length <= 0) {
+        throw "Expected files.length > 0 but was " + files.length;
+    }
+    var userFile = aqua.project.getUserFile("");
+    var files = userFile.collectFilesRecursively("*.*");
+    if(files == null) {
+        throw "Expected files != null but was " + files;
+    }
+	print('[OK]');
+}
+
+function testCollectAquaScripts() {
+	print('[TEST] aqua.project.getAquaScript().collectFilesRecursively()');
+    var aquaScript = aqua.project.getAquaScript("AQProjectFile/collectFiles.xjs");
+    var files = aquaScript.collectFilesRecursively();
+    if(files == null) {
+        throw "Expected files != null but was " + files;
+    }
+    if(files.length != 0) {
+        throw "Expected files.length == 0 but was " + files.length;
+    }
+    var aquaScript = aqua.project.getAquaScript("");
+    var files = aquaScript.collectFilesRecursively("*.*");
+    if(files == null) {
+        throw "Expected files != null but was " + files;
+    }
+	print('[OK]');
+}
+
+function testCollectConnections() {
+	print('[TEST] aqua.project.getServerConnectionsRootFolder().collectFilesRecursively()');
+    var connectionFolder = aqua.project.getServerConnectionsRootFolder();
+    var files = connectionFolder.collectFilesRecursively();
+    if(files == null) {
+        throw "Expected files != null but was " + files;
+    }
+    if(files.length <= 0) {
+        throw "Expected files.length > 0 but was " + files.length;
+    }
+    var connectionFolder = aqua.project.getServerConnectionsRootFolder();
+    var files = connectionFolder.collectFilesRecursively("* *");
+    if(files == null) {
+        throw "Expected files != null but was " + files;
+    }
+	print('[OK]');
+
+}
+
+function print(m) {
+    aqua.console.println(m);
+}

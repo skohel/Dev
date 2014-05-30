@@ -1,0 +1,13 @@
+﻿var server = "Oracle 11G - 10.168.11.51 - HR";
+var db     = null;
+var schema = "HR";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+var objs     = metadata.extractClusters(db, schema);
+
+for(var i=0; i<objs.length; i++){
+    aqua.console.println("Object Name:\t[" + objs[i].getName() + "]\t\tThe CREATE script:\t[" + objs[i].scriptCREATE() + "]");
+}
+conn.disconnect();

@@ -1,0 +1,79 @@
+﻿// declare and give values to two strings for comparing
+var stringA = "Object\nTable of contents\n\n\n   1. 1. Summary\n   2. 2. Syntax\n   3. 3. Parameters\n   4. 4. Description\n   5. 5. Properties\n   6. 6. Methods\nFriday’s swings came after Senate passed its version of a financial overhaul bill and German lawmakers voted to approve their country’s share of the nearly $1 trillion rescue deal to save the euro and contain the European debt crisis.\n         1. 7.1. Properties\n         2. 7.2. Methods\n   8. 8. Examples\ntest";
+var stringB = "\nStocks on Wall Street surged as the trading ended on Friday, capping another volatile week.\nMichael Appleton for The New York Times\n\nTraders on the floor of the New York Stock Exchange shortly after opening on Friday.\n\nFriday’s swings came after Senate passed its version of a financial overhaul bill and German lawmakers voted to approve their country’s share of the nearly $1 trillion rescue deal to save the euro and contain the European debt crisis.\n\nThe Dow Jones industrial average fell almost immediately below 10,000 as trading opened on Friday but regained that ground and more. At the close, the index was 125.38 points, or 1.25 percent, higher at 10,193.39. The Standard & Poor’s 500-stock index rose 16.10 points or 1.5 percent, to 1,087.69, and the Nasdaq was 25.03 points or 1.14 percent higher at 2,229.04.\n\nThe market volatility index remained high on Friday, and there were signs of pressure in the credit market as 10-year Treasury yields and the three-month interbank lending rate rose.\n\n“Definitely people think we are not out of the woods yet,” said Justin Golden, a senior strategist for Macro Risk Advisors, who said institutional investors at least were awaiting further developments in Europe over the handling of the debt crisis.\nObject";
+
+// Returns a singleton object which provides compare functionality.
+var objCompare              = aqua.getCompare();
+
+// This method compares strings on line-per-line basis.
+var objDifferences          = objCompare.compare(stringA, stringB);
+
+// Returns a non-null array of changes, suitable for formatted output.
+var objLinechange           = objDifferences.getChanges();
+
+print("\n--------------- print toString results --------------------------");
+for(i=0;i<objLinechange.length;i++) { print(objLinechange[i]); }
+
+//print("objLinechange.length: " + objLinechange.length);
+print("\n--------------- print Array Specific Values ---------------------");
+for(i=0;i<objLinechange.length;i++) {
+    // Returns a text string on the left side of comparison which corresponds to the first argument in compare() function.
+    print("objLinechage["+i+"].getLeft() = " + objLinechange[i].getLeft());
+    // Returns a text string on the right side of comparison which corresponds to the second argument in compare() function.
+    print("objLinechage["+i+"].getRight() = " + objLinechange[i].getRight());
+    // Returns true if this change corresponds to an added line.
+    print("objLinechage["+i+"].isAdded() = " + objLinechange[i].isAdded());
+    // Returns true if this change corresponds to a deleted line.
+    print("objLinechage["+i+"].isDeleted() = " + objLinechange[i].isDeleted());
+    // Returns true if this change corresponds to a modified line.
+    print("objLinechage["+i+"].isModified() = " + objLinechange[i].isModified());
+    // Returns true if the line has not been modified, or if the comparison options made two lines appear identical.
+    print("objLinechage["+i+"].isUnchanged() = " + objLinechange[i].isUnchanged());
+}
+
+print("\n--------------- print # of modifications ------------------------");
+// Returns a number of ADDED, DELETED, or MODIFIED lines (excluding UNCHANGED).
+var objint                  = objDifferences.getModificationCount();
+print("getModificationCount: " + objint);
+
+var objLineChangeModOnly    = objDifferences.getModificationsOnly();
+print("\n--------------- print toString results --------------------------");
+for(i=0;i<objLineChangeModOnly.length;i++) { print(objLineChangeModOnly[i]); }
+
+print("\n--------------- print Array Specific Values ---------------------");
+for(i=0;i<objLineChangeModOnly.length;i++) {
+    // Returns a text string on the left side of comparison which corresponds to the first argument in compare() function.
+    print("objLineChangeModOnly["+i+"].getLeft() = " + objLineChangeModOnly[i].getLeft());
+    // Returns a text string on the right side of comparison which corresponds to the second argument in compare() function.
+    print("objLineChangeModOnly["+i+"].getRight() = " + objLineChangeModOnly[i].getRight());
+    // Returns true if this change corresponds to an added line.
+    print("objLineChangeModOnly["+i+"].isAdded() = " + objLineChangeModOnly[i].isAdded());
+    // Returns true if this change corresponds to a deleted line.
+    print("objLineChangeModOnly["+i+"].isDeleted() = " + objLineChangeModOnly[i].isDeleted());
+    // Returns true if this change corresponds to a modified line.
+    print("objLineChangeModOnly["+i+"].isModified() = " + objLineChangeModOnly[i].isModified());
+    // Returns true if the line has not been modified, or if the comparison options made two lines appear identical.
+    print("objLineChangeModOnly["+i+"].isUnchanged() = " + objLineChangeModOnly[i].isUnchanged());
+}
+
+// Returns true only if changes are present.
+var objBoolean              = objDifferences.isDifferent();
+print("\n--------------- print isDifferent results -----------------------");
+print("isDiffrent: " + objBoolean);
+
+
+// Returns a string which represents a HTML-formatted representation of the changes.
+var objString               = objDifferences.toHtml();
+print("\n--------------- print toHtml() results ---------------------------");
+print("toHtml(): " + objString);
+
+// Returns a string which represents a HTML-formatted representation of the changes.
+var objStringParamT         = objDifferences.toHtml(true);
+print("\n--------------- print toHtml(true) results -----------------------");
+print("toHtml(true): " + objString);
+// Returns a string which represents a HTML-formatted representation of the changes.
+var objStringParamF         = objDifferences.toHtml(false);
+print("\n--------------- print toHtml(false) results -----------------------");
+print("toHtml(false): " + objString);
+
+

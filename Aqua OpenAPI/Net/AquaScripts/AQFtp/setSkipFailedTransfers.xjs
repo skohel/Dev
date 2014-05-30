@@ -1,0 +1,21 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        setSkipFailedTransfers()
+ 
+   Synopsis:
+       void setSkipFailedTransfers(boolean skipFailedTransfers)
+
+   Description
+        Sets the flag which enables unsuccessful file put, delete and get operations to be skipped with a warning and the remainder of the files still transferred, default to false.
+
+   Parameters
+        skipFailedTransfers - true if failures in transfers are ignored
+
+   Throws
+        none
+ 
+   Example
+        See below.
+*/

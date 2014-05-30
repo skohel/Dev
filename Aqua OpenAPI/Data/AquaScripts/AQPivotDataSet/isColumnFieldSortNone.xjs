@@ -1,0 +1,20 @@
+﻿
+// create pivot data set
+var pivotTable = aqua.data.newPivotDataSet();
+
+// data field name
+var fieldName = "Freight";
+
+// check sort order
+var isNone = pivotTable.isColumnFieldSortNone(fieldName);
+aqua.console.println("--- before setting sort order ---");
+aqua.console.println("column field sort none = " + isNone);
+
+// set sort order
+pivotTable.setColumnFieldSortNone(fieldName);
+
+// check sort order
+isNone = pivotTable.isColumnFieldSortNone(fieldName);
+aqua.console.println("--- after setting sort order ---");
+aqua.console.println("column field sort none = " + isNone);
+

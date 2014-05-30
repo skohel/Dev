@@ -1,0 +1,14 @@
+﻿print("Generate a random integer:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextInteger();
+    print("\t"+x);
+}
+
+var min = -1000;
+var max = 1000;
+print("Generate a random integer between " + min + " and " + max + ":");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextInteger(min, max);
+    print("\t"+x);
+}
+

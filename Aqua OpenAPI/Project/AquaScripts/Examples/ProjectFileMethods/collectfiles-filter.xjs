@@ -1,0 +1,29 @@
+﻿/*
+
+Recursively collects files in a project folder and its descendant folders.
+
+Synopsys
+    AQProjectFile[] collectFiles(String filter) 
+
+Description
+    Recursively collects files in a project folder and its descendant folders.
+
+Example
+    //
+
+
+*/
+
+
+ap = aqua.project;
+
+objFile = ap.getAquaScript("");
+
+collect = objFile.collectFiles("*User*.xjs");
+
+for(i=0;i<collect.length;i++) {
+    print(collect[i].getName());
+}
+function print(m) {
+    aqua.console.println(m);
+}

@@ -1,0 +1,24 @@
+
+// create a web client
+var client = aqua.net.newWebClient();
+
+// create a request
+var request = client.newWebRequest("http://www.aquafold.com");
+
+// submit request as a get request
+var response = client.submitGetRequest(request);
+
+// write request to console
+aqua.console.println(request.toString());
+
+// write response to console
+aqua.console.println(response.toString(false));
+
+// get header's value
+var headerValue = response.getContentTypeHeader();
+
+// show header's value
+aqua.console.println("The value of the Content-Type entity header is [" + headerValue + "].");
+
+// terminate client
+client.closeConnection();

@@ -1,0 +1,3 @@
+﻿var str = aqua.console.readLine("enter something and hit return when you are done: ");
+
+aqua.console.println("echo: [" + str + "]");

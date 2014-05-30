@@ -1,0 +1,4 @@
+﻿var email = "architect@aquafold.com";
+var type  = aqua.getType();
+
+aqua.console.println("Is [" + email + "] a valid email address: [" + type.getEmailAddress().isValid(email) + "]");

@@ -1,0 +1,50 @@
+﻿var server      = "MySql 6.0 - 10.168.1.38 - demo";
+var db          = "demo";
+var schema      = null;
+var sql         = "select * from actor";
+
+var conn = aqua.project.getServerConnection(server);
+conn.connect();
+conn.changeDatabase(db);
+
+var resultSet = conn.executeQuery(sql);
+var columnStructure = resultSet.getColumnStructure();
+var columnNames     = columnStructure.getColumnNames();
+
+if (resultSet.next()){
+    for (var i=0; i<columnStructure.getColumnCount(); i++){
+
+        try{
+            // example of AQResultSet.getDate(int)
+            aqua.console.println("Column[" + i + "]      [" + columnNames[i] + "]    resultSet.getDate(i)\t[" + resultSet.getDate(i) + "]");
+
+            // example of AQResultSet.getDate(string)
+            aqua.console.println("Column[" + i + "]      [" + columnNames[i] + "]    resultSet.getDate(" + columnNames[i] + ")\t[" + resultSet.getDate(columnNames[i]) + "]");
+
+            aqua.console.println("");
+        }
+        catch(ex){
+            aqua.console.println(ex.toString());
+            aqua.console.println("");
+        }
+    }
+}
+
+// this will fail
+try{
+    aqua.console.println("Column[" + i + "]      [" + columnNames[i] + "]    resultSet.getDate(i)\t[" + resultSet.getDate(i) + "]");
+}
+catch(ex){
+    aqua.console.println(ex.toString());
+}
+
+// so will this
+try{
+    aqua.console.println("Column[" + i + "]      [invalidcolumnname]    resultSet.getDate(invalidcolumnname)\t[" + resultSet.getDate("invalidcolumnname") + "]");
+}
+catch(ex){
+    aqua.console.println(ex.toString());
+}
+
+resultSet.close();
+conn.disconnect();

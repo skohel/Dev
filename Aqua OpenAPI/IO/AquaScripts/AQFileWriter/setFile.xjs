@@ -1,0 +1,6 @@
+﻿var filename   = "/tmp/newFile";
+var fileWriter = aqua.io.newFileWriter();
+
+aqua.console.println("Setting filename [" + filename + "]");
+fileWriter.setFile(filename);
+fileWriter.close();

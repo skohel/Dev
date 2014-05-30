@@ -1,0 +1,17 @@
+﻿var test_file = "Datastudio/";
+// get instance of filesystem object
+//var AQFS = aqua.filesystem;
+var fileset = aqua.filesystem.newFileSet();
+fileset.setBaseDir(test_file);
+
+files = aqua.filesystem.scan(fileset);
+try {
+    aqua.console.println("______ Scanning and Printing Set File ______ : ");
+    for (var i=0; i< files.length; i++) {
+        aqua.console.println(files[i]);
+    }
+ } 
+catch(ex) {
+    aqua.console.println("File Name not Valid: Failed - " + ex.toString() + "\n");
+}
+   

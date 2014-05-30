@@ -1,0 +1,15 @@
+﻿
+//
+// This script demonstrates how to get/set the footer text.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// set footer text
+settings.setFooter("This is a footer text.");
+
+// get footer text
+var footer = settings.getFooter();
+aqua.console.println("The footer is currently set to '" + footer + "'.");
+

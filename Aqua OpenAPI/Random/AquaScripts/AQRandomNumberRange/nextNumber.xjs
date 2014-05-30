@@ -1,0 +1,23 @@
+
+importPackage(java.util);
+
+// an utility function to generate numbers from a number range generator
+function generateNumbers(generator) {
+    for( var i=0; i<6; i++ ) {
+        aqua.console.println("  " + generator.nextNumber());
+    }
+}
+
+
+// create a number range generator using default range
+var randomRange = aqua.random.newRandomNumberRange();
+aqua.console.println("Generate Number objects from a number range generator using default range:");
+generateNumbers(randomRange);
+
+// create a number range generator using custom range
+var fromNumber = 3;
+var toNumber = 6;
+randomRange = aqua.random.newRandomNumberRange(fromNumber, toNumber);
+aqua.console.println("");
+aqua.console.println("Generate Number objects from a number range generator with range set from [" + fromNumber + "] to [" + toNumber + "]");
+generateNumbers(randomRange);

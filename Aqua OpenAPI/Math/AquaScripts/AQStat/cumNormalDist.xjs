@@ -1,0 +1,8 @@
+
+
+var z = 1.2;
+
+out=aqua.math.stat.cumNormalDist(z);
+
+aqua.console.println("Cumulative Normal Distribution Value = " + out);
+

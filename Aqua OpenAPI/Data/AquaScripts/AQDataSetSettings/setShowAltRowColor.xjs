@@ -1,0 +1,45 @@
+
+//
+// This script demonstrates how to turn on or off alternate background colors when rendering data set in HTML.
+//
+
+// define a data set
+var columns = ["ShipCountry", "CustomerID", "ShipName", "Freight"];
+var dataSet = aqua.data.newDataSet(columns);
+
+// add rows to data set
+dataSet.addRowWithValues("Canada", "C039", "ABC Inc.",   200);
+dataSet.addRowWithValues("Canada", "C061", "Sunrise",    230);
+dataSet.addRowWithValues("France", "C123", "Joe Smith", 1620);
+dataSet.addRowWithValues("Japan",  "C375", "JPL Corp.", 4200);
+dataSet.addRowWithValues("UK",     "C028", "BUK",       1500);
+dataSet.addRowWithValues("US",     "C006", "AuqaFold",    35);
+dataSet.addRowWithValues("US",     "C007", "NETINC",     105);
+dataSet.addRowWithValues("US",     "C257", "BA IT",       89);
+dataSet.addRowWithValues("US",     "C257", "BA R&D",      89);
+
+// create a settings for the data set, settings is used to describe how data set to be rendered
+var settings = aqua.report.newReportDataSetSettings();
+
+// set title
+settings.setTitle("AquaFold Open API Example: showing alternate background colors");
+
+// create a report
+var report = aqua.report.newReport();
+
+// add data set and its settings to report
+report.addDataSet(dataSet, settings);
+
+// render report in HTML and display it in browser
+aqua.response.write(report.renderHtml());
+aqua.response.write("<br><br>");
+
+
+// alternate colors is turned on by default, turn it off
+settings.setShowAltRowColor(false);
+
+// update title
+settings.setTitle("AquaFold Open API Example: alternate background colors turned off");
+
+// render report in HTML and display it in browser
+aqua.response.write(report.renderHtml());

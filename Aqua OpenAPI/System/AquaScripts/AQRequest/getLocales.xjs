@@ -1,0 +1,5 @@
+﻿var locales = aqua.request.getLocales();
+
+for (var i=0; i<locales.length; i++){
+    aqua.console.println("locale [" + i + "]: [" + locales[i] + "]");
+}

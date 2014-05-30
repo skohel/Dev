@@ -1,0 +1,132 @@
+﻿
+// the path in the local "Servers" folder
+var serverPath = "SQL Server 2000";
+// the database in which we are interested
+var databaseName = "Northwind";
+
+// open connection to server
+var serverConnection = aqua.project.getServerConnection(serverPath);
+
+// establish SQL connection
+serverConnection.connect();
+
+// change database
+serverConnection.changeDatabase(databaseName);
+
+// create a data set
+var dataSet = serverConnection.executeSnapshot("select * from orders;");
+
+// ----- Column Indexes, Names, and Types -----
+//   0 - OrderID         - NUMBER
+//   1 - CustomerID      - TEXT
+//   2 - EmployeeID      - NUMBER
+//   3 - OrderDate       - DATETIME
+//   4 - RequiredDate    - DATETIME
+//   5 - ShippedDate     - DATETIME
+//   6 - ShipVia         - NUMBER
+//   7 - Freight         - NUMBER
+//   8 - ShipName        - TEXT
+//   9 - ShipAddress     - TEXT
+//  10 - ShipCity        - TEXT
+//  11 - ShipRegion      - TEXT
+//  12 - ShipPostalCode  - TEXT
+//  13 - ShipCountry     - TEXT
+
+// dataSet.setSortingAscending("ShipVia");
+// dataSet.setSortingDescending("ShipVia");
+// dataSet.setSortingNone("ShipVia");
+// dataSet.setSortingAscending(7);
+dataSet.setSortingDescending(7);
+// dataSet.setSortingNone(7);
+
+// sort data set
+dataSet.sort();
+
+// create a settings
+var settings = aqua.data.newDataSetSettings();
+
+settings.setTitle("Title: <Data Set Demo>");
+settings.setFooter("Footer <goes> here.");
+settings.setShowRowNumber(false);
+// settings.setRowNumberHeader("Row Number");
+// settings.setRowNumberStartRowIndex(3);
+// settings.hideColumn(0);
+
+// create custom headers
+settings.setColumnHeaders(new Array("Order <ID>", "Customer <ID>"));
+settings.setColumnHeader(3, "Order <Date>");
+settings.setColumnHeaders(new Array("ShipAddress", "ShipCity", "Unbalanced!!!"), new Array("Ship Address", "Ship City"));
+settings.setColumnHeader("ShipName", "Ship Name");
+
+// sort links
+settings.setHtmlDataColumnSortLink("http://www.yahoo.com?type=c1&order=<AQSO>&sid=<AQSID>");
+
+// format output
+settings.setDateTimeFormat("yyyy-MM-dd HH:mm:ss");
+settings.setColumnDateTimeFormat("OrderDate", "yyyy-MM-dd");
+settings.setColumnDateTimeFormatNone("RequiredDate");
+settings.setColumnNumericFormat("OrderID", "#,##0.##");
+settings.setColumnNumericFormat("Freight", "#,##0.00");
+// settings.setColumnNumericFormatNone("Freight");
+
+// settings.setDateTimeFormatNone();
+// settings.setColumnDateTimeFormat(3, "yyyy-MM-dd");
+// settings.setColumnDateTimeFormatNone(4);
+// settings.setColumnNumericFormat(0, "#,##0.##");
+// settings.setColumnNumericFormatNone(7);
+
+// chart
+var chart = aqua.chart.newChart();
+chart.setDataSource(dataSet);
+chart.getProperties().setImageHeight(400);
+chart.getProperties().setImageWidth(600);
+chart.setCategoryFields("ShipCountry");
+// chart.setCategoryFields("ShipCountry", "ShipRegion");
+// chart.setCategoryFields("ShipCountry", "ShipRegion", "ShipCity");
+chart.setSeriesFields("Freight");
+// chart.setSeriesFields("Freight", "ShipVia");
+// chart.setSeriesFields("Freight", "ShipVia", "EmployeeID");
+
+// --- turn settings/chart on/off
+// chart = null;
+// settings = null;
+
+// --- generate text grid
+// aqua.console.print(dataSet.renderText());
+// aqua.console.print(dataSet.renderText(12));
+aqua.console.print(dataSet.renderText(settings));
+
+// generate a HTML document
+// aqua.console.print(dataSet.renderHtml());
+
+// generate a HTML document and display it in the embedded browser
+// aqua.response.write(dataSet.renderHtml());
+// aqua.response.write(dataSet.renderHtml(settings));
+aqua.response.write(dataSet.renderHtml(settings, chart));
+
+// --- save data set to Excel
+// settings.setPageSize(12);
+// settings.setMaxColumnWidth(25);
+function saveToExcel() {
+    var excel2003File = "C:/temp/temp3DataSet.xls";
+    var excel2007File = "C:/temp/temp7DataSet.xlsx";
+//  dataSet.saveAsExcel2003(excel2003File);
+    dataSet.saveAsExcel2003(excel2003File, settings, chart);
+    aqua.console.println("Data set is saved to " + excel2003File + ".");
+//  dataSet.saveAsExcel2007(excel2007File);
+//  dataSet.saveAsExcel2007(excel2007File, settings, chart);
+//  aqua.console.println("Data set is saved to " + excel2007File + ".");
+}
+// saveToExcel();
+
+// --- convert data set to Excel as a byte array
+function toExcelAsByteArray(is2k7) {
+//  var byteArray = (is2k7 ? dataSet.getAsExcel2007() : dataSet.getAsExcel2003());
+    var byteArray = (is2k7 ? dataSet.getAsExcel2007(settings, chart) : dataSet.getAsExcel2003(settings, chart));
+    var fileName = (is2k7 ? "ExcelDataSet.xlsx" : "ExcelDataSet.xls");
+    aqua.response.sendBinary("application/excel", fileName, byteArray);
+}
+// toExcelAsByteArray(false);
+
+// done, disconnect from server
+serverConnection.disconnect();

@@ -1,0 +1,31 @@
+/*
+aqua.math.pow
+
+Returns the value of the first argument raised to the power of the second argument. 
+   
+Synopsys
+    double aqua.math.pow(double value, double power)
+
+Description
+    Nothing exciting to describe.
+
+Example
+    see below
+*/
+
+// --- pow() ---
+function show_pow(value, power) {
+    aqua.console.println("pow[" + value + ", " + power + "] --> [" + aqua.math.pow(value, power) + "]");
+}
+
+show_pow(1, 0);
+show_pow(0, 1);
+show_pow(0.5, 0.5);
+show_pow(2.5, 2);
+show_pow(2.5, 2.1);
+show_pow(4, .5);
+show_pow(2, 3);
+show_pow(2, -3);
+show_pow(-2, -3);
+
+

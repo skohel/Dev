@@ -1,0 +1,57 @@
+﻿//------------------------------------------------------------------------------
+// Class:  
+//      CoreHadoopFileSystem
+// Method:
+//      fileSize()
+//
+// Synopsis:
+//      fileSize()
+//
+// Description
+//      Returns the length of the file denoted by this file name. The return
+//      value is unspecified if this file name denotes a directory.
+//    
+// Parameters
+//      string - The file name.
+//
+// Throws
+//      Exception - on error
+//
+// Return
+//      long - The length, in bytes, of the file denoted by this file name
+//      pathname, or 0L if the file does not exist. Some operating
+//      systems may return 0L for pathnames denoting system-dependent
+//      entities such as devices or pipes.
+//
+// Example
+//      See below.
+//------------------------------------------------------------------------------
+// all test data will be created under this directory
+var fs_data_dir = "/test/AQHadoopFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.net.newHadoopDistributedFileSystem("hdfs://localhost:9100");
+
+test_fileSize();
+
+// --- test fileSize ---
+
+function test_fileSize(){
+
+   var src_file = fs_data_dir + "files/license.txt";
+   var file_doesnt_exist = fs_data_dir + "file_doesnt_exist";
+
+   exec_fileSize(src_file);
+   exec_fileSize(file_doesnt_exist);
+   exec_fileSize(fs_data_dir);
+ 
+}
+
+function exec_fileSize(src_file) {
+    try {
+        aqua.console.println("fileSize: [" + src_file + "] is " + AQFS.fileSize(src_file) + " bytes");
+        aqua.console.println("fileSize done");
+    } catch(ex) {
+        aqua.console.println("fileSize failed - " + ex.toString());
+    }
+}

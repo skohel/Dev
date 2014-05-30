@@ -1,0 +1,33 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "/tmp/test/AQFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.filesystem;
+
+/* --- test renameext--- */
+
+test_renameext();
+
+// --- renameExtensions ---
+
+function test_renameext() {
+    var src_base = test_data_dir + "files/src_base/";
+    var dest_base = test_data_dir + "renameext/";
+    
+    AQFS.copy(src_base, dest_base);
+
+    // testing error condition - rename extension of a file
+    exec_renameext(dest_base + "test_file.html", "html", "HTML");
+    // this should  work
+    exec_renameext(dest_base, "txt", "text");
+}
+function exec_renameext(srcDir, fromExt, toExt) {
+    try {
+        aqua.console.println("renameext: renameing file with [" + fromExt + "] extension in " + srcDir + " to [" + toExt + "] extension...");
+        AQFS.renameExtensions(srcDir, fromExt, toExt);
+        aqua.console.println("renameext done.");
+    } 
+    catch(ex) {
+        aqua.console.println("renameext failed - " + ex.toString());
+    }
+}

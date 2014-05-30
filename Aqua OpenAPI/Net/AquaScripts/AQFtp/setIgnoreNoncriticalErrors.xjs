@@ -1,0 +1,21 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        setIgnoreNoncriticalErrors()
+ 
+   Synopsis:
+        void setIgnoreNoncriticalErrors(boolean ignoreNoncriticalErrors)
+
+   Description
+        Sets the flag to ignore some non-fatal error codes sent by some servers during directory creation: wu-ftp in particular, default to false   
+
+   Parameters
+        ignoreNoncriticalErrors - true if non-critical errors should not cause a failure 
+  
+   Throws
+        none
+ 
+   Example
+        See below.
+*/

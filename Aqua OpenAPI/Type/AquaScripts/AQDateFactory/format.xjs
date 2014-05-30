@@ -1,0 +1,17 @@
+﻿var factory = aqua.type.getDate();
+
+// get current datetime
+var date    = factory.newDate();
+
+aqua.console.println(factory.format(date, "yyyy/MM/dd HH.mm.ss", "GMT-08:00"));
+aqua.console.println(factory.format(date, "yyyy/MM/dd HH.mm.ss", "GMT-00:00"));
+aqua.console.println(factory.format(date, "yyyy-MM-dd HH.mm.ss", "EST"));
+aqua.console.println(factory.format(date, "yyyy/MM/dd HH.mm.ss", "PST"));
+aqua.console.println("");
+
+aqua.console.println(factory.format(date, "E, dd MMM yyyy", "GMT-08:00", "ZH"));
+aqua.console.println(factory.format(date, "E, dd MMM yyyy", "GMT-00:00", "US"));
+aqua.console.println(factory.format(date, "E, dd MMM yyyy", "EST", "FR"));
+aqua.console.println(factory.format(date, "E, dd MMM yyyy", "PST", "FI"));
+aqua.console.println("");
+

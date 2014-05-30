@@ -1,0 +1,44 @@
+/*
+
+Description of method functionality
+
+Synopsys
+    [Return Data Type] functionName()  
+
+Description
+    Description of functionality
+
+Example
+    //
+
+
+*/
+var ds = aqua.data.newDataSet("shipcountry,text,freight,number");
+ds.addRowWithValues("US", 100);
+ds.addRowWithValues("UK", 10);
+ds.addRowWithValues("Japan", 200);
+ds.addRowWithValues("Canada", 20);
+ds.addRowWithValues("France", 300);
+ds.addRowWithValues("Germany", 30);
+
+
+var ds = aqua.data.newDataSet("shipcountry,text,freight,number");
+var row;
+row = ds.insertRow(5);
+row.set("shipcountry", "US");
+row.set("freight", 100);
+row = ds.get(4);
+row.set("shipcountry", "UK");
+row.set("freight", 10);
+row = ds.get(3);
+row.set("shipcountry", "France");
+row.set("freight", 200);
+row = ds.get(2);
+row.set("shipcountry", "Germany");
+row.set("freight", 20);
+row = ds.get(1);
+row.set("shipcountry", "Japan");
+row.set("freight", 300);
+row = ds.get(0);
+row.set("shipcountry", "Canada");
+row.set("freight", 30);

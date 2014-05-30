@@ -1,0 +1,29 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "c:\\tmp\\test\\AQArchive\\";
+
+test_gzip();
+
+// --- gzip() ---
+function test_gzip() {
+    var src_base = test_data_dir + "files\\src_base\\";
+    var dest_base = test_data_dir + "gzip\\gzip_dest\\";
+    var tar_src_base = test_data_dir + "files\\src_tar\\";
+    
+    // testing error condition - no gzip file
+    exec_gzip(tar_src_base + "dir.tar", null);
+    // testing error condition - so source
+    exec_gzip(null, dest_base + "test_file.txt.gz");
+    // this should work - gzipping tar file
+    exec_gzip(tar_src_base + "dir.tar", dest_base + "dir.tar.gz");
+    // this should work - gzipping file
+    exec_gzip(src_base + "test_file.txt", dest_base + "test_file.txt.gz");
+}
+function exec_gzip(source, zipFile) {
+    try {
+        aqua.console.println("gzip: from [" + source + "] to [" + zipFile + "]...");
+        aqua.archive.gzip(source, zipFile);
+        aqua.console.println("gzip: done.");
+    } catch(ex) {
+        aqua.console.println("gzip: failed - " + ex.toString());
+    }
+}

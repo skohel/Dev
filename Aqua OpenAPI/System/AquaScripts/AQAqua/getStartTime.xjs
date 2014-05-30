@@ -1,0 +1,1 @@
+﻿aqua.console.println("get start time for script (in miliseconds) [" + aqua.getStartTime() + "]");

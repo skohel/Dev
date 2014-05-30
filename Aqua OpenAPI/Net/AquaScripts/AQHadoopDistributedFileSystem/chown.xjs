@@ -1,0 +1,62 @@
+﻿//------------------------------------------------------------------------------
+// Class:  
+//      CoreHadoopFileSystem
+// Method:
+//      chown()
+//
+// Synopsis:
+//      chown()
+//
+// Description
+//      Changes the owner of a file or all files inside the specified directory. 
+//      Currently, it has effect only under Unix. 
+//    
+// Parameters
+//      string - The name of the group; required.
+//      string - The file or directory to perform the task; required. 
+//
+// Throws
+//      Exception - on error
+//
+// Return
+//      None.
+//
+// Example
+//      See below.
+//------------------------------------------------------------------------------
+// all test data will be created under this directory
+var fs_data_dir = "/test/AQHadoopFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.net.newHadoopDistributedFileSystem("hdfs://localhost:9100");
+
+test_chown();
+
+// --- chown() ---
+
+function test_chown() {
+    var src_base = fs_data_dir + "files/";
+    var dest_base = fs_data_dir + "chown/";
+
+    AQFS.copy(src_base, dest_base);
+
+    var owner = "root";
+    // testing error condition - no files or directories to change
+    exec_chown(null, owner);
+    // this should work - change group for a single file
+    exec_chown(dest_base + "license.txt", owner);
+    // this should work - change group for a dir
+    exec_chown(dest_base, owner);
+
+    // Clean up
+    AQFS.deleteDirectory(dest_base, true);
+}
+function exec_chown(pathname, group) {
+    try {
+        aqua.console.println("chown: changing group of [" + pathname + "] to [" + group + "]...");
+        AQFS.chown(pathname, group);
+        aqua.console.println("chown done.");
+    } catch(ex) {
+        aqua.console.println("chown failed - " + ex.toString());
+    }
+}

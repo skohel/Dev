@@ -1,0 +1,52 @@
+﻿
+//
+// This script demonstrates how to set the row index from where the row number calculation to be started.
+//
+
+// define a data set
+var columns = ["ShipCountry", "CustomerID", "ShipName", "Freight"];
+var dataSet = aqua.data.newDataSet(columns);
+
+// add rows to data set
+dataSet.addRowWithValues("",            "",     "",          null);
+dataSet.addRowWithValues("--Summary--", "",     "",          null);
+dataSet.addRowWithValues("",            "",     "",          null);
+dataSet.addRowWithValues("Canada",      "C039", "ABC Inc.",   200);
+dataSet.addRowWithValues("Canada",      "C061", "Sunrise",    230);
+dataSet.addRowWithValues("France",      "C123", "Joe Smith", 1620);
+dataSet.addRowWithValues("Japan",       "C375", "JPL Corp.", 4200);
+dataSet.addRowWithValues("UK",          "C028", "BUK",       1500);
+dataSet.addRowWithValues("US",          "C006", "AuqaFold",    35);
+dataSet.addRowWithValues("US",          "C257", "BOA",         89);
+
+// create a settings for the data set, settings is used to describe how data set to be rendered
+var settings = aqua.report.newReportDataSetSettings();
+
+// set title
+settings.setTitle("AquaFold Open API Example: default row number settings");
+
+// create a report
+var report = aqua.report.newReport();
+
+// add data set and its settings to report
+report.addDataSet(dataSet, settings);
+
+// present report as a plain text grid in console
+aqua.console.print(report.renderText());
+aqua.console.println(""); aqua.console.println("");
+// render report in HTML and display it in browser
+aqua.response.write(report.renderHtml());
+aqua.response.write("<br><br>");
+
+
+// start showing row number at the fourth row, row index is zero based
+settings.setRowNumberStartRowIndex(3);
+
+// update title
+settings.setTitle("AquaFold Open API Example: custom row number settings");
+
+// present report as a plain text grid in console
+aqua.console.print(report.renderText());
+// render report in HTML and display it in browser
+aqua.response.write(report.renderHtml());
+

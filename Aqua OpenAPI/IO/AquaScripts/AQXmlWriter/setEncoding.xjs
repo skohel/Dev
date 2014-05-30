@@ -1,0 +1,37 @@
+﻿var xmlFile  = "/sampleXmlWriter.xml";
+var encoding = "ISO-8859-1"; // "UTF-8"/ "UTF-16"
+var writer   = aqua.io.newXmlWriter();
+
+writer.setFile(xmlFile);
+writer.setEncoding(encoding);
+writer.write(generateDataSet());
+writer.close();
+
+readFile(xmlFile, encoding);
+
+//------------------------------------------------------------------------------
+function readFile(file, encoding){
+
+    var reader   = aqua.io.newTextReader();
+
+    reader.setFile(file);
+    reader.setEncoding(encoding);
+    aqua.console.list(reader.read());
+    reader.close();
+}
+
+function generateDataSet(){
+    // define a data set
+    var columns = ["shipcountry", "freight"];
+    var ds = aqua.data.newDataSet(columns);
+
+    // add dataset row with values
+    ds.addRowWithValues("US", 100);
+    ds.addRowWithValues("UK", 10);
+    ds.addRowWithValues("Japan", 200);
+    ds.addRowWithValues("Canada", 20);
+    ds.addRowWithValues("France", 300);
+    ds.addRowWithValues("Germany", 30);
+
+    return ds;
+}

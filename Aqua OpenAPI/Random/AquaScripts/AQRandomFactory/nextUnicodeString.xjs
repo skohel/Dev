@@ -1,0 +1,11 @@
+﻿print("Generate a random unicode string with max-length constraint:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextUnicodeString(i+3);
+    print("\t"+x);
+}
+
+print("Generate a random unicode string with min/max-length constraints:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextUnicodeString(2,4);
+    print("\t"+x);
+}

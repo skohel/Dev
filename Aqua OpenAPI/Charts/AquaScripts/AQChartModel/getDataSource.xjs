@@ -1,0 +1,58 @@
+﻿/*
+aqua.chart.getDataSource
+
+Synopsys
+    AQDataSource getDataSource();
+
+Description
+Return the chart model's underlying AQDataSource, if one has been specified.
+Otherwise, return NULL
+
+Example
+    see below
+
+*/
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+var ds = aqua.data.newDataSet(["shipcountry","freight"]);
+
+var row;
+
+row = ds.addRow();
+row.set(0, "US");
+row.set(1, 100);
+row = ds.addRow();
+row.set(0, "UK");
+row.set(1, 10);
+row = ds.addRow();
+row.set(0, "France");
+row.set(1, 200);
+row = ds.addRow();
+row.set(0, "Germany");
+row.set(1, 20);
+row = ds.addRow();
+row.set(0, "Japan");
+row.set(1, 300);
+row = ds.addRow();
+row.set(0, "Canada");
+row.set(1, 30);
+
+model.setDataSource(ds);
+
+model.addCategoryField("shipcountry");
+model.addSeriesField("freight");
+
+chart.getProperties().setChartTypeArea();
+
+var theDataSource = model.getDataSource();
+aqua.response.write('Row Count: ' + theDataSource.getRowCount());
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

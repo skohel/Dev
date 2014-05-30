@@ -1,0 +1,8 @@
+﻿var sql         = "SELECT table1.col1, table1.col2, table1.col3, table2.* FROM table1 JOIN table2 ON table1.name = table2.name";
+var beautifier  = aqua.project.getServerConnection("MySql 6.0 - 10.168.1.38 - demo").newSqlFormat();
+
+beautifier.setBreakAfterKeywords(true);
+
+aqua.console.println("BEFORE BEAUTIFICATION:\n[" + sql + "]");
+aqua.console.println("");
+aqua.console.println("AFTER BEAUTIFICATION:\n[" +  beautifier.format(sql) + "]");

@@ -1,0 +1,21 @@
+
+// utility function - abort execution
+function abort(api) {
+    aqua.console.println("!!! expected exception is not generated on execution of [" + api + "]");
+    aqua.exit();
+}
+
+// utility function - write expected exception to console
+function showExpectedError(ex) {
+    aqua.console.println("... expected exception received - " + ex.name + " - " + ex.message);
+}
+
+
+// create a new email message
+var email = aqua.mail.newMessage();
+
+// test invalid arguments
+try { email.addHadoopFileAttachment(null, null, null); abort('addHadoopFileAttachment(null, null, null)'); } catch(ex) { showExpectedError(ex); } 
+
+// done with test
+aqua.console.println("DONE");

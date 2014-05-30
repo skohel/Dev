@@ -1,0 +1,8 @@
+﻿var textFile = "/access.log";
+
+var writer = aqua.io.newTextWriter();
+aqua.console.println("Default line delimiter [" + writer.getLineDelimiter() + "]");
+writer.setLineDelimiter("XXX");
+aqua.console.println("After it's been set to [XXX] line delimiter [" + writer.getLineDelimiter() + "]");
+
+

@@ -1,0 +1,7 @@
+﻿var validValue   = "1111111111111111111";
+var invalidValue = "11111111111111111111";
+var factory      = aqua.type.getLong();
+
+aqua.console.println("Is [" + validValue   + "] a long? [" + factory.isValid(validValue) + "]");
+aqua.console.println("Is [" + invalidValue + "] a long? [" + factory.isValid(invalidValue) + "]");
+

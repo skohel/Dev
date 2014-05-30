@@ -1,0 +1,12 @@
+﻿var folder = "/Aqua-rdbms-docs";
+var ws     = aqua.vcs.newWorkspaceSubversion();
+
+ws.setUsername(aqua.crypto.getSecureField('svn.username'));
+ws.setPassword(aqua.crypto.getSecureField('svn.password'));
+
+var diff         = ws.getHistory(folder);
+var affectedPath = diff[0].getAffectedPaths();
+
+if (affectedPath != null){
+    aqua.console.list(affectedPath.getDeletedPaths());
+}

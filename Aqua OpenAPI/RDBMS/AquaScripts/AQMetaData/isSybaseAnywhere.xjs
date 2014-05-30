@@ -1,0 +1,16 @@
+﻿var server = "MS SQLServer - 10.168.11.57 - msdb - dbo";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+var metadata = conn.getMetadata();
+
+aqua.console.println("Is connection [" + server + "] to an Sybase Anywhere server? " + metadata.isSybaseAnywhere());
+conn.disconnect();
+
+
+var server = "Sybase Anywhere 10 - 10.168.1.37 - demo - DBA";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+var metadata = conn.getMetadata();
+
+aqua.console.println("Is connection [" + server + "] to an Sybase Anywhere server? " + metadata.isSybaseAnywhere());
+conn.disconnect();

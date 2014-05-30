@@ -1,0 +1,29 @@
+﻿
+//
+// This script demonstrates how to determine whether formatting numeric values in a column is desired or not.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// check whether formatting is desired by column index, column index is zero based
+var index = 0;
+var flag = settings.isColumnNumericFormatNone(index);
+aqua.console.println("Default setting: numeric formatting for column at index " + index + " is " + (flag ? "not " : "") + "desired.");
+
+// turn off formatting by column index
+settings.setColumnNumericFormatNone(index);
+flag = settings.isColumnNumericFormatNone(index);
+aqua.console.println("Custom setting: numeric formatting for column at index " + index + " is " + (flag ? "not " : "") + "desired.");
+
+
+
+// check whether formatting is desired by column name
+var name = "CustomerID";
+flag = settings.isColumnNumericFormatNone(name);
+aqua.console.println("Default setting: numeric formatting for column '" + name + "' is " + (flag ? "not " : "") + "desired.");
+
+// turn off formatting by column name
+settings.setColumnNumericFormatNone(name);
+flag = settings.isColumnNumericFormatNone(name);
+aqua.console.println("Custom setting: numeric formatting for column '" + name + "' is " + (flag ? "not " : "") + "desired.");

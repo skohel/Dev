@@ -1,0 +1,240 @@
+﻿/*
+aqua.math.curve
+
+Synopsyis
+    Summary of interpolation and evaluation methods
+
+Description
+Demonstrates usage of interpolation methods
+
+Example
+    see below
+
+*/
+var rawDataX=new Array();
+var rawDataY=new Array();
+var rawDataYGraph = new Array();
+
+var interpolatedPoint=0;
+var noise = new Array();
+var desiredX=0;
+
+//generate noise
+for(i=0;i<34;i++){
+noise[i]=2*Math.random()-1;
+noise[i]=noise[i]*10;
+}
+
+//generate noisy data with gap
+for(i=0;i<15;i++){
+   rawDataX[i]=i;
+   rawDataY[i]=.2*Math.pow(rawDataX[i],2)+10+noise[i];
+   
+}
+
+
+for(i=15;i<30;i++){
+   rawDataX[i]=i+5;
+   rawDataY[i]=.2*Math.pow(rawDataX[i],2)+10+noise[i];
+   
+}
+
+//////generate graph version of data (uniformly spaced, etc)
+
+for(i=0;i<15;i++){
+ 
+   rawDataYGraph[i]=.2*Math.pow(i,2)+10+noise[i];
+   
+}
+
+for(i=15;i<20;i++){
+rawDataYGraph[i]=NaN;
+}
+
+for(i=20;i<35;i++){
+  
+   rawDataYGraph[i]=.2*Math.pow(i,2)+10+noise[i];
+   
+}
+//////////raw data graph
+
+var chart0 = aqua.chart.newChart();
+var model0 = chart0.getModel();
+
+model0.addSeries("raw");
+
+
+
+for(i=0;i<35;i++){
+model0.addCategory(i);
+model0.setValue(0,i,rawDataYGraph[i]);
+
+
+}
+
+chart0.getProperties().setNumericCategoryAxis(true);
+
+chart0.getProperties().setTitle("Noisy Set with Missing Data");
+chart0.getProperties().setChartTypeLine(0);
+//chart0.getProperties().setChartTypeScatter(1);
+//chart.getProperties().setChartTypeScatter(2);
+chart0.getProperties().setMergeAxis(true);
+
+
+chart0.getProperties().setView2D(true);
+
+chart0.getProperties().setWidth(20);
+chart0.getProperties().setHeight(12);
+
+
+//chart.getProperties().setMergeSeriesMin(0);
+//chart.getProperties().setMergeSeriesMax(100);
+//chart.getProperties().setCategoryRange(9,100);
+
+
+chart0.getProperties().setImageHeight(480);
+chart0.getProperties().setImageWidth(800);
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+model.addSeries("raw");
+model.addSeries("interpolated");
+
+
+for(i=0;i<35;i++){
+model.addCategory(i);
+model.setValue(0,i,rawDataYGraph[i]);
+model.setValue(1,i,NaN);
+
+}
+
+
+//perform interpolation
+for(i=15;i<20;i++){
+interpolatedPoint=aqua.math.curve.interpolate(rawDataX,rawDataY,i,"loess");
+model.setValue(1,i ,interpolatedPoint);
+}
+
+chart.getProperties().setNumericCategoryAxis(true);
+
+chart.getProperties().setTitle("Gap-filling using interpolation.");
+chart.getProperties().setChartTypeLine(0);
+chart.getProperties().setChartTypeScatter(1);
+//chart.getProperties().setChartTypeScatter(2);
+chart.getProperties().setMergeAxis(true);
+
+
+chart.getProperties().setView2D(true);
+
+chart.getProperties().setWidth(20);
+chart.getProperties().setHeight(12);
+
+
+//chart.getProperties().setMergeSeriesMin(0);
+//chart.getProperties().setMergeSeriesMax(100);
+//chart.getProperties().setCategoryRange(9,100);
+
+
+chart.getProperties().setImageHeight(480);
+chart.getProperties().setImageWidth(800);
+
+
+//get fit to interpolate
+
+var chart2 = aqua.chart.newChart();
+var model2 = chart2.getModel();
+
+var testFit = aqua.math.getFit();
+var fitY = new Array();
+var fitYGraph = new Array();
+var polyCoeff = new Array();
+var newPoly = testFit.newPOLY_Function();
+
+fitY=testFit.polyFit(rawDataX,rawDataY,2);
+polyCoeff=testFit.polyFitCoeff(rawDataX,rawDataY,2);
+
+//initialize graph data
+for(i=0;i<rawDataYGraph.length-1;i++){
+fitYGraph[i]=NaN;
+}
+
+
+//fill gap
+for(i=0;i<rawDataYGraph.length-1;i++){
+fitYGraph[i]=testFit.evaluate(i,newPoly,polyCoeff);
+}
+
+model2.addSeries("raw");
+model2.addSeries("fitted");
+
+
+
+//graph fitted data including gap
+for(i=0;i<rawDataYGraph.length-1;i++){
+model2.addCategory(i);
+model2.setValue(0,i,rawDataYGraph[i]);
+model2.setValue(1,i,fitYGraph[i]);
+}
+
+
+chart2.getProperties().setTitle("Exp Fit");
+chart2.getProperties().setChartTypeLine(0);
+chart2.getProperties().setChartTypeScatter(1);
+chart2.getProperties().setMergeAxis(true);
+
+chart2.getProperties().setRotationX(-45);
+chart2.getProperties().setDepth(10);
+chart2.getProperties().setWidth(20);
+chart2.getProperties().setHeight(12);
+chart2.getProperties().setView2D(true);
+
+chart2.getProperties().setNumericCategoryAxis(true);
+
+//chart.getProperties().setMergeSeriesMin(0);
+//chart.getProperties().setMergeSeriesMax(100);
+//chart.getProperties().setCategoryRange(9,100);
+
+
+chart2.getProperties().setImageHeight(480);
+chart2.getProperties().setImageWidth(800);
+// image will be available for 5 seconds
+var url0 = chart0.cache(5);
+var url = chart.cache(5);
+var url2 = chart2.cache(5);
+
+
+//introduction
+
+aqua.response.write(' <p><span style="color: #2778cb;"><big><strong>Missing Data Methods: Interpolation and gap-filling.</strong></big></span></p>');
+aqua.response.write('A common problem in any data analysis is missing data.  If a sensor loses power during a test or an interviewer forgets a given question, data points can be left out of a record.  In aqua.math, there are several methods that can be used to either replace a bad data point or populate an empty point.');
+aqua.response.write('<ol><li>Interpolation methods <li>Fitting and evaluation methods  </ol><br>');
+
+aqua.response.write('Consider the following data set:<br>');
+//fig 0
+aqua.response.write('<img src=').write(url0).write('>');
+
+//notes on fig 1
+aqua.response.write('<p>There is a clear interval without representative data.  We could simply approximate all the missing points as the average of the points bounding the empty region, but there are more robust methods of approximating internal data points (interpolation).')  
+aqua.response.write('  For example, we can use aqua.math.curve\'s interpolation methods for each of the missing data points, effectively filling the gap.<br>');
+aqua.response.write('<table>');
+aqua.response.write('<pre>         interpolatedPoint=aqua.math.curve.interpolate(rawDataX,rawDataY,desiredX);  // calculate missing data point at x = desiredX</pre> ');
+
+//fig 1
+aqua.response.write('<img src=').write(url).write('>');
+
+aqua.response.write('<br><hr>If the data permits, or if a given functional behavior is expected, we can use fitting and evaluation methods to populate missing data points.<br><br>');
+
+aqua.response.write('<pre>         fitY=testFit.polyFit(rawDataX,rawDataY,2);  //find best fit polynomial</pre>');
+aqua.response.write('<pre>         polyCoeff=testFit.polyFitCoeff(rawDataX,rawDataY,2);  //recover polynomial coefficients for evaluation</pre>');
+aqua.response.write('<pre>         evaluatedPoint = testFit.evaluate(desiredX,newPoly,polyCoeff);  //evaluate fit at point of interest</pre>');
+
+aqua.response.write('');
+aqua.response.write('<br><br>');
+
+
+
+//fig 2
+aqua.response.write('<img src=').write(url2).write('>');
+
+

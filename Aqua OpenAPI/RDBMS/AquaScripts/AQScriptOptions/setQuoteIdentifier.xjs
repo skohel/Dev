@@ -1,0 +1,24 @@
+﻿var server = "DB2 LUW 9.7 - 10.168.11.57 - SAMPLE - demo";
+var db     = "SAMPLE";
+var schema = "demo";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata     = conn.getMetadata();
+var scriptOption = conn.getScriptOptions();
+
+aqua.console.println("AQOptions.getLeadingQuoteIdentifier():       [" + scriptOption.getLeadingQuoteIdentifier() + "]");
+aqua.console.println("AQOptions.getTrailingQuoteIdentifier():      [" + scriptOption.getTrailingQuoteIdentifier() + "]");
+aqua.console.println("");
+
+aqua.console.println("Executing AQOptions.setQuoteIdentifier(\"\\\"\")"); 
+scriptOption.setQuoteIdentifier("\"");
+aqua.console.println("AQOptions.getLeadingQuoteIdentifier():       [" + scriptOption.getLeadingQuoteIdentifier() + "]");
+aqua.console.println("AQOptions.getTrailingQuoteIdentifier():      [" + scriptOption.getTrailingQuoteIdentifier() + "]");
+aqua.console.println("");
+
+aqua.console.println("Executing AQOptions.setQuoteIdentifier(\"\\\"\", \"\'\")"); 
+scriptOption.setQuoteIdentifier("\"", "\'");
+aqua.console.println("AQOptions.getLeadingQuoteIdentifier():       [" + scriptOption.getLeadingQuoteIdentifier() + "]");
+aqua.console.println("AQOptions.getTrailingQuoteIdentifier():      [" + scriptOption.getTrailingQuoteIdentifier() + "]");
+aqua.console.println("");

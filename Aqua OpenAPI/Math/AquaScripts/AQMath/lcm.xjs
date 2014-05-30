@@ -1,0 +1,22 @@
+/*
+aqua.math.lcm
+
+Returns the least common multiple of the absolute value of two numbers, using the formula lcm(a,b) = (a / gcd(a,b)) * b.
+
+Synopsys
+    int aqua.math.lcm(int value1, int value2)
+
+Description
+
+Example
+    see below
+*/
+// --- lcm() ---
+function show_lcm(value1, value2) {
+    aqua.console.println("lcm[" + value1 + ", " + value2 + "] --> [" + aqua.math.lcm(value1, value2) + "]");
+}
+
+show_lcm(2, 3);
+show_lcm(10, 35);
+
+

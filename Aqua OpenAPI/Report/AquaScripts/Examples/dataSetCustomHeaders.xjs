@@ -1,0 +1,68 @@
+// ---------------------------------------------------------------------------------------
+// This example script demonstrates how to create and clear custom headers for a data set.
+// ---------------------------------------------------------------------------------------
+
+// an utility function to write a report to console in a formatted grid
+function printReport(heading, report) {
+    aqua.console.println(">>>>>> " + heading + " <<<<<<");
+    aqua.console.println(report.renderText());
+}
+
+// create a data set with 3 columns
+var columns = ["ship-country", "freight", "ship-via"];
+var dataSet = aqua.data.newDataSet(columns);
+
+// add data set rows with values
+dataSet.addRowWithValues("Canada", 1001, 3);
+dataSet.addRowWithValues("US", 1002, 1);
+dataSet.addRowWithValues("UK", 0, 2);
+
+// create a report and a report data set setttings
+var report = aqua.report.newReport()
+var settings = aqua.report.newReportDataSetSettings();
+
+// bind data set and its settings to report
+report.addDataSet(dataSet, settings);
+
+// customize data set settings to not display row number
+settings.setShowRowNumber(false);
+// customize data set settings to not display report generation time
+settings.setShowReportTime(false);
+
+
+// --- demo 1: define custom header by index ---
+settings.setColumnHeader(0, "Ship Country");
+printReport("demo 1 - custom header by index", report);
+// clear previous settings
+settings.clearColumnHeaderIndexes();
+printReport("clear", report);
+
+// --- demo 2: define custom headers by indexes ---
+settings.setColumnHeaders([null, "Freight", "Ship Via"]);
+printReport("demo 2 - custom headers by indexes", report);
+// clear previous settings
+settings.clearColumnHeaderIndexes();
+printReport("clear", report);
+
+// --- demo 3: define custom header by name ---
+settings.setColumnHeader("ship-via", "[Ship Via]");
+printReport("demo 3 - custom header by name", report);
+// clear previous settings
+settings.clearColumnHeaderNames();
+printReport("clear", report);
+
+// --- demo 4: define custom headers by names ---
+settings.setColumnHeaders(["ship-country", "ship-via"], ["Ship*Country", "Ship*Via"]);
+printReport("demo 4 - custom headers by names", report);
+// clear previous settings
+settings.clearColumnHeaderNames();
+printReport("clear", report);
+
+// --- demo 5: define custom headers by name and index ---
+settings.setColumnHeader("freight", "<Freight>");
+settings.setColumnHeader(2, "<Ship Via>");
+printReport("demo 5 - custom headers by name and index", report);
+// clear previous settings
+settings.clearColumnHeaders();
+printReport("clear", report);
+

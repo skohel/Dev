@@ -1,0 +1,10 @@
+﻿var f    = aqua.getForm()
+var form = f.newForm(1,2);
+form.add(0,0,"Name:");
+form.addTextField(0,1, "name", "");
+
+// display in a browser -  if you click "Debug in browswer" or press "ctrl-shift-enter"
+aqua.response.write(form);
+
+// display on console - if you just click run.
+aqua.console.print(form.toHtml());

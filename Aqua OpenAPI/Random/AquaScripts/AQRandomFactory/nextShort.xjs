@@ -1,0 +1,14 @@
+﻿print("Generate a random short:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextShort();
+    print("\t"+x);
+}
+
+var min = -1000;
+var max = 1000;
+print("Generate a random short between " + min + " and " + max + ":");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextShort(min, max);
+    print("\t"+x);
+}
+

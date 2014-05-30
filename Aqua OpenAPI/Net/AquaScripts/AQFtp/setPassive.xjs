@@ -1,0 +1,21 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        setPassive()
+ 
+   Synopsis:
+        void setPassive(boolean passive)
+
+   Description
+        Specifies whether to use passive mode. Set to true if you are behind a firewall and cannot connect without it. Passive mode is disabled by default.   
+
+   Parameters
+        passive - true is passive mode should be used 
+  
+   Throws
+        none
+ 
+   Example
+        See below.
+*/

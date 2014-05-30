@@ -1,0 +1,43 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "/tmp/test/AQFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.filesystem;
+
+/* --- test rename --- */
+test_rename();
+
+// --- rename() ---
+
+function test_rename() {
+    var src_base = test_data_dir + "files/src_base/";
+    var dest_base = test_data_dir + "rename/";
+    var src_file = src_base + "test_file.txt";
+    
+    var dest_file = dest_base + "tmp_file.txt";
+
+    AQFS.copy(src_file, dest_file);
+    AQFS.copy(test_data_dir + "files/src_base1", dest_base);
+
+    // testing error condition - source directory doesn't exist.
+    exec_rename(null, dest_base + "new_test_file.txt");
+    exec_rename("file_doesnt_exists", dest_base + "new_test_file.txt");
+    // testing error condition - destination doesn't exists
+    exec_rename(dest_file, null);
+
+    // this should work
+    exec_rename(dest_file, dest_base + "new_test_file.txt");
+    exec_rename(dest_base + "one", dest_base + "tmp_new_dir");
+}
+
+function exec_rename(source, destination) {
+    try {
+        aqua.console.println("rename: renameing [" + source + "] to [" + destination + "]...");
+        AQFS.rename(source, destination);
+        aqua.console.println("rename done.");
+    } 
+    catch(ex) {
+        aqua.console.println("renames failed - " + ex.toString());
+    }
+}
+

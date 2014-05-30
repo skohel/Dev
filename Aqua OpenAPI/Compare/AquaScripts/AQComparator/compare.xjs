@@ -1,0 +1,18 @@
+﻿var server = "MySQL";
+var db     = "mysql";
+var schema = null;
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata       = conn.getMetadata();
+var TableA         = metadata.extractTable(db, schema, "db")
+var TableB         = metadata.extractTable(db, schema, "host") 
+var objComparator  = aqua.getCompare().newComparator();
+var objDifferences = objComparator.compare(TableA, TableB);
+var objLinechange  = objDifferences.getChanges();
+
+for(i=0;i<objLinechange.length;i++) {
+    aqua.console.println("line "+i+":\t" + objLinechange[i]); 
+}
+
+conn.disconnect();

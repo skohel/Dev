@@ -1,0 +1,22 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        setSeparator()
+ 
+   Synopsis:
+       void setSeparator(String separator)
+
+   Description
+        Sets the remote file separator character. This normally defaults to the Unix standard forward slash, 
+        but can be manually overridden using this call if the remote server requires some other separator. Only the first character of the string is used.     
+
+   Parameters
+        separator - the file separator on the remote system
+  
+   Throws
+        none
+ 
+   Example
+        See below.
+*/

@@ -1,0 +1,2 @@
+﻿// run this script by clicking on the "debug in browser" button
+aqua.response.writeText("<code>aquafold inc</code>");

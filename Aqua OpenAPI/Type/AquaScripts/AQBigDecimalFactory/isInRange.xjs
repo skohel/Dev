@@ -1,0 +1,13 @@
+﻿var factory  = aqua.type.getBigDecimal();
+
+var value = .0000000000005;
+var min   = .0000000000001;
+var max   = .0000000000010;
+
+aqua.console.println("Is [" + value + "] between  [" + min + "] and [" + max + "]? " + factory.isInRange(value, min, max));
+
+max = .0000000000005
+aqua.console.println("Is [" + value + "] between  [" + min + "] and [" + max + "]? " + factory.isInRange(value, min, max));
+
+max = .0000000000004
+aqua.console.println("Is [" + value + "] between  [" + min + "] and [" + max + "]? " + factory.isInRange(value, min, max));

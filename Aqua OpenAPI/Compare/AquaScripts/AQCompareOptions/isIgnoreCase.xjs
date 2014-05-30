@@ -1,0 +1,15 @@
+﻿var line1 = "DATA STUDIO";
+var line2 = "data studio";
+var comp = aqua.compare.newComparator();
+comp.compareOptions.setIgnoreCase(true);
+var result;
+var diffi;
+
+result = comp.compareText(line1, line2);
+diffi  = result.getChanges();
+
+for (var i=0; i < diffi.length; i++){
+  aqua.console.println("The 2 lines are the same, set Ignore Case is true and are there any differences ?  :\t" +  diffi[i].isModified());
+  aqua.console.println("setIgnoreCase :" + comp.compareOptions.isIgnoreCase());
+  }
+

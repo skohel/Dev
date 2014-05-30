@@ -1,0 +1,6 @@
+// Returns the next pseudorandom, uniformly distributed double value between 0.0 and 1.0 from this random number generator's sequence.
+print("Generate a random Double value:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextDouble();
+    print("\t"+x);
+}

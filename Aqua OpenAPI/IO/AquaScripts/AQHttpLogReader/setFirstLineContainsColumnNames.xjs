@@ -1,0 +1,18 @@
+﻿// define output file
+var logFile = "/access.log";
+
+// create a log reader
+var reader = aqua.io.newHttpLogReader();
+reader.setFile(logFile);
+reader.setLogFormat("%h %l %u %t \"%r\" %>s %b");
+reader.setFirstLineContainsColumnNames(true);
+
+for(var x=1; dataRow = reader.readNextRow(); x++){
+    aqua.console.println("Row [" + x + "]");
+    for (var i=0; i<dataRow.getSize(); i++){
+        aqua.console.println("[" + dataRow.getString(i) + "]");
+    }
+    aqua.console.println("\n");
+}
+
+reader.close();

@@ -1,0 +1,25 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "c:\\tmp\\test\\AQArchive\\";
+
+test_signjar();
+
+// --- signjar() ---
+function test_signjar() {
+    var src_jar_dir = test_data_dir + "jar\\jar_dest\\";
+    
+    // testing error condition - no alias and store pass
+    exec_signjar(src_jar_dir + "dir.jar", null, null, null);
+    // testing error condition - no store pass
+    exec_signjar(src_jar_dir + "dir.jar", "test-alias", null, null);
+    // this should work
+    exec_signjar(src_jar_dir + "dir.jar", "test", test_data_dir + "keystore.jks", "testtest");
+}
+function exec_signjar(jarFile, alias, keystore, storepass) {
+    try {
+        aqua.console.println("signjar: signing jar file [" + jarFile + "] with alias=[" + alias + "], keystore=[" + keystore + "], storepass=[" + storepass + "]...");
+        aqua.archive.signjar(jarFile, alias, keystore, storepass);
+        aqua.console.println("signjar: done.");
+    } catch(ex) {
+        aqua.console.println("signjar: failed - " + ex.toString());
+    }
+}

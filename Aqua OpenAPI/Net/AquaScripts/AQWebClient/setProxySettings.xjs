@@ -1,0 +1,15 @@
+
+// create a web client
+var client = aqua.net.newWebClient();
+
+// set proxy
+client.setProxySettings("10.168.5.210", 3128, null, null, null, null);
+
+// create a new request
+var request = client.newWebRequest("http://aquafold.com");
+
+// submit request
+var response = client.submitGetRequest(request);
+
+// write response to console
+aqua.console.println("" + response.getContent());

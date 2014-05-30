@@ -1,0 +1,21 @@
+﻿var columns = ["shipcountry","freight","id"];
+var dataSet = aqua.data.newDataSet(columns);
+var ds      = generateDataSet();
+
+for (var i=0; i<ds.getRowCount(); i++){
+    dataSet.add(ds.get(i));
+}
+
+aqua.console.println(dataSet.renderText());
+aqua.response.write(dataSet.renderHtml());
+
+//------------------------------------------------------------------------------
+function generateDataSet(){
+
+    var ds = aqua.data.newDataSet(["shipcountry","freight","id"]);
+    ds.addRowWithValues("US",    10,    100001);
+    ds.addRowWithValues("UK",    100,   100002);
+    ds.addRowWithValues("India", 1000,  100003);
+    ds.addRowWithValues("China", 10000, 100004);
+    return ds;
+}

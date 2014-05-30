@@ -1,0 +1,28 @@
+﻿var server = "DB2 LUW 9.7 - 10.168.11.57 - SAMPLE - demo";
+var db     = "SAMPLE";
+var schema = "demo";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+var indexes  = metadata.extractIndexes(db, schema);
+
+for (var i=0; i<indexes.length; i++){
+
+    var index = metadata.extractIndex(db, schema, indexes[i].getName());
+
+    // calling AQIndex.extractPermissions()
+    var permissions = index.extractPermissions();
+    for (var j=0; j<permissions.length; j++){
+        var permission = permissions[j];
+
+        aqua.console.println("Index Name: [" + index.getName() + "]    GRANT script: [" + permission.scriptGRANT("user") + "]");
+        aqua.console.println("Index Name: [" + index.getName() + "]    GRANT script: [" + permission.scriptGRANT("role") + "]");
+        aqua.console.println("Index Name: [" + index.getName() + "]    REOVKE script: [" + permission.scriptREVOKE("user") + "]");
+        aqua.console.println("Index Name: [" + index.getName() + "]    REVOKE script: [" + permission.scriptREVOKE("role") + "]");
+        aqua.console.println("Index Name: [" + index.getName() + "]    CREATE script: [" + permission.scriptCREATE() + "]");
+        aqua.console.println("Index Name: [" + index.getName() + "]    DROP script: [" + permission.scriptDROP() + "]");
+        aqua.console.println("");
+    }
+}
+conn.disconnect();

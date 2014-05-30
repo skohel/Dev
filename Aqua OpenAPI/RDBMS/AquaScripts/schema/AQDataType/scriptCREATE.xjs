@@ -1,0 +1,16 @@
+﻿var server = "DB2 LUW 9.7 - 10.168.11.57 - SAMPLE - demo";
+var db     = "SAMPLE";
+var schema = "demo";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata  = conn.getMetadata();
+var dataTypes = metadata.extractDataTypes(db, schema);
+
+for (var j=0; j<dataTypes.length; j++){
+    var dataType = metadata.extractDataType(db, schema, dataTypes[j].getName());
+    // calling AQDataType.scriptCREATE()
+    aqua.console.println("Data Type Name: [" + dataType.getName() + "]    CREATE script: [" + dataType.scriptCREATE() + "]");
+    aqua.console.println("");
+}
+conn.disconnect();

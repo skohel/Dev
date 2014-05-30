@@ -1,0 +1,29 @@
+﻿var TextFile = "C:/text.out";
+
+// define a data set
+var columns = ["shiporder", "date"];
+var ds = aqua.data.newDataSet(columns);
+
+// fill dataset row with values
+var row = ds.addRow();
+row.set(0,"Russia");
+row.set(1,new java.util.Date());
+
+var writer = aqua.io.newTextWriter();
+writer.setFile(TextFile);
+writer.setFirstLineContainsColumnNames(true)
+
+writer.write(ds);
+writer.close();
+readFile();
+
+
+function readFile() {
+    var reader = aqua.io.newTextReader();
+    reader.setFile(TextFile);
+    var row = null;
+    while((row = reader.readNextRow()) != null) {
+        print(row);
+    }
+    print();
+}

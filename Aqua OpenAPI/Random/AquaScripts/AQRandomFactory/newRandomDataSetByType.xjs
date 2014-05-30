@@ -1,0 +1,50 @@
+
+importPackage(java.util);
+
+// create a report
+var report = aqua.report.newReport();
+
+// create a dataset settings
+var settings = aqua.report.newReportDataSetSettings();
+settings.setNumericFormat("#,###.##");
+settings.setDateTimeFormat("yyyy-MM-dd HH:mm:ss");
+
+
+// utility function - generate datasets and add them to report with custom dataset settings
+function generateDataSets(datasetGenerator) {
+    for( var i=0; i<2; i++ ) {
+        var dataset = datasetGenerator.nextDataSet();
+        report.addDataSet(dataset, settings);
+    }
+}
+
+// utility function - create a new Date object
+function createDate(year, month, day, hour, minute, second) {
+    // month: zero-based, 0 for January
+    var gc = new GregorianCalendar(year, month, day, hour, minute, second);
+    var date = gc.getTime();
+    return date;
+}
+
+
+// create a random data set generator with range constraints
+var rows = 4;
+var columns = 3;
+var type = "number";
+var range = aqua.random.newRandomNumberRange(-1000, 1000);
+var randomDataSet = aqua.random.newRandomDataSetByType(rows, columns, type, range);
+// generate some datasets and add them to report
+generateDataSets(randomDataSet);
+
+
+// create a random data set generator with range and variation constraints
+type = "date";
+range = aqua.random.newRandomDateRange(createDate(2010, 0, 1, 0, 0, 0), createDate(2010, 0, 15, 23, 59, 59));
+var variation = aqua.random.newRandomDateVariation(0,0,0,0,0,0, 0,0,0,6,0,0);
+randomDataSet = aqua.random.newRandomDataSetByType(rows, columns, type, range, variation);
+// generate some datasets and add them to report
+generateDataSets(randomDataSet);
+
+
+// show report
+aqua.console.println(report.renderText());

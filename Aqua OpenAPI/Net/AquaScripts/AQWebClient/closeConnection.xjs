@@ -1,0 +1,15 @@
+﻿
+
+try {
+    var client = aqua.net.newWebClient();
+    var req = client.newWebRequest("http://aquafold.com")
+    var resp = client.submitGetRequest(req);
+    resp.getContentString();
+    client.closeConnection();
+} catch(error) {
+    aqua.console.println("TEST FAILED: " + error);
+}
+
+
+aqua.console.println("DONE");
+

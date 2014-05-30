@@ -1,0 +1,38 @@
+﻿//
+// This script demonstrates how to get row field names as an array.
+//
+
+// an utility function to write a name array to the console 
+function printNameList(nameList) {
+    if ( nameList.length <= 0 ) {
+        aqua.console.println("No row fields defined.");
+    } else {
+        aqua.console.println("List of row fields:");
+        for( var i=0; i<nameList.length; i++ ) {
+            aqua.console.println("  " + nameList[i]);
+        }
+    }
+}
+
+// create pivot data set
+var pivotTable = aqua.data.newPivotDataSet();
+
+// get row fields; initially, should be empty
+var fieldNames = pivotTable.getRowFields();
+
+// show row field names
+aqua.console.println("------ before adding row fields ------");
+printNameList(fieldNames);
+
+
+// add row fields to the pivot table
+pivotTable.addRowField("ShipCountry");
+pivotTable.addRowField("ShipName");
+
+// get row field names
+fieldNames = pivotTable.getRowFields();
+
+// show row field names
+aqua.console.println("");
+aqua.console.println("------ after adding row fields ------");
+printNameList(fieldNames);

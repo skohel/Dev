@@ -1,0 +1,16 @@
+﻿var server = "MS SQLServer - 10.168.11.57 - msdb - dbo";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+var metadata = conn.getMetadata();
+
+aqua.console.println("Is connection [" + server + "] to an SybaseASE server? " + metadata.isSybaseASE());
+conn.disconnect();
+
+
+var server = "Sybase ASE 15.0 - TDS 5.5 - 10.168.1.46";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+var metadata = conn.getMetadata();
+
+aqua.console.println("Is connection [" + server + "] to an SybaseASE server? " + metadata.isSybaseASE());
+conn.disconnect();

@@ -1,0 +1,13 @@
+﻿var line1 = "DATA STUDIO";
+var line2 = "     DATA STUDIO";
+var comp = aqua.compare.newComparator();
+comp.compareOptions.setTrimLeft(true);
+var result;
+var diffi;
+
+result = comp.compareText(line1, line2);
+diffi  = result.getChanges();
+
+for (var i=0; i < diffi.length; i++){
+  aqua.console.println("The 2 lines are the same, set Trim Left is true and are there any differences ?  :\t" +  diffi[i].isModified());
+  }

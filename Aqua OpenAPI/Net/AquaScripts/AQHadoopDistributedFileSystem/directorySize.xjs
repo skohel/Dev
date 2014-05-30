@@ -1,0 +1,55 @@
+﻿//------------------------------------------------------------------------------
+// Class:  
+//      CoreHadoopFileSystem
+// Method:
+//      directorySize()
+//
+// Synopsis:
+//      directorySize()
+//
+// Description
+//      Returns the size of directory denoted by this directory.
+//    
+// Parameters
+//      string - The directory, required.
+//      boolean - If recurse is true, include files in the sub directory,
+//                otherwise don't include files in the sub directory in
+//                the count; required
+//
+// Throws
+//      Exception - on error
+//
+// Return
+//      long - The count.
+//
+// Example
+//      See below.
+//------------------------------------------------------------------------------
+// all test data will be created under this directory
+var fs_data_dir = "/test/AQHadoopFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.net.newHadoopDistributedFileSystem("hdfs://localhost:9100");
+
+test_directorySize();
+
+// --- test directorySize ---
+
+function test_directorySize(){
+
+   var src_dir = fs_data_dir + "files/";
+   var file_doesnt_exist = fs_data_dir + "file_doesnt_exist";
+
+   exec_directorySize(file_doesnt_exist, false);
+   exec_directorySize(src_dir, false);
+   exec_directorySize(src_dir, true);
+}
+
+function exec_directorySize(src_dir, recursive) {
+    try {
+        aqua.console.println("directorySize: [" + src_dir + "," + recursive + "] is " + AQFS.directorySize(src_dir, recursive));
+        aqua.console.println("directorySize done");
+    } catch(ex) {
+        aqua.console.println("directorySize failed - " + ex.toString());
+    }
+}

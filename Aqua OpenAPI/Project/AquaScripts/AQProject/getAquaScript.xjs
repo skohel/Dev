@@ -1,0 +1,51 @@
+﻿testNoArguments();
+testNotExistingScriptArguments();
+testExistinScript();
+
+function testExistinScript() {
+	aqua.console.println('[TEST] aqua.project.getAquaScript() with EXISTING aquascript');
+	var error;
+	var result;
+	try {
+		result = aqua.project.getAquaScript("AQProject/getAquaScript.xjs");
+	} catch(e) {
+		error = e;
+	}
+	if(error != null) {
+		throw "Expected: NO exception but was: " + error;
+	}
+	if(result == null) {
+		throw "Expected: NOT empty result but was: " + result;
+	}
+	aqua.console.println('[OK]');
+}
+
+function testNotExistingScriptArguments() {
+	aqua.console.println('[TEST] aqua.project.getAquaScript() with NOT EXISTING aquascript');
+	var error;
+	try {
+		aqua.project.getAquaScript("dddddddddddddddddddddddd--sdfoiuhlkcjvblskjbf");
+	} catch(e) {
+		error = e;
+	}
+	if(error != null) {
+		throw "Expected: NO exception but was: " + error;
+	}
+	aqua.console.println('[OK]');
+}
+
+
+function testNoArguments() {
+	aqua.console.println('[TEST] aqua.project.getAquaScript() with no arguments...');
+	var error;
+	try {
+		aqua.project.getAquaScript();
+	} catch(e) {
+		error = e;
+	}
+	if(error == null) {
+		throw "Expected: exception but was: " + error;
+	}
+	aqua.console.println('[OK]');
+}
+

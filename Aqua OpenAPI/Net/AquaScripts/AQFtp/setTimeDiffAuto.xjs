@@ -1,0 +1,21 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        setTimeDiffAuto()
+ 
+   Synopsis:
+        void setTimeDiffAuto(boolean timeDiffAuto)
+
+   Description
+        Finds out automatically the time difference between local and remote machine if true. This requires right to create and delete a temporary file in the remote directory. 
+
+   Parameters
+        timeDiffAuto - find automatically the time difference if true
+
+   Throws
+        none
+ 
+   Example
+        See below.
+*/

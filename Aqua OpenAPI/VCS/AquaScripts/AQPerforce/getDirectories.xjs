@@ -1,0 +1,19 @@
+﻿var Pws    = aqua.vcs.newPerforce();
+Pws.setVerbose(false);
+
+// create AQOpaqueObject containing the username and password
+var usr = aqua.crypto.getSecureField('svn.username');
+var pwd = aqua.crypto.getSecureField('svn.password');
+
+// connect to the Perforce server
+Pws.connect("p4jrpc://10.168.11.82:1666","client","F:\\May_Perforce",usr,pwd);
+
+// define the directory object
+var depdir=Pws.getDirectories("F:\\May_Perforce\\Local_10.3\\*",false,false,true);
+
+// List the directory of the file in the depot
+for (i=0;i<depdir.length;i++)
+{
+aqua.console.println("The Directory is :" + depdir[i]);
+}
+Pws.close();

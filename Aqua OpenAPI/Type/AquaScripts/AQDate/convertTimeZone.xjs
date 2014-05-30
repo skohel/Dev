@@ -1,0 +1,8 @@
+﻿var factory = aqua.type.getDate();
+var date    = factory.newDate();
+var tz      = "GMT-00:00"
+
+aqua.console.println("Current datetime:                          [" + date + "]");
+
+aqua.console.println("New datetime with timezone + [" + tz + "]:  [" + date.convertTimeZone(tz) + "]");
+

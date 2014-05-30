@@ -1,0 +1,12 @@
+﻿var ExlSp = aqua.data.excelSpreadsheet('C://setcell.xls');
+
+// example on how to set individual cells
+ExlSp.currentWorksheet = 'Company';
+ExlSp.setCell(5, 3, 'Created by:');
+ExlSp.setCell(5, 4, aqua.system.getProperty('user.name'));
+ExlSp.setCell(6, 3, 'Date:');
+ExlSp.setCell(6, 4, new java.util.Date());
+ExlSp.autoResize = true;
+
+// save the excel spreadsheet 
+ExlSp.save();

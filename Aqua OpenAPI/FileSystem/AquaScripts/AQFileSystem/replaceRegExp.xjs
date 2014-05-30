@@ -1,0 +1,39 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "/tmp/test/AQFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.filesystem;
+
+/* --- test replaceregexp --- */
+
+test_replaceregexp();
+
+// --- replaceRegExp ---
+
+function test_replaceregexp() {
+    var src_base = test_data_dir + "files/src_base/";
+    var dest_base = test_data_dir + "replaceregexp/";
+    var dest_file = dest_base + "test_file.txt";
+    
+    AQFS.copy(src_base, dest_base);
+
+    // this should not work - file or directory doesn't exist
+    exec_replaceregexp(dest_base + "file_doesnt_exist", "P.T", "xyz");
+    // change PDT or PST to xyz
+    exec_replaceregexp(dest_file, "P.T", "xyz");
+    // change hh:mm:ss to hh-ss
+    exec_replaceregexp(dest_file, "([0-9]+):[0-9]+:", "\\1-");
+
+    // change PDT 2009 or PST 2009 to timezone-2009
+    exec_replaceregexp(dest_base, "P.T (\\d+)", "timezone-\\1");
+}
+function exec_replaceregexp(pathname, expression, substitution) {
+    try {
+        aqua.console.println("replace-regexp: replacing expression [" + expression + "] in " + pathname + " to [" + substitution + "]...");
+        AQFS.replaceRegExp(pathname, expression, substitution);
+        aqua.console.println("replace-regexp done.");
+    } 
+    catch(ex) {
+        aqua.console.println("replace-regexp failed - " + ex.toString());
+    }
+}

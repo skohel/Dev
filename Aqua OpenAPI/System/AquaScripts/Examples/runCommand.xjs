@@ -1,0 +1,19 @@
+﻿/*
+
+Description of method functionality
+
+Synopsys
+    [Return Data Type] functionName()  
+
+Description
+    Description of functionality
+
+Example
+    //
+
+
+*/
+
+var p = aqua.system.runCommand("notepad.exe");
+p.waitFor();
+aqua.console.println("notepad exit value: " + p.exitValue());

@@ -1,0 +1,25 @@
+/*
+aqua.math.srqt
+
+Returns the correctly rounded positive square root of a double value.
+
+Synopsys
+    double aqua.math.srqt(double)
+
+Description
+    Nothing exciting to describe.
+
+Example
+    see below
+*/
+
+// --- sqrt() ---
+function show_sqrt(value) {
+    aqua.console.println("sqrt[" + value + "] --> [" + aqua.math.sqrt(value) + "]");
+}
+show_sqrt(12.5);
+show_sqrt(3);
+show_sqrt(9);
+show_sqrt(0);
+show_sqrt(-2);
+

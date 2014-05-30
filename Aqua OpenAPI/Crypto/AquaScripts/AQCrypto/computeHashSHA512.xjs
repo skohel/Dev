@@ -1,0 +1,10 @@
+﻿// test string to produce the HASH
+var test_str = "The quick brown fox jumps over the lazy dog";
+
+try {
+     aqua.console.println("_________   SHA-512 HASH   _______ : \n" + aqua.crypto.computeHashSHA512(test_str) );
+     aqua.console.println("SHA-512 Hash: Success\n");
+}
+catch(ex) {
+    aqua.console.println("SHA-512 Hash: failed - " + ex.toString() + "\n");
+}

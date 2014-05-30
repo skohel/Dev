@@ -1,0 +1,13 @@
+var gitWS    = aqua.vcs.newGit();
+
+try {
+// clone the git repository to your local machine in folder specified
+gitWS.clone("c://git_clone","https://github.com/seivan/Rfizzy.git", null);
+
+// print after cloning repo successfully 
+aqua.console.println("Git Repository cloned suceessfully ...");
+}
+catch(ex) {
+// print after cloning repo failure
+aqua.console.println("Error in git clone command ..." +ex.toString() + "\n");
+}

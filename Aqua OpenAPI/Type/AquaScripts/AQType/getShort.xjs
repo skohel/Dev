@@ -1,0 +1,7 @@
+﻿var validValue   = "11111";
+var invalidValue = "111111";
+var factory      = aqua.type.getShort();
+
+aqua.console.println("Is [" + validValue   + "] a short? [" + factory.isValid(validValue) + "]");
+aqua.console.println("Is [" + invalidValue + "] a short? [" + factory.isValid(invalidValue) + "]");
+

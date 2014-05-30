@@ -1,0 +1,17 @@
+
+// create a new server
+var smtpServer = aqua.mail.newSmtpServer();
+
+// set host
+var host = "hostName";
+smtpServer.setHost(host);
+
+// validate host
+var hostName = smtpServer.getHost();
+if ( hostName != host ) {
+    throw "Unexpected host name '" + hostName + "' retrieved, expected name is '" + host + "'";
+}
+
+// done with test
+aqua.console.println("DONE");
+

@@ -1,0 +1,69 @@
+﻿//------------------------------------------------------------------------------
+// Class:  
+//      CoreHadoopFileSystem
+// Method:
+//      list()
+//
+// Synopsis:
+//      list()
+//
+// Description
+//      Returns an array of strings naming the files and directories in the
+//      directory denoted by this abstract pathname.
+//
+//      If source does not denote a directory, then this method returns null.
+//      Otherwise an array of strings is returned, one for each file or directory
+//      in the directory. Names denoting the directory itself and the directory's
+//      parent directory are not included in the result. Each string is a file
+//      name rather than a complete path.
+//
+//      There is no guarantee that the name strings in the resulting array will
+//      appear in any specific order; they are not, in particular, guaranteed to
+//      appear in alphabetical order.
+//    
+// Parameters
+//      string - The name of the directory; required.
+//
+// Throws
+//      Exception - on error
+//
+// Return
+//      An array of String, if the source is a directory, otherwise null.
+//
+// Example
+//      See below.
+//------------------------------------------------------------------------------
+// all test data will be created under this directory
+var fs_data_dir = "/test/AQHadoopFileSystem/";
+
+// get instance of filesystem object
+//var url = "hdfs://localhost:54310";
+var url = "ftp://10.168.2.138";
+var AQFS = aqua.net.newFtpFileSystem(url, "anonymous", "user");
+
+test_list();
+
+// --- test list ---
+
+function test_list(){
+
+   var src_file = fs_data_dir + "files/license.txt";
+   var file_doesnt_exist = fs_data_dir + "file_doesnt_exist";
+
+   exec_list(src_file);
+   exec_list(file_doesnt_exist);
+   exec_list(fs_data_dir + "files");
+}
+
+function exec_list(src_file) {
+    try {
+        var list_of_files = AQFS.list(src_file);
+        aqua.console.println("list: [" + src_file + "] have these files ");
+        for(var i=0; i < list_of_files.length; i++){
+            aqua.console.println("[" + list_of_files[i] + "]");
+        }
+        aqua.console.println("list done");
+    } catch(ex) {
+        aqua.console.println("list failed - " + ex.toString());
+    }
+}

@@ -1,0 +1,17 @@
+﻿
+//
+// This script demonstrates how to determine whether to display the title divider.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// check whether to display title divider
+var flag = settings.isShowTitleDivider();
+aqua.console.println("Default setting: title divider is " + (flag ? "" : "not ") + "displayed by default.");
+
+
+// do not display title divider
+settings.setShowTitle(false);
+flag = settings.isShowTitle();
+aqua.console.println("Custom setting: title divider is " + (flag ? "" : "not ") + "displayed.");

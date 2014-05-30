@@ -1,0 +1,16 @@
+﻿var filename   = "/tmp/newFile";
+var fileWriter = aqua.io.newFileWriter();
+var bytes      = [65, 65, 65];
+var oneByte    = 65;
+
+aqua.console.println("Setting filename [" + filename + "]");
+fileWriter.setFile(filename);
+
+aqua.console.println("Writing bytes [" + bytes + "]");
+fileWriter.write(bytes);
+
+aqua.console.println("Writing a single byte [" + oneByte + "]");
+fileWriter.write(oneByte);
+
+aqua.console.println("Closing file [" + filename + "]");
+fileWriter.close();

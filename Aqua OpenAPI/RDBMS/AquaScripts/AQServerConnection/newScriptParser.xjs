@@ -1,0 +1,18 @@
+﻿var server = "Oracle 11G - 10.168.11.51 - HR";
+var db     = null;
+var schema = "SYS";
+var conn   = aqua.project.getServerConnection( server);
+var sql    = "SELECT * FROM some_table\nGO\nSELECT * FROM some_view";
+
+var scriptParser = conn.newScriptParser();
+var str          = scriptParser.parse(sql);
+
+aqua.console.println("The orignal script: [" + sql + "]");
+aqua.console.println("");
+
+aqua.console.println("After parsing: ");
+for (var i=0; i<str.length; i++){
+    aqua.console.println("statement [" + i + "] " + str[i]);
+}
+
+conn.disconnect();

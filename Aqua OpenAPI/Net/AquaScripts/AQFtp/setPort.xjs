@@ -1,0 +1,21 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        setPort()
+ 
+   Synopsis:
+        void setPort(int port)
+
+   Description
+        Sets the FTP port used by the remote server. Defaults to port 21.    
+
+   Parameters
+        port - the port on which the remote server is listening
+  
+   Throws
+        none
+ 
+   Example
+        See below.
+*/

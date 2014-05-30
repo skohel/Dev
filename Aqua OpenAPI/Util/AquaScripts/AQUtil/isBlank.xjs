@@ -1,0 +1,4 @@
+﻿var htmlen = aqua.util.htmlEncode("This is a <TEST> for HTML &Encode&");
+var space =  "     ";
+aqua.console.println(aqua.util.isBlank(htmlen));
+aqua.console.println(aqua.util.isBlank(space));

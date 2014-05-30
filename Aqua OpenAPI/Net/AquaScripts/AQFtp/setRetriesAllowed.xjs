@@ -1,0 +1,22 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        setRetriesAllowed()
+ 
+   Synopsis:
+       void setRetriesAllowed(String retriesAllowed)
+
+   Description
+        Sets the number of retries allowed on an file-transfer operation. If a number > 0 specified, each file transfer can fail up to that many times before the operation is failed. 
+        If -1 or "forever" specified, the operation will keep trying until it succeeds. Defaults to 0 which will try once and if failure then give up.     
+
+   Parameters
+        retriesAllowed - - number of retries to allow; -1 means keep trying forever, "forever" may also be specified as a synonym for -1
+  
+   Throws
+        none
+ 
+   Example
+        See below.
+*/

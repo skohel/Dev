@@ -1,0 +1,19 @@
+﻿var args =
+{
+    a : "one",
+    b : "two"
+};
+
+aqua.console.println("Executing aqua.system.runScript(\"AQSystem/oneAndTwo.xjs\", args, false):");
+var returnValue = aqua.system.runScript("AQSystem/oneAndTwo.xjs", args, false);
+aqua.console.println("Script returned value : [" + returnValue + "]");
+aqua.console.println("");
+
+aqua.console.println("Executing aqua.system.runScript(\"AQSystem/oneAndTwo.xjs\", args):");
+var returnValue = aqua.system.runScript("AQSystem/oneAndTwo.xjs", args);
+aqua.console.println("Script returned value : [" + returnValue + "]");
+aqua.console.println("");
+
+aqua.console.print("Executing aqua.system.runScript(\"AQSystem/aquafold.xjs\"): [");
+aqua.system.runScript("AQSystem/aquafold.xjs");
+aqua.console.println("]");

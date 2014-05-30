@@ -1,0 +1,9 @@
+﻿var sql = "SELECT   ProductNumber, Category = CASE ProductLine WHEN 'R' THEN 'Road' WHEN 'M' THEN 'Mountain' WHEN 'T' THEN 'Touring' WHEN 'S' THEN 'Other sale items' ELSE 'Not for sale' END, Name FROM Production.Product ORDER BY ProductNumber;";
+
+var beautifier  = aqua.project.getServerConnection("MySql 6.0 - 10.168.1.38 - demo").newSqlFormat();
+
+beautifier.setBreakForCaseKeywords(true);
+
+aqua.console.println("BEFORE BEAUTIFICATION:\n[" + sql + "]");
+aqua.console.println("");
+aqua.console.println("AFTER BEAUTIFICATION:\n[" +  beautifier.format(sql) + "]");

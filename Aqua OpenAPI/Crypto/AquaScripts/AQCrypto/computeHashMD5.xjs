@@ -1,0 +1,10 @@
+﻿// test string to produce the HASH
+var test_str = "The quick brown fox jumps over the lazy dog";
+
+try {
+     aqua.console.println("__________  MD5 HASH   ________ : \n" + aqua.crypto.computeHashMD5(test_str) );
+     aqua.console.println("MD5 Hash: Success\n");
+}
+catch(ex) {
+    aqua.console.println("MD5 Hash: Failed - " + ex.toString() + "\n");
+}

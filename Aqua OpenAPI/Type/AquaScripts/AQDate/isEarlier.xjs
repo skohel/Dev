@@ -1,0 +1,13 @@
+﻿var factory = aqua.type.getDate();
+
+// get current datetime
+var current = factory.newDate();
+aqua.util.sleep(15);
+var later   = factory.newDate();
+
+aqua.console.println("Is [" + current + "] earlier then [" + later + "]? " + current.isEarlier(later));
+
+aqua.console.println("Is [" + current + "] earlier then [" + current + "]? " + current.isEarlier(current));
+
+aqua.console.println("Is [" + later + "] earlier then [" + current + "]? " + later.isEarlier(current));
+

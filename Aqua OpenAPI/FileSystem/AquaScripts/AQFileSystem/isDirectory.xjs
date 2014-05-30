@@ -1,0 +1,21 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "/tmp/test/AQFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.filesystem;
+
+/* --- isDirectory --- */
+
+test_isDirectory();
+
+// --- test isDirectory ---
+
+function test_isDirectory(){
+
+   var src_file = test_data_dir + "files/src_base/test_file.txt";
+   var dir_doesnt_exist = test_data_dir + "dir_doesnt_exist";
+   
+   aqua.console.println("Is " + src_file + " a directory (true/false): " + AQFS.isDirectory(src_file));
+   aqua.console.println("Is " + dir_doesnt_exist + " a directory (true/false): " + AQFS.isDirectory(dir_doesnt_exist));
+   aqua.console.println("Is " + test_data_dir + " a directory (true/false): " + AQFS.isDirectory(test_data_dir));
+}

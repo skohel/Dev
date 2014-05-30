@@ -1,0 +1,21 @@
+/*
+aqua.math.gcd
+
+Returns the greatest common divisor of the absolute value of two numbers,
+using the "binary gcd" method which avoids division and modulo operations.
+   
+Synopsys
+    int aqua.math.gcd(int p, int q)
+
+Description
+
+Example
+    see below
+*/
+
+// --- gcd() ---
+function show_gcd(p, q) {
+    aqua.console.println("gcd[" + p + ", " + q + "] --> [" + aqua.math.gcd(p, q) + "]");
+}
+show_gcd(2, 3);
+show_gcd(27, 45);

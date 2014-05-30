@@ -1,0 +1,21 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        setUserid()
+ 
+   Synopsis:
+        void setUserid(Object userid)
+
+   Description
+        Sets the login user id to use on the specified server  
+
+   Parameters
+        userid - remote system userid
+
+   Throws
+        none
+ 
+   Example
+        See below.
+*/

@@ -1,0 +1,9 @@
+﻿var reader    = aqua.io.newStringReader();
+var str       = "\"Column A\"|\"Column B\"|\'Column C\'";
+var delimiter = "|";
+
+aqua.console.println("Set input string [" + str + "]");
+reader.setInputString(str);
+reader.setColumnNames(["a", "b", "c"]);
+reader.setCellDelimiter(delimiter);
+aqua.console.list(reader.read());

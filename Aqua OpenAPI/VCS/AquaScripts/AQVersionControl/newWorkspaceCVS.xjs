@@ -1,0 +1,8 @@
+﻿var folder       = "/tmp/CSVTEST";
+var ws           = aqua.vcs.newWorkspaceCVS();
+var diff         = ws.getHistory(folder);
+var affectedPath = diff[0].getAffectedPaths();
+
+if (affectedPath != null){
+    aqua.console.list(affectedPath.getAddedPaths());
+}

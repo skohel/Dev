@@ -1,0 +1,36 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "/tmp/test/AQFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.filesystem;
+
+/*--- test replace ---*/
+test_replace();
+
+// --- replace ---
+
+function test_replace() {
+    var src_base = test_data_dir + "files/src_base/";
+    var dest_base = test_data_dir + "replace/";
+    var dest_file = dest_base + "test_file.txt";
+
+    AQFS.copy(src_base, dest_base);
+
+    // testing error conditions - destination has to exist
+    exec_replace(null, "PDT", "+++pdt+++");
+    exec_replace(dest_base + "dir_doesnt_exist", "PDT", "+++pdt+++");
+    // this should work
+    exec_replace(dest_file, "PDT", "+++pdt+++");
+    exec_replace(dest_base, "PDT", null);
+    exec_replace(dest_base, "2009", "2-0-0-9");
+}
+function exec_replace(pathname, token, value) {
+    try {
+        aqua.console.println("replace: replacing token [" + token + "] in " + pathname + " to [" + value + "]...");
+        AQFS.replace(pathname, token, value);
+        aqua.console.println("replace done.");
+    }
+    catch(ex) {
+        aqua.console.println("replace failed - " + ex.toString());
+    }
+}

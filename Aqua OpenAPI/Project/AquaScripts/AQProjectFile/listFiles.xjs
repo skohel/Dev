@@ -1,0 +1,31 @@
+﻿aqua.console.println("---- list root aquascripts without filter ----");
+
+var folder = aqua.project.getAquaScript("");
+var files = folder.list();
+for(i = 0 ; i < files.length; i++) {
+	aqua.console.println(files[i].getName());
+}
+
+aqua.console.println("---- list root aquascripts with *.xjs filter ----");
+
+folder = aqua.project.getAquaScript("");
+files = folder.list("*.xjs");
+for(i = 0 ; i < files.length; i++) {
+	aqua.console.println(files[i].getName());
+}
+
+aqua.console.println("---- list root  user files without filter ----");
+
+var folder = aqua.project.getUserFile("");
+var files = folder.list();
+for(i = 0 ; i < files.length; i++) {
+	aqua.console.println(files[i].getName());
+}
+
+aqua.console.println("---- list root user files with *.* filter ----");
+
+folder = aqua.project.getUserFile("");
+files = folder.list("*.*");
+for(i = 0 ; i < files.length; i++) {
+	aqua.console.println(files[i].getName());
+}

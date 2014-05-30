@@ -1,0 +1,34 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "/tmp/test/AQFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.filesystem;
+
+test_fixcrlf();
+
+// --- test fixcrlf ---
+
+function test_fixcrlf() {
+    var src_base = test_data_dir + "files/src_base/";
+    var dest_base = test_data_dir + "fixcrlf/";
+
+    AQFS.copy(src_base, dest_base);
+
+    // testing error condition - missing file
+    exec_fixcrlf(null);
+    
+    // this should work
+    exec_fixcrlf(dest_base + "test_file.txt");
+    exec_fixcrlf(dest_base + "tmp_dir");
+}
+
+function exec_fixcrlf(pathname) {
+    try {
+        aqua.console.println("fixcrlf: fixing CRLF for [" + pathname + "]...");
+        AQFS.fixCRLF(pathname);
+        aqua.console.println("fixcrlf done.");
+    }
+    catch(ex) {
+        aqua.console.println("fixcrlf failed - " + ex.toString());
+    }
+}

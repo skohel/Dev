@@ -1,0 +1,65 @@
+
+/**
+ * Bind parameters to GET and POST requests.
+ */
+
+// create a web client
+var webClient = aqua.net.newWebClient();
+
+// directory where responses to be saved
+var outputDir = "C:/tmp/download/";
+
+// create a reqest and bind parameters
+var request = webClient.newWebRequest("http://www.aquafold.com/");
+request.addParameter("name1", "value1");
+request.addParameter("name2", "value2");
+
+// submit a POST request
+submitRequest(request, outputDir + "aquaAddParam.html", true);
+
+
+// create a request and bind parameters
+request = webClient.newWebRequest("http://groups.yahoo.com/search/");
+request.addParameter("query", "aqua data studio");
+
+// submit a GET request
+submitRequest(request, outputDir + "yahooAddParam.html");
+
+
+// terminate client
+webClient.closeConnection();
+// end of example
+print("--- DONE ---");
+
+
+// an utility function to submit a request and save response to a local file
+function submitRequest(request, fileName, doPost) {
+    var url = request.getURL();
+    print("");
+    print("===> Submitting request to [" + url + "]...");
+
+    try {
+        var response = null;
+
+        // submit request
+        if ( doPost ) {
+            response = webClient.submitPostRequest(request);
+        } else {
+            response = webClient.submitGetRequest(request);
+        }
+
+        // save response
+        if ( fileName != null ) {
+            response.saveContent(fileName);
+            print("--> Response content is saved to [" + fileName + "]");
+        }
+
+        // write request object to console
+        print(request.toString());
+        // write response object to console
+        print(response.toString(false));
+    } catch(ex) {
+        print("!!! Failed to submit request to URL [" + url + "] - " + ex.message);
+    }
+}
+

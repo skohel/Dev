@@ -1,0 +1,5 @@
+﻿print("Generate a random first name:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextFirstName();
+    print("\t"+x);
+}

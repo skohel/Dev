@@ -1,0 +1,64 @@
+﻿//------------------------------------------------------------------------------
+// Class:  
+//      CoreHadoopFileSystem
+// Method:
+//      chgrp()
+//
+// Synopsis:
+//      chgrp()
+//
+// Description
+//      Changes the group ownership of a file or all files inside the directory.
+//      Currently, it has effect only under Unix. 
+//    
+// Parameters
+//      string - The name of the group; required.
+//      string - The file or directory to perform the task; required. 
+//
+// Throws
+//      Exception - on error
+//
+// Return
+//      None.
+//
+// Example
+//      See below.
+//------------------------------------------------------------------------------
+// all test data will be created under this directory
+var fs_data_dir = "/test/AQHadoopFileSystem/";
+
+// get instance of filesystem object
+//var url = "hdfs://localhost:54310";
+var url = "ftp://10.168.2.138";
+var AQFS = aqua.net.newFtpFileSystem(url, "anonymous", "user");
+
+test_chgrp();
+
+// --- chgrp() ---
+
+function test_chgrp() {
+    var src_base = fs_data_dir + "files/";
+    var dest_base = fs_data_dir + "chgrp/";
+
+    AQFS.copy(src_base, dest_base);
+
+    var group = "root";
+    // testing error condition - no files or directories to change
+    exec_chgrp(null, group);
+    // this should work - change group for a single file
+    exec_chgrp(dest_base + "license.txt", group);
+    // this should work - change group for a dir
+    exec_chgrp(dest_base, group);
+
+    // Clean up
+    AQFS.deleteDirectory(dest_base, true);
+}
+function exec_chgrp(pathname, group) {
+    try {
+        aqua.console.println("chgrp: changing group of [" + pathname + "] to [" + group + "]...");
+        AQFS.chgrp(pathname, group);
+        aqua.console.println("chgrp done.");
+    } catch(ex) {
+        aqua.console.println("chgrp failed - " + ex.toString());
+    }
+}

@@ -1,0 +1,12 @@
+﻿var factory  = aqua.type.getFloat();
+
+var value1   = "100.001";
+var value2   = "100.005";
+
+aqua.console.println("Is [" + value1 + "] less then  [" + value2 + "]? " + factory.isLess(value1, value2));
+
+value2 = 100.001;
+aqua.console.println("Is [" + value1 + "] less then  [" + value2 + "]? " + factory.isLess(value1, value2));
+
+value2 = -100.001;
+aqua.console.println("Is [" + value1 + "] less then  [" + value2 + "]? " + factory.isLess(value1, value2));

@@ -1,0 +1,28 @@
+﻿var server = "Sybase ASE 15.0 - TDS 5.5 - 10.168.1.46";
+var db     = "example_data";
+var schema = "dbo";
+
+var conn = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+var procedures = metadata.extractProcedures(db, schema);
+
+for (var i=0; i<procedures.length; i++){
+
+    var procedure = procedures[i];
+
+    // calling AQProcedure.extractParameter()
+    var parameters = procedure.extractParameters();
+
+    aqua.console.println("Procedure Name: [" + procedure.getName() + "]     no. of Parameters: [" + parameters.length + "]");
+    for (var j=0; j<parameters.length; j++){
+        aqua.console.println("Parameter: [" + j + "]    Parameter name: [" + parameters[j].getName() + "]");
+        aqua.console.println("Parameter: [" + j + "]    getOrdinal: [" + parameters[j].getOrdinal() + "]");
+        aqua.console.println("Parameter: [" + j + "]    isInput: [" + parameters[j].isInput() + "]");
+        aqua.console.println("Parameter: [" + j + "]    getDataType: [" + parameters[j].getDataType() + "]");
+        aqua.console.println("");
+    }
+    aqua.console.println("");
+}
+conn.disconnect();

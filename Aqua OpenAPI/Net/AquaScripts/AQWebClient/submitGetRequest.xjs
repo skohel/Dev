@@ -1,0 +1,12 @@
+
+// create a web client
+var client = aqua.net.newWebClient();
+
+// create a new request
+var request = client.newWebRequest("http://aquafold.com");
+
+// submit a get request
+var response = client.submitGetRequest(request);
+
+// write response to console
+aqua.console.println("" + response.getContent());

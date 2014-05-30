@@ -1,0 +1,7 @@
+﻿var validValue   = "JohnLH@aquafold.com";
+var invalidValue = "JohnLH@aquafold";
+var factory      = aqua.type.getEmailAddress();
+
+aqua.console.println("Is [" + validValue   + "] an email address? [" + factory.isValid(validValue) + "]");
+aqua.console.println("Is [" + invalidValue + "] an email address? [" + factory.isValid(invalidValue) + "]");
+

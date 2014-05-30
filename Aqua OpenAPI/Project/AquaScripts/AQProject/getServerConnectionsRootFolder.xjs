@@ -1,0 +1,10 @@
+﻿testGetServerConnectionsRootFolder();
+
+function testGetServerConnectionsRootFolder() {
+	aqua.console.println('[TEST] aqua.project.getServerConnectionsRootFolder()');
+    var root = aqua.project.getServerConnectionsRootFolder();
+    if(root == null) {
+        throw "Expected: root folder != null but was: " + root;
+    }
+   	aqua.console.println('[OK]');
+}

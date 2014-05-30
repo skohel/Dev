@@ -1,0 +1,20 @@
+﻿
+//
+// This script demonstrates how to get/set the character used to represent the footer divider.
+// The footer divider is only applicable to a plain text grid.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// get default footer divider
+var divider = settings.getFooterDivider();
+aqua.console.println("The default footer divider is '" + divider + "'.");
+
+// customize footer divider
+settings.setFooterDivider("=");
+
+// get current footer divider
+divider = settings.getFooterDivider();
+aqua.console.println("The footer divider is currently set to '" + divider + "'.");
+

@@ -1,0 +1,7 @@
+﻿var validValue        = "10000000000000000000000000000000000000001";
+var invalidValue      = ".0000000000000000000000000000000000000001";
+var bigIntegerFactory = aqua.type.getBigInteger();
+
+aqua.console.println("Is [" + validValue   + "] a big integer? [" + bigIntegerFactory.isValid(validValue) + "]");
+aqua.console.println("Is [" + invalidValue + "] a big integer? [" + bigIntegerFactory.isValid(invalidValue) + "]");
+

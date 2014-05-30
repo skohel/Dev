@@ -1,0 +1,118 @@
+﻿// generates an html page which contains grid results and chart.
+
+var conn = aqua.project.getServerConnection('NextGen Servers/MySQL/MySQL 6.0');
+conn.connect();
+conn.changeDatabase('demo');
+
+// statement 1
+aqua.response.write('select 1 as category, 75 as s1, 35 as s2\n' + 
+'union\n' + 
+'select 2 as category, 45 as s1, 55 as s2\n' + 
+'union\n' + 
+'select 3 as category, 55 as s1, 90 as s2\n' + 
+'union\n' + 
+'select 4 as category, 45 as s1, 45 as s2\n' + 
+'union\n' + 
+'select 5 as category, 65 as s1, 85 as s2\n' + 
+'union\n' + 
+'select 6 as category, 40 as s1, 60 as s2\n' + 
+'union\n' + 
+'select 7 as category, 80 as s1, 35 as s2\n' + 
+'union\n' + 
+'select 8 as category, 45 as s1, 55 as s2\n' + 
+'union\n' + 
+'select 9 as category, 45 as s1, 90 as s2\n' + 
+'union\n' + 
+'select 10 as category, 20 as s1, 45 as s2');
+aqua.response.write('<p>');
+dataSet = conn.executeSnapshot('select 1 as category, 75 as s1, 35 as s2\n' + 
+'union\n' + 
+'select 2 as category, 45 as s1, 55 as s2\n' + 
+'union\n' + 
+'select 3 as category, 55 as s1, 90 as s2\n' + 
+'union\n' + 
+'select 4 as category, 45 as s1, 45 as s2\n' + 
+'union\n' + 
+'select 5 as category, 65 as s1, 85 as s2\n' + 
+'union\n' + 
+'select 6 as category, 40 as s1, 60 as s2\n' + 
+'union\n' + 
+'select 7 as category, 80 as s1, 35 as s2\n' + 
+'union\n' + 
+'select 8 as category, 45 as s1, 55 as s2\n' + 
+'union\n' + 
+'select 9 as category, 45 as s1, 90 as s2\n' + 
+'union\n' + 
+'select 10 as category, 20 as s1, 45 as s2');
+
+
+// chart
+chart = aqua.chart.newChart();
+chart.setDataSource(dataSet);
+chart.setSeriesFields("s2", "s1");
+chart.setCategoryFields("category");
+chart.properties.setBackgroundColorBottom(-1314571);
+chart.properties.setBackgroundColorTop(-2630411);
+chart.properties.setCategoryAxisNumberFormat("#,##0");
+chart.properties.setCategorySpacing(0.45);
+chart.properties.setDepth(4.0);
+chart.properties.setNumericCategoryAxis(false);
+chart.properties.setFixedCategoryCount(1);
+chart.properties.setShowFixedCategoryCount(false);
+chart.properties.setFont('Arial-PLAIN-6');
+chart.properties.setGroupSmallValuesThreshold(3.0);
+chart.properties.setGroupSmallValues(true);
+chart.properties.setHeight(10.0);
+chart.properties.setImageWidth(640);
+chart.properties.setImageHeight(480);
+chart.properties.setShowLegend(true);
+chart.properties.setLegendHeight(160);
+chart.properties.setLegendHeightTypeFit();
+chart.properties.setLegendPositionTopRight();
+chart.properties.setLegendWidth(100);
+chart.properties.setLegendWidthTypeExact();
+chart.properties.setLightingDefault();
+chart.properties.setLineWidth(1.0);
+chart.properties.setShowMarkers(true);
+chart.properties.setMapShowBackground(false);
+chart.properties.setMapShowDetails(false);
+chart.properties.setMergeAxis(false);
+chart.properties.setPanX(-3.8000002);
+chart.properties.setPanY(-6.299999);
+chart.properties.setPieShowLines(false);
+chart.properties.setPieExplode(0.0);
+chart.properties.setPieLabelDistance(3.0);
+chart.properties.setReverseValueAxis(false);
+chart.properties.setRotationX(324);
+chart.properties.setRotationY(0);
+chart.properties.setRotationZ(0);
+chart.properties.setSeriesSpacing(0.45);
+chart.properties.setStackedPercent(false);
+chart.properties.setTitle('2D Bar Area Combination Chart');
+chart.properties.setValueAxisNumberFormat("###0");
+chart.properties.setWidth(16.0);
+chart.properties.setView2D(true);
+chart.properties.setZoom(3);
+chart.properties.setShowValueAxis(true);
+chart.properties.setShowCategoryAxis(true);
+chart.properties.setShowSeriesAxis(false);
+chart.properties.setShowGrid(true);
+chart.properties.setChartTypeArea(0);
+chart.properties.setColor(0, -12159556);
+chart.properties.setColumnTypeCube(0);
+chart.properties.setChartTypeColumn(1);
+chart.properties.setColor(1, -6870527);
+chart.properties.setColumnTypeCube(1);
+
+url = chart.cache(3600);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');
+
+// grid results
+writer = aqua.io.newHtmlWriter();
+writer.setTableStyle('background:#ffffe1;');
+writer.write(dataSet);
+aqua.response.write(writer.toHtml());
+aqua.response.write('<p>');
+
+

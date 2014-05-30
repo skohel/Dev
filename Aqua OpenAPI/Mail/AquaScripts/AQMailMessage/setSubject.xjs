@@ -1,0 +1,25 @@
+
+// utility function - abort execution
+function abort(api) {
+    aqua.console.println("!!! expected exception is not generated on execution of [" + api + "]");
+    aqua.exit();
+}
+
+// utility function - write expected exception to console
+function showExpectedError(ex) {
+    aqua.console.println("... expected exception received - " + ex.name + " - " + ex.message);
+}
+
+
+// create a new email message
+var email = aqua.mail.newMessage();
+
+// test invalid arguments
+try { email.setSubject(null); abort('setSubject(null)'); } catch(ex) { showExpectedError(ex); } 
+
+// test valid arguments
+email.setSubject("");
+email.setSubject("Subject text");
+
+// done with test
+aqua.console.println("DONE");

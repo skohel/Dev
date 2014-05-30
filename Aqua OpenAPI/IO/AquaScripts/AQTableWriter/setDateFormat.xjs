@@ -1,0 +1,13 @@
+﻿var server = aqua.project.getServerConnection("SQL Server 2000");
+server.connect();
+var table = server.getMetaData().extractTable("Northwind","dbo","testextcols");
+var writer = table.getWriter();
+
+var row = writer.newDataRow();
+row.set(0, aqua.random.nextInteger());
+row.set(4, "2001-01-01 01:01:01");
+
+writer.setDateFormat("yyyy-mm-dd hh:mm:ss");
+writer.write(row);
+writer.close();
+server.disconnect();

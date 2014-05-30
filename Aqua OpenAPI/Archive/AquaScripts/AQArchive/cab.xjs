@@ -1,0 +1,61 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "c:\\tmp\\test\\AQArchive\\";
+
+test_cab_dir();
+test_cab_fileset();
+
+// --- CAB directory ---
+function test_cab_dir() {
+    
+    var src_base = test_data_dir + "files\\src_base\\";
+    var dest_base = test_data_dir + "cab\\cab_dest\\";
+    
+    // testing error condition
+    exec_cab_dir(null, null);
+    // archiving directory
+    exec_cab_dir(src_base, dest_base + "dir.cab");
+    // archiving file (this will fail)
+    exec_cab_dir(src_base + "test_file.txt", dest_base + "file.cab");
+}
+
+function exec_cab_dir(srcDir, cabFile) {
+    
+    try {
+        aqua.console.println("cab: creating [" + cabFile + "] with srcDir=[" + srcDir + "]...");
+        aqua.archive.cab(srcDir, cabFile);
+        aqua.console.println("cab: done.\n");
+    } catch(ex) {
+        aqua.console.println("cab: failed - " + ex.toString() + "\n");
+    }
+}
+
+
+// --- CAB fileset ---
+function test_cab_fileset() {
+    
+    var src_base  = test_data_dir + "files\\src_base\\";
+    var dest_base = test_data_dir + "cab\\cab_dest\\";
+    var fileset   = aqua.filesystem.newFileSet();
+    
+    fileset.setBaseDir(src_base);
+    fileset.setIncludes("**/*");
+    fileset.setExcludes("**/*.txt");
+    
+    // testing error condition
+    exec_cab_fileset(null, dest_base + "fileset.cab");
+    // testing error condition
+    exec_cab_fileset(fileset, null);
+    // archiving a single fileset
+    exec_cab_fileset(fileset, dest_base + "fileset.cab");
+
+}
+
+function exec_cab_fileset(fileSet, cabFile) {
+    try {
+        aqua.console.println("cab fileset: creating [" + cabFile + "] with fileset=[" + (fileSet == null ? 'null' : fileSet.getBaseDir()) + "]...");
+        aqua.archive.cab(fileSet, cabFile);
+        aqua.console.println("cab fileset: done.\n");
+    } catch(ex) {
+        aqua.console.println("cab fileset: failed - " + ex.toString() + "\n");
+    }
+}

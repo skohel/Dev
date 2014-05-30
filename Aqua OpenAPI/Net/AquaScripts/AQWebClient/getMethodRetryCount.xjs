@@ -1,0 +1,13 @@
+
+// create a web client
+var client = aqua.net.newWebClient();
+
+// get default retry count
+var count = client.getMethodRetryCount();
+aqua.console.println("Default method retry count is " + count + ".");
+
+// change retry count
+count += 2;
+client.setMethodRetryCount(count);
+count = client.getMethodRetryCount();
+aqua.console.println("Method retry count is changed to " + count + ".");

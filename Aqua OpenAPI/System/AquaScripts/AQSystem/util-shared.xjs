@@ -1,0 +1,12 @@
+﻿/*
+This is a sample script to define utility functions which can be used in other AquaScripts using runScript api.
+*/
+
+if(typeof toTitleCase != 'function') { 
+    print("This is utility functions collection only, execute run-script-shared.xjs");
+}
+
+function greet(greeting, name) {
+    // invoking toTitleCase method defined in run-script-shared.xjs.
+    return greeting + " " + toTitleCase(name);
+}

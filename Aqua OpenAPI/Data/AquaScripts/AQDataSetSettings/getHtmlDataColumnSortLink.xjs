@@ -1,0 +1,23 @@
+﻿
+//
+// This script demonstrates how to get/set the sorting URL associated with data columns in a pivot table.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// get current sorting URL setting
+var url = settings.getHtmlDataColumnSortLink();
+if ( url == null ) {
+    aqua.console.println("The data column sort link is not defined.");
+} else {
+    aqua.console.println("The data column sort link is '" + url + "'.");
+}
+
+// set sorting URL
+settings.setHtmlDataColumnSortLink("http://www.aquafold.com?sortOrder=<AQSO>&columnId=<AQSID>");
+
+// get current sorting URL setting
+url = settings.getHtmlDataColumnSortLink();
+aqua.console.println("The data column sort link is currently set to '" + url + "'.");
+

@@ -1,0 +1,14 @@
+﻿var server      = "Oracle 11G - 10.168.11.51 - HR";
+var db          = null;
+var schema      = "SYS";
+var conn        = aqua.project.getServerConnection( server);
+var sql         = "SELECT * FROM some_table";
+var beautifier  = conn.newSqlFormat();
+
+beautifier.setBreakAfterKeywords(true);
+
+aqua.console.println("BEFORE BEAUTIFICATION:\n[" + sql + "]");
+aqua.console.println("");
+aqua.console.println("AFTER BEAUTIFICATION:\n[" +  beautifier.format(sql) + "]");
+
+conn.disconnect();

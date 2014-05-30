@@ -1,0 +1,12 @@
+﻿var TextFile = "/home/sterling/Downloads/Aqua OpenAPI/IO/User\ Files/access.log";
+var reader   = aqua.io.newTextReader();
+
+print("Start TextFileReader read() test...");
+reader.setFile(TextFile);
+
+var dataRow;
+for (var i=0; dataRow = reader.readNextRow(); i++){
+
+    aqua.console.println("row [" + i + "] : [" + dataRow.getString(0) + "]");
+}
+reader.close();

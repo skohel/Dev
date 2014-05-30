@@ -1,0 +1,6 @@
+﻿var folder   = "/tmp/SVNTEST";
+var svn      = aqua.vcs.newWorkspaceSubversion();
+svn.setVerbose(true);
+svn.setUsername(aqua.crypto.getSecureField('svn.username'));
+svn.setPassword(aqua.crypto.getSecureField('svn.password'));
+svn.commit(folder, "Testing commit through API");

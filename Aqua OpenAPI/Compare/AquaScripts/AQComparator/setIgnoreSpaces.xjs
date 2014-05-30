@@ -1,0 +1,26 @@
+﻿var line1 = "AAA\nBBB";
+var line2 = "AAA\n\n\n\n\nBBB";
+var comp1 = aqua.compare.newComparator();
+var result;
+var diffi;
+
+// Setting Ignore Spaces to true
+comp1.setIgnoreSpaces(true);
+
+result = comp1.compareText(line1, line2);
+diffi  = result.getChanges();
+
+for (var i=0; i < diffi.length; i++) {
+   aqua.console.println("Is line 2 modified (ignoring empty line):\t\t" + diffi[i]);
+}
+aqua.console.println("");
+
+// Setting Ignore Spaces to false
+comp1.setIgnoreSpaces(false);
+
+result = comp1.compareText(line1, line2);
+diffi  = result.getChanges();
+
+for (var i=0; i < diffi.length; i++) {
+   aqua.console.println("Is line 2 modified (don't ignore empty line):\t" + diffi[i]);
+}

@@ -1,0 +1,15 @@
+﻿var gitWS    = aqua.vcs.newGit();
+gitWS.setVerbose(true);
+try {
+// set the git workspace in your local machine
+gitWS.setWorkspace("c://git_repo_init");
+gitWS.add("c://git_repo_init/sql.txt")
+gitWS.commit("c://git_repo_init/sql.txt","tariq","tariqrahiman@hotmail.com","This is First Commit");
+
+// print after committing the file successfully
+aqua.console.println("File committed to Git Repo successfully...");
+}
+catch(ex) {
+// print if commit to git repo is a failure
+aqua.console.println("Error in committing file to Git Repo..." +ex.toString() + "\n");
+}

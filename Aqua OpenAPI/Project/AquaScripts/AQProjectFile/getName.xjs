@@ -1,0 +1,51 @@
+﻿testServerConnectionFolder();
+testAquaScriptFolder();
+testAquaScript();
+testUserFileFolder();
+testUserFile();
+
+function testServerConnectionFolder() {
+	aqua.console.println("[TEST] aqua.project.getServerConnectionsRootFolder().getName()");
+    var name = aqua.project.getServerConnectionsRootFolder().getName();
+    if(name == null) {
+        throw "Expected: name != null but was "+ name;
+    }
+	aqua.console.println("[OK]");
+}
+
+function testAquaScriptFolder() {
+	aqua.console.println("[TEST] aqua.project.getAquaScriptsRootFolder().getName()");
+    var name = aqua.project.getAquaScriptsRootFolder().getName();
+    if(name == null) {
+        throw "Expected: name != null but was "+ name;
+    }
+	aqua.console.println("[OK]");
+}
+
+function testAquaScript() {
+	aqua.console.println("[TEST] aqua.project.getAquaScript(\"AQProjectFile/getLength.xjs\").getName()");
+    var name = aqua.project.getAquaScript("AQProjectFile/getLength.xjs").getName();
+    if(name == null) {
+        throw "Expected: name != null but was "+ name;
+    }
+	aqua.console.println("[OK]");
+}
+
+function testUserFileFolder() {
+	aqua.console.println("[TEST] aqua.project.getUserFilesRootFolder().getName()");
+    var name = aqua.project.getUserFilesRootFolder().getName();
+    if(name == null) {
+        throw "Expected: name != null but was "+ name;
+    }
+	aqua.console.println("[OK]");
+}
+
+function testUserFile() {
+	aqua.console.println("[TEST] aqua.project.getUserFile(\"testFile\").getName()");
+	aqua.project.getUserFile("testFile").write("test text");
+    var name = aqua.project.getUserFile("testFile").getName();
+    if(name == null) {
+        throw "Expected: name != null but was "+ name;
+    }
+	aqua.console.println("[OK]");
+}

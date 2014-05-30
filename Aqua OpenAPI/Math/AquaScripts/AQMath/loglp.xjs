@@ -1,0 +1,32 @@
+/*
+aqua.math.log1p
+
+Returns the natural logarithm of the sum of the argument and 1. Note that for small values x, 
+the result of log1p(x) is much closer to the true result of ln(1 + x) than the floating-point evaluation of log(1.0+x). 
+
+Synopsys
+    double aqua.math.log1p(double)
+
+Description
+    * If the argument is NaN or less than -1, then the result is NaN.
+    * If the argument is positive infinity, then the result is positive infinity.
+    * If the argument is negative one, then the result is negative infinity.
+    * If the argument is zero, then the result is a zero with the same sign as the argument. 
+
+The computed result must be within 1 ulp of the exact result. Results must be semi-monotonic. 
+
+Example
+    see below
+*/
+
+// --- log1p() ---
+function show_log1p(value) {
+    aqua.console.println("log1p[" + value + "] --> [" + aqua.math.log1p(value) + "]");
+}
+show_log1p(-2);
+show_log1p(-1);
+show_log1p(0)
+show_log1p(1);
+show_log1p(2.5);
+show_log1p(4);
+

@@ -1,0 +1,83 @@
+﻿//------------------------------------------------------------------------------
+// Class:  
+//      CoreHadoopFileSystem
+// Method:
+//      moveFromLocalFileSets()
+//
+// Synopsis:
+//      moveFromLocalFileSets()
+//
+// Description
+//      Moves a list of local files to Hadoop FS as specified by the AQFilesSet
+//      object. Use the AQFileSet object to define the source directory and the
+//      file pattern to move.
+//    
+// Parameters
+//      AQFileSets - A list of files, as defined in the AQFileSet object, to
+//                   perform the task; required.
+//      string     - The location of where the file will be copied; required. 
+//
+// Throws
+//      Exception - on error
+//
+// Return
+//      None.
+//
+// Example
+//      See below.
+//------------------------------------------------------------------------------
+// all test data will be created under this FS directory
+var fs_data_dir = "/test/AQHadoopFileSystem/";
+var local_data_dir = "d:/temp/files/";
+
+// get instance of filesystem object
+var AQLOCALFS = aqua.filesystem;
+//var url = "hdfs://localhost:54310";
+var url = "ftp://10.168.2.138";
+var AQFS = aqua.net.newFtpFileSystem(url, "anonymous", "user");
+
+test_moveFromLocalFileSets();
+
+//--- move files specified in a fileset to a directory ---
+function test_moveFromLocalFileSets() {
+    AQLOCALFS.copy("d:/temp/tiny_mce", local_data_dir);
+
+    var dest_base = fs_data_dir + "move/";
+    AQFS.deleteDirectory(dest_base, true);   
+
+    var fileset1 = AQFS.newFileSet();
+    var fileset2 = AQFS.newFileSet();
+    
+    fileset1.setBaseDir(local_data_dir)
+    fileset1.setIncludes("**/*.jpg");
+    fileset1.setExcludes("**/*.gif");
+    
+    fileset2.setBaseDir(local_data_dir)
+    fileset2.setIncludes("**/*.gif");
+    
+    var filesets = new Array(fileset1, fileset2);
+    
+    // testing error condition - source file is required
+    exec_moveFromLocalFileSets(null, "ab");
+    // testing error condition - destination is requred
+    exec_moveFromLocalFileSets("ab", null);
+    // this should work
+    exec_moveFromLocalFileSets(filesets, dest_base);
+
+    // Clean up
+    AQFS.deleteDirectory(dest_base, true);
+}
+
+function exec_moveFromLocalFileSets(filesets, destDir) {
+    try {
+        aqua.console.println("moveFromLocalFileSets: moving " );
+        for (var i=0; i<filesets.length; i++){
+           aqua.console.println("["+ (filesets[i] == null? 'null' : filesets[i].getBaseDir()) + "]");
+        }
+        aqua.console.println(" to [" + destDir + "]...");
+        AQFS.moveFromLocalFileSets(filesets, destDir);
+        aqua.console.println("moveFromLocalFileSets done.");
+    } catch(ex) {
+        aqua.console.println("moveFromLocalFileSets failed - " + ex.toString());
+    }
+}

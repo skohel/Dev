@@ -1,0 +1,14 @@
+﻿var factory = aqua.type.getDate();
+
+// get current datetime
+var date1   = factory.newDate();
+var date2   = factory.newDate(2010, 1, 2, 34, 56, 7, "GMT-08:00");
+var date3   = factory.newDate(2010, 1, 2, 34, 56, "GMT-08:00");
+var date4   = factory.newDate(2010, 1, 2, "GMT-08:00");
+var date5   = factory.newDate(0, "GMT-00:00");
+
+aqua.console.println("Date 1: [" + date1 + "]");
+aqua.console.println("Date 2: [" + date2 + "]");
+aqua.console.println("Date 3: [" + date3 + "]");
+aqua.console.println("Date 4: [" + date4 + "]");
+aqua.console.println("Date 5: [" + date5 + "]");

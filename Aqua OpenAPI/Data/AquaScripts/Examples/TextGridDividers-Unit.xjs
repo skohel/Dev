@@ -1,0 +1,59 @@
+﻿
+// the path in the local "Servers" folder
+var serverPath = "SQL Server 2000";
+// the database in which we are interested
+var databaseName = "Northwind";
+
+// open connection to server
+var serverConnection = aqua.project.getServerConnection(serverPath);
+
+// establish SQL connection
+serverConnection.connect();
+
+// change database
+serverConnection.changeDatabase(databaseName);
+
+// create a data set
+var dataSet = serverConnection.executeSnapshot("select * from orders where CustomerId like 'AN%';");
+
+// create a data set settings
+var settings = aqua.report.newReportDataSetSettings();
+// settings.setTitleDivider(null);
+// settings.setTitleDivider("");
+// settings.setTitleDivider("tx");
+// settings.setTitleDivider("T");
+
+// settings.setHeaderDivider("hx");
+// settings.setHeaderDivider("H");
+
+// settings.setFooterDivider("fx");
+// settings.setFooterDivider("F");
+
+// settings.setColumnGapDivider("gx");
+// settings.setColumnGapDivider("G");
+
+// settings.setRowDivider("rx");
+// settings.setRowDivider("R");
+// settings.addCustomRowDividerLocation(2);
+
+// settings.setColumnDivider("cx");
+// settings.setColumnDivider("C");
+// settings.addCustomColumnDividerLocation(2);
+
+// settings.addCustomRowDivider(6, "<x");
+// settings.addCustomRowDivider(6, ">");
+// settings.addCustomRowDividerLocation(6);
+
+// create a new report
+var report = aqua.report.newReport();
+report.addDataSet(dataSet, settings);
+
+// --- generate report
+
+// generate a plain text report
+aqua.console.print(report.renderText());
+// generate a HTML report
+// aqua.console.print(report.renderHtml());
+
+// done, disconnect from server
+serverConnection.disconnect();

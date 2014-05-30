@@ -1,0 +1,4 @@
+﻿var folder = "/tmp/SVNTEST";
+var svn    = aqua.vcs.newWorkspaceSubversion();
+aqua.console.println("The Revision of the file is : " +  svn.getRevision(folder));
+

@@ -1,0 +1,31 @@
+
+// utility function - abort execution
+function abort(api) {
+    aqua.console.println("!!! expected exception is not generated on execution of [" + api + "]");
+    aqua.exit();
+}
+
+// utility function - write expected exception to console
+function showExpectedError(ex) {
+    aqua.console.println("... expected exception received - " + ex.name + " - " + ex.message);
+}
+
+
+// create a new email message
+var email = aqua.mail.newMessage();
+
+// test invalid arguments
+try { email.setFrom(null); abort('setFrom(null)'); } catch(ex) { showExpectedError(ex); } 
+try { email.setFrom(""); abort('setFrom("")'); } catch(ex) { showExpectedError(ex); } 
+try { email.setFrom("  "); abort('setFrom("  ")'); } catch(ex) { showExpectedError(ex); } 
+
+// validate mail From
+var address = "name@company.com";
+email.setFrom(address);
+var from = email.getFrom();
+if ( from != address ) {
+    throw "Unexpected mail From '" + from + "', expected address is '" + address + "'.";
+}
+
+// done with test
+aqua.console.println("DONE");

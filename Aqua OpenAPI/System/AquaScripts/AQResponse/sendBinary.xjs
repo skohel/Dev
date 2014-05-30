@@ -1,0 +1,3 @@
+﻿// run this script by clicking on "debug in browser"
+var bytes = aqua.util.hexDecode("7E7E7E7E7E7E7E");
+aqua.response.sendBinary("text/html", "filename", bytes);

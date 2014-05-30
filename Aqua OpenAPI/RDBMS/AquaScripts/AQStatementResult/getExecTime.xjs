@@ -1,0 +1,25 @@
+﻿var server      = "Informix 11.5 - 10.168.11.39 - demo - demo";
+var db          = "demo";
+var conn        = aqua.project.getServerConnection(server);
+conn.connect();
+
+conn.changeDatabase(db);
+
+var sql = "select * from address\n";
+sql    += "GO\n";
+sql    += "select * from child  \n";
+sql    += "GO\n";
+sql    += "select * from name   \n";
+
+var scriptResult     = conn.executeScript(sql);
+var statementResults = scriptResult.getResults();
+
+for (var i=0; i<statementResults.length; i++){
+
+    var execTime  = statementResults[i].getExecTime()
+    var statement = statementResults[i].getStatement();
+
+    aqua.console.println("Time in milliseconds taken to execute (" + statement + "):            [" + execTime + "]\n");
+}
+
+conn.disconnect();

@@ -1,0 +1,1 @@
+﻿aqua.console.println("getRequestURI [" + aqua.request.getRequestURI() + "]");

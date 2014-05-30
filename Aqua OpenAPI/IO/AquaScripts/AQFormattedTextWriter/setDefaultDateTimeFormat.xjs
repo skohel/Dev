@@ -1,0 +1,58 @@
+﻿var TextFile = "/text.out";
+var locale   = aqua.random.nextLocale();
+var format   = "MMMM/dd/yyyy hh:mm:ss";
+
+defaultDateTimeFormatWithLocale(locale);
+defaultDateTimeFormat();
+
+//------------------------------------------------------------------------------
+function defaultDateTimeFormat(){
+    // define a data set
+    var columns = ["shiporder", "date"];
+    var ds = aqua.data.newDataSet(columns);
+
+    // fill dataset row with values
+    var row = ds.addRow();
+    row.set(0,"Russia");
+    row.set(1,new java.util.Date());
+    ds.columnStructure.getColumn(0).setSqlType(java.sql.Types.VARCHAR);
+    ds.columnStructure.getColumn(1).setSqlType(java.sql.Types.TIMESTAMP);
+
+    var writer = aqua.io.newTextWriter();
+    writer.setFile(TextFile);
+    aqua.console.println("Setting default datetime format [" + format + "]");
+    writer.setDefaultDateTimeFormat(format);
+    writer.write(ds);
+    writer.close();
+    readFile();
+}
+
+function defaultDateTimeFormatWithLocale(locale){
+
+    // define a data set
+    var columns = ["shiporder", "date"];
+    var ds = aqua.data.newDataSet(columns);
+
+    // fill dataset row with values
+    var row = ds.addRow();
+    row.set(0,"Russia");
+    row.set(1,new java.util.Date());
+    ds.columnStructure.getColumn(0).setSqlType(java.sql.Types.VARCHAR);
+    ds.columnStructure.getColumn(1).setSqlType(java.sql.Types.TIMESTAMP);
+
+    var writer = aqua.io.newTextWriter();
+    
+    writer.setFile(TextFile);
+    aqua.console.println("Setting default datetime format [" + format + "] to locale [" + locale + "]");
+    writer.setDefaultDateTimeFormat(format, locale);
+    writer.write(ds);
+    writer.close();
+    readFile();
+}
+
+function readFile() {
+    var reader = aqua.io.newTextReader();
+    reader.setFile(TextFile);
+    print(reader.readNextRow());
+    print();
+}

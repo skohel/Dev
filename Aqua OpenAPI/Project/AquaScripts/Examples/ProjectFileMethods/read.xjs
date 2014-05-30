@@ -1,0 +1,32 @@
+﻿/*
+
+Reads the file content into a string using the specified encoding.
+
+Synopsys
+    String read() Reads the file content into a string assuming UTF-8 encoding.
+    String read(String encoding)
+
+Description
+    Reads the file content into a string using the specified encoding. 
+
+Example
+    //
+
+
+*/
+
+
+userFiles = aqua.project.collectUserFiles("/");
+for(i=0; i<userFiles.length; i++)
+{
+    bval = userFiles[i].read();
+    print("----- file start -----");
+    print(bval);
+    print("----- file end -------");
+    print("");
+}
+
+
+function print(m) {
+    aqua.console.println(m);
+}

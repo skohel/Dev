@@ -1,0 +1,36 @@
+/*
+
+Description of method functionality
+
+Synopsys
+    [Return Data Type] functionName()  
+
+Description
+    Description of functionality
+
+Example
+    //
+
+
+*/
+
+importPackage(com.aquafold.openapi.rdbms); 
+importPackage(java.lang); 
+
+// Establish DB Connectivity
+conn = aqua.project.getServerConnection("/myserv");
+conn.connect();
+print("Established Connection .."+ conn);
+
+// Insert Query
+
+for(i=0; i<10; i++)
+{
+var randShort  = aqua.random.getShort();
+var sqlQuery = "INSERT INTO orders(OrderID, CustomerID, EmployeeID, OrderDate) VALUES (" + randShort + " , " + randShort + "," + randShort + "," + randShort + " )";
+print('SQL Query: ' + sqlQuery);
+insq = conn.executeUpdate(sqlQuery);
+// Disconnect the DB Connectivity
+}
+conn.disconnect();
+print("Disconnected :" + conn);

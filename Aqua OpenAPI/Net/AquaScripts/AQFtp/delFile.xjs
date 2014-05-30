@@ -1,0 +1,29 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        delFile()
+ 
+   Synopsis:
+        void delFile(String filename, String remotedir) throws Exception
+
+   Description
+        Deletes a file on the remote FTP server. 
+
+   Parameters
+        filename - the path of the remote file relative to remotedir
+        remotedir - the base directory on the remote FTP server  
+  
+   Throws
+        Exception - if failed to delete file
+ 
+   Example
+        See below.
+*/
+
+var server = "localhost";
+var user = "anonymous";
+var password = "any@email.com";
+var ftp = aqua.net.newFtp(server,user,password);
+
+ftp.delDir("/test");

@@ -1,0 +1,18 @@
+﻿var server = "Sybase ASE 15.0 - TDS 5.5 - 10.168.1.46";
+var db     = "example_data";
+var schema = "dbo";
+
+var conn = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+
+var objs = metadata.extractSegments(db, schema);
+
+for(var i=0; i<objs.length; i++){
+
+    var obj = metadata.extractSegment(db, schema, objs[i].getName());
+    aqua.console.println("Segment Name:\t[" + obj.getName() + "]\t\tThe CREATE script:\t[" + obj.scriptCREATE() + "]");
+    aqua.console.println("");
+}
+conn.disconnect();

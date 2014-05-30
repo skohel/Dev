@@ -1,0 +1,10 @@
+﻿var server = "MS SQLServer - 10.168.11.57 - msdb - dbo";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var dataTypes = conn.getMetadata().getDataTypes();
+aqua.console.println("The data types for server [" + server + "]: ");
+for (var i=0; i<dataTypes.length; i++){
+    aqua.console.println("[" + dataTypes[i] + "]");
+}
+conn.disconnect();

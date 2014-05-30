@@ -1,0 +1,17 @@
+﻿
+//
+// This script demonstrates how to determine whether to display trend charts for rows.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// check whether to display row trend chart
+var flag = settings.isShowRowTrendChart();
+aqua.console.println("Default setting: row trend chart is " + (flag ? "" : "not ") + "displayed by default.");
+
+
+// display row trend chart
+settings.setShowRowTrendChart(true);
+flag = settings.isShowRowTrendChart();
+aqua.console.println("Custom setting: row trend chart is " + (flag ? "" : "not ") + "displayed.");

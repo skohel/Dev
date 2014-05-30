@@ -1,0 +1,54 @@
+//------------------------------------------------------------------------------
+// Class:  
+//      AQNet
+// Method:
+//      get()
+//
+// Synopsis:
+//      get()
+//
+// Description
+//      Gets a file from a URL source.
+//    
+// Parameters
+//      string - The URL to get; required.
+//      string - The fully qualified name or name of the file to be saved; required.
+//
+// Throws
+//      Exception - on error
+//
+// Return
+//      None.
+//
+// Example
+//      See below.
+//------------------------------------------------------------------------------
+// all test data will be created under this directory
+var test_data_dir = "/tmp/test/AQFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.net;
+
+/* --- testing get --- */
+
+test_get();
+
+// --- get() ---
+
+function test_get() {
+    var dest_base = test_data_dir + "get/";
+
+    exec_get("http://www.google.com", dest_base + "tmp_google.txt");
+    exec_get("http://www.xxxxdoesNotExist.com", dest_base + "tmp_none.txt");
+}
+function exec_get(url, destFile) {
+    try {
+        aqua.console.println("get: requesting [" + url + "]...");
+        AQFS.get(url, destFile);
+        aqua.console.println("get done.");
+    } catch(ex) {
+        aqua.console.println("get failed - " + ex.toString());
+    }
+}
+
+// -------------------------------------------------------------------------------

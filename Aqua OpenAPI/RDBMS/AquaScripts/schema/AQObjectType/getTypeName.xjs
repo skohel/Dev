@@ -1,0 +1,17 @@
+﻿var server = "Oracle 11G - 10.168.11.51 - HR";
+var db     = null;
+var schema = "HR";
+
+var conn = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+
+var objs = metadata.extractObjectTypes(db, schema);
+
+for(var i=0; i<objs.length; i++){
+
+    var obj = metadata.extractObjectType(db, schema, objs[i].getName());
+    aqua.console.println("Object Type Name:\t[" + obj.getName() + "]\t\tType Name:\t[" + obj.getTypeName() + "]");
+}
+conn.disconnect();

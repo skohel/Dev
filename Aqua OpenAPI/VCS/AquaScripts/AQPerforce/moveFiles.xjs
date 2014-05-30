@@ -1,0 +1,24 @@
+﻿var Pws    = aqua.vcs.newPerforce();
+
+// create AQOpaqueObject containing the username and password
+var usr = aqua.crypto.getSecureField('svn.username');
+var pwd = aqua.crypto.getSecureField('svn.password');
+
+// connect to the Perforce server
+Pws.connect("p4jrpc://10.168.11.82:1666","client","F:\\May_Perforce\\AAA",usr,pwd);
+
+// define source and destination
+
+var fromfle = "C:\\p4v_ads_try\\test\\";
+var toFle = "C:\\p4v_ads_try\\Workspace_gui\\com\\";
+
+// define the file to move
+var movFle = "C:\\p4v_ads_try\\test\\application.css";
+
+
+// move the file
+Pws.moveFile(0,true,false,null,fromfle,toFle);
+
+// disconnect from the Perforce server
+Pws.close();
+print("The file is moved and disconnecting from server ...");

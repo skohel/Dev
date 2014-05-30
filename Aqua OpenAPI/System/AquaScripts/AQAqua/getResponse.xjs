@@ -1,0 +1,3 @@
+﻿var response = aqua.getResponse();
+
+aqua.console.println("Status: [" + response.getStatus() + "]");

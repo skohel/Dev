@@ -1,0 +1,19 @@
+
+//
+// This script demonstrates how to get/set the time period that the generated trend chart images should be kept.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// get default cache time
+var cacheTime = settings.getChartCacheTime();
+aqua.console.println("Default chart cache time is " + cacheTime + " seconds.");
+
+// customize chart cache time
+settings.setChartCacheTime(5);
+
+// get new cache time
+cacheTime = settings.getChartCacheTime();
+aqua.console.println("Current setting of chart cache time is " + cacheTime + " seconds.");
+

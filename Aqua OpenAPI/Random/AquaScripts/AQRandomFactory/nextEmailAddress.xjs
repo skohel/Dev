@@ -1,0 +1,5 @@
+﻿print("Generate a random email address:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextEmailAddress();
+    print("\t"+x);
+}

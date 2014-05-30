@@ -1,0 +1,21 @@
+﻿testCollectUserFiles();
+testCollectUserFilesWithFilter();
+
+function testCollectUserFiles() {
+	aqua.console.println("Calling aqua.project.collectUserFiles(\"\")");
+    var fileList = aqua.project.collectUserFiles("");
+    if(fileList == null) {
+        throw "Expected: file list != null but was: " +fileList;
+    }
+    aqua.console.println("User files found: [" + fileList.length + "]\n");
+	
+}
+
+function testCollectUserFilesWithFilter() {
+	aqua.console.println("calling aqua.project.collectUserFiles(\"\", \"*.*\")");
+    var fileList = aqua.project.collectUserFiles("", "*.*");
+    if(fileList == null) {
+        throw "Expected: file list != null but was: " +fileList;
+    }
+    aqua.console.println("User files found [" + fileList.length + "]");
+}

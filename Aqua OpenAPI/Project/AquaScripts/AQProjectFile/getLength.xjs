@@ -1,0 +1,51 @@
+﻿testServerConnectionFolder();
+testAquaScriptFolder();
+testAquaScript();
+testUserFileFolder();
+testUserFile();
+
+function testServerConnectionFolder() {
+	aqua.console.println("[TEST] aqua.project.getServerConnectionsRootFolder().getLength()");
+    var length = aqua.project.getServerConnectionsRootFolder().getLength();
+    if(length != 0) {
+        throw "Expected: 0 but was "+ length;
+    }
+	aqua.console.println("[OK]");
+}
+
+function testAquaScriptFolder() {
+	aqua.console.println("[TEST] aqua.project.getAquaScriptsRootFolder().getLength()");
+    var length = aqua.project.getServerConnectionsRootFolder().getLength();
+    if(length != 0) {
+        throw "Expected: 0 but was "+ length;
+    }
+	aqua.console.println("[OK]");
+}
+
+function testAquaScript() {
+	aqua.console.println("[TEST] aqua.project.getAquaScript(\"AQProjectFile/getLength.xjs\").getLength()");
+    var length = aqua.project.getAquaScript("AQProjectFile/getLength.xjs").getLength();
+    if(length <= 0) {
+        throw "Expected: > 0 but was " + length;
+    }
+	aqua.console.println("[OK]");
+}
+
+function testUserFileFolder() {
+	aqua.console.println("[TEST] aqua.project.getUserFilesRootFolder().getLength()");
+    var length = aqua.project.getUserFilesRootFolder().getLength();
+    if(length != 0) {
+        throw "Expected: 0 but was "+ length;
+    }
+	aqua.console.println("[OK]");
+}
+
+function testUserFile() {
+	aqua.console.println("[TEST] aqua.project.getUserFile(\"testFile\").getLength()");
+	aqua.project.getUserFile("testFile").write("test text");
+    var length = aqua.project.getUserFile("testFile").getLength();
+    if(length != 9) {
+        throw "Expected: 9 but was " + length;
+    }
+	aqua.console.println("[OK]");
+}

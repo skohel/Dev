@@ -1,0 +1,25 @@
+﻿var dataSet = generateDataSet();
+
+aqua.console.println("Plain:");
+aqua.console.println(dataSet.renderHtml());
+aqua.console.println("");
+
+aqua.console.println("Now with settings:");
+var dataSetSettings = aqua.data.newDataSetSettings();
+aqua.console.println(dataSet.renderHtml(dataSetSettings));
+aqua.console.println("");
+
+aqua.console.println("Now with settings and chart:");
+var chart = aqua.chart.newChart();
+aqua.console.println(dataSet.renderHtml(dataSetSettings, chart));
+
+//------------------------------------------------------------------------------
+function generateDataSet(){
+
+    var ds = aqua.data.newDataSet(["shipcountry","freight","id"]);
+    ds.addRowWithValues(aqua.random.nextCountry(),    "10", "100001");
+    ds.addRowWithValues(aqua.random.nextCountry(),   "100", "100002");
+    ds.addRowWithValues(aqua.random.nextCountry(),  "1000", "100003");
+    ds.addRowWithValues(aqua.random.nextCountry(), "10000", "100004");
+    return ds;
+}

@@ -1,0 +1,12 @@
+﻿var factory  = aqua.type.getDouble();
+
+var value1   = 10000000000000;
+var value2   = 20000000000000;
+
+aqua.console.println("Is [" + value1 + "] less then  [" + value2 + "]? " + factory.isLessOrEqual(value1, value2));
+
+value2 = 10000000000000;
+aqua.console.println("Is [" + value1 + "] less then  [" + value2 + "]? " + factory.isLessOrEqual(value1, value2));
+
+value2 = .0000000000004;
+aqua.console.println("Is [" + value1 + "] less then  [" + value2 + "]? " + factory.isLessOrEqual(value1, value2));

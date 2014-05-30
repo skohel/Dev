@@ -1,0 +1,16 @@
+﻿var server = "Oracle 11G - 10.168.11.51 - HR";
+var db     = null;
+var schema = "HR";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata      = conn.getMetadata();
+var databaseLinks = metadata.extractDatabaseLinks(db, schema);
+
+for (var j=0; j<databaseLinks.length; j++){
+    var databaseLink = metadata.extractDatabaseLink(db, schema, databaseLinks[j].getName());
+    // calling AQDatabaseLink.scriptCREATE()
+    aqua.console.println("Database Link Name: [" + databaseLink.getName() + "]    DROP script: [" + databaseLink.scriptDROP() + "]");
+    aqua.console.println("");
+}
+conn.disconnect();

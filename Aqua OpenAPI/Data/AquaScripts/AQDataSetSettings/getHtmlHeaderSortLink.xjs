@@ -1,0 +1,41 @@
+﻿
+//
+// This script demonstrates how to get/set the sorting URL for header cell identified by a column index or by a column name.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// get sorting URL by column index, index is zero based
+var index = 0;
+var url = settings.getHtmlHeaderSortLink(index);
+if ( url == null ) {
+    aqua.console.println("No sorting URL defined for column at index " + index + ".");
+} else {
+    aqua.console.println("The sorting URL at index " + index + " is '" + url + "'.");
+}
+
+// set sorting URL by column index
+settings.addHtmlHeaderSortLink(index, "http://www.aquafold.com?cid=0&sort=<AQSO>");
+
+// get sorting URL by column index
+url = settings.getHtmlHeaderSortLink(index);
+aqua.console.println("The sorting URL at index " + index + " is currently set to '" + url + "'.");
+
+
+// set sorting URL by column name
+var name = "CustomerID";
+url = settings.getHtmlHeaderSortLink(name);
+if ( url == null ) {
+    aqua.console.println("No sorting URL defined for column '" + name + "'.");
+} else {
+    aqua.console.println("The sorting URL associated with column '" + name + "' is '" + url + "'.");
+}
+
+// set sorting URL by column name
+settings.addHtmlHeaderSortLink(name, "http://www.aquafold.com?cid=1&sort=<AQSO>");
+
+// get sorting URL by column name
+url = settings.getHtmlHeaderSortLink(name);
+aqua.console.println("The sorting URL associated with column '" + name + "' is currently set to '" + url + "'.");
+

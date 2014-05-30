@@ -1,0 +1,69 @@
+﻿//------------------------------------------------------------------------------
+// Class:  
+//      CoreHadoopFileSystem
+// Method:
+//      touch()
+//
+// Synopsis:
+//      touch()
+//
+// Description
+//      hanges the modification time of a file and possibly creates it at the
+//      same time. The modificationTime, if set, needs to be in the format
+//      "MM/DD/YYYY HH:MM AM or PM" or "MM/DD/YYYY HH:MM:SS AM or PM".
+//    
+// Parameters
+//      string - The file to be touched. If the file doesn't exist, it will be
+//               created.
+//      string - The new modification time of the file. The string should be in
+//               the following format "MM/DD/YYYY HH:MM AM or PM" or
+//               "MM/DD/YYYY HH:MM:SS AM or PM".
+// Throws
+//      Exception - on error
+//
+// Return
+//      None.
+//
+// Example
+//      See below.
+//------------------------------------------------------------------------------
+// all test data will be created under this directory
+var fs_data_dir = "/test/AQHadoopFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.net.newHadoopDistributedFileSystem("hdfs://localhost:9100");
+
+test_touch();
+
+// --- touch ---
+
+function test_touch() {
+    var src_base = fs_data_dir + "files/";
+    var dest_base = fs_data_dir + "touch/";
+
+    AQFS.copy(src_base, dest_base);
+    
+    // testing error condition
+    exec_touch(null, null);
+    exec_touch(dest_base + "license.txt", "bad timestamp");
+    
+    // this should work
+    exec_touch(dest_base + "file.does.not.exist.txt", null);
+    exec_touch(dest_base + "license.txt", null);
+    exec_touch(dest_base + "license.txt", "12/31/1999 11:59 PM");
+    
+    // Clean up
+    AQFS.deleteDirectory(dest_base, true);
+}
+
+function exec_touch(fileName, modificationTime) {
+    try {
+        aqua.console.println("touch: touching [" + fileName + "] with modification-time=[" + modificationTime + "]...");
+        AQFS.touch(fileName, modificationTime);
+        aqua.console.println("touch done.");
+    } catch(ex) {
+        aqua.console.println("touch failed - " + ex.toString());
+    }
+}
+
+// -------------------------------------------------------------------------------

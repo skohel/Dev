@@ -1,0 +1,9 @@
+﻿var result = aqua.compare.compare("HealthCare\nString\nMethod\nDetail\n\Enter\ntesting","String\n\Compare\nFirst\nEnter");
+var diff   = result.getChanges();
+
+aqua.console.println("***** Changes ******");
+for (var i=0; i < diff.length; i++) {
+       aqua.console.println(diff[i]);
+}
+aqua.console.println("*****       ******");
+aqua.console.println("Count of ADDED/DELETED/MODIFIED :: " + result.getModificationCount());

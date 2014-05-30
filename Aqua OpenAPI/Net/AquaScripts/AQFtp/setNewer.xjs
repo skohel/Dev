@@ -1,0 +1,21 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        setNewer()
+ 
+   Synopsis:
+        void setNewer(boolean newer)
+
+   Description
+        A synonym for depends. Sets to true to transmit only new or changed files. See setTimeDiffAuto(boolean)  and setTimeDiffMillis(long)  for related attributes.    
+
+   Parameters
+        newer - if true only transfer newer files 
+  
+   Throws
+        none
+ 
+   Example
+        See below.
+*/

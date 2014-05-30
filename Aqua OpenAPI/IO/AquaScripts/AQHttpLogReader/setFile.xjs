@@ -1,0 +1,12 @@
+﻿// define output file
+var logFile = "/access.log";
+
+// create a log reader
+var reader = aqua.io.newHttpLogReader();
+reader.setFile(logFile);
+
+var ds = reader.read();
+print(ds.renderText());
+
+reader.close();
+aqua.exit();

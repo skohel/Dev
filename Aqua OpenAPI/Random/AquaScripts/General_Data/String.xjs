@@ -1,0 +1,24 @@
+﻿/*
+
+Description of method functionality
+
+Synopsys
+    [Return Data Type] functionName()  
+
+Description
+    Description of functionality
+
+Example
+    //
+
+
+*/
+
+print("Generates a random string of a certain length:");
+// The parameter name [maxlength] is deceptive.  This is not a max length, its of a length passed.
+// Can we rename it to [length]? -R- can we make it generate a random string with length max of that
+// integer passed like maxlength 10 you can get "asdflj" or "as;dljfkdd"?? not sure what its suppose to do
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextString(30);
+    print(x);
+}

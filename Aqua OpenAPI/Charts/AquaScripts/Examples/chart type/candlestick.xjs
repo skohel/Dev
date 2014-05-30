@@ -1,0 +1,39 @@
+﻿importPackage(com.aquafold.openapi.chart);
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+model.addSeries("High");
+model.addSeries("Low");
+model.addSeries("Open");
+model.addSeries("Close");
+
+model.addCategory("Energy");
+model.addCategory("Finance");
+model.addCategory("Tech");
+
+model.setValue(0, 0, 1000);
+model.setValue(0, 1, 500);
+model.setValue(0, 2, 200);
+model.setValue(1, 0, 400);
+model.setValue(1, 1, 100);
+model.setValue(1, 2, 50);
+model.setValue(2, 0, 750);
+model.setValue(2, 1, 300);
+model.setValue(2, 2, 100);
+model.setValue(3, 0, 850);
+model.setValue(3, 1, 425);
+model.setValue(3, 2, 125);
+
+chart.getProperties().setChartTypeCandlestick();
+
+chart.getProperties().setZoom(0.9);
+chart.getProperties().setMergeAxis(true);
+        
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

@@ -1,0 +1,1 @@
+﻿aqua.vcs.commit("/tmp/SVNTEST/test.txt", "test commit", aqua.crypto.getSecureField("svn.username"), aqua.crypto.getSecureField("svn.password"));

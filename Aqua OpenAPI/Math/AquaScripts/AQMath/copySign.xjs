@@ -1,0 +1,24 @@
+/*
+aqua.math.copySign
+
+    Returns the first floating-point argument with the sign of the second floating-point argument. 
+   
+Synopsys
+    double aqua.math.copySign(float magnitude, float sign)
+
+Description
+    magnitude - the parameter providing the magnitude of the result
+    sign - the parameter providing the sign of the result 
+
+Example
+    see below
+*/
+
+// --- copySign() ---
+function show_copySign(magnitude, sign) {
+    aqua.console.println("copySign[" + magnitude + ", " + sign + "] --> [" + aqua.math.copySign(magnitude, sign) + "]");
+}
+show_copySign(3, 1);
+show_copySign(3, -1);
+show_copySign(-3, 1);
+show_copySign(-3, -1);

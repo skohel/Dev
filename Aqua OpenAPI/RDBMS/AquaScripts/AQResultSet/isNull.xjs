@@ -1,0 +1,42 @@
+﻿var server = "MySql 6.0 - 10.168.1.38 - demo";
+var db     = "mysql";
+var schema = null;
+var sql    = "select * from user";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+conn.changeDatabase(db);
+
+var resultSet = conn.executeQuery(sql);
+resultSet.next();
+
+var row             = resultSet.getRow();
+var columnStructure = resultSet.getColumnStructure();
+var columnNames     = columnStructure.getColumnNames();
+
+if (row !=null){
+    for (var i=0; i<columnStructure.getColumnCount(); i++){
+        // AQResultSet.isNull(int)
+        aqua.console.println("Column[" + i + "]      [" + columnNames[i] + "]    resultSet.isNull(" + i + ")   [" + resultSet.isNull(i) + "]");
+        // AQResultSet.isNull(String)
+        aqua.console.println("Column[" + i + "]      [" + columnNames[i] + "]    resultSet.isNull(" + columnNames[i] + ")   [" + resultSet.isNull(columnNames[i]) + "]");
+    }
+}
+
+// this will fail - column index is greater then the number of columns.
+try{
+    aqua.console.println("Column[" + i + "]      [" + columnNames[i] + "]    resultSet.isNull(i)\t[" + resultSet.isNull(i) + "]");
+}
+catch(ex){
+    aqua.console.println(ex.toString());
+}
+
+// This will also fail - column name is invalid
+try{
+    aqua.console.println("Column[" + i + "]      [invalidcolumnname]    resultSet.isNull(invalidcolumnname)\t[" + resultSet.isNull("invalidcolumnname") + "]");
+}
+catch(ex){
+    aqua.console.println(ex.toString());
+}
+
+resultSet.close();
+conn.disconnect();

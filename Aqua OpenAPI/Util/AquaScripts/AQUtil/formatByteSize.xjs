@@ -1,0 +1,11 @@
+﻿var TB = 1099511627776;
+test_formatByteSize(TB);
+
+function test_formatByteSize(bytes)
+{
+    var decimal = 4;
+    aqua.console.println("[" + bytes + "] is " + aqua.util.formatByteSize(bytes, "KB", decimal));
+    aqua.console.println("[" + bytes + "] is " + aqua.util.formatByteSize(bytes, "MB", decimal));
+    aqua.console.println("[" + bytes + "] is " + aqua.util.formatByteSize(bytes, "GB", decimal));
+    aqua.console.println("[" + bytes + "] is " + aqua.util.formatByteSize(bytes, "TB", decimal));
+}

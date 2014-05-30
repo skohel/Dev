@@ -1,0 +1,24 @@
+/*
+aqua.math.nextUp
+
+Returns the floating-point value adjacent to f in the direction of positive infinity.
+
+Synopsys
+    double aqua.math.nextUp(double)
+
+Description
+    * If the argument is NaN, the result is NaN.
+    * If the argument is positive infinity, the result is positive infinity.
+    * If the argument is zero, the result is Double.MIN_VALUE 
+
+Example
+    see below
+*/
+
+// --- nextUp() ---
+function show_nextUp(value) {
+    aqua.console.println("nextUp[" + value + "] --> [" + aqua.math.nextUp(value) + "]");
+}
+show_nextUp(1.1);
+show_nextUp(0);
+show_nextUp(-1);s

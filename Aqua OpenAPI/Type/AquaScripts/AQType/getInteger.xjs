@@ -1,0 +1,7 @@
+﻿var validValue   = "123123";
+var invalidValue = "123.12";
+var factory      = aqua.type.getInteger();
+
+aqua.console.println("Is [" + validValue   + "] an integer? [" + factory.isValid(validValue) + "]");
+aqua.console.println("Is [" + invalidValue + "] an integer? [" + factory.isValid(invalidValue) + "]");
+

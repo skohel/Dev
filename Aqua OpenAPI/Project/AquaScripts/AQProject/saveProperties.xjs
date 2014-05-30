@@ -1,0 +1,19 @@
+﻿
+testSaveProperties();
+
+function testSaveProperties() {
+    aqua.console.println('[TEST] aqua.project.saveProperties()');
+    var properties = new java.util.Properties();
+    properties.put("1", "1");
+    properties.put("2", "2");
+    properties.put("3", "3");
+    properties.put("4", "4");
+    properties.put("5", "5");
+    aqua.project.saveProperties(properties, "testProperties");
+
+    var props = aqua.project.getUserFile("testProperties");
+    if(props == null) {
+        throw "Expected: properties != null but was: " + props;
+    }
+    aqua.console.println('[OK]');
+}

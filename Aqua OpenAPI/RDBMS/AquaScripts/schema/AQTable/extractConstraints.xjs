@@ -1,0 +1,21 @@
+﻿var server = "Oracle 11G - 10.168.11.51 - HR";
+var db     = null;
+var schema = "HR";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+var objs     = metadata.extractTables(db, schema);
+
+for (var i=0; i<objs.length; i++){
+    var obj = metadata.extractTable(db, schema, objs[i].getName());
+    var constraints = obj.extractConstraints();
+    aqua.console.println("Table Name: [" + obj.getName() + "]"); 
+    for (var j=0; j<constraints.length; j++){
+        var constraint = obj.extractConstraint(constraints[j].getName());
+        aqua.console.println("Constraint: [" + j + "]    Constraint Name: [" + constraint.getName() + "]");
+        aqua.console.println("Constraint: [" + j + "]    Data Type Name: [" + constraint.getTypeName() + "]");
+    }
+    aqua.console.println("");
+}
+conn.disconnect();

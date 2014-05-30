@@ -1,0 +1,38 @@
+﻿importPackage(com.aquafold.openapi.chart);
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+model.addSeries("a");
+model.addSeries("b");
+
+model.addCategory("US");
+model.addCategory("UK");
+model.addCategory("France");
+
+model.setValue(0, 0, 65);
+model.setValue(0, 1, 75);
+model.setValue(0, 2, 100);
+model.setValue(1, 0, 45);
+model.setValue(1, 1, 55);
+model.setValue(1, 2, 100);
+
+chart.getProperties().setChartTypePie();
+
+chart.getProperties().setZoom(0.4);
+chart.getProperties().setPanX(-300);
+        
+chart.getProperties().setPieExplode(5);
+chart.getProperties().setPieLabelDistance(5);
+chart.getProperties().setPieShowLines(true);
+
+chart.getProperties().setGroupSmallValues(true);
+chart.getProperties().setGroupSmallValuesThreshold(30); // Group any values less than 30% of sum of all values
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

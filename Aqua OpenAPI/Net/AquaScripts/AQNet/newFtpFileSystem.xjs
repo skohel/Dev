@@ -1,0 +1,6 @@
+
+// create a FTP file system
+var url = "ftp://10.168.2.138";
+var AQFS = aqua.net.newFtpFileSystem(url, "anonymous", "user");
+
+aqua.console.println("FTP file system successfully created.");

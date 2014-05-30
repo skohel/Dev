@@ -1,0 +1,19 @@
+﻿var server = "Oracle 11G - 10.168.11.51 - HR";
+var db     = null;
+var schema = "HR";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+
+var indexes = metadata.extractIndexes(db, schema);
+
+for (var i=0; i<indexes.length; i++){
+
+    var index = indexes[i];
+
+    // calling AQIndexe.scriptCREATE()
+    aqua.console.println("Index Name: [" + index.getName() + "]    CREATE script: [" + index.scriptCREATE() + "]");
+    aqua.console.println("");
+}
+conn.disconnect();

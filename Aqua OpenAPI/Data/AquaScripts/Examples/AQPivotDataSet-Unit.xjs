@@ -1,0 +1,146 @@
+
+// the path in the local "Servers" folder
+var serverPath = "SQL Server 2000";
+// the database in which we are interested
+var databaseName = "Northwind";
+
+// open connection to server
+var serverConnection = aqua.project.getServerConnection(serverPath);
+
+// establish SQL connection
+serverConnection.connect();
+
+// change database
+serverConnection.changeDatabase(databaseName);
+
+// execute query to get application data
+var dataSet = serverConnection.executeSnapshot("select * from orders;");
+// var dataGrid = dataSet.getFormattedGrid(dataSet.getRowCount());
+// aqua.console.print(dataGrid);
+
+// create pivot data set
+var pivotTable = aqua.data.newPivotDataSet();
+
+// define pivot row fields
+pivotTable.addRowField(" ShipCountry  ");
+pivotTable.addRowField("ShipCity");
+pivotTable.addRowField("ShipName");
+pivotTable.clearRowFields();
+// pivotTable.addRowField("ShipCountry");
+// pivotTable.addRowField("ShipName");
+
+// define pivot column fields
+pivotTable.addColumnField("OrderDate");
+pivotTable.addColumnField("ShipRegion");
+pivotTable.clearColumnFields();
+// pivotTable.addColumnField("OrderDate");
+// pivotTable.addColumnField("ShipRegion");
+// pivotTable.addColumnField("ShipCity");
+
+// define pivot data fields
+pivotTable.addDataField("Freight");
+pivotTable.addDataField("EmployeeID");
+pivotTable.clearDataFields();
+// pivotTable.addDataField("Freight");
+// pivotTable.addDataField("EmployeeID");
+// pivotTable.addDataField("OrderID");
+// pivotTable.addDataField("CustomerID");
+
+// set row field sort order
+var rowSortFieldName = "ShipCountry";
+pivotTable.setRowFieldSortDescending(rowSortFieldName);
+pivotTable.clearRowFieldSortOrderSettings();
+// pivotTable.setRowFieldSortAscending(rowSortFieldName);
+// pivotTable.setRowFieldSortDescending(rowSortFieldName);
+// pivotTable.setRowFieldSortNone(rowSortFieldName);
+
+// set field column sort order
+var columnSortFieldName = "ShipRegion";
+pivotTable.setColumnFieldSortDescending(columnSortFieldName);
+pivotTable.clearColumnFieldSortOrderSettings();
+// pivotTable.setColumnFieldSortAscending(columnSortFieldName);
+// pivotTable.setColumnFieldSortDescending(columnSortFieldName);
+// pivotTable.setColumnFieldSortNone(columnSortFieldName);
+
+// set data cell sort order
+// pivotTable.sortDataCell(0, 0, false);
+// pivotTable.clearDataCellSortSettings();
+// pivotTable.sortDataCell(0, 0, true);
+
+// set data column sort order
+pivotTable.sortDataColumnDescending(0);
+pivotTable.clearDataColumnSortSettings();
+// pivotTable.sortDataColumnAscending(0);
+pivotTable.sortDataColumnDescending(0);
+
+// set data field summary type
+var dataSummaryFieldName = "Freight";
+pivotTable.setDataFieldSummaryMean(dataSummaryFieldName);
+pivotTable.clearDataFieldSummaryTypeSettings();
+// pivotTable.setDataFieldSummarySum(dataSummaryFieldName);
+// pivotTable.setDataFieldSummaryMax(dataSummaryFieldName);
+// pivotTable.setDataFieldSummaryMin(dataSummaryFieldName);
+// pivotTable.setDataFieldSummaryMean(dataSummaryFieldName);
+// pivotTable.setDataFieldSummaryVar(dataSummaryFieldName);
+// pivotTable.setDataFieldSummaryStdDev(dataSummaryFieldName);
+// pivotTable.setDataFieldSummaryCount(dataSummaryFieldName);
+
+
+// set application data
+pivotTable.setDataSet(dataSet);
+
+// calculate pivot data
+pivotTable.calculateGrid();
+
+// create settings
+settings = aqua.data.newDataSetSettings();
+settings.setShowRowNumber(true);
+settings.setShowRowNumber(false);
+settings.setTitle("Simple Pivot Table");
+
+// alternate row colors
+// settings.setShowAltRowColor(false);
+settings.setAltRowBackgroundColor("f1f1e4");
+// settings.setAltRowBackgroundColor("ffff00");
+settings.setAltRowForegroundColor("#ff0000");
+
+// chart
+var chart = aqua.chart.newChart();
+chart.setDataSource(pivotTable);
+chart.getProperties().setImageHeight(400);
+chart.getProperties().setImageWidth(600);
+chart = null;
+
+// show pivot data
+// aqua.console.println(pivotTable.renderText(12));
+aqua.console.println(pivotTable.renderText());
+// aqua.console.println(pivotTable.renderText(settings));
+
+// show pivot data in HTML
+// aqua.response.write(pivotTable.renderHtml());
+aqua.response.write(pivotTable.renderHtml(settings, chart));
+
+// save to excel
+var excelSettings = settings;
+excelSettings = null;
+
+function saveToExcel(excelSettings, chart) {
+    var excel2003File = "C:/temp/temp3PivotDataSet.xls";
+    var excel2007File = "C:/temp/temp7PivotDataSet.xlsx";
+    pivotTable.saveAsExcel2003(excel2003File, excelSettings, chart);
+    aqua.console.println("Report is saved to " + excel2003File + ".");
+//  pivotTable.saveAsExcel2007(excel2007File);
+//  aqua.console.println("Report is saved to " + excel2007File + ".");
+}
+// saveToExcel(excelSettings, chart);
+
+// convert report to Excel as a byte array
+function toExcelAsByteArray(is2k7) {
+    var byteArray = (is2k7 ? pivotTable.getAsExcel2007(excelSettings, chart) : pivotTable.getAsExcel2003(excelSettings, chart));
+    var fileName = (is2k7 ? "ExcelPivotData.xlsx" : "ExcelPivotData.xls");
+    aqua.response.sendBinary("application/excel", fileName, byteArray);
+}
+// toExcelAsByteArray(false);
+
+// done, disconnect from server
+serverConnection.disconnect();

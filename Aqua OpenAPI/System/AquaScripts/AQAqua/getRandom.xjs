@@ -1,0 +1,4 @@
+﻿var length = 100;
+var random = aqua.getRandom();
+
+aqua.console.print("random string of size [" + length + "]: [" + random.nextString(length, length) + "]");

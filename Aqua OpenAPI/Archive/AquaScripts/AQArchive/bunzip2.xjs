@@ -1,0 +1,29 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "/tmp/test/AQArchive/";
+
+test_bunzip2();
+
+// --- bunzip2() ---
+function test_bunzip2() {
+    var src_base = test_data_dir + "bzip2/bzip2_dest/";
+    var dest_base = test_data_dir + "bzip2/bunzip2_dest/";
+    
+    // testing error condition - no source file to unzip
+    exec_bunzip2(null, dest_base);
+    // these should work
+    exec_bunzip2(src_base + "test_file.txt.bz2", dest_base);
+    exec_bunzip2(src_base + "dir.tar.bz2", dest_base);
+    
+    
+}
+function exec_bunzip2(zipFile, destination) {
+    try {
+        aqua.console.println("bunzip2: from [" + zipFile + "] to [" + destination + "]...");
+        aqua.archive.bunzip2(zipFile, destination);
+        aqua.console.println("bunzip2: done.");
+    } catch(ex) {
+        aqua.console.println("bunzip2: failed - " + ex.toString());
+    }
+}
+
+

@@ -1,0 +1,4 @@
+﻿var io     = aqua.getIo();
+var reader = io.newStringReader();
+reader.setInputString("hello");
+reader.close();

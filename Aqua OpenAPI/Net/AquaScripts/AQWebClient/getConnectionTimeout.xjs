@@ -1,0 +1,13 @@
+
+// create a web client
+var client = aqua.net.newWebClient();
+
+// get default connection timeout
+var timeout = client.getConnectionTimeout();
+aqua.console.println("Default connetion timeout is " + timeout + " milliseconds.");
+
+// change connection timeout
+timeout += 1000;
+client.setConnectionTimeout(timeout);
+timeout = client.getConnectionTimeout();
+aqua.console.println("Connetion timeout is changed to " + timeout + " milliseconds.");

@@ -1,0 +1,16 @@
+﻿var factory  = aqua.type.getLong();
+
+var value = 50000000;
+var min   = 10000000;
+var max   = 90000000;
+
+aqua.console.println("Is [" + value + "] between  [" + min + "] and [" + max + "]? " + factory.isInRange(value, min, max));
+
+max = 50000000;
+aqua.console.println("Is [" + value + "] between  [" + min + "] and [" + max + "]? " + factory.isInRange(value, min, max));
+
+max = 40000000;
+aqua.console.println("Is [" + value + "] between  [" + min + "] and [" + max + "]? " + factory.isInRange(value, min, max));
+
+max = 40000000.1;
+aqua.console.println("Is [" + value + "] between  [" + min + "] and [" + max + "]? " + factory.isInRange(value, min, max));

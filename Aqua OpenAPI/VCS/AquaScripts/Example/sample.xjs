@@ -1,0 +1,22 @@
+// replace with path to a mounted folder from your local setup --
+
+var ws = aqua.vcs.getWorkspace("c:/Work/UserHome/Trunk/SVN/1");
+print(ws);
+
+print(ws.getRootFolder());
+ws.update(ws.getRootFolder());
+try
+{
+    // attempt to update a file outside of the workspace
+    ws.update("");
+}
+catch(e)
+{
+    print("correctly generated an exception");
+}
+
+print(ws.getRevision(ws.getRootFolder()));
+
+print("committing", ws.getRootFolder());
+ws.commit("aquascript commit", ws.getRootFolder());
+print(ws.getRevision(ws.getRootFolder()));

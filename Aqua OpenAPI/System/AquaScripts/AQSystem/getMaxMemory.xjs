@@ -1,0 +1,1 @@
+﻿aqua.console.println(aqua.system.getMaxMemory());

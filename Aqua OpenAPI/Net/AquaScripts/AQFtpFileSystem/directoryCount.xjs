@@ -1,0 +1,57 @@
+﻿//------------------------------------------------------------------------------
+// Class:  
+//      CoreHadoopFileSystem
+// Method:
+//      directoryCount()
+//
+// Synopsis:
+//      directoryCount()
+//
+// Description
+//      Returns the sub directory count denoted by this directory.
+//    
+// Parameters
+//      string - The directory, required.
+//      boolean - If recurse is true, count directories in the sub directory,
+//                otherwise don't include directories in the sub directory in
+//                the count; required
+//
+// Throws
+//      Exception - on error
+//
+// Return
+//      long - The count.
+//
+// Example
+//      See below.
+//------------------------------------------------------------------------------
+// all test data will be created under this directory
+var fs_data_dir = "/test/AQHadoopFileSystem/";
+
+// get instance of filesystem object
+//var url = "hdfs://localhost:54310";
+var url = "ftp://10.168.2.138";
+var AQFS = aqua.net.newFtpFileSystem(url, "anonymous", "user");
+
+test_directoryCount();
+
+// --- test directoryCount ---
+
+function test_directoryCount(){
+
+   var src_dir = fs_data_dir + "files/";
+   var file_doesnt_exist = fs_data_dir + "file_doesnt_exist";
+
+   exec_directoryCount(file_doesnt_exist, false);
+   exec_directoryCount(src_dir, false);
+   exec_directoryCount(src_dir, true);
+}
+
+function exec_directoryCount(src_dir, recursive) {
+    try {
+        aqua.console.println("directoryCount: [" + src_dir + "," + recursive + "] is " + AQFS.directoryCount(src_dir, recursive));
+        aqua.console.println("directoryCount done");
+    } catch(ex) {
+        aqua.console.println("directoryCount failed - " + ex.toString());
+    }
+}

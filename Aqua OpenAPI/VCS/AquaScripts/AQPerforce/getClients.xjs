@@ -1,0 +1,18 @@
+﻿var Pws    = aqua.vcs.newPerforce();
+Pws.setVerbose(false);
+// create AQOpaqueObject containing the username and password
+var usr = aqua.crypto.getSecureField('svn.username');
+var pwd = aqua.crypto.getSecureField('svn.password');
+
+// connect to the Perforce server
+Pws.connect("p4jrpc://10.168.11.82:1666","client","F:\\May_Perforce",usr,pwd);
+aqua.console.println("Connected to the Perforce Server ..!");
+
+var clnts = Pws.getClients("tariq", null,1);
+for (var i=0; i < clnts.size(); i++)
+{
+// display client info
+aqua.console.println("Host: " + clnts.get(i).getHostName());
+}
+
+Pws.close();

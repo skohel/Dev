@@ -1,0 +1,3 @@
+﻿aqua.console.println("aqua.response.getContentType: [" + aqua.response.getContentType() + "]");
+aqua.response.setContentType("au");
+aqua.console.println("aqua.response.getContentType: [" + aqua.response.getContentType() + "]");

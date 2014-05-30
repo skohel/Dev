@@ -1,0 +1,39 @@
+﻿var xmlFile  = "C://sampleXmlWriter.xml";
+var nullStr  = "unknown value";
+var writer   = aqua.io.newXmlWriter();
+
+writer.setFile(xmlFile);
+writer.setNullString(nullStr);
+writer.write(generateDataSet());
+writer.close();
+
+readFile(xmlFile);
+
+//------------------------------------------------------------------------------
+function readFile(file){
+
+    var reader   = aqua.io.newTextReader();
+
+    reader.setFile(file);
+    aqua.console.list(reader.read());
+    reader.close();
+}
+
+function generateDataSet(){
+    // define a data set
+    var columns = ["shipcountry", "freight"];
+    var ds = aqua.data.newDataSet(columns);
+
+    // add dataset row with values
+    ds.addRowWithValues("US", 100);
+    ds.addRowWithValues("UK", 10);
+    ds.addRowWithValues("Japan", 200);
+    ds.addRowWithValues("Canada", 20);
+    ds.addRowWithValues("France", 300);
+    ds.addRowWithValues("Germany", 30);
+    ds.addRowWithValues("", 40);
+    ds.addRowWithValues(null, 40);
+    ds.addRowWithValues(null, null);
+
+    return ds;
+}

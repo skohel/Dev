@@ -1,0 +1,8 @@
+﻿var string1     = "AAA\r\nBBB\nDDD\nEEE\nFFF";
+var string2     = "FFF\nAAA\nBBB\nCCC\nDDD\nEEE\nFFF";
+var result      = aqua.compare.compare(string1, string2);;
+var difference  = result.getChanges();
+
+for (var i=0; i < difference.length; i++) {
+    aqua.console.println(difference[i]);
+}

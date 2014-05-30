@@ -1,0 +1,72 @@
+﻿testServerConnectionFolder();
+testAquaScriptFolder();
+testAquaScript();
+testUserFileFolder();
+testUserFile();
+
+function testServerConnectionFolder() {
+	aqua.console.println("[TEST] aqua.project.getServerConnectionsRootFolder().read()");
+    var error;
+    try {
+        aqua.project.getServerConnectionsRootFolder().read();
+    } catch(e) {
+        error = e;
+    }
+    if(error == null) {
+        throw "Expected: exception but was no exception";
+    }
+	aqua.console.println("[OK]");
+}
+
+function testAquaScriptFolder() {
+	aqua.console.println("[TEST] aqua.project.getAquaScriptsRootFolder().read()");
+    var error;
+    try {
+        aqua.project.getServerConnectionsRootFolder().read();
+    } catch(e) {
+        error = e;
+    }
+    if(error == null) {
+        throw "Expected: exception but was no exception";
+    }
+	aqua.console.println("[OK]");
+}
+
+function testAquaScript() {
+	aqua.console.println("[TEST] aqua.project.getAquaScript(\"AQProjectFile/read.xjs\").read()");
+    var content = aqua.project.getAquaScript("AQProjectFile/read.xjs").read();
+    if(content == null) {
+        throw "Expected: content != null but was "+ content;
+    }
+    if(content.length == 0 ) {
+        throw "Expected: content.length > 0  but was "+ content.length;
+    }
+	aqua.console.println("[OK]");
+}
+
+function testUserFileFolder() {
+	aqua.console.println("[TEST] aqua.project.getUserFilesRootFolder().read()");
+    var error;
+    try {
+        aqua.project.getUserFilesRootFolder().read();
+    } catch(e) {
+        error = e;
+    }
+    if(error == null) {
+        throw "Expected: exception but was no exception";
+    }
+	aqua.console.println("[OK]");
+}
+
+function testUserFile() {
+	aqua.console.println("[TEST] aqua.project.getUserFile(\"testFile\").read(\"UTF-16\")");
+	aqua.project.getUserFile("testFile").write("test text");
+    var content = aqua.project.getUserFile("testFile").read("UTF-16");
+    if(content == null) {
+        throw "Expected: content != null but was "+ content;
+    }
+    if(content.length == 0 ) {
+        throw "Expected: content.length > 0  but was "+ content.length;
+    }
+	aqua.console.println("[OK]");
+}

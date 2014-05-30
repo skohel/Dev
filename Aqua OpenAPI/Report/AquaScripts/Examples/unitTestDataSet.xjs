@@ -1,0 +1,254 @@
+
+// the path in the local "Servers" folder
+var serverPath = "SQL Server 2000 - 54";
+// the database in which we are interested
+var databaseName = "Northwind";
+
+// open connection to server
+var serverConnection = aqua.project.getServerConnection(serverPath);
+
+// establish SQL connection
+serverConnection.connect();
+
+// change database
+serverConnection.changeDatabase(databaseName);
+
+// create a new report
+var report = aqua.report.newReport();
+
+// === multiple data sets can be added to a report,
+// === each data set has its own settings such as title, headers, etc.
+
+
+// --- data set #1
+
+// create a data set
+var dataSet = serverConnection.executeSnapshot("select * from orders where CustomerId like 'AN%';");
+
+// ----- Column Indexes, Names, and Types -----
+//   0 - OrderID         - NUMBER
+//   1 - CustomerID      - TEXT
+//   2 - EmployeeID      - NUMBER
+//   3 - OrderDate       - DATETIME
+//   4 - RequiredDate    - DATETIME
+//   5 - ShippedDate     - DATETIME
+//   6 - ShipVia         - NUMBER
+//   7 - Freight         - NUMBER
+//   8 - ShipName        - TEXT
+//   9 - ShipAddress     - TEXT
+//  10 - ShipCity        - TEXT
+//  11 - ShipRegion      - TEXT
+//  12 - ShipPostalCode  - TEXT
+//  13 - ShipCountry     - TEXT
+
+dataSet.setSortingAscending("ShipVia");
+dataSet.setSortingNone("ShipVia");
+dataSet.setSortingDescending(7);
+dataSet.setSortingNone(7);
+
+// dataSet.setSortingAscending("ShipVia");
+// dataSet.setSortingDescending("ShipVia");
+// dataSet.setSortingNone("ShipVia");
+// dataSet.setSortingAscending(7);
+// dataSet.setSortingDescending(7);
+// dataSet.setSortingNone(7);
+
+// sort data set
+dataSet.sort();
+
+// bind data set to report without any custom settings but title and footer
+var settings = aqua.report.newReportDataSetSettings();
+settings.setTitle("Report: Customer ID starts with letter <AN>");
+settings.setFooter("Footer <goes> here.");
+settings.setShowRowNumber(false);
+// settings.setRowNumberHeader("Row Number");
+// settings.setRowNumberStartRowIndex(3);
+// settings.hideColumn(0);
+
+// sort links
+settings.setHtmlDataColumnSortLink("http://www.yahoo.com?type=c1&order=<AQSO>&sid=<AQSID>");
+
+// format output
+settings.setDateTimeFormat("yyyy-MM-dd HH:mm:ss");
+settings.setColumnDateTimeFormat("OrderDate", "yyyy-MM-dd");
+settings.setColumnDateTimeFormatNone("RequiredDate");
+settings.setColumnNumericFormat("OrderID", "#,##0.##");
+settings.setColumnNumericFormat("Freight", "#,##0.00");
+settings.setColumnNumericFormatNone("Freight");
+
+// settings.setDateTimeFormatNone();
+// settings.setColumnDateTimeFormat(3, "yyyy-MM-dd");
+// settings.setColumnDateTimeFormatNone(4);
+// settings.setColumnNumericFormat(0, "#,##0.##");
+// settings.setColumnNumericFormatNone(7);
+
+// alternate row colors
+// settings.setShowAltRowColor(false);
+settings.setAltRowBackgroundColor("f1f1e4");
+settings.setAltRowForegroundColor("#ff0000");
+
+// chart
+var chart = aqua.chart.newChart();
+chart.setDataSource(dataSet);
+chart.getProperties().setImageHeight(400);
+chart.getProperties().setImageWidth(600);
+// chart.setCategoryFields("ShipCountry");
+// chart.setCategoryFields("ShipCountry", "ShipRegion");
+chart.setCategoryFields("ShipCountry", "ShipRegion", "ShipCity");
+// chart.setSeriesFields("Freight");
+// chart.setSeriesFields("Freight", "ShipVia");
+chart.setSeriesFields("Freight", "ShipVia", "EmployeeID");
+
+// report.addDataSet(dataSet, settings);
+// report.addDataSet(dataSet, settings, null);
+report.addDataSet(dataSet, settings, chart);
+
+
+// --- data set #2
+
+// create another data set and bind it to report with settings passed as a null object
+dataSet = serverConnection.executeSnapshot("select * from orders where CustomerId like 'Z%';");
+report.addDataSet(dataSet, null);
+
+
+// --- data set #3
+
+// create yet another data set
+dataSet = serverConnection.executeSnapshot("select * from orders;");
+dataSet = serverConnection.executeSnapshot("select * from orders where CustomerId like 'A%';");
+
+// create a custom headers for this data set
+settings = aqua.report.newReportDataSetSettings();
+settings.setColumnHeaders(new Array("Order <ID>", "Customer <ID>"));
+settings.setColumnHeader(3, "Order <Date>");
+settings.setColumnHeaders(new Array("ShipAddress", "ShipCity", "Unbalanced!!!"), new Array("Ship Address", "Ship City"));
+settings.setColumnHeader("ShipName", "Ship Name");
+settings.setTitle("All Customer IDs");
+settings.setFooter("Footer goes here!");
+settings.setShowFooter(false);
+
+// hide some columns
+settings.hideColumnsByName(new Array("ShipVia", "RequiredDate"));
+settings.hideColumnsByIndex(new Array(2, 12)); // EmployeeID and ShipPostalCode
+settings.hideColumn("ShipAddress");
+settings.hideColumn(11); // ShipRegion
+// settings.showColumn(11);
+// settings.showColumn("ShipAddress");
+// settings.showColumn("ShipVia");
+
+// row number customization
+var rowNumberHeaderName = "count<(*)>";
+settings.setRowNumberHeader(rowNumberHeaderName);
+// settings.setShowRowNumber(false);
+settings.setRowNumberStartRowIndex(3);
+settings.setShowAdjustedRowNumberHeader(false);
+
+// HTML links for data cells
+// keyword replacement is defined as <COLUMN_NAME>
+var testURI = "http://www.google.com?";
+var orderIdURL = testURI + "oid=<OrderID>&anyName=anyValue&od=<OrderDate>&rd=<RequiredDate>&sr=<ShipRegion>";
+var customerIdURL = testURI + "oid=<OrderID>&cid=<CustomerID>&anyName=anyValue";
+var freightURL = testURI + "oid=<OrderID>&frt=<Freight>";
+var shipCityURL = testURI + "oid=<OrderID>&sc=<ShipCity>";
+var shipNameURL = testURI + "oid=<OrderID>&cid=<CustomerID>&sn=<ShipName>";
+var shipCountryURL = testURI + "oid=<OrderID>&cid=<CustomerID>&sn=<ShipName>&sc=<ShipCountry>&sa=<ShipAddress>";
+settings.addHtmlDataLink("OrderID", orderIdURL);
+settings.addHtmlDataLink(1, customerIdURL);
+// settings.removeHtmlDataLink("OrderID");
+// settings.removeHtmlDataLink(1);
+settings.addHtmlDataLinkByIndexes(new Array(7, 10), new Array(freightURL, shipCityURL));
+settings.addHtmlDataLinkByNames(new Array("ShipCountry", "ShipName", "ShipCity"), new Array(shipCountryURL, shipNameURL, shipCityURL));
+
+// link on row number data cell can be done if row number header is set or using special index -1
+var rowNumberURL = testURI + "rid=<" + rowNumberHeaderName + ">&oid=<OrderID>&name=value";
+// settings.addHtmlDataLink(rowNumberHeaderName, rowNumberURL);
+settings.addHtmlDataLink(-1, rowNumberURL);
+
+// HTML links for headers
+// keyword replacement is defined as <COLUMN_NAME>
+var headerURI = "http://www.yahoo.com?";
+var urlRowNumber = headerURI + "cid=all";
+var urlOrderId = headerURI + "oid=<OrderID>&sr=<ShipRegion>&name=value";
+var urlOrderDate = headerURI + "ty=header&hid=<OrderDate>";
+var urlShippedDate = headerURI + "ty=header&hid=<ShippedDate>";
+var urlShipName = headerURI + "ty=header&hid=<ShipName>";
+var urlShipCity = headerURI + "ty=header&hid=<ShipCity>";
+settings.addHtmlHeaderLink(rowNumberHeaderName, urlRowNumber);
+settings.addHtmlHeaderLink(0, urlOrderId);
+settings.addHtmlHeaderLinkByIndexes(new Array(3, 8, 12), new Array(urlOrderDate, urlShipName));  // unbalanced
+settings.addHtmlHeaderLinkByNames(new Array("ShippedDate", "ShipCity"), new Array(urlShippedDate, urlShipCity));
+// settings.removeHtmlHeaderLink(3);
+// settings.removeHtmlHeaderLink("ShippedDate");
+
+// sorting and sorting links
+// dataSet.setSortingAscending(7);
+dataSet.setSortingDescending(7);
+// dataSet.setSortingNone(7);
+dataSet.setSortingAscending("ShipCity");
+// dataSet.setSortingDescending("ShipCity");
+// dataSet.setSortingNone("ShipCity");
+settings.setHtmlDataColumnSortLink("http://www.yahoo.com?type=c3&order=<AQSO>&sid=<AQSID>");
+// sort data set
+dataSet.sort();
+
+// format output
+settings.setColumnDateTimeFormat(3, "yyyy-MM-dd");
+settings.setColumnDateTimeFormat("ShippedDate", "yy-MM-dd E");
+settings.setColumnNumericFormat(7, "#,##0.00");
+
+// alternate row colors
+// settings.setShowAltRowColor(false);
+settings.setAltRowBackgroundColor("f1f1e4");
+settings.setAltRowForegroundColor("#ff0000");
+
+// chart
+chart = aqua.chart.newChart();
+chart.setDataSource(dataSet);
+chart.getProperties().setImageHeight(400);
+chart.getProperties().setImageWidth(600);
+chart.setCategoryFields(new Array("ShipCity"));
+chart.setSeriesFields(new Array("Freight"));
+
+// bind data set and its settings to report object
+// report.addDataSet(dataSet, settings);
+report.addDataSet(dataSet, settings, chart);
+
+// --- generate report
+
+// generate a plain text report
+aqua.console.print(report.renderText());
+
+var reportSettings = aqua.report.newReportSettings();
+report.setSettings(reportSettings);
+reportSettings.setGenerateHtmlDocHeader(false);
+reportSettings.setGenerateHtmlDocFooter(false);
+
+// generate a HTML report
+// aqua.console.print(report.renderHtml());
+
+// generate a HTML report in the embedded browser
+aqua.response.write(report.renderHtml());
+
+// --- save report to Excel
+// settings.setPageSize(12);
+// settings.setMaxColumnWidth(25);
+function saveToExcel() {
+    var excel2003File = "C:/temp/temp3GridReport.xls";
+    var excel2007File = "C:/temp/temp7GridReport.xlsx";
+    report.saveAsExcel2003(excel2003File);
+    aqua.console.println("Report is saved to " + excel2003File + ".");
+//  report.saveAsExcel2007(excel2007File);
+//  aqua.console.println("Report is saved to " + excel2007File + ".");
+}
+// saveToExcel();
+
+// --- convert report to Excel as a byte array
+function toExcelAsByteArray(is2k7) {
+    var byteArray = (is2k7 ? report.getAsExcel2007() : report.getAsExcel2003());
+    var fileName = (is2k7 ? "ExcelReport.xlsx" : "ExcelReport.xls");
+    aqua.response.sendBinary("application/excel", fileName, byteArray);
+}
+// toExcelAsByteArray(false);
+
+// done, disconnect from server
+serverConnection.disconnect();

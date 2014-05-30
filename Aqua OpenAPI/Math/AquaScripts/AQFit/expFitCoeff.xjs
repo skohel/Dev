@@ -1,0 +1,32 @@
+﻿
+
+var rawDataX=new Array();
+var rawDataY = new Array();
+var noise = new Array();
+var fitY=new Array();
+var guess=new Array();
+
+guess[0]=1;
+guess[1]=1
+guess[2]=1;
+
+//generate noisy data
+for(i=0;i<30;i++){
+   rawDataX[i]=(i+1)/10.0;
+noise[i]=2*Math.random()-1;
+   rawDataY[i]=2*Math.exp(1.5*rawDataX[i]) + 3 +noise[i]/5;
+   
+}
+
+//perform fit
+fitY=aqua.math.fit.expFitCoeff(rawDataX,rawDataY);
+aqua.console.println("Fitted Function (no initial guess)");
+aqua.console.println("y = " + fitY[0] + " exp( " + fitY[1] + " x) +  " + fitY[2]);
+
+
+//perform fit
+fitY=aqua.math.fit.expFitCoeff(rawDataX,rawDataY,guess);
+
+aqua.console.println("Fitted function (with initial guess)");
+//
+aqua.console.println("y = " + fitY[0] + " exp( " + fitY[1] + " x) +  " + fitY[2]);

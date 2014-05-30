@@ -1,0 +1,628 @@
+﻿/*
+
+Financial Case Study: Indicators
+
+*/
+var high= new Array();
+var low= new Array();
+var close= new Array();
+var open= new Array();
+var volume = new Array();
+var date = new Array();
+
+//var conn = aqua.project.getServerConnection('test2');
+//conn.connect();
+//conn.changeDatabase('stockdata4');
+////test =conn.executeQuery("select * from table6");
+//
+////import data
+//dataSet=conn.executeSnapshot("select * from finaltable");
+
+//csv import test
+var TextFile = "C:\\Aqua10-0 Workspace\\share\\aqua-projects\\Aqua OpenAPI\\Math\\User Files\\stockdata2.csv";
+
+var reader = aqua.io.newTextReader();
+reader.setFile(TextFile);
+reader.setFirstLineContainsColumnNames(true);
+reader.setCellDelimiter(",");
+
+var dataSet = aqua.data.newDataSet();//reader.read();
+
+
+dataSet.importData(reader);
+
+dataSet.sort("Date",true);
+aqua.console.println(dataSet.getValueAt(0,1))
+//
+N=dataSet.getRowCount();
+for(i=0;i<N;i++){
+
+date[i]=dataSet.getValueAt(i,0);
+open[i]=parseFloat(dataSet.getValueAt(i,1));
+high[i]=parseFloat(dataSet.getValueAt(i,2));
+low[i]=parseFloat(dataSet.getValueAt(i,3));
+close[i]=parseFloat(dataSet.getValueAt(i,4));
+volume[i]=parseFloat(dataSet.getValueAt(i,5));
+}
+
+//calculations
+ma9=aqua.math.financial.movingaverage(close,9);
+bol=aqua.math.financial.bollinger(close,9);
+ma20=aqua.math.financial.movingaverage(close,20);
+ema9=aqua.math.financial.ema(close,9);
+mstd9=aqua.math.financial.movingstd(close,9);
+th=aqua.math.financial.trh(high,close);
+tl=aqua.math.financial.trl(low,close);
+ema20=aqua.math.financial.ema(close,20);
+ema100=aqua.math.financial.ema(close,100);
+
+relsi=aqua.math.financial.rsi(close,9);
+md = aqua.math.financial.macd(close,12,21,9);
+sto=aqua.math.financial.stochosc(high,low,close,15,9);
+onbv = aqua.math.financial.obv(close,volume);
+prc = aqua.math.financial.proc(onbv,1);
+
+//charts
+
+//chartBase
+var chartBase = aqua.chart.newChart();
+var modelBase = chartBase.getModel();
+
+
+modelBase.addSeries("High");
+modelBase.addSeries("Low");
+modelBase.addSeries("Close");
+modelBase.addSeries("Open");
+
+stockend=100
+for(i=0;i<stockend;i++){
+k=i+11
+modelBase.addCategory(date[k]);
+modelBase.setValue(0,i,high[k]);
+modelBase.setValue(1,i,low[k]);
+modelBase.setValue(2,i,close[k]);
+modelBase.setValue(3,i,open[k]);
+}
+
+//chart types
+chartBase.getProperties().setChartTypeCandlestick();
+
+
+//line colors
+chartBase.getProperties().setColor(0,"#000000"); 
+
+//chartBase.getProperties().set
+
+chartBase.getProperties().setImageHeight(480);
+chartBase.getProperties().setImageWidth(800);
+//
+//
+chartBase.getProperties().setPanX(-475);
+chartBase.getProperties().setPanY(-240);
+//
+chartBase.getProperties().setWidth(42);
+chartBase.getProperties().setHeight(24);
+//
+chartBase.getProperties().setRotationX(-45);
+chartBase.getProperties().setDepth(1);
+
+chartBase.getProperties().setCategoryAxisDateFormat("MMM dd");
+chartBase.getProperties().showCategoryAxis=true;
+chartBase.getProperties().showValueAxis=true;
+chartBase.getProperties().showLegend=true;
+chartBase.getProperties().showSeriesAxis=false;
+
+chartBase.getProperties().showMarkers=false
+chartBase.getProperties().setLineWidth(2);
+chartBase.getProperties().setMergeSeriesMin(9500);
+chartBase.getProperties().setMergeSeriesMax(12000);
+
+//charts
+
+//chart1
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+
+//model.addCategory("Date");
+model.addSeries("RSI");
+model.addSeries("OverBought");
+model.addSeries("OverSold")
+model.addSeries("Upper");
+model.addSeries("Lower");
+
+for(i=0;i<100;i++){
+k=i+11
+
+//relsi with overbought
+temp =relsi[k];
+model.addCategory(date[k]);
+model.setValue(2,i,NaN);
+model.setValue(1,i,NaN);
+model.setValue(0,i,temp);
+model.setValue(3,i,70);
+model.setValue(4,i,30);
+//rsi overbought/sold
+
+if (temp>=70) 
+ {
+model.setValue(2,i,10);
+model.setValue(1,i,NaN);
+}
+if (temp<=30)
+ {
+model.setValue(1,i,10);
+model.setValue(2,i,NaN);
+}
+}
+
+//chart types
+chart.getProperties().setChartTypeLine(0);
+chart.getProperties().setChartTypeColumn(1);
+chart.getProperties().setChartTypeColumn(2);
+chart.getProperties().setChartTypeLine(3);
+chart.getProperties().setChartTypeLine(4);
+
+
+//line colors
+chart.getProperties().setColor(0,"#000000");
+chart.getProperties().setColor(2,"#009900"); //green
+chart.getProperties().setColor(1,"#ff0000");
+chart.getProperties().setColor(4,"#004400"); //green
+chart.getProperties().setColor(3,"#440000");
+
+
+//chart.getProperties().set
+
+chart.getProperties().setImageHeight(480);
+chart.getProperties().setImageWidth(800);
+//
+//
+chart.getProperties().setPanX(-500);
+chart.getProperties().setPanY(-240);
+//
+chart.getProperties().setWidth(42);
+chart.getProperties().setHeight(24);
+//
+chart.getProperties().setRotationX(-45);
+chart.getProperties().setDepth(1);
+chart.getProperties().setCategoryAxisDateFormat("MMM dd");
+chart.getProperties().showSeriesAxis=false;
+chart.getProperties().showCategoryAxis=true;
+chart.getProperties().showLegend=true;
+
+chart.getProperties().showMarkers=false
+chart.getProperties().setLineWidth(2);
+//chart.getProperties().setMergeSeriesMin(9200);
+//chart.getProperties().setMergeSeriesMax(11500);
+
+//chart2
+var chart2 = aqua.chart.newChart();
+var model2 = chart2.getModel();
+
+//model2.addCategory("Date");
+model2.addSeries("MACDHist");
+model2.addSeries("Signal Line");
+model2.addSeries("MacD");
+
+
+for(i=0;i<100;i++){
+k=i+21
+//macdhistogram
+model2.addCategory(date[k]);
+model2.setValue(0,i,md[k][0]-md[k][1]);
+model2.setValue(1,i,md[k][0]);
+model2.setValue(2,i,md[k][1]);
+
+
+}
+
+//chart types
+chart2.getProperties().setChartTypeColumn(0);
+chart2.getProperties().setChartTypeLine(1);
+chart2.getProperties().setChartTypeLine(2);
+
+
+//line colors
+chart2.getProperties().setColor(2,"#000000");
+chart2.getProperties().setColor(1,"#ff0000");
+//chart2.getProperties().setColor(0,"#000000");
+
+
+//chart2.getProperties().set
+
+chart2.getProperties().setImageHeight(480);
+chart2.getProperties().setImageWidth(800);
+//
+//
+chart2.getProperties().setPanX(-500);
+chart2.getProperties().setPanY(-240);
+//
+chart2.getProperties().setWidth(42);
+chart2.getProperties().setHeight(24);
+//
+chart2.getProperties().setRotationX(-45);
+chart2.getProperties().setDepth(1);
+
+chart2.getProperties().setCategoryAxisDateFormat("MMM dd");
+chart2.getProperties().showSeriesAxis=false;
+chart2.getProperties().showCategoryAxis=true;
+chart2.getProperties().showLegend=true;
+
+chart2.getProperties().showMarkers=false
+chart2.getProperties().setLineWidth(2);
+//chart2.getProperties().setMergeSeriesMin(9200);
+//chart2.getProperties().setMergeSeriesMax(11500);
+
+//chart3
+var chart3 = aqua.chart.newChart();
+var model3 = chart3.getModel();
+
+//model3.addCategory("Date");
+model3.addSeries("Volume / 1e6");
+model3.addSeries("Volume / 1e6");
+model3.addSeries("On Balance Volume");
+
+
+
+for(i=0;i<100;i++){
+k=i+21
+model3.addCategory(date[k]);
+//obv volume chart
+temp = aqua.math.signum(prc[k]);
+if (temp>=0) 
+ {
+model3.setValue(0,i,volume[k]/1e6);
+model3.setValue(1,i,NaN);
+} else {
+model3.setValue(1,i,volume[k]/1e6);
+model3.setValue(0,i,NaN);
+}
+
+//obv 
+model3.setValue(2,i,onbv[k]/aqua.math.stat.max(onbv)*aqua.math.stat.max(volume)/1e6+aqua.math.stat.max(volume)/1e6);
+
+
+}
+
+//chart types
+chart3.getProperties().setChartTypeColumn(0);
+chart3.getProperties().setChartTypeColumn(1);
+chart3.getProperties().setChartTypeLine(2);
+
+
+
+//line colors
+
+//chart3.getProperties().setColor(4,"#0000ff");
+chart3.getProperties().setColor(0,"#660000");
+chart3.getProperties().setColor(1,"#006600");
+chart3.getProperties().setColor(2,"#000000");
+
+
+
+//chart3.getProperties().set
+chart3.getProperties().setImageHeight(480);
+chart3.getProperties().setImageWidth(800);
+//
+//
+chart3.getProperties().setPanX(-475);
+chart3.getProperties().setPanY(-240);
+//
+chart3.getProperties().setWidth(42);
+chart3.getProperties().setHeight(24);
+//
+chart3.getProperties().setRotationX(-45);
+chart3.getProperties().setDepth(1);
+chart3.getProperties().mergeAxis=true;
+
+chart3.getProperties().setCategoryAxisDateFormat("MMM dd");
+
+chart3.getProperties().showValueAxis=true;
+chart3.getProperties().showSeriesAxis=false;
+chart3.getProperties().showCategoryAxis=true;
+chart3.getProperties().showLegend=true;
+
+chart3.getProperties().setSeriesAxisNumberFormat("0e0");
+
+chart3.getProperties().showMarkers=false
+chart3.getProperties().setLineWidth(2);
+//chart3.getProperties().setMergeSeriesMin(8500);
+//chart3.getProperties().setMergeSeriesMax(12500);
+
+//chart4
+var chart4 = aqua.chart.newChart();
+var model4 = chart4.getModel();
+
+//model4.addCategory("Date");
+model4.addSeries("Stochastic Oscillator %D");
+model4.addSeries("Stochastic Oscillator %K");
+
+
+
+for(i=0;i<100;i++){
+k=i+21
+model4.addCategory(date[k]);
+//stochastic oscillator, full
+model4.setValue(0,i,sto[k][0]);
+model4.setValue(1,i,sto[k][1]);
+
+
+}
+
+//chart types
+chart4.getProperties().setChartTypeLine(0);
+chart4.getProperties().setChartTypeLine(1);
+chart4.getProperties().setChartTypeLine(2);
+chart4.getProperties().setChartTypeLine(3);
+chart4.getProperties().setChartTypeLine(4);
+
+
+//line colors
+chart4.getProperties().setColor(0,"#0000");
+chart4.getProperties().setColor(1,"#660000");
+chart4.getProperties().setColor(2,"#000000");
+chart4.getProperties().setColor(3,"#ff0000");
+chart4.getProperties().setColor(4,"#ff0000");
+
+
+//chart4.getProperties().set
+
+chart4.getProperties().setImageHeight(480);
+chart4.getProperties().setImageWidth(800);
+//
+//
+chart4.getProperties().setPanX(-500);
+chart4.getProperties().setPanY(-240);
+//
+chart4.getProperties().setWidth(42);
+chart4.getProperties().setHeight(24);
+//
+chart4.getProperties().setRotationX(-45);
+chart4.getProperties().setDepth(1);
+
+chart4.getProperties().setCategoryAxisDateFormat("MMM dd");
+chart4.getProperties().showSeriesAxis=false;
+chart4.getProperties().showCategoryAxis=true;
+chart4.getProperties().showLegend=true;
+
+chart4.getProperties().showMarkers=false
+chart4.getProperties().setLineWidth(2);
+//chart4.getProperties().setMergeSeriesMin(9500);
+//chart4.getProperties().setMergeSeriesMax(12000);
+
+//chart5
+var chart5 = aqua.chart.newChart();
+var model5 = chart5.getModel();
+
+//model5.addCategory("Date");
+model5.addSeries("Detrended Oscillator");
+
+stockend=100
+for(i=0;i<stockend;i++){
+k=i+11
+model5.addCategory(date[k]);
+//detrended oscillator
+temp = close[k];
+model5.setValue(0,i,temp-ma20[k+11]);
+}
+
+
+
+//chart types
+chart5.getProperties().setChartTypeLine(0);
+chart5.getProperties().setChartTypeLine(5);
+chart5.getProperties().setChartTypeLine(6);
+chart5.getProperties().setChartTypeLine(7);
+chart5.getProperties().setChartTypeLine(8);
+
+
+//line colors
+chart5.getProperties().setColor(0,"#000000"); 
+
+
+
+
+//chart5.getProperties().set
+
+chart5.getProperties().setImageHeight(480);
+chart5.getProperties().setImageWidth(800);
+//
+//
+chart5.getProperties().setPanX(-500);
+chart5.getProperties().setPanY(-240);
+//
+chart5.getProperties().setWidth(42);
+chart5.getProperties().setHeight(24);
+//
+chart5.getProperties().setRotationX(-45);
+chart5.getProperties().setDepth(1);
+
+chart5.getProperties().setCategoryAxisDateFormat("MMM dd");
+chart5.getProperties().showSeriesAxis=false;
+chart5.getProperties().showCategoryAxis=true;
+chart5.getProperties().showLegend=true;
+
+chart5.getProperties().showMarkers=false
+chart5.getProperties().setLineWidth(2);
+//chart5.getProperties().setMergeSeriesMin(9500);
+//chart5.getProperties().setMergeSeriesMax(12000);
+
+//chartLast
+var chartLast = aqua.chart.newChart();
+var modelLast = chartLast.getModel();
+
+
+modelLast.addSeries("Close");
+modelLast.addSeries("20-Day ema");
+
+stockend=100
+for(i=0;i<stockend;i++){
+k=i+11
+modelLast.addCategory(date[k]);
+modelLast.setValue(0,i,close[k]);
+modelLast.setValue(1,i,ema20[k]);
+}
+
+//chart types
+chartLast.getProperties().setChartTypeLine();
+
+
+//line colors
+chartLast.getProperties().setColor(0,"#000000"); 
+
+//chartLast.getProperties().set
+
+chartLast.getProperties().setImageHeight(480);
+chartLast.getProperties().setImageWidth(800);
+//
+//
+chartLast.getProperties().setPanX(-475);
+chartLast.getProperties().setPanY(-240);
+//
+chartLast.getProperties().setWidth(42);
+chartLast.getProperties().setHeight(24);
+//
+chartLast.getProperties().setRotationX(-45);
+chartLast.getProperties().setDepth(1);
+
+chartLast.getProperties().setCategoryAxisDateFormat("MMM dd");
+chartLast.getProperties().showCategoryAxis=true;
+chartLast.getProperties().showValueAxis=true;
+chartLast.getProperties().showLegend=true;
+chartLast.getProperties().showSeriesAxis=false;
+
+chartLast.getProperties().showMarkers=false
+chartLast.getProperties().setLineWidth(2);
+chartLast.getProperties().setMergeSeriesMin(9500);
+chartLast.getProperties().setMergeSeriesMax(11500);
+
+
+var urlBase = chartBase.cache(5);
+var url = chart.cache(5);
+var url2 = chart2.cache(5);
+var url3 = chart3.cache(5);
+var url4 = chart4.cache(5);
+var url5 = chart5.cache(5);
+var urlLast = chartLast.cache(5);
+
+
+
+
+//introduction
+
+aqua.response.write(' <p><span style="color: #2778cb;"><big><strong>Aqua Financial Methods: Indicators</strong></big></span></p>');
+
+aqua.response.write('<ol>')
+aqua.response.write('<li><a href="#section1"><span style="color: #2778cb;">Overview</span></a>');
+aqua.response.write('<li><a href="#section2"><span style="color: #2778cb;">Inputs</span></a>');
+aqua.response.write('<ul><li><span style="color: #2778cb;">Stock Data</span></a>');
+aqua.response.write('<li><span style="color: #2778cb;">CandleStick Plot</span></a></ul>');
+
+aqua.response.write('<li><a href="#section4"><span style="color: #2778cb;">Indicators</span></a>');
+aqua.response.write('<ul><li><span style="color: #2778cb;">Moving Average Convergence/Divergence (MACD)</span></a>');
+aqua.response.write('<li><span style="color: #2778cb;">MACD Histogram</span></a>');
+aqua.response.write('<li><span style="color: #2778cb;">Relative Strength Index (RSI)</span></a>');
+aqua.response.write('<li><span style="color: #2778cb;">On Balance Volume (OBV)</span></a>');
+aqua.response.write('<li><span style="color: #2778cb;">Stochastic Oscillator (Fast, Slow, Full)</span></a></ul>');
+
+
+aqua.response.write('<li><a href="#section5"><span style="color: #2778cb;">Custom Scripting</span></a>');
+aqua.response.write('<ul><li><span style="color: #2778cb;">Detrended Price Oscillator</span></a></ul>');
+
+aqua.response.write('</ol><hr>')
+
+aqua.response.write('<p><a name="section1"><span style="color: #2778cb;"><big>Overview</big></span></a></br>');
+aqua.response.write('<p>AquaData Studio has financial methods that are useful in modelling price behavior.  In addition, the AquaScript environment available to the user can be a valuable asset in constructing custom financial tools.   <br>');
+
+aqua.response.write('<p><a name="section2"><span style="color: #2778cb;"><big>Inputs: Stock and Pricing Data</big></span></a></br>');
+
+aqua.response.write('<p> In order to illustrate some of the features of aqua.math.financial, we will be using standard pricing data.  Specifically, the High, Low, Close, Open, Volume, and Adjusted Close of the Dow Index daily values for 2010');
+aqua.response.write('<blockquote><pre>import info</pre></blockquote>');
+aqua.response.write('<p><span style="color: #2778cb;">CandleStick Plot</span><br>');
+aqua.response.write('<p>One of the most common ways to view pricing data is via candlestick plot.  This chart has two components, the body (range of open to close price) and the wick (range of high to low price) and illustrates the difference \
+                        between these two ranges. This chart type is available in the charting toolset.');
+aqua.response.write('<blockquote><pre>chart.getProperties().setChartTypeCandleStick();</pre></blockquote>');
+aqua.response.write('<img src=').write(urlBase).write('><br><br>');
+aqua.response.write('<hr width=45% align=center>');
+
+aqua.response.write('<p><a name="section3"><span style="color: #2778cb;"><big>Indicators</big></span></a></br>');
+
+aqua.response.write('<p><span style="color: #2778cb;">MACD</span><br>');
+aqua.response.write('<p>The MACD, or moving average convergence/divergence, is an indicator designed to both follow trends and identify changes in momentum.  \
+                        It is the difference between the 12 and 26 day exponential moving averages.  The aqua.math.financial.macd method returns both the MACD and its signal line.  \
+                         The difference between these two is often plotted as the MACD Histogram.');
+
+aqua.response.write('<blockquote><pre>md = aqua.math.financial.macd(close,12,21,9); // calculate moving average convergence/divergence</pre></blockquote>');
+aqua.response.write('<blockquote><pre>//md[][0] = macd</pre></blockquote>');
+aqua.response.write('<blockquote><pre>//md[][1] = signal line</pre></blockquote>');
+aqua.response.write('<img src=').write(url2).write('><br><br>');
+aqua.response.write('<hr width=45% align=center>');
+
+aqua.response.write('<p><span style="color: #2778cb;">RSI</span><br>');
+aqua.response.write('<p>The RSI, or relative strenth index measures the velocity (magnitude and direction ) of price movements.  It is often used to identify whether a stock is overbought or oversold. \
+                         Using charting methods available, we can script a chart that indicates both the RSI and offers overbought/oversold alerts as a hisogram.');
+aqua.response.write('<blockquote><pre>relsi=aqua.math.financial.rsi(close,9); // calculate relative strength index over period of 9 days</pre></blockquote>');
+aqua.response.write('<blockquote><pre>if (temp>=70)</pre>'); 
+aqua.response.write('<pre> {</pre>');
+aqua.response.write('<pre>model.setValue(2,i,10);  <i>//if rsi over 70, set alert for overbought</i></pre>'); 
+aqua.response.write('<pre>model.setValue(1,i,NaN);</pre>');
+aqua.response.write('<pre>}</pre>');
+aqua.response.write('<pre>if (temp<=30)</pre>');
+aqua.response.write('<pre> {</pre>');
+aqua.response.write('<pre>model.setValue(1,i,10);  <i>//if rsi under 30, set alert for oversold</i></pre>');
+aqua.response.write('<pre>model.setValue(2,i,NaN);</pre>');
+aqua.response.write('<pre>}</pre></blockquote>')
+aqua.response.write('<img src=').write(url).write('><br><br>');
+aqua.response.write('<hr width=45% align=center>');
+
+aqua.response.write('<p><span style="color: #2778cb;">Stochastic Oscillator</span><br>');
+aqua.response.write('<p>The Stochastic Oscillator is a momentum indicator that, according to its inventor \'doesn\'t follow price, it doesn\'t follow volume or anything like that. It follows the speed or the momentum of price. It is also used to identify overbought and oversold levels.');
+aqua.response.write('The stochastic oscilator method returns two quantities.  %K is how near the period low a closing value of a stock is,  scaled by the period\'s range (highest high-lowest low). \
+                     %D is the exponential moving average of %K.  The are three versions of this method available in aqua.math.financial:  The fast, slow, and the general oscillators.  They differ on the \
+                     windows used for the exponential moving averages.  The fast oscillator, for example, obtains %D by smoothing %K with a 3 period window.  The slow smooths both %K and %D with 3 period windows. \
+                     The general oscillator allows the user to assign  an arbitrary window length for smoothing.');
+aqua.response.write('<blockquote><pre>sto=aqua.math.financial.stochosc(high,low,close,15,9);  <i>// calculate %K and %D over 15 days, smoothing with a 9 day exponential moving average</i></pre></blockquote>');
+aqua.response.write('<img src=').write(url4).write('><br><br>');
+aqua.response.write('<hr width=45% align=center>');
+
+aqua.response.write('<p><span style="color: #2778cb;">OBV</span><br>');
+aqua.response.write('<p>On Balance Volume is a volume accumulator, adding volume if the stock closes up and subtracting if it closes down.  We can use the obv calculation to script a volume / obv chart that indicates whether the stock closed up or down.');
+aqua.response.write('<blockquote><pre>onbv = aqua.math.financial.obv(close,volume);  <i>// calculate on balance volume</i></pre></blockquote>');
+aqua.response.write('<blockquote><pre>prc = aqua.math.financial.proc(onbv);  <i>// calculate rate of change of on balance volume (to decide color of volume histogram)</i></pre></blockquote>');
+//aqua.response.write('<p>The general case of bounding the price with moving standard deviation can be done in aquascript.');
+aqua.response.write('<blockquote><pre>for(i=0;i<100;i++){</pre>');
+aqua.response.write('<pre>k=i+21</pre>');
+aqua.response.write('<pre>model3.addCategory(date[k]);</pre>');
+aqua.response.write('<pre>//obv volume chart</pre>');
+aqua.response.write('<pre>temp = aqua.math.signum(prc[k]);  <i>//determine direction of obv slope</i></pre>');
+aqua.response.write('<pre>if (temp>=0) </pre>');
+aqua.response.write('<pre> {</pre>');
+aqua.response.write('<pre>model3.setValue(0,i,volume[k]/1e6); <i>//if positive, volume series to green</i></pre>');
+aqua.response.write('<pre>model3.setValue(1,i,NaN);</pre>');
+aqua.response.write('<pre>} else {</pre>');
+aqua.response.write('<pre>model3.setValue(1,i,volume[k]/1e6); <i>//if negative, volume series to red</i></pre>');
+aqua.response.write('<pre>model3.setValue(0,i,NaN);</pre>');
+aqua.response.write('<pre>}</pre></blockquote>');
+aqua.response.write('<img src=').write(url3).write('><br><br>');
+aqua.response.write('<hr width=45% align=center>');
+
+aqua.response.write('<p><span style="color: #2778cb;"><big>Custom Indicators</big></span><br>');
+aqua.response.write('<p>The previous indicators are already available in aqua.math.financial, but users can use the scripting environment to construct custom indicators.  We will construct the Detrended Price Oscillator.');
+
+aqua.response.write('<p><span style="color: #2778cb;">Detrended Price Oscillator</span><br>');
+aqua.response.write('The detrended price oscillator is the difference between the price and its 20-day exponential moving average.  \
+                     Since the moving average is a trend identifier, we can remove the overall trend (detrending) and study the price\'s movement around the trend. \
+                     For this oscillator, we only need the exponential moving average.');
+aqua.response.write('<blockquote><pre>ema20=aqua.math.financial.ema(close,20); <i>//calculate the 20-day exponential moving average</i></pre>');
+aqua.response.write('<pre>var detrendOsc=new Array();</pre>');
+aqua.response.write('<pre>for(i=0;i &lt close.length;i++){</pre>');
+aqua.response.write('<pre>detrendOsc[i]=ema20[i]-close[i];</pre>');
+aqua.response.write('<pre>}</pre></blockquote>');
+aqua.response.write('<img src=').write(urlLast).write('><br><br>');
+aqua.response.write('<img src=').write(url5).write('><br><br>');
+aqua.response.write('<hr width=45% align=center>');
+
+
+//aqua.response.write('<img src=').write(url4).write('><br><br>');
+//aqua.response.write('<hr width=45% align=center>');

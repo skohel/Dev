@@ -1,0 +1,29 @@
+﻿var server = "Sybase ASE 15.0 - TDS 5.5 - 10.168.1.46";
+var db     = "example_data";
+var schema = "dbo";
+
+var conn = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+
+var procedures = metadata.extractProcedures(db, schema);
+
+for (var i=0; i<procedures.length; i++){
+
+    var procedure = procedures[i];
+
+    // calling AQProcedure.extractPermissions()
+    var permissions = procedure.extractPermissions();
+    for (var j=0; j<permissions.length; j++){
+        var permission = permissions[j];
+
+        aqua.console.println("Procedure Name: [" + procedure.getName() + "]    GRANT script: [" + permission.scriptGRANT("user") + "]");
+        aqua.console.println("Procedure Name: [" + procedure.getName() + "]    GRANT script: [" + permission.scriptGRANT("role") + "]");
+        aqua.console.println("Procedure Name: [" + procedure.getName() + "]    REOVKE script: [" + permission.scriptREVOKE("user") + "]");
+        aqua.console.println("Procedure Name: [" + procedure.getName() + "]    REVOKE script: [" + permission.scriptREVOKE("role") + "]");
+        
+        aqua.console.println("");
+    }
+}
+conn.disconnect();

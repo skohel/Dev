@@ -1,0 +1,10 @@
+﻿var sql         = "select some_table.*, other_table.* from some_table, other_table where some_table.id = other_table.id";
+var beautifier  = aqua.project.getServerConnection("MySql 6.0 - 10.168.1.38 - demo").newSqlFormat();
+
+beautifier.setBreakAfterKeywords(true);
+
+aqua.console.println("BEFORE setUseTabIdent:\n[" + beautifier.format(sql) + "]");
+aqua.console.println("");
+
+beautifier.setUseTabIdent(true);
+aqua.console.println("AFTER setUseTabIdent:\n[" +  beautifier.format(sql) + "]");

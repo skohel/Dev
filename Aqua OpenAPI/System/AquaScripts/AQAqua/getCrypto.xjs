@@ -1,0 +1,6 @@
+﻿var str    = "abcdefghijklmnopqrstuvwxyz0123456789";
+var crypto = aqua.getCrypto();
+
+aqua.console.println("MD2 hash string for [" + str + "]: [" + crypto.computeHashMD2(str) + "]");
+
+

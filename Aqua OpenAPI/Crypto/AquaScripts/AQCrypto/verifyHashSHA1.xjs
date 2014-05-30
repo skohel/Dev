@@ -1,0 +1,12 @@
+﻿// test string to verify the HASH
+var test_str  = "The quick brown fox jumps over the lazy dog";
+var good_hash = "2fd4e1c67a2d28fced849ee1bb76e7391b93eb12";
+var bad_hash  = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+
+try {
+    aqua.console.println("Is [" + good_hash + "] the SHA hash for [" + test_str  + "]: " + aqua.crypto.verifyHashSHA1(test_str, good_hash));
+    aqua.console.println("Is [" + bad_hash +  "] the SHA hash for [" + test_str  + "]: " + aqua.crypto.verifyHashSHA1(test_str, bad_hash));
+}
+catch(ex) {
+    aqua.console.println("Verify SHA-1 Hash: Failed - " + ex.toString() + "\n");
+}

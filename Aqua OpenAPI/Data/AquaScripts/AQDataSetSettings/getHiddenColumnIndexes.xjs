@@ -1,0 +1,24 @@
+﻿
+//
+// This script demonstrates how to set/get hidden column by indexes.
+//
+
+importPackage(java.util);
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// hide column by index, index is zero based
+settings.hideColumn(0);
+
+// hide column by indexes
+settings.hideColumnsByIndex([2, 7, 1, 5]);
+
+// get indexes of hidden columns
+var indexList = settings.getHiddenColumnIndexes();
+aqua.console.println("List of hidden column indexes: " + indexList);
+
+aqua.console.println("List of hidden column indexes: ");
+for( var i=0; i<indexList.size(); i++ ) {
+    aqua.console.println("  " + indexList.get(i));
+}

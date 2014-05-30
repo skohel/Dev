@@ -1,0 +1,81 @@
+﻿/*
+aqua.math.fit.weibullFit
+
+Returns coefficients of weibull regression.
+
+Synopsys
+    double[] aqua.fit.weibullFit(double[],double[], double[]);
+    
+
+Description
+   Finds coefficients of cumulative weibull function which best describes incoming data.  
+
+Example
+    see below
+*/
+
+var rawDataX=new Array();
+var rawDataY = new Array();
+var noise = new Array();
+var fitY=new Array();
+var guess=new Array();
+var coeff = new Array();
+
+guess[0]=1;
+guess[1]=1
+
+
+//generate noisy data
+for(i=0;i<30;i++){
+   rawDataX[i]=(i+1)/10.0;
+noise[i]=2*Math.random()-1;
+rawDataY[i]=Math.pow(rawDataX[i]/2,1.5);
+   rawDataY[i]=Math.exp(-rawDataY[i]) +noise[i]/5;
+   
+}
+
+//perform smoothing
+fitY=aqua.math.fit.weibullFit(rawDataX,rawDataY,guess);
+coeff=aqua.math.fit.weibullFitCoeff(rawDataX,rawDataY,guess);
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+var testFit = aqua.math.getFit();
+
+model.addSeries("raw");
+model.addSeries("fitted");
+
+for(i=0;i<30;i++){
+model.addCategory(rawDataX[i]);
+model.setValue(0,i,rawDataY[i]);
+model.setValue(1,i,fitY[i]);
+}
+
+chart.getProperties().setTitle("Weibull Fit");
+chart.getProperties().setChartTypeLine(0);
+chart.getProperties().setChartTypeLine(1);
+chart.getProperties().setMergeAxis(true);
+
+chart.getProperties().setRotationX(-45);
+chart.getProperties().setDepth(10);
+chart.getProperties().setWidth(20);
+chart.getProperties().setHeight(12);
+
+
+chart.getProperties().setMergeSeriesMin(0);
+chart.getProperties().setMergeSeriesMax(1);
+//chart.getProperties().setCategoryRange(9,100);
+
+
+chart.getProperties().setImageHeight(480);
+chart.getProperties().setImageWidth(800);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p style="font-size:200%">');
+
+aqua.response.write('Raw Data =e<sup>-(x/2)<sup>1.5</sup></sup> + noise <br>');
+aqua.response.write('Fit = e<sup>-(x/').write(coeff[0]).write(')<sup>').write(coeff[1]).write('</sup></sup>');
+
+

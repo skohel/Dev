@@ -1,0 +1,31 @@
+
+// create a new email message
+var email = aqua.mail.newMessage();
+
+// get text
+var text = email.getText();
+if ( text != null ) {
+    throw "Unexpected text '" + text + "', null expected.";
+}
+
+// set text
+var origin = "email text";
+email.setText(origin);
+
+// get text and validate it
+text = email.getText();
+if ( text != origin ) {
+    throw "Unexpected text '" + text + "', expected text is '" + origin + "'.";
+}
+
+// set text to null
+email.setText(null);
+
+// get text and validate it
+text = email.getText();
+if ( text != null ) {
+    throw "Unexpected text '" + text + "', null expected.";
+}
+
+// done with test
+aqua.console.println("DONE");

@@ -1,0 +1,16 @@
+
+
+var rawData=new Array();
+var out;
+var k = 20;
+
+//generate data
+for(i=0;i<30;i++){
+
+   rawData[i]=10+2*Math.random()-1;
+   
+}
+
+out=aqua.math.stat.percentile(rawData,k);
+
+aqua.console.println(k+"th percentile = " +out);

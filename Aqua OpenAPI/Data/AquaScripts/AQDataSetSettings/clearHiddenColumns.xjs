@@ -1,0 +1,61 @@
+﻿
+//
+// This script demonstrates how to reset all of hide column settings.
+//
+
+// define a data set
+var columns = ["EmployeeID", "ShipCountry", "CustomerID", "ShipName", "Freight"];
+var dataSet = aqua.data.newDataSet(columns);
+
+// add rows to data set
+dataSet.addRowWithValues(10001, "Canada", "C039", "ABC Inc.",   200);
+dataSet.addRowWithValues(10001, "Canada", "C061", "Sunrise",    230);
+dataSet.addRowWithValues(10001, "France", "C123", "Joe Smith", 1620);
+dataSet.addRowWithValues(10003, "UK",     "C028", "BUK",       1500);
+dataSet.addRowWithValues(10002, "Japan",  "C375", "JPL Corp.", 4200);
+dataSet.addRowWithValues(10001, "US",     "C006", "AuqaFold",    35);
+dataSet.addRowWithValues(10002, "US",     "C257", "BA IT",       89);
+dataSet.addRowWithValues(10003, "US",     "C257", "BA R&D",      89);
+
+// create a settings for the data set, settings is used to describe how data set to be rendered
+var settings = aqua.report.newReportDataSetSettings();
+
+// hide columns by names
+var columnNames = [ "ShipCountry", "ShipName" ];
+settings.hideColumnsByName(columnNames);
+
+// hide column by name
+settings.hideColumn("CustomerID");
+
+// hide column by index, column index is zero based
+settings.hideColumn(0);
+
+// set title
+settings.setTitle("AquaFold Open API Example: grid with hidden columns");
+
+// create a report
+var report = aqua.report.newReport();
+
+// add data set and its settings to report
+report.addDataSet(dataSet, settings);
+
+// present report as a plain text grid in console
+aqua.console.print(report.renderText());
+aqua.console.println(""); aqua.console.println("");
+// render report in HTML and display it in browser
+aqua.response.write(report.renderHtml());
+aqua.response.write("<br><br>");
+
+
+// reset all of hidden columns
+settings.clearHiddenColumns();
+
+// update title
+settings.setTitle("AquaFold Open API Example: hide columns reset");
+
+// present report as a plain text grid in console
+aqua.console.print(report.renderText());
+aqua.console.println(""); aqua.console.println("");
+// render report in HTML and display it in browser
+aqua.response.write(report.renderHtml());
+

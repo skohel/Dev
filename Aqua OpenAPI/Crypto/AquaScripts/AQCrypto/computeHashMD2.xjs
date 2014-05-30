@@ -1,0 +1,12 @@
+﻿// test string to produce the HASH
+var test_str = "The quick brown fox jumps over the lazy dog";
+
+try {
+     var hash = aqua.crypto.computeHashMD2(test_str);
+     aqua.console.println("_________   MD2 HASH   _______ : \n" + hash);
+     aqua.console.println("MD2 Hash: Success\n");
+}
+catch(ex) {
+    aqua.console.println("MD2 Hash: failed - " + ex.toString() + "\n");
+}
+

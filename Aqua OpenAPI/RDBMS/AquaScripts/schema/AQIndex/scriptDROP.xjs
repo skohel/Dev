@@ -1,0 +1,19 @@
+﻿var server = "Sybase Anywhere 10 - 10.168.1.37 - demo - DBA";
+var db     = "demo";
+var schema = "DBA";
+
+var conn = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+var indexes  = metadata.extractIndexes(db, schema);
+
+for (var i=0; i<indexes.length; i++){
+
+    var index = metadata.extractIndex(db, schema, indexes[i].getName());
+
+    // calling AQIndex.scriptDrop()
+    aqua.console.println("Index Name: [" + index.getName() + "]    DROP script: [" + index.scriptDROP() + "]");
+    aqua.console.println("");
+}
+conn.disconnect();

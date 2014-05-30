@@ -1,0 +1,9 @@
+﻿// test string to produce the HASH
+var test_str = "The quick brown fox jumps over the lazy dog";
+try {
+     aqua.console.println("_____________       SHA-384 HASH  ______________ : \n" + aqua.crypto.computeHashSHA384(test_str) );
+     aqua.console.println("SHA-384  Hash: Success\n");
+}
+catch(ex) {
+    aqua.console.println("SHA-384  Hash: Failed - " + ex.toString() + "\n");
+}

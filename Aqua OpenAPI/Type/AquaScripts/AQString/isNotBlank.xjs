@@ -1,0 +1,8 @@
+﻿var value   = "111111";
+var factory = aqua.type.getString();
+
+aqua.console.println("Is [" + value + "] not blank? [" + factory.isNotBlank(value) + "]");
+
+value = "";
+aqua.console.println("Is [" + value + "] not blank? [" + factory.isNotBlank(value) + "]");
+

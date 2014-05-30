@@ -1,0 +1,33 @@
+﻿var Pws    = aqua.vcs.newPerforce();
+Pws.setVerbose(false);
+
+// create AQOpaqueObject containing the username and password
+var usr = aqua.crypto.getSecureField('svn.username');
+var pwd = aqua.crypto.getSecureField('svn.password');
+
+// connect to the Perforce server
+Pws.connect("p4jrpc://10.168.11.82:1666","client","F:\\May_Perforce",usr,pwd);
+aqua.console.println("** Display Server Information **");
+
+// Display Server Information
+aqua.console.println("Client Address : "           + Pws.getServerInfo().getClientAddress() );
+aqua.console.println("Client Current Directory : " + Pws.getServerInfo().getClientCurrentDirectory() );
+aqua.console.println("Client Host : "              + Pws.getServerInfo().getClientHost() );
+aqua.console.println("Client Name : "              + Pws.getServerInfo().getClientName() );
+aqua.console.println("Client Root : "              + Pws.getServerInfo().getClientRoot() );
+aqua.console.println("Proxy Version : "            + Pws.getServerInfo().getProxyVersion() );
+aqua.console.println("Server Address : "           + Pws.getServerInfo().getServerAddress() );
+aqua.console.println("Server Date : "              + Pws.getServerInfo().getServerDate() );
+aqua.console.println("Server License : "           + Pws.getServerInfo().getServerLicense() );
+aqua.console.println("Server License IP: "         + Pws.getServerInfo().getServerLicenseIp() );
+aqua.console.println("Server Root : "              + Pws.getServerInfo().getServerRoot() );
+aqua.console.println("Server Uptime : "            + Pws.getServerInfo().getServerUptime() );
+aqua.console.println("Server Version : "           + Pws.getServerInfo().getServerVersion());
+aqua.console.println("User Name : "                + Pws.getServerInfo().getUserName() );
+aqua.console.println("Monitor Enabled : "          + Pws.getServerInfo().isMonitorEnabled() );
+aqua.console.println("Unicode Enabled : "          + Pws.getServerInfo().isUnicodeEnabled() );
+
+aqua.console.println("** End of Server Information **");
+
+// disconnect
+Pws.close();

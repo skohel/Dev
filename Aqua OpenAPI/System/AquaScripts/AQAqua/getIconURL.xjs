@@ -1,0 +1,3 @@
+﻿var iconURL = aqua.getIconURL("x.icon");
+
+aqua.console.print(iconURL);

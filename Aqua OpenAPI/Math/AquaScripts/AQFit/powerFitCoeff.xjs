@@ -1,0 +1,22 @@
+
+
+var rawDataX=new Array();
+var rawDataY = new Array();
+var noise = new Array();
+var fitY=new Array();
+
+//generate noisy data
+for(i=0;i<30;i++){
+   rawDataX[i]=(i+1)/10.0;
+noise[i]=2*Math.random()-1;
+   rawDataY[i]=2*Math.pow(rawDataX[i],1.5) + 3 +noise[i]/5;
+   
+}
+
+//perform fit
+fitY=aqua.math.fit.powerFitCoeff(rawDataX,rawDataY);
+
+
+
+aqua.console.println("y(x) = "+fitY[0] + " x^" + fitY[1] + " + " + fitY[2]);
+

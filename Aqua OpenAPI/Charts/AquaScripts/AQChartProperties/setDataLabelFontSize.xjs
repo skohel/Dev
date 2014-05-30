@@ -1,0 +1,49 @@
+﻿/*
+aqua.chart.properties.setDataLabelFontSize
+
+Synopsys
+    void setDataLabelFontSize(float fontSize);
+
+Description
+Set the font size scalar used to render the Data Label text
+For example:
+0.5 means scale the currently selected font by 50$ (reduce to half size)
+
+Example
+    see below
+*/
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+model.addSeries("Sale Price");
+model.addSeries("Cost");
+
+model.addCategory("Orange");
+model.addCategory("Green");
+model.addCategory("Red");
+
+model.setValue(0, 0, 100);
+model.setValue(0, 1, 200);
+model.setValue(0, 2, 300);
+model.setValue(1, 0, 10);
+model.setValue(1, 1, 20);
+model.setValue(1, 2, 30);
+
+chart.getProperties().setChartTypeArea(0);
+chart.getProperties().setChartTypeColumn(1);
+chart.getProperties().setMergeAxis(true);
+
+chart.getProperties().setShowDataLabels(true);
+chart.getProperties().setDataLabelFontSize(3);
+
+var size = chart.getProperties().getDataLabelFontSize();
+aqua.response.write('Data Label Font Size: ').write(size).write("<p>");
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

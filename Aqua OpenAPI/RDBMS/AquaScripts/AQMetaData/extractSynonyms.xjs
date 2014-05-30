@@ -1,0 +1,97 @@
+﻿var server = "DB2 LUW 9.7 - 10.168.11.57 - SAMPLE - demo";
+var db     = "SAMPLE";
+var schema = "demo";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+var synonyms = metadata.extractSynonyms(db, schema);
+
+for(var i=0; i<synonyms.length; i++){
+
+    var obj = metadata.extractSynonym(db, schema, synonyms[i].getName());
+    printAQSchemaObject(obj);
+}
+
+conn.disconnect();
+
+
+//---------------------------------------------------------------
+// Print all getters in AQSchemaObject
+//---------------------------------------------------------------
+function printAQSchemaObject(obj){
+
+    if (obj != null){
+        aqua.console.println("From AQSchemaObject: ");
+        aqua.console.println("Database Name:            [" + obj.getDatabaseName() + "]");
+        aqua.console.println("Schema Name:              [" + obj.getSchemaName() + "]");
+        // calling function to print getters in the superclass (AQServerObject)
+        printAQServerObject(obj);
+    }
+}
+
+
+//---------------------------------------------------------------
+// Print all getters in AQServerObject
+//---------------------------------------------------------------
+function printAQServerObject(obj){
+
+    if (obj != null){
+        aqua.console.println("FROM AQServerObject: " );
+        aqua.console.println("Object Name:              [" + obj.getName() + "]");
+        aqua.console.println("Type Name:                [" + obj.getTypeName() + "]");
+    
+        try{
+            aqua.console.println("Script DROP:              [" + obj.scriptDROP() + "]");
+        }
+        catch(ex){
+            aqua.console.println("Script Drop - Exception:	[" + ex.toString() + "]");
+        }
+        try{
+            aqua.console.println("Script CREATE:            [" + obj.scriptCREATE() + "]");
+        }
+        catch(ex){
+            aqua.console.println("Script Create - Exception:[" + ex.toString() + "]");
+        }
+        
+        // calling function to print getters from object returned
+        // from method getServerConnection();
+        printAQServerConnection(obj.getServerConnection());
+        aqua.console.println("");
+    }
+}
+
+
+//---------------------------------------------------------------
+// Print all getters in AQServerConnection
+//---------------------------------------------------------------
+function printAQServerConnection(obj){
+
+    if (obj != null){
+        aqua.console.println("FROM AQServerConnection: ");
+        aqua.console.println("Name:                     [" + obj.getName() + "]");
+        aqua.console.println("Session ID:               [" + obj.getSessionID() + "]");
+        aqua.console.println("Version String:           [" + obj.getVersionString() + "]");
+        aqua.console.println("Connected:                [" + obj.isConnected() + "]");
+
+        // calling function to print getter from object returned
+        // from calling method getScriptOptions()
+        printAQScriptOptions(obj.getScriptOptions());
+    }
+}
+
+
+//---------------------------------------------------------------
+// Print all getters in AQScriptOptions
+//---------------------------------------------------------------
+function printAQScriptOptions(obj){
+
+    if (obj != null){
+        aqua.console.println("FROM AQScriptOptions: ");
+        aqua.console.println("Leading quote identifier: [" + obj.getLeadingQuoteIdentifier() + "]");
+        aqua.console.println("Line Separator:           [" + obj.getLineSeparator() + "]");
+        aqua.console.println("Qualify Object:           [" + obj.getQualifyObject() + "]");
+        aqua.console.println("Statement Separator:      [" + obj.getStatementSeparator() + "]");
+        aqua.console.println("Trailing quote identifier:[" + obj.getTrailingQuoteIdentifier() + "]");
+    }
+}

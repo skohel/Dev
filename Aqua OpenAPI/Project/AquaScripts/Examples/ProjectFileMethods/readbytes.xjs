@@ -1,0 +1,38 @@
+﻿/*
+
+Reads the file content into a byte array
+
+Synopsys
+    byte[] readBytes()
+
+Description
+    Reads the file content into a byte array
+
+Example
+    //
+
+
+*/
+
+
+ap = aqua.project;
+
+userFile = ap.getUserFile("jon-bytes.dat");
+
+readMe = userFile.readBytes();
+
+fordisplay = "[";
+for(i=0;i<readMe.length;i++) {
+    if(i==readMe.length-1) {
+        fordisplay = fordisplay + readMe[i];
+    } else {
+        fordisplay = fordisplay + readMe[i] + ",";
+    }
+}
+fordisplay = fordisplay +"]";
+
+print("These bytes -> " +fordisplay+ " <- were read from jon-bytes.dat ");
+
+function print(m) {
+    aqua.console.println(m);
+}

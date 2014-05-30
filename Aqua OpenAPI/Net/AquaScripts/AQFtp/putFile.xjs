@@ -1,0 +1,22 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        putFile()
+ 
+   Synopsis:
+        void putFile(String filename, String remotedir) throws Exception
+
+   Description
+        Upload a file to the remote FTP server.    
+
+   Parameters
+        filename - the name of the file to be sent
+        remotedir - the name of the directory on the remote FTP server where file to be saved 
+  
+   Throws
+        Exception - if failed to upload files
+ 
+   Example
+        See below.
+*/

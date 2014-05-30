@@ -1,0 +1,14 @@
+﻿
+
+var coeff = new Array();
+
+
+//calculate coefficients
+coeff=aqua.math.curve.sGolay(2,2,3);
+
+
+aqua.console.println("S-G Coefficients");
+//aqua.console.println();
+for(i=0;i<coeff.length;i++){
+aqua.console.println(coeff[i]);
+}

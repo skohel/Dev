@@ -1,0 +1,3 @@
+﻿aqua.console.print("before exit");
+aqua.exit();
+aqua.console.print("after exit");

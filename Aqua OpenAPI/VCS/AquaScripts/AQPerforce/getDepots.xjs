@@ -1,0 +1,28 @@
+﻿var Pws    = aqua.vcs.newPerforce();
+Pws.setVerbose(false);
+
+// create AQOpaqueObject containing the username and password
+var usr = aqua.crypto.getSecureField('svn.username');
+var pwd = aqua.crypto.getSecureField('svn.password');
+
+// connect to the Perforce server
+Pws.connect("p4jrpc://10.168.11.82:1666","client","F:\\May_Perforce",usr,pwd);
+
+// define the depot object
+var dep=Pws.getDepots();
+aqua.console.println("** Perforce Depots Info ..!");
+
+for (var i=0; i < dep.size(); i++)
+{
+// List Depot information
+aqua.console.println("Depot "+i+ " " + dep.get(i).getName());
+aqua.console.println("Depot Address :"+ dep.get(i).getAddress());
+aqua.console.println("Depot Type :"+ dep.get(i).getDepotType());
+aqua.console.println("Path translation info :"+ dep.get(i).getMap() );
+aqua.console.println("Owner Name :"+ dep.get(i).getOwnerName() );
+aqua.console.println("Suffix :"+ dep.get(i).getSuffix() );
+aqua.console.println("Description :"+ dep.get(i).getDescription().trim() );
+aqua.console.println("****");
+}
+
+Pws.close();

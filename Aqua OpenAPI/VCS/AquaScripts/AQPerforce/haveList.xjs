@@ -1,0 +1,25 @@
+﻿var Pws    = aqua.vcs.newPerforce();
+Pws.setVerbose(false);
+
+// create AQOpaqueObject containing the username and password
+var usr = aqua.crypto.getSecureField('svn.username');
+var pwd = aqua.crypto.getSecureField('svn.password');
+
+// connect to the Perforce server
+Pws.connect("p4jrpc://10.168.11.82:1666","client","F:\\May_Perforce",usr,pwd);
+
+// define the have list object
+var hL=Pws.haveList("F:\\May_Perforce\\AAA\\commit.txt");
+
+aqua.console.println("** The have list of file **");
+for (var i=0; i < hL.size(); i++)
+{
+// List files and revisions that have been synced to the client workspace
+aqua.console.println(hL.toArray().valueOf()[i]);
+}
+
+aqua.console.println("Finished displaying the have list ..");
+Pws.close();
+
+// disconnect from the Perforce server
+aqua.console.println("** Disconnected from Perforce Server ..!");

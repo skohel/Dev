@@ -1,0 +1,21 @@
+
+// an utility function to generate strings from a string range generator
+function generateStrings(generator) {
+    for( var i=0; i<6; i++ ) {
+        aqua.console.println("  " + generator.nextString());
+    }
+}
+
+
+// create a string range generator using default range (0-16)
+var randomRange = aqua.random.newRandomStringLength();
+aqua.console.println("Generate String objects from a string range generator using default length range (from 0 to 16):");
+generateStrings(randomRange);
+
+// create a string range generator using custom range
+var minLength = 3;
+var maxLength = 9;
+randomRange = aqua.random.newRandomStringLength(minLength, maxLength);
+aqua.console.println("");
+aqua.console.println("Generate String objects from a string range generator with length range set from " + minLength + " to " + maxLength + ".");
+generateStrings(randomRange);

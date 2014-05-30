@@ -1,0 +1,24 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        put()
+ 
+   Synopsis:
+        void put(AQFileSet fileset, String remotedir) throws Exception
+        void put(AQFileSet[] filesets, String remotedir) throws Exception
+
+   Description
+        Upload files defined by a list of file sets to the remote FTP server. Each file set defines a set of files to be sent to the remote FTP server, 
+        and, the base directory belongs to each file set must point to a local directory.   
+
+   Parameters
+        filesets - a list of file sets
+        fileset - defines the set of files to be sent 
+  
+   Throws
+        Exception - if failed to upload files
+ 
+   Example
+        See below.
+*/

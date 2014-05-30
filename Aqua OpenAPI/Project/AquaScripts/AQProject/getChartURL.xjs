@@ -1,0 +1,10 @@
+﻿testGetChartURL();
+
+function testGetChartURL() {
+	aqua.console.println('[TEST] aqua.project.getChartURL(()');
+	var url = aqua.project.getChartURL();
+	if(url == null) {
+		throw "Expected url != null but was: " + url;
+	}
+	aqua.console.println('[OK]');	
+}

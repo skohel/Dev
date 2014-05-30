@@ -1,0 +1,15 @@
+﻿var server = "MS SQLServer - 10.168.11.57 - msdb - dbo";
+var db     = "msdb";
+var schema = "dbo";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+var objs     = metadata.extractXmlSchemaCollections(db);
+
+for(var i=0; i<objs.length; i++){
+    var obj = objs[i];
+    aqua.console.println("XML Schema Collection Name:\t[" + obj.getName() + "]\t\tThe CREATE script:\t[" + obj.scriptCREATE() + "]");
+    aqua.console.println("");
+}
+conn.disconnect();

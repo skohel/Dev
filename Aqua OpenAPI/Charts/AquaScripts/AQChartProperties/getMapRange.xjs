@@ -1,0 +1,43 @@
+﻿/*
+aqua.chart.properties.getMapRange
+
+Synopsys
+    String getMapRange();
+
+Description
+Return the Map Ranges e.g. "0,100,200,300,400,500", where 0 <= x < 100;  100 <= x < 200; ... ; 400 <= x <= 500
+
+Example
+    see below
+
+*/
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+model.addSeries("a");
+model.addSeries("b");
+
+model.addCategory("US");
+model.addCategory("UK");
+model.addCategory("France");
+
+model.setValue(0, 0, 50);
+model.setValue(0, 1, 150);
+model.setValue(0, 2, 250);
+
+chart.getProperties().setChartTypeMap();
+
+chart.getProperties().setMapRange("0, 100, 200, 300");
+chart.getProperties().setMapRangeColors("green, blue, red");
+
+var ranges = chart.getProperties().getMapRange();
+aqua.response.write('Map Ranges: ').write(ranges).write("<p>");
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

@@ -1,0 +1,21 @@
+/*
+
+Description of method functionality
+
+Synopsys
+    [Return Data Type] functionName()  
+
+Description
+    Description of functionality
+
+Example
+    //
+
+
+*/
+
+print("Generates random day of the week:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextDayOfWeek();
+    print("\t"+x);
+}

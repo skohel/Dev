@@ -1,0 +1,5 @@
+﻿print("Generate a random operating system:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextOperatingSystem();
+    print("\t"+x);
+}

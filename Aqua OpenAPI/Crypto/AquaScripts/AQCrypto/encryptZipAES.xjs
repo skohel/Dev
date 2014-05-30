@@ -1,0 +1,13 @@
+﻿// The source file to create the encryptZipAES
+var src_file = "/tmp/encrypt.zip";
+
+// The destination file with a password key
+var dest_file = "/tmp/encryptZip.zip";
+
+try {
+    aqua.crypto.encryptZipAES(src_file, dest_file, "blackforest");
+    aqua.console.println("encryptZipAES: Success\n");
+}
+catch(ex) {
+    aqua.console.println("encryptZipAES: failed - " + ex.toString() + "\n");
+}

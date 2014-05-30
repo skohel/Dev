@@ -1,0 +1,28 @@
+﻿/*
+
+Reads the file content into a string using the specified encoding.
+
+Synopsys
+    String read(String encoding)
+
+Description
+    Reads the file content into a string using the specified encoding. 
+
+Example
+    //
+
+
+*/
+
+
+ap = aqua.project;
+
+userFile = ap.getUserFile("jon-bytes.dat");
+
+readMe = userFile.read("UTF-16");
+
+print("These bytes -> " +readMe+ " <- were read as UTF-16 from jon-bytes.dat ");
+
+function print(m) {
+    aqua.console.println(m);
+}

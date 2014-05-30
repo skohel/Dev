@@ -1,0 +1,29 @@
+
+
+var funtest;
+var coeff=Array(1,1,1);
+
+//new parametric polynomial
+funtest=aqua.math.fit.newPOLY_Function();
+aqua.console.println("f(1) = " + aqua.math.fit.evaluate(1,funtest,coeff));
+
+//new parametric power function
+funtest=aqua.math.fit.newPOW_Function();
+aqua.console.println("f(1) = "+ aqua.math.fit.evaluate(1,funtest,coeff));
+
+//new parametric exponential
+funtest=aqua.math.fit.newEXP_Function();
+aqua.console.println("f(1) = "+aqua.math.fit.evaluate(1,funtest,coeff));
+
+//new parametric logarithm
+funtest=aqua.math.fit.newLN_Function();
+aqua.console.println("f(1) = "+aqua.math.fit.evaluate(1,funtest,coeff));
+
+//new parametric weibull function
+funtest=aqua.math.fit.newWEIBULL_Function();
+aqua.console.println("f(1) = "+aqua.math.fit.evaluate(1,funtest,coeff));
+
+//function can also be evaluated like this
+aqua.console.println("f(1) = " + funtest.value(1,coeff));
+
+

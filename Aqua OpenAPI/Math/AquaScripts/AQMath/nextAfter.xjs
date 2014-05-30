@@ -1,0 +1,37 @@
+/*
+aqua.math.nextAfter
+
+Returns the floating-point number adjacent to the first argument in the direction of the second argument.
+If both arguments compare as equal the second argument is returned. 
+
+   
+Synopsys
+    double aqua.math.nextAfter(double start, double direction)
+
+Description
+    * If both arguments are signed zeros, direction  is returned unchanged (as implied by the requirement 
+      of returning the second argument if the arguments compare as equal).
+    * If start is ±Double.MIN_VALUE and direction has a value such that the result should have a smaller 
+      magnitude, then a zero with the same sign as start is returned.
+    * If start is infinite and direction has a value such that the result should have a smaller magnitude, 
+      Double.MAX_VALUE with the same sign as start is returned.
+    * If start is equal to ± Double.MAX_VALUE and direction has a value such that the result should have a
+      larger magnitude, an infinity with same sign as start is returned. 
+
+Example
+    see below
+*/
+
+// --- nextAfter() ---
+function show_nextAfter(start, direction) {
+    aqua.console.println("nextAfter[" + start + ", " + direction + "] --> [" + aqua.math.nextAfter(start, direction) + "]");
+}
+show_nextAfter(2, 1);
+show_nextAfter(2, 2);
+show_nextAfter(2, 3);
+show_nextAfter(2.1, 1.2);
+show_nextAfter(2.3, 2.3);
+show_nextAfter(2.5, 3.4);
+show_nextAfter(-2.1, -1.2);
+show_nextAfter(-2.3, -2.3);
+show_nextAfter(-2.5, -3.4);

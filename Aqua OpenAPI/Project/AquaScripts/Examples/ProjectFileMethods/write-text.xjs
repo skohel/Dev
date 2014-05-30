@@ -1,0 +1,29 @@
+﻿/*
+
+Writes the text string to a file using UTF-8 encoding.
+
+Synopsys
+    void write(String text) Writes the text string to a file using UTF-8 encoding.
+
+Description
+    Writes the text string to a file using UTF-8 encoding. No byte order mark (BOM) is written.  
+
+Example
+    //
+
+
+*/
+
+
+userFiles = aqua.project.collectUserFiles("/");
+for(i=0; i<userFiles.length; i++)
+{
+    if(userFiles[i].getName() == "ivan.txt") {
+        userFiles[i].write("writing some text to a file.  \n testing a line break  \n testing tabs \t tab \t tab ;;");
+        print("writing to file.");
+    }
+}
+
+function print(m) {
+    aqua.console.println(m);
+}

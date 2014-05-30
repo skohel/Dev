@@ -1,0 +1,21 @@
+﻿var server = "MySql 6.0 - 10.168.1.38 - demo";
+var db     = "mysql";
+var schema = null;
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+conn.changeDatabase("test");
+
+var sql = "UPDATE test set value10 = 'column 10'";
+
+aqua.console.println("Calling AQServerConnection.executeUpdate(" + sql + ")");
+var count = conn.executeUpdate(sql);
+aqua.console.println("No. of rows affected in execution of (" + sql + "):      [" + count + "]\n");
+
+var sql = "SELECT * FROM test";
+
+aqua.console.println("Calling AQServerConnection.executeUpdate(" + sql + ")");
+count = conn.executeUpdate(sql);
+aqua.console.println("No. of rows affected in execution of (" + sql + "):      [" + count + "]");
+
+conn.disconnect();

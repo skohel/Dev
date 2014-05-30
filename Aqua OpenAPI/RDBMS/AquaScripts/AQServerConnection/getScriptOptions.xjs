@@ -1,0 +1,12 @@
+﻿var server = "MySql 6.0 - 10.168.1.38 - demo";
+var db     = "mysql";
+var schema = null;
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var scriptOptions = conn.getScriptOptions();
+
+aqua.console.println("Calling AQServerConnection.getScriptOption():");
+aqua.console.println("The default statement separator:              [" + scriptOptions.getStatementSeparator() + "]");
+
+conn.disconnect();

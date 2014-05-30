@@ -1,0 +1,35 @@
+
+
+var rawDataX=new Array();
+var rawDataY=new Array();
+var interpolatedPoint=0;
+var noise = new Array();
+var desiredX=0;
+
+//generate noisy data
+for(i=0;i<30;i++){
+   rawDataX[i]=(i+1)/10.0;
+noise[i]=2*Math.random()-1;
+   rawDataY[i]=2*Math.pow(rawDataX[i],1.5)+10+noise[i]/3;
+   
+}
+
+desiredX=(rawDataX[5]+rawDataX[6])/2;
+
+//perform spline interpolation
+interpolatedPoint=aqua.math.curve.interpolate(rawDataX,rawDataY,desiredX);
+
+
+aqua.console.println("Type:          Desired X,        Interpolated Y");
+aqua.console.println("Splines:    " + desiredX + ", " + interpolatedPoint);
+
+//perform divided difference interpolation
+interpolatedPoint=aqua.math.curve.interpolate(rawDataX,rawDataY,desiredX,"divided");
+
+aqua.console.println("DivDiff:    " +desiredX + ", " + interpolatedPoint);
+
+//perform loess interpolation
+interpolatedPoint=aqua.math.curve.interpolate(rawDataX,rawDataY,desiredX,"loess");
+
+aqua.console.println("Loess:      "+desiredX + ", " + interpolatedPoint);
+

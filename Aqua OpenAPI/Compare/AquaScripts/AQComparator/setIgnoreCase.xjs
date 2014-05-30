@@ -1,0 +1,24 @@
+﻿var line1 = "AQUA DATA STUDIO";
+var line2 = "aqua data studio";
+var comp1 = aqua.compare.newComparator();
+var result;
+var diffi;
+
+// Setting Ignore Case to true
+comp1.setIgnoreCase(true);
+
+result = comp1.compareText(line1, line2);
+diffi  = result.getChanges();
+
+for (var i=0; i < diffi.length; i++) {
+   aqua.console.println("Is line 2 modified (ignoring case):\t" + diffi[i].isModified() );
+}
+
+// Setting Ignore Case to false
+comp1.setIgnoreCase(false);
+result = comp1.compareText(line1, line2);
+diffi  = result.getChanges();
+
+for (var i=0; i < diffi.length; i++) {
+   aqua.console.println("Is line 2 modified (don't ignore case):\t" + diffi[i].isModified() );
+}

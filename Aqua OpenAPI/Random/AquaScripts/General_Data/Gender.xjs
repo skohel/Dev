@@ -1,0 +1,21 @@
+/*
+
+Description of method functionality
+
+Synopsys
+    [Return Data Type] functionName()  
+
+Description
+    Description of functionality
+
+Example
+    //
+
+
+*/
+
+print("Generate a random gender:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextGender();
+    print("\t"+x);
+}

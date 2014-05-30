@@ -1,0 +1,34 @@
+﻿/*
+aqua.project.deleteUserFile
+
+deletes a user file from the User Files directory.
+
+Synopsys
+    boolean aqua.project.deleteUserFile(string);
+
+Description
+    Deletes a file in the "User File" project folder. 
+    String path indicates the file to delete
+    Returns true if the file has been successfully deleted. 
+
+
+Example
+    //delete the file ivantestdelete.txt in the specified project's "User Files" directory.
+    aqua.project.deleteUserFile("/ivantestdelete.txt");
+
+*/
+
+
+ap = aqua.project;
+
+bval = ap.deleteUserFile("/ivantestdelete.txt");
+
+if(bval) {
+    print("File deleted!");
+} else {
+    print("File was not found.");
+}
+
+function print(m) {
+    aqua.console.println(m);
+}

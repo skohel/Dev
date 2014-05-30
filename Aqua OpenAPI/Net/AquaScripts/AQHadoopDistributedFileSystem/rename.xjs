@@ -1,0 +1,64 @@
+﻿//------------------------------------------------------------------------------
+// Class:  
+//      CoreHadoopFileSystem
+// Method:
+//      rename()
+//
+// Synopsis:
+//      rename()
+//
+// Description
+//      Renames a file or a directory. Destination does not exists, file will not be renamed.
+//    
+// Parameters
+//      string - The location and name of the file or directory to be renamed; required.
+//      string - The new name of the file or directory; required.s
+//
+// Throws
+//      Exception - on error
+//
+// Return
+//      None.
+//
+// Example
+//      See below.
+//------------------------------------------------------------------------------
+// all test data will be created under this directory
+var fs_data_dir = "/test/AQHadoopFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.net.newHadoopDistributedFileSystem("hdfs://localhost:9100");
+
+/* --- test rename --- */
+test_rename();
+
+// --- rename() ---
+
+function test_rename() {
+    var src_base = fs_data_dir + "files/";
+    var dest_base = fs_data_dir + "rename/";
+
+    AQFS.copy(src_base, dest_base);
+
+    // testing error condition - source directory doesn't exist.
+    exec_rename(null, dest_base + "new_test_file.txt");
+    exec_rename("file_doesnt_exists", dest_base + "new_test_file.txt");
+
+    // this should work
+    exec_rename(dest_base + "license.txt", dest_base + "new_license.txt");
+    exec_rename(dest_base, fs_data_dir + "new_rename/");
+
+    // clean up
+    AQFS.deleteDirectory(fs_data_dir + "new_rename/", true);
+}
+
+function exec_rename(source, destination) {
+    try {
+        aqua.console.println("rename: renameing [" + source + "] to [" + destination + "]...");
+        AQFS.rename(source, destination);
+        aqua.console.println("rename done.");
+    } catch(ex) {
+        aqua.console.println("renames failed - " + ex.toString());
+    }
+}
+

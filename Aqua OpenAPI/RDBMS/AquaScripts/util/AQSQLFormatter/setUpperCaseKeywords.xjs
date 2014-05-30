@@ -1,0 +1,9 @@
+﻿var sql         = "select some_table.*, other_table.* from some_table, other_table where some_table.id = other_table.id";
+var beautifier  = aqua.project.getServerConnection("MySql 6.0 - 10.168.1.38 - demo").newSqlFormat();
+
+beautifier.setBreakAfterKeywords(true);
+beautifier.setUpperCaseKeywords(true);
+
+aqua.console.println("BEFORE BEAUTIFICATION:\n[" + sql + "]");
+aqua.console.println("");
+aqua.console.println("AFTER BEAUTIFICATION:\n[" +  beautifier.format(sql) + "]");

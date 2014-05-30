@@ -1,0 +1,36 @@
+﻿/*
+   Class:  
+        AQPathFilter
+   Method:
+        accept()
+ 
+   Synopsis:
+        boolean accept(String path)
+
+   Description
+        Tests whether or not the specified abstract pathname should be included in a pathname list. 
+
+   Parameters
+        path - The abstract pathname to be tested 
+
+   Returns:
+    true if and only if pathname should be included
+
+   Throws
+        Exception - if failed to delete files
+ 
+   Example
+        See below.
+*/
+var username = aqua.crypto.getSecureField('ftp.username');
+var password = aqua.crypto.getSecureField('ftp.password');
+
+// get instance of filesystem object
+var AQLOCALFS = aqua.filesystem;
+//var AQFS = aqua.net.newFtpFileSystem("ftp://anonymous:qwqw@10.168.2.138/");
+var ftp = aqua.net.newFtpFileSystem("ftp://10.168.2.138/", username, password);
+
+var filter =  ftp.newRegexExcludeFilter("([A-z0-9])*\.xjs");
+
+aqua.console.println(filter.accept("ASDASD\\ASDASD.FGH")); //true
+aqua.console.println(filter.accept("ASDASD\\ASDASD.xjs")); //false

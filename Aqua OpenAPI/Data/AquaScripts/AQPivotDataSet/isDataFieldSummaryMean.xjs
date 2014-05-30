@@ -1,0 +1,20 @@
+﻿
+// create pivot data set
+var pivotTable = aqua.data.newPivotDataSet();
+
+// data field name
+var fieldName = "Freight";
+
+// check summary type
+var isMean = pivotTable.isDataFieldSummaryMean(fieldName);
+aqua.console.println("--- before setting summary type ---");
+aqua.console.println("data field summary mean = " + isMean);
+
+// set summary type
+pivotTable.setDataFieldSummaryMean(fieldName);
+
+// check summary type
+var isMean = pivotTable.isDataFieldSummaryMean(fieldName);
+aqua.console.println("--- after setting summary type ---");
+aqua.console.println("data field summary mean = " + isMean);
+

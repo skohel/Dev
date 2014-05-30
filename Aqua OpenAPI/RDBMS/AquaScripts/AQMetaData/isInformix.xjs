@@ -1,0 +1,16 @@
+﻿var server = "MS SQLServer - 10.168.11.57 - msdb - dbo";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+var metadata = conn.getMetadata();
+
+aqua.console.println("Is connection [" + server + "] to an Informix server? " + metadata.isInformix());
+conn.disconnect();
+
+
+var server = "Informix 11.5 - 10.168.11.39 - demo_clone - demo_clone";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+var metadata = conn.getMetadata();
+
+aqua.console.println("Is connection [" + server + "] to an Informix server? " + metadata.isInformix());
+conn.disconnect();

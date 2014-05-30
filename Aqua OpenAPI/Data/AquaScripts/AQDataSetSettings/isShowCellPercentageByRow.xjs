@@ -1,0 +1,17 @@
+﻿
+//
+// This script demonstrates how to determine whether to display percentage value of each cell in the same row to the total value of the row.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// check whether to display cell percentage value by row
+var flag = settings.isShowCellPercentageByRow();
+aqua.console.println("Default setting: showing cell percentage value by row is turned " + (flag ? "on" : "off") + " by default.");
+
+
+// do not display cell percentage value by row
+settings.setShowCellPercentageByRow(false);
+flag = settings.isShowCellPercentageByRow();
+aqua.console.println("Custom setting: showing cell percentage value by row is turned " + (flag ? "on" : "off") + ".");

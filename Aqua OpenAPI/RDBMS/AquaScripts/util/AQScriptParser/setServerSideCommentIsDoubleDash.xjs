@@ -1,0 +1,15 @@
+﻿var sql          = "select 0=0\nGO\n--select 1=1\nGO\nselect 2=2";
+var scriptParser = aqua.project.getServerConnection("MySql 6.0 - 10.168.1.38 - demo").newScriptParser();
+
+parsedText = scriptParser.parse(sql);
+for (var i=0; i<parsedText.length; i++){
+    aqua.console.println("");
+    aqua.console.println("STATEMENT [" + i + "]: [" + parsedText[i] + "]");
+}
+
+scriptParser.setServerSideCommentIsDoubleDash(true);
+parsedText = scriptParser.parse(sql);
+for (var i=0; i<parsedText.length; i++){
+    aqua.console.println("");
+    aqua.console.println("STATEMENT [" + i + "]: [" + parsedText[i] + "]");
+}

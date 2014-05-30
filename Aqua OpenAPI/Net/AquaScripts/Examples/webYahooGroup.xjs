@@ -1,0 +1,118 @@
+
+/**
+ * Log onto a server, perform an action and then log out.
+ */
+
+// create a web client
+var webClient = aqua.net.newWebClient();
+
+// list of URLs to access
+var url_login = "https://login.yahoo.com/config/login?";
+var url_post = "http://tech.groups.yahoo.com/group/aquadatastudio/post";
+var url_logout = "https://login.yahoo.com/config/login?";
+
+// directory where response results to be saved
+var outputDir = "C:/tmp/download/";
+
+// create a login request
+var request = webClient.newWebRequest(url_login);
+// get login id and password
+var username = aqua.console.readLine("Please enter Yahoo Group login name = ");
+var password = aqua.console.readPassword("Please enter Yahoo Group login password = ");
+// bind parameters
+request.addParameter(".tries", "1");
+request.addParameter(".src", "ygrp");
+request.addParameter(".md5", "");
+request.addParameter(".hash", "");
+request.addParameter(".js", "");
+request.addParameter(".last", "");
+request.addParameter("promo", "");
+request.addParameter(".intl", "us");
+request.addParameter(".bypass", "");
+request.addParameter(".partner", "");
+request.addParameter(".u", "fcr5ckl67ifo4");
+request.addParameter(".v", "0");
+request.addParameter(".challenge", "WVyGwP.ho_p3UVk9IyjZcKLt9kST");
+request.addParameter(".yplus", "");
+request.addParameter(".emailCode", "");
+request.addParameter("pkg", "");
+request.addParameter("stepid", "");
+request.addParameter(".ev", "");
+request.addParameter("hasMsgr", "0");
+request.addParameter(".chkP", "Y");
+request.addParameter(".done", "http://tech.groups.yahoo.com/group/aquadatastudio/join");
+request.addParameter(".pd", "ygrp_ver=0&c=&ivt=&sg=");
+request.addParameter("pad", "5");
+request.addParameter("aad", "5");
+request.addParameter("login", username);
+request.addParameter("passwd", password);
+
+// submit login request as a POST request and save result
+submitRequest(request, outputDir + "yahooGroupLogin.html", true);
+
+
+// create a request to access the form for posting message;
+// won't be able to access this form without a successful login
+request = webClient.newWebRequest(url_post);
+
+// submit the request as a GET request and save result
+submitRequest(request, outputDir + "yahooGroupPost.html");
+
+
+// create logout request
+request = webClient.newWebRequest(url_logout);
+request.addParameter("logout", "1");
+request.addParameter(".direct", "2");
+request.addParameter(".done", "http://www.aquafold.com/");
+request.addParameter(".src", "ygrp");
+request.addParameter(".intl", "us");
+
+// submit logout request as a GET request and save result
+submitRequest(request, outputDir + "yahooGroupLogout.html");
+
+
+// try accessing post-message-form URL above after logout, would fail this time;
+request = webClient.newWebRequest(url_post);
+
+// submit the request and save result which should return login page this time
+submitRequest(request, outputDir + "yahooGroupPostAfterLogout.html");
+
+
+// terminate client
+webClient.closeConnection();
+// end of example
+print("--- DONE ---");
+
+
+// an utility function to submit a request and save response to a local file
+function submitRequest(request, fileName, doPost) {
+    var url = request.getURL();
+
+    print("");
+    print("===> Submitting request to [" + url + "]...");
+
+    try {
+        var response = null;
+
+        // submit request
+        if ( doPost ) {
+            response = webClient.submitPostRequest(request);
+        } else {
+            response = webClient.submitGetRequest(request);
+        }
+
+        // save response
+        if ( fileName != null ) {
+            response.saveContent(fileName);
+            print("--> Response content is saved to [" + fileName + "]");
+        }
+
+        // write request object to console
+        print(request.toString());
+        // write response object to console
+        print(response.toString(false));
+    } catch(ex) {
+        print("!!! Failed to submit request to URL [" + url + "] - " + ex.message);
+    }
+}
+

@@ -1,0 +1,32 @@
+
+//
+// This script demonstrates how to get/set the datetime pattern used to format a column either by column index or by column name.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// get default datetime format pattern by column index
+var index = 0;
+var pattern = settings.getColumnDateFormat(index);
+aqua.console.println("Default setting of datetime format pattern for column at index " + index + " is [" + pattern + "].");
+
+// set format pattern by column index
+settings.setColumnDateFormat(index, "yyyy-MM-dd HH:mm:ss");
+
+// retrieve current setting by column index
+pattern = settings.getColumnDateFormat(index);
+aqua.console.println("Current setting of datetime format pattern for column at index " + index + " is [" + pattern + "].");
+
+// get default datetime format pattern by column name
+var name = "CustomerID";
+var pattern = settings.getColumnDateFormat(name);
+aqua.console.println("Default setting of datetime format pattern for column name " + name + " is [" + pattern + "].");
+
+// set format pattern by column name
+settings.setColumnDateFormat(name, "MM/dd/yy HH-mm-ss");
+
+// retrieve current setting by column name
+pattern = settings.getColumnDateFormat(name);
+aqua.console.println("Current setting of datetime format pattern for column name " + name + " is [" + pattern + "].");
+

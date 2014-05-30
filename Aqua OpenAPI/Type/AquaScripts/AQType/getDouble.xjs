@@ -1,0 +1,7 @@
+﻿var validValue   = "11111.111";
+var invalidValue = "11111.xxx";
+var doubleFactory  = aqua.type.getDouble();
+
+aqua.console.println("Is [" + validValue   + "] a double? [" + doubleFactory.isValid(validValue) + "]");
+aqua.console.println("Is [" + invalidValue + "] a double? [" + doubleFactory.isValid(invalidValue) + "]");
+

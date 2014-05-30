@@ -1,0 +1,49 @@
+﻿/*
+aqua.chart.chartModel.addCountryNameMapping
+
+Synopsis
+    void addCountryNameMapping(String defaultCountryName, String newCountryNameMapping);
+
+Parameters
+    defaultCountryName is the default name of country to be mapped.
+    newCountryNameMapping is the name to be associated with the country specified in the first parameter.
+
+Description
+Map the specified name to the specified country.
+
+Example
+    see below
+
+*/
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+model.addSeries("cost");
+
+model.addCategory("US");
+model.addCategory("United States of America");
+model.addCategory("United States");
+model.addCategory("Mexico");
+model.addCategory("Canada");
+
+model.setValue(0, 0, 100);
+model.setValue(0, 1, 200);
+model.setValue(0, 2, 300);
+model.setValue(0, 3, 400);
+model.setValue(0, 4, 500);
+
+chart.getProperties().setChartTypeMap();
+
+model.addCountryNameMapping("USA", "United States of America");
+
+aqua.response.write("Country Value for United States: ").write(model.getCountryValue("United States", 0)).write("<p>");
+aqua.response.write("Country Value for Mexico: ").write(model.getCountryValue("Mx", 0)).write("<p>");
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

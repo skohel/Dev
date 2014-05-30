@@ -1,0 +1,59 @@
+﻿
+//
+// This script demonstrates how to reset sorting URL link attached to data columns defined in a pivot table.
+//
+
+// define a data set
+var columns = ["ShipCountry", "CustomerID", "ShipName", "Freight"];
+var dataSet = aqua.data.newDataSet(columns);
+
+// add rows to data set
+dataSet.addRowWithValues("Canada", "C039", "ABC Inc.",   200);
+dataSet.addRowWithValues("Canada", "C061", "Sunrise",    230);
+dataSet.addRowWithValues("France", "C123", "Joe Smith", 1620);
+dataSet.addRowWithValues("Japan",  "C375", "JPL Corp.", 4200);
+dataSet.addRowWithValues("UK",     "C028", "BUK",       1500);
+dataSet.addRowWithValues("US",     "C006", "AuqaFold",    35);
+dataSet.addRowWithValues("US",     "C007", "NETINC",     105);
+dataSet.addRowWithValues("US",     "C257", "BA IT",       89);
+dataSet.addRowWithValues("US",     "C257", "BA R&D",      89);
+
+// create a pivot data set
+var pivotTable = aqua.data.newPivotDataSet();
+
+// define pivot fields
+pivotTable.addRowField("ShipCountry");
+pivotTable.addColumnField("CustomerID");
+
+// set pivot source data and calculate pivot data
+pivotTable.setDataSet(dataSet);
+pivotTable.calculateGrid();
+
+// create a settings for the pivot data set, settings is used to describe how pivot data to be rendered
+var settings = aqua.report.newReportDataSetSettings();
+
+// define sort link with keyword substitution
+var sortURL = "http://www.aquafold.com?sortOrder=<AQSO>&columnId=<AQSID>";
+settings.setHtmlDataColumnSortLink(sortURL);
+
+// set title
+settings.setTitle("AquaFold Open API Example: data columns with sort links");
+
+// create a report
+var report = aqua.report.newReport();
+// add pivot data set and its settings to report
+report.addDataSet(pivotTable, settings);
+
+// render report in HTML and display it in browser
+aqua.response.write(report.renderHtml());
+aqua.response.write("<br><br>");
+
+
+// reset data column sort link
+settings.clearHtmlDataColumnSortLink();
+
+// update title
+settings.setTitle("AquaFold Open API Example: data columns sort links cleared");
+
+// render report in HTML and display it in browser
+aqua.response.write(report.renderHtml());

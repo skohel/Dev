@@ -1,0 +1,101 @@
+﻿
+//
+// This script demonstrates how to reset the customized system time format used to render Time objects back to default.
+//
+
+importPackage(java.math);
+importPackage(java.text);
+importPackage(java.sql);
+
+// a utility function to create a java.util.Date object from a string
+function toDate(text) {
+    var dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    var date = null;
+    try { date = dateFormat.parse(text); }
+    catch(ex) { aqua.console.println("Error converting [" + text + "] to Date object - " + ex.toString()); }
+    return date;
+}
+
+// a utility function to create a java.sql.Timestamp object from a string
+function toTimestamp(text) {
+    var date = toDate(text);
+    var timestamp = date;
+    try { timestamp = new java.sql.Timestamp(date.getTime()); }
+    catch(ex) { aqua.console.println("Error converting [" + text + "] to Timestamp object - " + ex.toString()); }
+    return timestamp;
+}
+
+// a utility function to create a java.math.BigDecimal object from a string
+function toBigDecimal(text) {
+    var number = text;
+    try { number = new java.math.BigDecimal(text); }
+    catch(ex) { aqua.console.println("Error converting [" + text + "] to BigDecimal object - " + ex.toString()); }
+    return number;
+}
+
+
+// define a data set
+var columnNames = ["ShipCountry", "CustomerID", "ShipName", "OrderDate", "ShippedDate", "Freight"];
+var dataSet = aqua.data.newDataSet(columnNames);
+
+// define column types: sql type and java type need to be defined in order to get formatting work correctly
+var columnStructure = dataSet.getColumnStructure();
+var columnDescriptor = null;
+columnDescriptor = columnStructure.getColumn(0);  columnDescriptor.setSqlType(java.sql.Types.VARCHAR);  columnDescriptor.setJavaType("java.lang.String");
+columnDescriptor = columnStructure.getColumn(1);  columnDescriptor.setSqlType(java.sql.Types.VARCHAR);  columnDescriptor.setJavaType("java.lang.String");
+columnDescriptor = columnStructure.getColumn(2);  columnDescriptor.setSqlType(java.sql.Types.VARCHAR);  columnDescriptor.setJavaType("java.lang.String");
+columnDescriptor = columnStructure.getColumn(3);  columnDescriptor.setSqlType(java.sql.Types.TIME);     columnDescriptor.setJavaType("java.sql.Timestamp");
+columnDescriptor = columnStructure.getColumn(4);  columnDescriptor.setSqlType(java.sql.Types.TIME);     columnDescriptor.setJavaType("java.sql.Timestamp");
+columnDescriptor = columnStructure.getColumn(5);  columnDescriptor.setSqlType(java.sql.Types.DECIMAL);  columnDescriptor.setJavaType("java.math.BigDecimal");
+
+// add rows to data set
+dataSet.addRowWithValues("Canada", "C039", "ABC Inc.",  toTimestamp("2010-03-12 00:00:00"), toTimestamp("2010-03-12 16:02:32"), toBigDecimal( 200));
+dataSet.addRowWithValues("Canada", "C061", "Sunrise",   toTimestamp("2010-01-31 23:59:59"), toTimestamp("2010-02-01 12:12:12"), toBigDecimal( 230));
+dataSet.addRowWithValues("France", "C123", "Joe Smith", toTimestamp("2009-10-02 12:00:00"), toTimestamp("2009-10-04 00:00:00"), toBigDecimal(1620));
+dataSet.addRowWithValues("Japan",  "C375", "JPL Corp.", toTimestamp("2010-05-20 11:45:43"), toTimestamp("2010-05-20 23:59:59"), toBigDecimal(4200));
+dataSet.addRowWithValues("UK",     "C028", "BUK",       toTimestamp("2010-05-20 17:03:21"), toTimestamp("2010-05-21 09:32:45"), toBigDecimal(1500));
+dataSet.addRowWithValues("US",     "C006", "AuqaFold",  toTimestamp("2010-05-20 09:16:52"), toTimestamp("2010-05-21 08:45:33"), toBigDecimal(  35));
+dataSet.addRowWithValues("US",     "C257", "BA IT",     toTimestamp("2010-06-27 09:00:18"), toTimestamp("2010-06-27 18:09:57"), toBigDecimal(  89));
+dataSet.addRowWithValues("US",     "C257", "BA R&D",    toTimestamp("2010-07-15 15:36:07"), toTimestamp("2010-07-16 12:00:00"), toBigDecimal(  27));
+
+// create a settings for the data set, settings is used to describe how data set to be rendered
+var settings = aqua.report.newReportDataSetSettings();
+
+// set title
+settings.setTitle("AquaFold Open API Example: rendering Time objects in default format");
+
+// create a report
+var report = aqua.report.newReport();
+// add data set and its settings to report
+report.addDataSet(dataSet, settings);
+
+// present report in a text grid
+aqua.console.print(report.renderText());
+aqua.console.println(""); aqua.console.println("");
+// render report in HTML and display it in browser
+aqua.response.write(report.renderHtml());
+aqua.response.write("<br><br>");
+
+
+// define a system-wide custom time format 
+settings.setTimeFormat("HH:mm:ss");
+settings.setTitle("AquaFold Open API Example: rendering Time objects in custom format");
+
+// present report in a text grid, both OrderDate and ShippedDate columns should be rendered in custom format
+aqua.console.print(report.renderText());
+aqua.console.println(""); aqua.console.println("");
+// render report in HTML and display it in browser
+aqua.response.write(report.renderHtml());
+aqua.response.write("<br><br>");
+
+
+// reset system time format back to default
+settings.setTimeFormatDefault();
+settings.setTitle("AquaFold Open API Example: rendering Time objects in default format");
+
+// present report in a text grid, the result should be the same as the first text grid
+aqua.console.print(report.renderText());
+aqua.console.println(""); aqua.console.println("");
+// render report in HTML and display it in browser
+aqua.response.write(report.renderHtml());
+

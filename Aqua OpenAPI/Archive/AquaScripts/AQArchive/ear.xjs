@@ -1,0 +1,72 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "c:\\tmp\\test\\AQArchive\\";
+
+test_ear_dir();
+test_ear_filesets();
+
+// --- EAR directory ---
+function test_ear_dir() {
+
+    var src_base  = test_data_dir + "files\\src_base\\";
+    var dest_base = test_data_dir + "ear\\ear_dest\\";
+
+    // testing error condition
+    exec_ear_dir(src_base, dest_base + "dir_NE.ear", src_base + "file_does_not_exist.xml");
+    // testing error condition
+    exec_ear_dir(src_base + "test_file.txt", dest_base + "file.ear", null);
+    // EAR archive will work without an xml file
+    exec_ear_dir(src_base, dest_base + "dir.ear", null);
+    // testing error condition
+    exec_ear_dir(src_base, dest_base + "dir_xml.ear", test_data_dir + "files\\application.xml");
+
+}
+function exec_ear_dir(srcDir, earFile, appxmlFile) {
+    try {
+        aqua.console.println("ear dir: from [" + srcDir + "] to [" + earFile + "] with appXMLFile=[" + appxmlFile + "]...");
+        aqua.archive.ear(srcDir, earFile, appxmlFile);
+        aqua.console.println("ear dir: done.\n");
+    } catch(ex) {
+        aqua.console.println("ear dir: failed - " + ex.toString() + "\n");
+    }
+}
+
+// --- EAR filesets ---
+function test_ear_filesets() {
+
+    var src_base1 = test_data_dir + "files\\src_base1\\";
+    var src_base2 = test_data_dir + "files\\src_base2\\";
+    var dest_base = test_data_dir + "ear\\ear_dest\\";
+    var fileset1  = aqua.filesystem.newFileSet();
+    var fileset2  = aqua.filesystem.newFileSet();
+    
+    fileset1.setBaseDir(src_base1);
+    fileset1.setIncludes("**/*");
+    fileset1.setExcludes("**/*.txt");
+
+    fileset2.setBaseDir(src_base2);
+    fileset2.setIncludes("**/*");
+    fileset2.setExcludes("**/*.html");
+
+    var fileset_array = new Array(fileset1, fileset2);
+    
+    // testing error condition
+    exec_ear_filesets(fileset_array, dest_base + "filesets_NE.ear", src_base1 + "file_does_not_exist.xml");
+    // EAR archive will work without an xml file
+    exec_ear_filesets(fileset_array, dest_base + "filesets_without_xml.ear", null);
+    // archiving a single fileset
+    exec_ear_filesets(fileset_array, dest_base + "filesets_with_xml.ear", test_data_dir + "files\\application.xml");
+
+}
+function exec_ear_filesets(filesets, earFile, appxmlFile) {
+    try {
+        aqua.console.println("ear filesets from directories :");
+        for(var i=0; i < filesets.length; i++){
+           aqua.console.println("\t[" + filesets[i].getBaseDir() + "] ");
+        }
+        aqua.console.println("to [" + earFile + "] with appXMLFile=[" + appxmlFile + "]...");
+        aqua.archive.ear(filesets, earFile, appxmlFile);
+        aqua.console.println("ear fileset: done.\n");
+    } catch(ex) {
+        aqua.console.println("ear fileset: failed - " + ex.toString() + "\n");
+    }
+}

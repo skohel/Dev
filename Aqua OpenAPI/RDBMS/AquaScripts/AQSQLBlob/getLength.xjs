@@ -1,0 +1,47 @@
+﻿var server = "Oracle 11G - 10.168.11.51 - HR";
+var db     = null;
+var schema = "HR";
+var sql    = "select * from HR.ANGER where ID = 2991";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var resultSet = conn.executeQuery(sql);
+resultSet.next();
+
+var row             = resultSet.getRow();
+var columnStructure = resultSet.getColumnStructure();
+var columnNames     = columnStructure.getColumnNames();
+
+if (row !=null){
+    for (var i=0; i<columnStructure.getColumnCount(); i++){
+
+        var blob;
+        // calling AQResultSet.getBlob() to get a blob object.
+        try{
+            blob = resultSet.getBlob(i);
+        }
+        catch(ex){
+            aqua.console.println("Error: Column[" + i + "]      [" + columnNames[i] + "]");
+            aqua.console.println(ex.toString());
+            aqua.console.println("");
+        }
+
+        if (blob != null){
+
+            aqua.console.println("Column[" + i + "]      [" + columnNames[i] + "]    AQSQLBlob.getLength()   [" + blob.getLength() + "]");
+            var bytes = blob.getBytes(1, blob.getLength());
+            var stringFactory = aqua.type.getString();
+            aqua.console.print("Column[" + i + "]      [" + columnNames[i] + "]    AQSQLBlog.getBytes()  [");
+            for (var j=0; j<bytes.length; j++){
+                aqua.console.print(bytes[j]);
+            }
+            aqua.console.println("]");
+
+            aqua.console.println("");
+        }
+    }
+}
+
+
+resultSet.close();
+conn.disconnect();

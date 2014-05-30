@@ -1,0 +1,28 @@
+﻿var saveFile = "/sampleHTMLWriter.htm";
+var writer   = aqua.io.newHtmlWriter();
+
+writer.setTitle("Aqua Script HTML Writer Sample");
+writer.setRowStyle("background-color:red;")
+writer.setTableStyle("text-align:left;");
+writer.write(generateDataSet());
+writer.saveToFile(saveFile,"ISO-8859-1");
+writer.close();
+
+aqua.console.println("Data Set written to HTML File:  " + saveFile);
+
+//------------------------------------------------------------------------------
+function generateDataSet(){
+    // define a data set
+    var columns = ["shipcountry", "freight"];
+    var ds = aqua.data.newDataSet(columns);
+
+    // add dataset row with values
+    ds.addRowWithValues("US", 100);
+    ds.addRowWithValues("UK", 10);
+    ds.addRowWithValues("Japan", 200);
+    ds.addRowWithValues("Canada", 20);
+    ds.addRowWithValues("France", 300);
+    ds.addRowWithValues("Germany", 30);
+
+    return ds;
+}

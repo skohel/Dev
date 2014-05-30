@@ -1,0 +1,46 @@
+﻿/*
+aqua.chart.properties.setCategoryAxisNumberFormat
+
+Synopsys
+    void setCategoryAxisNumberFormat(String format);
+
+Description
+Set the string used to format numbers on the category axis (e.g. "#,##0.00")
+
+Example
+    see below
+
+*/
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+model.addSeries("a");
+model.addSeries("b");
+model.addCategory(100.01);
+model.addCategory(250.0);
+model.addCategory(1500.25555);
+
+model.setValue(0, 0, 100);
+model.setValue(0, 1, 200);
+model.setValue(0, 2, 300);
+model.setValue(1, 0, 10);
+model.setValue(1, 1, 20);
+model.setValue(1, 2, 30);
+
+chart.getProperties().setCategoryAxisNumberFormat("$#,###.00");
+
+chart.getProperties().setChartTypeArea(0);
+chart.getProperties().setChartTypeColumn(1);
+chart.getProperties().setMergeAxis(true);
+
+var numberFormat = chart.getProperties().getCategoryAxisNumberFormat();
+aqua.response.write('Category Axis Number Format: ').write(numberFormat).write("<p>");
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

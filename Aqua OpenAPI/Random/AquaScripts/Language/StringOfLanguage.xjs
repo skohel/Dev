@@ -1,0 +1,58 @@
+/*
+
+Description of method functionality
+
+Synopsys
+    [Return Data Type] functionName()  
+
+Description
+    Description of functionality
+
+Example
+    //
+
+
+*/
+
+importPackage(com.aquafold.openapi.random);
+
+// Arrray of the 22 language codes currently handled
+var languageList = new Array(
+    AQRandom.LANG_BRAZILIAN_PORTUGUESE,
+    AQRandom.LANG_CHINESE,
+    AQRandom.LANG_CZECH,
+    AQRandom.LANG_DANISH,
+    AQRandom.LANG_DUTCH,
+    AQRandom.LANG_ENGLISH,
+    AQRandom.LANG_FINNISH,
+    AQRandom.LANG_FRENCH,
+    AQRandom.LANG_GERMAN,
+    AQRandom.LANG_GREEK,
+    AQRandom.LANG_HINDI,
+    AQRandom.LANG_ITALIAN,
+    AQRandom.LANG_JAPANESE,
+    AQRandom.LANG_KOREAN,
+    AQRandom.LANG_NORWEGIAN,
+    AQRandom.LANG_POLISH,
+    AQRandom.LANG_PORTUGUESE,
+    AQRandom.LANG_RUSSIAN,
+    AQRandom.LANG_SIMPLIFIED_CHINESE,
+    AQRandom.LANG_SPANISH,
+    AQRandom.LANG_SWEDISH,
+    AQRandom.LANG_TRADITIONAL_CHINESE,
+    null
+);
+
+for( var i=0; i<languageList.length; i++ ) {
+    var language = languageList[i];
+    print("Generate 10 random strings of length 1 through 10 using ["+language+"] code:");
+    for(k=1;k<11;k++) {
+        get_string(k, language);
+    }
+    print("");
+}
+
+function get_string(length, language) {
+    var result = aqua.random.nextString(length, language);
+    print("\t"+result);
+}

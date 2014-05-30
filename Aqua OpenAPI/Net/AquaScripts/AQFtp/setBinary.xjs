@@ -1,0 +1,21 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        setBinary()
+ 
+   Synopsis:
+        void setBinary(boolean binary)
+
+   Description
+        Uses binary mode if true, otherwise text mode. Defaults to binary mode.   
+
+   Parameters
+        binary - use binary mode in transfers if true 
+  
+   Throws
+        none
+ 
+   Example
+        See below.
+*/

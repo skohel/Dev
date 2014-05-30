@@ -1,0 +1,20 @@
+﻿
+//
+// This script demonstrates how to get/set the character used to represent the column divider.
+// The column divider is only applicable to a plain text grid.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// get default column divider
+var divider = settings.getColumnDivider();
+aqua.console.println("The default column divider is '" + divider + "'.");
+
+// customize column divider
+settings.setColumnDivider("+");
+
+// get current column divider
+divider = settings.getColumnDivider();
+aqua.console.println("The column divider is currently set to '" + divider + "'.");
+

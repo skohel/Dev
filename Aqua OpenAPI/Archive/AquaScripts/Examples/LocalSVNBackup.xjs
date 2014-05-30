@@ -1,0 +1,64 @@
+
+//backup_l33tsrc();
+backup_business();
+//backup_project();
+
+function backup_l33tsrc() {
+    var backup_name = "l33t-src";
+    var test_data_dir = ""
+    var src_base  = "C:\\Aqua8-5 Workspace\\share\\" + backup_name;
+    var dest_base = "c:\\";
+    var fileset   = aqua.filesystem.newFileSet();
+    
+    fileset.setBaseDir(src_base);
+    fileset.setIncludes("**/*");
+    fileset.setExcludes("**/*.svn");
+
+    exec_tar_fileset(dest_base + backup_name + ".tar", fileset);
+}
+function backup_business() {
+    var backup_name = "business";
+    var test_data_dir = ""
+    var src_base  = "C:\\Aqua8-5 Workspace\\share\\" + backup_name;
+    var dest_base = "c:\\";
+    var fileset   = aqua.filesystem.newFileSet();
+    
+    fileset.setBaseDir(src_base);
+    fileset.setIncludes("**/*");
+    fileset.setExcludes("**/*.svn");
+
+    exec_tar_fileset(dest_base + backup_name + ".tar", fileset);
+}
+function backup_project() {
+    var backup_name = "project";
+    var test_data_dir = ""
+    var src_base  = "C:\\Aqua8-5 Workspace\\share\\" + backup_name;
+    var dest_base = "c:\\";
+    var fileset   = aqua.filesystem.newFileSet();
+    
+    fileset.setBaseDir(src_base);
+    fileset.setIncludes("**/*");
+    fileset.setExcludes("**/*.svn");
+
+    exec_tar_fileset(dest_base + backup_name + ".tar", fileset);
+}
+function exec_tar_fileset(tarFile, fileset) {
+    try {
+        print("tar fileset: from [" + fileset.getBaseDir() + "] to [" + tarFile + "]...");
+        aqua.archive.tar(tarFile, fileset);
+        print("tar fileset: done.\n");
+        exec_gzip_fileset(tarFile)
+    } catch(ex) {
+        print("tar fileset: failed - " + ex.toString() + "\n");
+    }
+}
+function exec_gzip_fileset(tarFile) {
+    try {
+        print("gzip fileset: from [" + tarFile + "] to [" + tarFile + ".gz" + "]...");
+        aqua.archive.gzip(tarFile + ".gz", tarFile);
+        print("gzip fileset: done.\n");
+    } catch(ex) {
+        print("tar fileset: failed - " + ex.toString() + "\n");
+    }
+}
+

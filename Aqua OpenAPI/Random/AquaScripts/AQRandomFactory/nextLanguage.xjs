@@ -1,0 +1,5 @@
+﻿print("Generate a random language:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextLanguage();
+    print("\t"+x);
+}

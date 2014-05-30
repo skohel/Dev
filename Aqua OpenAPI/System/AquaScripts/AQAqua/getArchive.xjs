@@ -1,0 +1,3 @@
+﻿var source  = "/tmp/AQArchive";
+var zipFile = "/tmp/zipfile.zip";
+var archive = aqua.getArchive().zip(source, zipFile);

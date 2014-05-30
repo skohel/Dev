@@ -1,0 +1,30 @@
+﻿/*
+
+Recursively collects files in a project folder and its descendant folders, excluding system and hidden files.
+
+Synopsys
+    AQProjectFile[] collectFiles()  
+
+Description
+    Recursively collects files in a project folder and its descendant folders, excluding system and hidden files.
+
+Example
+    //
+
+
+*/
+
+
+ap = aqua.project;
+
+objFile = ap.getAquaScript("");
+
+collect = objFile.collectFiles();
+
+for(i=0;i<collect.length;i++) {
+    print(collect[i].getName());
+}
+
+function print(m) {
+    aqua.console.println(m);
+}

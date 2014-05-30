@@ -1,0 +1,31 @@
+
+// create a new email message
+var email = aqua.mail.newMessage();
+
+// get html text
+var html = email.getHtmlText();
+if ( html != null ) {
+    throw "Unexpected HTML text '" + html + "', null expected.";
+}
+
+// set html text
+var text = "<b>HTML text</b>";
+email.setHtmlText(text);
+
+// get html text and validate it
+html = email.getHtmlText();
+if ( html != text ) {
+    throw "Unexpected HTML text '" + html + "', expected text is '" + text + "'.";
+}
+
+// set html text to null
+email.setHtmlText(null);
+
+// get html text and validate it
+html = email.getHtmlText();
+if ( html != null ) {
+    throw "Unexpected HTML text '" + html + "', null expected.";
+}
+
+// done with test
+aqua.console.println("DONE");

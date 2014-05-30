@@ -1,0 +1,69 @@
+
+/**
+ * Download text and binary files via HTTP and HTTPS.
+ */
+
+// list of files to download
+var urlGoogle = "http://www.google.com";
+var urlGoogleLogo = "http://www.google.com/intl/en_ALL/images/logo.gif";
+var urlYahoo = "http://www.yahoo.com";
+var urlVeriSign = "https://www.verisign.com";
+var urlVeriSignImage = "https://www.verisign.com/b/assets/media/hpbanner7.jpg";
+
+// create a web client
+var webClient = aqua.net.newWebClient();
+
+// directory where downloaded files to be saved
+var outputDir = "C:/tmp/download/";
+
+// submit requests and save results
+submitRequest(urlGoogle, outputDir + "google.html");
+submitRequest(urlGoogleLogo, outputDir + "google.gif");
+submitRequest(urlYahoo, outputDir + "yahoo.html", true);
+submitRequest(urlVeriSign, outputDir + "verisign.html");
+submitRequest(urlVeriSignImage, outputDir + "verisign.jpg");
+
+// terminate client
+webClient.closeConnection();
+// end of example
+print("--- DONE ---");
+
+
+// an utility function to submit a request and save response to a local file
+function submitRequest(url, fileName, doPost) {
+    var request = null;
+    try {
+        request = webClient.newWebRequest(url);
+    } catch(ex) {
+        print("!!! Failed to create request object for URL [" + url + "] - " + ex.message);
+        return;
+    }
+
+    print("");
+    print("===> Submitting request to [" + url + "]...");
+
+    try {
+        var response = null;
+
+        // submit request
+        if ( doPost ) {
+            response = webClient.submitPostRequest(request);
+        } else {
+            response = webClient.submitGetRequest(request);
+        }
+
+        // save response
+        if ( fileName != null ) {
+            response.saveContent(fileName);
+            print("--> Response content is saved to [" + fileName + "]");
+        }
+
+        // write request object to console
+        print(request.toString());
+        // write response object to console
+        print(response.toString(false));
+    } catch(ex) {
+        print("!!! Failed to submit request to URL [" + url + "] - " + ex.message);
+    }
+}
+

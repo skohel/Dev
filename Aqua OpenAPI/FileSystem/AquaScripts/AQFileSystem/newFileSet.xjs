@@ -1,0 +1,40 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "/tmp/test/AQFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.filesystem;
+
+/* --- test fileset --- */
+test_fileset();
+
+// --- scan directory ---
+function test_fileset() {
+
+    var src_base  = test_data_dir;
+    var fileset = AQFS.newFileSet();
+    var files;
+    
+    // setting base directory
+    fileset.setBaseDir(src_base);
+    aqua.console.println("fileset.getBasedir() " + fileset.getBaseDir());
+    
+    // this is to demostrate setting of exclude and include patterns
+    fileset.setIncludes("**/*.html **/*.txt **/*.xml");
+    fileset.setExcludes("**/*.html");
+    
+    files = AQFS.scan(fileset);
+    
+    for (var i=0; i<files.length; i++){
+        aqua.console.println(files[i]);
+    }
+    
+    aqua.console.println("\nsetting more exclude patterns");
+    fileset.setExcludes("**/*.txt");
+    files = AQFS.scan(fileset);
+    
+    for (var i=0; i<files.length; i++){
+        aqua.console.println(files[i]);
+    }
+
+}
+// -------------------------------------------------------------------------------

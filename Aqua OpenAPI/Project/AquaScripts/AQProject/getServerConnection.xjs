@@ -1,0 +1,13 @@
+﻿testGetServerConnection();
+
+function testGetServerConnection() {
+	aqua.console.println('[TEST] aqua.project.getServerConnection()');
+    var connection = aqua.project.getServerConnection("testServer");
+    if(connection == null) {
+        throw "Expected: connection != null but was: " + connection;
+    }
+    if(!connection.getName().equals("testServer")) {
+        throw "Expected: connection.getName() == 'testServer' but was: " + connection.getName();
+    }
+   	aqua.console.println('[OK]');
+}

@@ -1,0 +1,14 @@
+﻿var server = "MS SQLServer - 10.168.11.57 - msdb - dbo";
+
+var conn = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+
+var objs = metadata.extractLanguages();
+
+for(var i=0; i<objs.length; i++){
+
+    aqua.console.println("Language Name:\t[" + objs[i].getName() + "]\t\tType Name:\t[" + objs[i].getTypeName() + "]");
+}
+conn.disconnect();

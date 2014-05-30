@@ -1,0 +1,10 @@
+﻿
+var client = aqua.net.newWebClient();
+
+try {
+    client.clearCookies();
+} catch(error) {
+    aqua.console.println("TEST FAILED: " + error);
+}
+
+aqua.console.println("DONE");

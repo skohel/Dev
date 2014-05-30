@@ -1,0 +1,15 @@
+﻿var server = "MS SQL Server 2005 ODBC - 10.168.11.52 - msdb - dbo";
+var db     = "msdb";
+var schema = "dbo";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+var defaults = metadata.extractDefaults(db, schema);
+
+if(defaults.length > 0){
+    aqua.console.println("AQschemaObject.getDatabaseName():         [" + defaults[0].getDatabaseName() + "]");
+}
+else {
+    aqua.console.println("Oops... seems like there are no defaults on this server");
+}

@@ -1,0 +1,20 @@
+﻿var Pws    = aqua.vcs.newPerforce();
+
+// create AQOpaqueObject containing the username and password
+var usr = aqua.crypto.getSecureField('svn.username');
+var pwd = aqua.crypto.getSecureField('svn.password');
+
+// connect to the Perforce server
+Pws.connect("p4jrpc://10.168.11.82:1666","client","F:\\May_Perforce\\AAA",usr,pwd);
+
+//returns the file revision
+rev = Pws.getRevision("F:\\May_Perforce\\Activate_10.7\\exists.txt");
+
+bytes = Pws.getRevisionContents("F:\\May_Perforce\\Activate_10.7\\exists.txt","head");
+for (var i=0; i <  bytes.length; i++)
+{
+   // print the binary revision contents
+   aqua.console.println(bytes[i]);
+}
+Pws.close();
+print("Disconnected from Perforce Server ...");

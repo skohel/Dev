@@ -1,0 +1,24 @@
+﻿
+//
+// This script demonstrates how to set/get hidden column by names.
+//
+
+importPackage(java.util);
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// hide column by name
+settings.hideColumn("ShipCountry");
+
+// hide column by names
+settings.hideColumnsByName(["CustomerID", "Freight"]);
+
+// get names of hidden columns
+var nameList = settings.getHiddenColumnNames();
+aqua.console.println("List of hidden column names: " + nameList);
+
+aqua.console.println("List of hidden column names: ");
+for( var i=0; i<nameList.size(); i++ ) {
+    aqua.console.println("  " + nameList.get(i));
+}

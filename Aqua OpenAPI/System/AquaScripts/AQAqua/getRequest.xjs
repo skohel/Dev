@@ -1,0 +1,3 @@
+﻿var request = aqua.getRequest();
+
+aqua.console.println("request.getMethod(): [" + request.getMethod() + "]");

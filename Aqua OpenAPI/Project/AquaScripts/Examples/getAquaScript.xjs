@@ -1,0 +1,33 @@
+﻿/*
+aqua.project.getAquaScript
+
+Returns a file object with the specified path under the "AquaScripts" project folder. 
+
+Synopsys
+    AQProjectFile getAquaScript(String path)
+
+Description
+    Returns a file object with the specified path under the "AquaScripts" project folder. 
+
+Example
+    //Returns a file object with the specified path ProjectFileMethods under the "AquaScripts" project folder. 
+    aqua.project.getAquaScript("/ProjectFileMethods");
+
+*/
+
+
+ap = aqua.project;
+
+objFile = ap.getAquaScript("/ProjectFileMethods");
+
+if(objFile.isFile()) {
+    print("file: [" + objFile.getName() + "]");
+} else if(objFile.isFolder()) {
+    print("folder: [" + objFile.getName() + "]");
+} else {
+    print("No file or folder of this name found!");
+}
+
+function print(m) {
+    aqua.console.println(m);
+}

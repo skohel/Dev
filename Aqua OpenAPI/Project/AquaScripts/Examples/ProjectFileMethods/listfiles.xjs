@@ -1,0 +1,30 @@
+﻿/*
+
+Returns an array of files and folders in a project folder.
+
+Synopsys
+    AQProjectFile[] listFiles() 
+
+Description
+    Returns an array of files and folders in a project folder.
+
+Example
+    //
+
+
+*/
+
+
+ap = aqua.project;
+
+objFile = ap.getAquaScript("");
+
+listoffiles = objFile.listFiles();
+
+for(i=0;i<listoffiles.length;i++) {
+    print(listoffiles[i].getName());
+}
+
+function print(m) {
+    aqua.console.println(m);
+}

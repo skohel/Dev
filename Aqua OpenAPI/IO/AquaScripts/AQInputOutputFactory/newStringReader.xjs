@@ -1,0 +1,7 @@
+﻿var reader = aqua.io.newStringReader();
+
+reader.setInputString("input string of free format")
+
+var ds = reader.read();
+
+print(ds.renderText());

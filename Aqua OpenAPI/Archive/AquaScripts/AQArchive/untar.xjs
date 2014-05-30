@@ -1,0 +1,30 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "c:\\tmp\\test\\AQArchive\\";
+
+test_untar();
+
+// --- untar() ---
+function test_untar() {
+    
+    var src_base = test_data_dir + "tar\\tar_dest\\";
+    var dest_base = test_data_dir + "tar\\untar_dest\\";
+    
+    // test error condition - missing tar file
+    exec_untar(null,  dest_base + "tmp_dir");
+    // these should work
+    exec_untar(src_base + "dir.tar", dest_base + "dir");
+    exec_untar(src_base + "fileset.tar", dest_base + "fileset");
+    exec_untar(src_base + "filesets.tar", dest_base + "filesets");
+    
+}
+function exec_untar(tarFile, destDir) {
+    try {
+        aqua.console.println("untar: from [" + tarFile + "] to [" + destDir + "]...");
+        aqua.archive.untar(tarFile, destDir);
+        aqua.console.println("untar: done.");
+    } catch(ex) {
+        aqua.console.println("untar: failed - " + ex.toString());
+    }
+}
+
+

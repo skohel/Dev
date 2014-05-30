@@ -1,0 +1,16 @@
+﻿var file = "test.txt";
+var str  = "Aquafold inc.";
+var projectFile = aqua.project.getUserFile(file);
+
+aqua.console.println("Writing string [" + str + "] to file [" + file + "]");
+projectFile.write(str);
+
+aqua.console.println("Content of [" + file + "] in bytes");
+var bytes = projectFile.readBytes();
+for (var i=0; i<bytes.length; i++){
+    aqua.console.println("pos [" + i + "]: [" + bytes[i] + "]");
+}
+
+aqua.console.println("Deleting file [" + file + "]");
+projectFile.remove();
+aqua.console.println("File removed");

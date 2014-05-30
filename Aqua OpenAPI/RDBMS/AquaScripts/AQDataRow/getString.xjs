@@ -1,0 +1,30 @@
+﻿//------------------------------------------------------------------------------
+//      This example executes a query, get 1 row of data, get a list of column
+//      names, then finally call getString(column name) on every column and print
+//      out the value of the field as a string.  
+//------------------------------------------------------------------------------
+var server      = "MySql 6.0 - 10.168.1.38 - demo";
+var db          = "mysql";
+var schema      = null;
+var sql         = "select * from user";
+
+var conn = aqua.project.getServerConnection(server);
+conn.connect();
+conn.changeDatabase(db);
+
+var resultSet = conn.executeQuery(sql);
+resultSet.next();
+
+var dataRow         = resultSet.getRow()
+var columnStructure = resultSet.getColumnStructure();
+var columnNames     = columnStructure.getColumnNames();
+var columnCount     = columnStructure.getColumnCount();
+
+if (dataRow != null){
+    for (var i=0; i<columnCount; i++){
+        aqua.console.println("columnName: [" + columnNames[i] + "]\tgetString(" + i + "): [" + dataRow.getString(i) + "]");
+    }
+}
+
+resultSet.close();
+conn.disconnect();

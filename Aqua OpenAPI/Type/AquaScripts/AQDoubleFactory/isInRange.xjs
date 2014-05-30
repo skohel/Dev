@@ -1,0 +1,14 @@
+﻿var factory  = aqua.type.getDouble();
+
+var value = 5000.001;
+var min   = 1000.001;
+var max   = 9000.001;
+
+aqua.console.println("Is [" + value + "] between  [" + min + "] and [" + max + "]? " + factory.isInRange(value, min, max));
+
+max = 5000.001;
+aqua.console.println("Is [" + value + "] between  [" + min + "] and [" + max + "]? " + factory.isInRange(value, min, max));
+
+max = 4000.001;
+aqua.console.println("Is [" + value + "] between  [" + min + "] and [" + max + "]? " + factory.isInRange(value, min, max));
+

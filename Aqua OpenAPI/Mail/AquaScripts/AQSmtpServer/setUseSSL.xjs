@@ -1,0 +1,29 @@
+
+// create a new server
+var smtpServer = aqua.mail.newSmtpServer();
+
+// set SSL
+var useSSL = true;
+smtpServer.setUseSSL(useSSL);
+
+// validate SSL
+var isSSL = smtpServer.isUseSSL();
+if ( isSSL != useSSL ) {
+    throw "Unexpected SSL flag '" + isSSL + "' retrieved, expected value is '" + useSSL + "'";
+}
+
+
+// set SSL
+useSSL = false;
+smtpServer.setUseSSL(useSSL);
+
+// validate SSL
+isSSL = smtpServer.isUseSSL();
+if ( isSSL != useSSL ) {
+    throw "Unexpected SSL flag '" + isSSL + "' retrieved, expected value is '" + useSSL + "'";
+}
+
+
+// done with test
+aqua.console.println("DONE");
+

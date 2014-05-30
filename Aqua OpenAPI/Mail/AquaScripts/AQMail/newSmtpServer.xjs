@@ -1,0 +1,14 @@
+
+// create SMTP server
+var smtpServer = aqua.mail.newSmtpServer();
+if ( smtpServer == null ) {
+    throw "Failed to create SMTP server, null object returned!";
+}
+aqua.console.println("SMTP server created.");
+
+// validate server object
+var useSSL = smtpServer.isUseSSL();
+aqua.console.println("Default SSL setting is " + (useSSL ? "on" : "off") + ".");
+
+aqua.console.println("DONE");
+

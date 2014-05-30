@@ -1,0 +1,97 @@
+
+var testHost = "10.168.5.211";
+var testUser = "aquatest";
+var testPassword = aqua.console.readPassword("Please enter remote server password for user '" + testUser + "': ");
+
+var testLocalRootDir = "c:/tmp/aqnet_test/";
+var testRemoteUserHome = "/home/" + testUser + "/";
+var testRemoteRootDir = testRemoteUserHome + "aqnet_test/";
+
+var testSftpLocalSrcDir = testLocalRootDir + "sftp_src/";
+var testSftpLocalDestDir = testLocalRootDir + "sftp_dest/";
+var testSftpRemoteSrcDir = testRemoteRootDir + "sftp_src/";
+var testSftpRemoteDestDir = testRemoteRootDir + "sftp_dest/";
+
+// local SSH files
+var cygwinSSHdir = "c:/cygwin/home/fyang/.ssh/";
+var cygwinKeyfile = cygwinSSHdir + "id_rsa";
+var cygwinKnownhosts = cygwinSSHdir + "known_hosts";
+var cygwinPassphrase = "aquatest account";
+
+// an utility function to write a message to the console
+function show_message(message) {
+    aqua.console.println(message);
+}
+
+// an utility function to report error
+function show_error(command, exception) {
+    show_message(command + " failed !!! - " + exception.name + " : " + exception.message);
+}
+
+// an utility function to execute open API
+function exec_sftp_to(parameters) {
+    try {
+        var file = parameters.file || null;
+        var fileset = parameters.fileset || null;
+        var todir = parameters.todir || null;
+        var host = parameters.host || null;
+        var username = parameters.username || null;
+        var password = parameters.password || null;
+        var keyfile = parameters.keyfile || null;
+        var passphrase = parameters.passphrase || null;
+        var trust = parameters.trust ? true : null;
+        var knownhosts = parameters.knownhosts || null;
+        aqua.net.sftpTo(file, fileset, todir, host, username, password, keyfile, passphrase, trust, knownhosts);
+        show_message("sftpTo(): done.");
+    } catch(ex) {
+        show_error("sftpTo()", ex);
+    }
+}
+
+// test invalid settings
+show_message("==> test invalid settings...");
+
+var parameters = { };
+exec_sftp_to(parameters);
+
+var fileName = "tmp_file.txt";
+parameters.file = testSftpLocalSrcDir + fileName;
+exec_sftp_to(parameters);
+
+parameters.todir = testSftpRemoteDestDir;
+exec_sftp_to(parameters);
+
+parameters.host = testHost;
+exec_sftp_to(parameters);
+
+parameters.username = testUser;
+exec_sftp_to(parameters);
+
+// all of required parameters should have been set now, including password below
+
+show_message("==> copy a single file form local to remote (auth=password)...");
+parameters.password = testPassword;
+exec_sftp_to(parameters);
+
+show_message("==> copy a directory from local to remote (auth=keyfile)...");
+delete parameters.file;
+delete parameters.password;
+parameters.keyfile = cygwinKeyfile;
+parameters.passphrase = cygwinPassphrase;
+var fileset = aqua.filesystem.newFileSet();
+fileset.setBaseDir(testSftpLocalSrcDir + "tmp_dir");
+parameters.fileset = fileset;
+exec_sftp_to(parameters);
+
+show_message("==> copy file set from local to remote (custom know_hosts)...");
+delete parameters.file;
+parameters.knownhosts = cygwinKnownhosts;
+fileset = aqua.filesystem.newFileSet();
+fileset.setBaseDir(testSftpLocalSrcDir);
+fileset.setIncludes("**/*_1.txt");
+fileset.setIncludes("**/*_3.txt");
+parameters.fileset = fileset;
+parameters.todir = testSftpRemoteDestDir + "fileset";
+exec_sftp_to(parameters);
+
+show_message("DONE")

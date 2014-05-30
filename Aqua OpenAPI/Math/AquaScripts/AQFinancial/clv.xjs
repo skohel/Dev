@@ -1,0 +1,15 @@
+
+var high=141.6;
+var low = 139.21;
+var close =140.0;
+var clv=0;
+
+clv=aqua.math.financial.clv(high,low,close);
+
+aqua.console.println("Close Location Value = " + clv);
+
+
+
+
+
+

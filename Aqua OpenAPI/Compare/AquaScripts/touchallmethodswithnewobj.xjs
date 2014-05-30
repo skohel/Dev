@@ -1,0 +1,90 @@
+﻿// declare and give values to two strings for comparing
+var stringA = "ThED Fjeva EjFjE o#034785 )!#!1`1209*$)(384# $)(*@#$&$(D& F*Dfdjkjke KJHDFh HDFJSeyu";
+var stringB = "theD    FjEvA EjFjE o#034785 )!#!1`1209*$)(384#   $)(*@#$&$(D&     F*DFdjKjKe KJHDFh HDFJSeyu";
+
+// Returns a singleton object which provides compare functionality.
+var objComparator           = aqua.getCompare().newComparator();
+
+// Whether the text comparison should ignores case.
+objComparator.setIgnoreCase(true);
+
+/*
+--all spaces
+--blank lines
+--leading
+--trailing
+--spaces between keywords (comparing AQServerObjects).
+*/
+objComparator.setIgnoreSpaces(true);
+
+// This method compares strings on line-per-line basis.
+var objDifferences          = objComparator.compare(stringA, stringB);
+
+// Returns a non-null array of changes, suitable for formatted output.
+var objLinechange           = objDifferences.getChanges();
+
+print("\n--------------- print toString results --------------------------");
+for(i=0;i<objLinechange.length;i++) { print(objLinechange[i]); }
+
+
+//print("objLinechange.length: " + objLinechange.length);
+print("\n--------------- print Array Specific Values ---------------------");
+for(i=0;i<objLinechange.length;i++) {
+    // Returns a text string on the left side of comparison which corresponds to the first argument in compare() function.
+    print("objLinechage["+i+"].getLeft() = " + objLinechange[i].getLeft());
+    // Returns a text string on the right side of comparison which corresponds to the second argument in compare() function.
+    print("objLinechage["+i+"].getRight() = " + objLinechange[i].getRight());
+    // Returns true if this change corresponds to an added line.
+    print("objLinechage["+i+"].isAdded() = " + objLinechange[i].isAdded());
+    // Returns true if this change corresponds to a deleted line.
+    print("objLinechage["+i+"].isDeleted() = " + objLinechange[i].isDeleted());
+    // Returns true if this change corresponds to a modified line.
+    print("objLinechage["+i+"].isModified() = " + objLinechange[i].isModified());
+    // Returns true if the line has not been modified, or if the comparison options made two lines appear identical.
+    print("objLinechage["+i+"].isUnchanged() = " + objLinechange[i].isUnchanged());
+}
+
+print("\n--------------- print # of modifications ------------------------");
+// Returns a number of ADDED, DELETED, or MODIFIED lines (excluding UNCHANGED).
+var objint                  = objDifferences.getModificationCount();
+print("getModificationCount: " + objint);
+
+var objLineChangeModOnly    = objDifferences.getModificationsOnly();
+print("\n--------------- print toString results --------------------------");
+for(i=0;i<objLineChangeModOnly.length;i++) { print(objLineChangeModOnly[i]); }
+
+print("\n--------------- print Array Specific Values ---------------------");
+for(i=0;i<objLineChangeModOnly.length;i++) {
+    // Returns a text string on the left side of comparison which corresponds to the first argument in compare() function.
+    print("objLineChangeModOnly["+i+"].getLeft() = " + objLineChangeModOnly[i].getLeft());
+    // Returns a text string on the right side of comparison which corresponds to the second argument in compare() function.
+    print("objLineChangeModOnly["+i+"].getRight() = " + objLineChangeModOnly[i].getRight());
+    // Returns true if this change corresponds to an added line.
+    print("objLineChangeModOnly["+i+"].isAdded() = " + objLineChangeModOnly[i].isAdded());
+    // Returns true if this change corresponds to a deleted line.
+    print("objLineChangeModOnly["+i+"].isDeleted() = " + objLineChangeModOnly[i].isDeleted());
+    // Returns true if this change corresponds to a modified line.
+    print("objLineChangeModOnly["+i+"].isModified() = " + objLineChangeModOnly[i].isModified());
+    // Returns true if the line has not been modified, or if the comparison options made two lines appear identical.
+    print("objLineChangeModOnly["+i+"].isUnchanged() = " + objLineChangeModOnly[i].isUnchanged());
+}
+
+// Returns true only if changes are present.
+var objBoolean              = objDifferences.isDifferent();
+print("\n--------------- print isDifferent results -----------------------");
+print("isDiffrent: " + objBoolean);
+
+
+// Returns a string which represents a HTML-formatted representation of the changes.
+var objString               = objDifferences.toHtml();
+print("\n--------------- print toHtml() results ---------------------------");
+print("toHtml(): " + objString);
+
+// Returns a string which represents a HTML-formatted representation of the changes.
+var objStringParamT         = objDifferences.toHtml(true);
+print("\n--------------- print toHtml(true) results -----------------------");
+print("toHtml(true): " + objString);
+// Returns a string which represents a HTML-formatted representation of the changes.
+var objStringParamF         = objDifferences.toHtml(false);
+print("\n--------------- print toHtml(false) results -----------------------");
+print("toHtml(false): " + objString);

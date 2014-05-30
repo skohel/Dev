@@ -1,0 +1,25 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        getDir()
+ 
+   Synopsis:
+        void getDir(String localdir, String remotedir) throws Exception
+        void getDir(String localdir, String remotedir, boolean includeSubdir) throws Exception
+
+   Description
+        Downloads all files in a remote directory to a local directory, files in the subdirectories are not included. This method is equivalent to getDir(String localdir, String remotedir, false).
+        Downloads all files, with option to include files in subdirectories, in a remote directory to a local directory. 
+
+   Parameters
+        localdir - the name of the local directory
+        remotedir - the name of the remote directory
+        includeSubdir - includes all of files in the subdirectories if true 
+  
+   Throws
+        Exception - if failed to download files
+ 
+   Example
+        See below.
+*/

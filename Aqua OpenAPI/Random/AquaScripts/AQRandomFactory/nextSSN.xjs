@@ -1,0 +1,5 @@
+﻿print("Generate a random SSN:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextSSN();
+    print("\t"+x);
+}

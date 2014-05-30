@@ -1,0 +1,28 @@
+﻿var server = "Oracle 11G - 10.168.11.51 - HR";
+var db     = null;
+var schema = "HR";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata  = conn.getMetadata();
+var functions = metadata.extractFunctions(db, schema);
+
+for (var i=0; i<functions.length; i++){
+
+    var func = functions[i];
+
+    // calling AQFunction.extractPermissions()
+    var permissions = func.extractPermissions();
+    for (var j=0; j<permissions.length; j++){
+        var permission = permissions[j];
+
+        aqua.console.println("Function Name: [" + func.getName() + "]    GRANT script: [" + permission.scriptGRANT("user") + "]");
+        aqua.console.println("Function Name: [" + func.getName() + "]    GRANT script: [" + permission.scriptGRANT("role") + "]");
+        aqua.console.println("Function Name: [" + func.getName() + "]    REOVKE script: [" + permission.scriptREVOKE("user") + "]");
+        aqua.console.println("Function Name: [" + func.getName() + "]    REVOKE script: [" + permission.scriptREVOKE("role") + "]");
+        aqua.console.println("Function Name: [" + func.getName() + "]    CREATE script: [" + permission.scriptCREATE() + "]");
+        aqua.console.println("Function Name: [" + func.getName() + "]    DROP script: [" + permission.scriptDROP() + "]");
+        aqua.console.println("");
+    }
+}
+conn.disconnect();

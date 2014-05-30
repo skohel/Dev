@@ -1,0 +1,38 @@
+﻿
+//
+// This script demonstrates how to set a constraint on page size when saving data set as an Excel file.
+//
+
+// define a data set
+var columns = ["ShipCountry", "CustomerID", "ShipName", "Freight"];
+var dataSet = aqua.data.newDataSet(columns);
+
+// add rows to data set
+dataSet.addRowWithValues("Canada", "C039", "ABC Inc.",   200);
+dataSet.addRowWithValues("Canada", "C061", "Sunrise",    230);
+dataSet.addRowWithValues("France", "C123", "Joe Smith", 1620);
+dataSet.addRowWithValues("Japan",  "C375", "JPL Corp.", 4200);
+dataSet.addRowWithValues("UK",     "C028", "BUK",       1500);
+dataSet.addRowWithValues("US",     "C006", "AuqaFold",    35);
+dataSet.addRowWithValues("US",     "C257", "BA IT",       89);
+dataSet.addRowWithValues("US",     "C257", "BA R&D",      89);
+
+// create a settings for the data set, settings is used to describe how data set to be rendered
+var settings = aqua.report.newReportDataSetSettings();
+
+// set title
+settings.setTitle("AquaFold Open API Example: constraint on page size");
+
+// set constraint on page size: 3 rows per worksheet
+settings.setPageSize(3);
+
+// create a report
+var report = aqua.report.newReport();
+// add data set and its settings to report
+report.addDataSet(dataSet, settings);
+
+// save report to Excel
+var fileName = "C:/tmp/examples/pageSizeConstraint.xls";
+report.saveAsExcel2003(fileName);
+aqua.console.println("Report is written to [ " + fileName + " ].");
+

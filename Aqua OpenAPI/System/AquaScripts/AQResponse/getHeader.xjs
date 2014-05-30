@@ -1,0 +1,1 @@
+﻿aqua.console.println("aqua.response.getHeader(\"Content-Type\"): [" + aqua.response.getHeader("Content-Type") + "]");

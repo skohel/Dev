@@ -1,0 +1,14 @@
+﻿var gitWS    = aqua.vcs.newGit();
+
+try {
+// set the git workspace in your local machine
+var my_git_fold = "c://git_i";
+// create an empty git repository
+gitWS.init(my_git_fold,false);
+// print to console after initializing a Git repository
+aqua.console.println("Git Repo initialized successfully...");
+}
+catch(ex) {
+// print to console if failure
+aqua.console.println("Error in initializing Git Repo..." +ex.toString() + "\n");
+}

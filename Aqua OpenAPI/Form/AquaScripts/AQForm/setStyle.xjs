@@ -1,0 +1,27 @@
+﻿// present the form
+var frm = aqua.form.newForm(6,2);
+frm.add(0,0,"Name:");
+frm.addTextField(0,1, "name", "");
+frm.add(1,0,"Title:");
+frm.addTextField(1,1, "title", "");
+frm.add(2,0,"Race:");
+
+//specify the location of the FormSelector
+selctr = frm.addSelectorField(2,1,"Interval");
+//add options for the FormSelector
+selctr.addOption("1","Asian");
+selctr.addOption("2","Hispanic");
+//set selector value
+selctr.addOption("3","Asian Indian",true);
+selctr.addOption("4","Asian Japanese");
+selctr.addOption("5","Middle East");
+frm.addSubmitButton(3,1,"Submit","Submit");
+
+//set the form style
+frm.setStyle("background:#E0E0E0; width:100%;")
+
+// display in a browser -  if you click "Debug in browswer" or press "ctrl-shift-enter"
+aqua.response.write(frm);
+
+// display on console - if you just click run.
+aqua.console.print(frm.toHtml());

@@ -1,0 +1,28 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "c:\\tmp\\test\\AQArchive\\";
+
+test_unjar();
+
+// --- unjar() ---
+function test_unjar() {
+    var src_base = test_data_dir + "\\jar\\jar_dest\\";
+    var dest_base = test_data_dir + "\\jar\\unjar_dest\\";
+    
+    // testing error condition - no jar to unjar
+    exec_unjar(null, dest_base);
+    // these should work
+    exec_unjar(src_base + "dir.jar",  dest_base + "dir");
+    exec_unjar(src_base + "fileset.jar", dest_base + "fileset");
+    exec_unjar(src_base + "filesets.jar",  dest_base + "filesets");
+    
+}
+function exec_unjar(jarFile, destDir) {
+    try {
+        aqua.console.println("unjar: from [" + jarFile + "] to [" + destDir + "]...");
+        aqua.archive.unjar(jarFile, destDir);
+        aqua.console.println("unjar: done.");
+    } catch(ex) {
+        aqua.console.println("unjar: !!! failed - " + ex.toString());
+    }
+}
+

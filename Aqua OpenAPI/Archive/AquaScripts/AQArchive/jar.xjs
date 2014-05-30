@@ -1,0 +1,72 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "c:\\tmp\\test\\AQArchive\\";
+
+test_jar_dir();
+test_jar_filesets();
+
+// --- jar directory ---
+function test_jar_dir() {
+
+    var src_base  = test_data_dir + "files\\src_base\\";
+    var dest_base = test_data_dir + "jar\\jar_dest\\";
+
+    // testing error condition
+    exec_jar_dir(src_base, null);
+    // testing error condition
+    exec_jar_dir(null, dest_base + "file.jar");
+    // testing error condition
+    exec_jar_dir(src_base + "test_file.txt", dest_base + "file.jar");
+    // archiving a directory
+    exec_jar_dir(src_base, dest_base + "dir.jar");
+
+}
+function exec_jar_dir(srcDir, jarFile) {
+    try {
+        aqua.console.println("jar dir: from [" + srcDir + "] to [" + jarFile + "]...");
+        aqua.archive.jar(srcDir, jarFile);
+        aqua.console.println("jar dir: done.\n");
+    } catch(ex) {
+        aqua.console.println("jar dir: failed - " + ex.toString() + "\n");
+    }
+}
+
+// --- jar filesets ---
+function test_jar_filesets() {
+
+    var src_base1 = test_data_dir + "files\\src_base1\\";
+    var src_base2 = test_data_dir + "files\\src_base2\\";
+    var dest_base = test_data_dir + "jar\\jar_dest\\";
+    var fileset1  = aqua.filesystem.newFileSet();
+    var fileset2  = aqua.filesystem.newFileSet();
+    
+    fileset1.setBaseDir(src_base1);
+    fileset1.setIncludes("**/*");
+    fileset1.setExcludes("**/*.txt");
+
+    fileset2.setBaseDir(src_base2);
+    fileset2.setIncludes("**/*");
+    fileset2.setExcludes("**/*.html");
+
+    var fileset_array = new Array(fileset1, fileset2);
+    
+    // testing error condition
+    exec_jar_filesets(fileset_array, null);
+    // testing error condition
+    exec_jar_filesets(null, dest_base + "filesets.jar");
+    // archiving a single fileset
+    exec_jar_filesets(fileset_array, dest_base + "filesets.jar");
+
+}
+function exec_jar_filesets(filesets, jarFile) {
+    try {
+        aqua.console.println("jar filesets from directories : ");
+	for(var i=0; i < filesets.length; i++){
+           aqua.console.println("\t[" + filesets[i].getBaseDir() + "] ");
+        }
+        aqua.console.println("to [" + jarFile + "]...");
+        aqua.archive.jar(filesets, jarFile);
+        aqua.console.println("jar fileset: done.\n");
+    } catch(ex) {
+        aqua.console.println("jar fileset: failed - " + ex.toString() + "\n");
+    }
+}

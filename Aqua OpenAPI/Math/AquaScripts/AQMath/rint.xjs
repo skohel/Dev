@@ -1,0 +1,26 @@
+/*
+aqua.math.rint
+
+Returns the double value that is closest in value to the argument and is equal to a mathematical integer.
+   
+Synopsys
+    double aqua.math.rint(double)
+
+Description
+    Nothing exciting to describe.
+
+Example
+    see below
+*/
+
+function show_rint(value) {
+    aqua.console.println("rint[" + value + "] --> [" + aqua.math.rint(value) + "]");
+}
+show_rint(-2.2);
+show_rint(-1.2);
+show_rint(-1);
+show_rint(0);
+show_rint(1);
+show_rint(1.2);
+show_rint(2.2);
+

@@ -1,0 +1,12 @@
+﻿// to run this script, you need to debug in browser
+// then add something to the query string
+var parameterNames = aqua.request.getParameterNames();
+
+while (parameterNames.hasMoreElements()){
+    var name   = parameterNames.nextElement();
+    var values = aqua.request.getParameterValues(name);
+    aqua.console.println("[" + name + "]");
+    aqua.console.list(values);
+    aqua.console.println(aqua.request.getParameter(name));
+}
+

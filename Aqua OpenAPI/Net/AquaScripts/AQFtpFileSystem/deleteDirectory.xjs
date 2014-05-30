@@ -1,0 +1,71 @@
+﻿//------------------------------------------------------------------------------
+// Class:  
+//      CoreHadoopFileSystem
+// Method:
+//      deleteDirectory()
+//
+// Synopsis:
+//      deleteDirectory()
+//
+// Description
+//      Delete a directory
+//    
+// Parameters
+//      string - The name of the directory to be deleted; required.
+//
+// Throws
+//      Exception - on error
+//
+// Return
+//      None.
+//
+// Example
+//      See below.
+//------------------------------------------------------------------------------
+// all test data will be created under this directory
+var fs_data_dir = "/test/AQHadoopFileSystem/";
+
+// get instance of filesystem object
+//var url = "hdfs://localhost:54310";
+var url = "ftp://10.168.2.138";
+var AQFS = aqua.net.newFtpFileSystem(url, "anonymous", "user");
+
+test_deleteDirectory();
+
+// --- delete a single directory
+
+function test_deleteDirectory() {
+    var src_dir = fs_data_dir + "files/";
+    var dest_dir = fs_data_dir + "deleteDirectory/";
+
+    AQFS.createDirectory(src_dir);
+
+    if (AQFS.exists(dest_dir)) {
+        AQFS.deleteDirectory(dest_dir, true);
+    }
+    AQFS.copy(src_dir, dest_dir);
+    
+    // testing error condition - file required
+    exec_deleteDirectory(null, false);
+    // testing error condition - file to be deleted has to exist
+    exec_deleteDirectory(dest_dir + "file.does.not.exist.txt", false);
+    // testing error condition - does not support wild card values
+    exec_deleteDirectory(dest_dir + "src_base/*.*", false);
+    // testing error condition - delete single file
+    exec_deleteDirectory(dest_dir + "web.xml", false);
+    // testing error condition - delete non-empty directory
+    exec_deleteDirectory(dest_dir, false);
+    
+    // this should work - deleting directory
+    exec_deleteDirectory(dest_dir, true);
+}
+
+function exec_deleteDirectory(source, recursive) {
+    try {
+        aqua.console.println("deleteDirectory: deleting [" + source + "]...");
+        // NOTE: delete cannot be used as a method name; otherwise, would cause javascript error
+        aqua.console.println("deleteDirectory done? " + AQFS.deleteDirectory(source, recursive));
+    } catch(ex) {
+        aqua.console.println("deleteDirectory failed - " + ex.toString());
+    }
+}

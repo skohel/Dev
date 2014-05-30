@@ -1,0 +1,36 @@
+﻿
+// create pivot data set
+var pivotTable = aqua.data.newPivotDataSet();
+
+// define column index
+var columnIndex = 3;
+
+// check sort order
+var isSorted = pivotTable.isSortDataColumnAscending();
+aqua.console.println("--- before setting sort order ---");
+aqua.console.println("sort by data column ascending = " + isSorted);
+
+// set sort order in descending order
+pivotTable.sortDataColumnDescending(columnIndex);
+
+// check sort order
+isSorted = pivotTable.isSortDataColumnAscending();
+aqua.console.println("--- after setting sort order in descending order ---");
+aqua.console.println("sort by data column ascending = " + isSorted);
+
+// set sort order in ascending order
+pivotTable.sortDataColumnAscending(columnIndex);
+
+// check sort order
+isSorted = pivotTable.isSortDataColumnAscending();
+aqua.console.println("--- after setting sort order in ascending order ---");
+aqua.console.println("sort by data column ascending = " + isSorted);
+
+// clear sort order settings
+pivotTable.clearDataColumnSortSettings();
+
+// check sort order
+isSorted = pivotTable.isSortDataColumnAscending();
+aqua.console.println("--- after sort order setting cleared ---");
+aqua.console.println("sort by data column ascending = " + isSorted);
+

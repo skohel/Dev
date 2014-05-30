@@ -1,0 +1,24 @@
+﻿
+importPackage(java.util);
+
+// utility function - create a new Date object
+function createDate(year, month, day, hour, minute, second) {
+    // month: zero-based, 0 for January
+    var gc = new GregorianCalendar(year, month, day, hour, minute, second);
+    var date = gc.getTime();
+    return date;
+}
+
+print("Generate a random date:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextDate();
+    print("\t"+x);
+}
+
+var fromDate = createDate(2010, 7, 1, 0, 0, 0);
+var toDate = createDate(2010, 7, 31, 23, 59, 59);
+print("Generate a random date between [" + fromDate + "] and [" + toDate + "]:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextDate(fromDate, toDate);
+    print("\t"+x);
+}

@@ -1,0 +1,19 @@
+﻿var reader    = aqua.io.newStringReader();
+var str       = "Column AColumn BColumn C";
+var colWidth  = 8;
+
+aqua.console.println("Set input string [" + str + "]");
+reader.setInputString(str);
+
+aqua.console.println("Set column width of column 0, 1, and 2 to [" + colWidth + "]");
+reader.setColumnWidth(0, colWidth);
+reader.setColumnWidth(1, colWidth);
+reader.setColumnWidth(2, colWidth);
+aqua.console.println("");
+
+aqua.console.println("Read input string with delimter set:");
+var row = reader.readNextRow();
+
+for (var i=0; i<row.getSize(); i++){
+    aqua.console.println("Column [" + i + "] value [" + row.get(i) + "]");
+}

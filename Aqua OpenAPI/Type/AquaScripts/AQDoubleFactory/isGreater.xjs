@@ -1,0 +1,9 @@
+﻿var factory  = aqua.type.getDouble();
+
+var value1 = "100000.002";
+var value2 = "100000.001";
+
+aqua.console.println("Is [" + value1 + "] greater then [" + value2 + "]? " + factory.isGreater(value1, value2));
+
+value2 = "100000.003";
+aqua.console.println("Is [" + value1 + "] greater then [" + value2+ "]? " + factory.isGreater(value1, value2));

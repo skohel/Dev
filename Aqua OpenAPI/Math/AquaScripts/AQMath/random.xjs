@@ -1,0 +1,19 @@
+/*
+aqua.math.random
+
+Returns a double value with a positive sign, greater than or equal to 0.0 and less than 1.0.
+
+Synopsys
+    double aqua.math.random()
+
+Description
+    Nothing exciting to describe.
+
+Example
+    see below
+*/
+
+for( var i=0; i<3; i++ ) {
+    aqua.console.println("random() returns [" + aqua.math.random() + "]");
+}
+

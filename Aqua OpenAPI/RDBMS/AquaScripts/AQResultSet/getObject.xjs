@@ -1,0 +1,37 @@
+﻿var server = "Oracle 11G - 10.168.11.51 - HR";
+var db     = null;
+var schema = "HR";
+var sql    = "select * from HR.ANGER where ID = 2991";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var resultSet       = conn.executeQuery(sql);
+var columnStructure = resultSet.getColumnStructure();
+var columnNames     = columnStructure.getColumnNames();
+
+if (resultSet.next()){
+    for (var i=0; i<columnStructure.getColumnCount(); i++){
+        aqua.console.println("Column[" + i + "]      [" + columnNames[i] + "]    resultSet.getObject(i)\t[" + resultSet.getObject(i) + "]");
+        aqua.console.println("Column[" + i + "]      [" + columnNames[i] + "]    resultSet.getObject(" + columnNames[i] + ")\t[" + resultSet.getObject(columnNames[i]) + "]");
+        aqua.console.println("");
+    }
+}
+
+// this will fail
+try{
+    aqua.console.println("Column[" + i + "]      [" + columnNames[i] + "]    resultSet.getObject(i)\t[" + resultSet.getObject(i) + "]");
+}
+catch(ex){
+    aqua.console.println(ex.toString());
+}
+
+// so will this
+try{
+    aqua.console.println("Column[" + i + "]      [invalidcolumnname]    resultSet.getObject(invalidcolumnname)\t[" + resultSet.getObject("invalidcolumnname") + "]");
+}
+catch(ex){
+    aqua.console.println(ex.toString());
+}
+
+resultSet.close();
+conn.disconnect();

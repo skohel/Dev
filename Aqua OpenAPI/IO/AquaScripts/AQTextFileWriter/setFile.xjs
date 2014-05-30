@@ -1,0 +1,17 @@
+﻿var textFile = "/text.out";
+var str      = "Aquafold Inc.";
+var writer   = aqua.io.newTextWriter();
+
+writer.setFile(textFile);
+writer.write(str);
+writer.close();
+readFile();
+
+
+function readFile() {
+
+    var reader = aqua.io.newTextReader();
+    reader.setFile(textFile);
+    aqua.console.println("Reading file [" + textFile + "]");
+    aqua.console.list(reader.read());
+}

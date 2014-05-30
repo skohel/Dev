@@ -1,0 +1,17 @@
+﻿
+//
+// This script demonstrates how to determine whether to display the header divider.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// check whether to display header divider
+var flag = settings.isShowHeaderDivider();
+aqua.console.println("Default setting: header divider is " + (flag ? "" : "not ") + "displayed by default.");
+
+
+// do not display header divider
+settings.setShowHeader(false);
+flag = settings.isShowHeader();
+aqua.console.println("Custom setting: header divider is " + (flag ? "" : "not ") + "displayed.");

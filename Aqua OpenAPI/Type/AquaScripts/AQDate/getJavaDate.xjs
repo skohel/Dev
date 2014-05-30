@@ -1,0 +1,6 @@
+﻿var factory = aqua.type.getDate();
+var date    = factory.newDate();
+
+aqua.console.println("Current datetime as an AQDate object:        [" + date + "]");
+
+aqua.console.println("Current datetime as a java.util.Date object: [" + date.getJavaDate() + "]");

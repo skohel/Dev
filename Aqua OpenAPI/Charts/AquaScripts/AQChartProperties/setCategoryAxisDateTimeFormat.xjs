@@ -1,0 +1,53 @@
+﻿/*
+aqua.chart.properties.setCategoryAxisDateTimeFormat
+
+Synopsys
+    void setCategoryAxisDateTimeFormat(String format);
+
+Description
+Set the string used to format dates on the category axis (e.g. "MMMM dd, yyyy HH:mm:ss a")
+
+Example
+    see below
+
+*/
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+model.addSeries("a");
+model.addSeries("b");
+var cal = java.util.Calendar.getInstance();
+cal.set(2010, 01, 01, 13, 30);
+var d1 = cal.getTime();
+cal.set(2010, 02, 01, 13, 30);
+var d2 = cal.getTime();
+cal.set(2010, 03, 01, 13, 30);
+var d3 = cal.getTime();
+model.addCategory(d1);
+model.addCategory(d2);
+model.addCategory(d3);
+
+model.setValue(0, 0, 100);
+model.setValue(0, 1, 200);
+model.setValue(0, 2, 300);
+model.setValue(1, 0, 10);
+model.setValue(1, 1, 20);
+model.setValue(1, 2, 30);
+
+chart.getProperties().setCategoryAxisDateTimeFormat("MM-dd-yyyy");
+
+chart.getProperties().setChartTypeArea(0);
+chart.getProperties().setChartTypeColumn(1);
+chart.getProperties().setMergeAxis(true);
+
+var dateFormat = chart.getProperties().getCategoryAxisDateTimeFormat();
+aqua.response.write('Category Axis Date Time Format: ').write(dateFormat).write("<p>");
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

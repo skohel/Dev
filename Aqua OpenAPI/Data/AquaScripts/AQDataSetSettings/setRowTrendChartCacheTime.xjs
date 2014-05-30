@@ -1,0 +1,62 @@
+﻿
+//
+// This script demonstrates how to save images of row trend charts in the system cache for a certain period of time.
+//
+
+// define a data set
+var columns = ["ShipCountry", "CustomerID", "ShipName", "Freight"];
+var dataSet = aqua.data.newDataSet(columns);
+
+// add rows to data set
+dataSet.addRowWithValues("Canada", "C039", "ABC Inc.",   200);
+dataSet.addRowWithValues("Canada", "C061", "Sunrise",    230);
+dataSet.addRowWithValues("France", "C123", "Joe Smith", 1620);
+dataSet.addRowWithValues("Japan",  "C375", "JPL Corp.", 4200);
+dataSet.addRowWithValues("UK",     "C028", "BUK",       1500);
+dataSet.addRowWithValues("US",     "C006", "AuqaFold",    35);
+dataSet.addRowWithValues("US",     "C007", "NETINC",     105);
+dataSet.addRowWithValues("US",     "C257", "BOA SALES",   89);
+dataSet.addRowWithValues("US",     "C257", "BOA MKT",     89);
+
+// create a pivot data set
+var pivotTable = aqua.data.newPivotDataSet();
+
+// define pivot fields
+pivotTable.addRowField("ShipCountry");
+pivotTable.addColumnField("CustomerID");
+
+// set pivot source data and calculate pivot data
+pivotTable.setDataSet(dataSet);
+pivotTable.calculateGrid();
+
+// create a settings for the pivot data set, settings is used to describe how pivot data to be rendered
+var settings = aqua.report.newReportDataSetSettings();
+
+// enable row trend chart, it is turned off by default
+settings.setShowRowTrendChart(true);
+
+// set title
+var cacheTime = settings.getRowTrendChartCacheTime();
+settings.setTitle("AquaFold Open API Example: default row trend chart cache time (" + cacheTime + " seconds)");
+
+// create a report
+var report = aqua.report.newReport();
+
+// add pivot data set and its settings to report
+report.addDataSet(pivotTable, settings);
+
+// render report in HTML and display it in browser
+aqua.response.write(report.renderHtml());
+aqua.response.write("<br><br>");
+
+
+// set cache time for row trend chart to 10 seconds
+settings.setRowTrendChartCacheTime(10);
+
+// update title
+cacheTime = settings.getRowTrendChartCacheTime();
+settings.setTitle("AquaFold Open API Example: custom row trend chart cache time (" + cacheTime + " seconds)");
+
+// render report in HTML and display it in browser
+aqua.response.write(report.renderHtml());
+

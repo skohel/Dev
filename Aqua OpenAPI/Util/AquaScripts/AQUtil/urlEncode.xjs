@@ -1,0 +1,6 @@
+﻿var url     = "http://www.aquafold.com/index.html";
+var urlen   = aqua.util.urlEncode(url);
+
+aqua.console.println("Original URL: [" + url + "]");
+aqua.console.println("Encoded URL:  [" + urlen + "]");
+

@@ -1,0 +1,46 @@
+﻿//------------------------------------------------------------------------------
+// Class:  
+//      CoreHadoopFileSystem
+// Method:
+//      exists()
+//
+// Synopsis:
+//      exists()
+//
+// Description
+//      Test whether a file or directory exists.
+//    
+// Parameters
+//      string - The file or directory; required.
+//
+// Throws
+//      Exception - on error
+//
+// Return
+//      boolean - true if file or directory exists; false otherwise.
+//
+// Example
+//      See below.
+//------------------------------------------------------------------------------
+// all test data will be created under this directory
+var fs_data_dir = "/test/AQHadoopFileSystem/";
+
+// get instance of filesystem object
+//var url = "hdfs://localhost:54310";
+var url = "ftp://10.168.2.138";
+var AQFS = aqua.net.newFtpFileSystem(url, "anonymous", "user");
+
+test_exists();
+
+// --- test exists ---
+
+function test_exists(){
+
+   var src_file = fs_data_dir + "files/license.txt";
+   var file_doesnt_exist = fs_data_dir + "file_doesnt_exist";
+   
+   aqua.console.println("Is " + file_doesnt_exist  + " a file (true/false)?: " + AQFS.exists(file_doesnt_exist));
+   aqua.console.println("Is " + fs_data_dir  + " a file (true/false)?: " + AQFS.exists(fs_data_dir));
+   aqua.console.println("Is " + src_file + " a file (true/false)?: " + AQFS.exists(src_file));
+ 
+}

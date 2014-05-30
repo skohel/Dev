@@ -1,0 +1,33 @@
+﻿var server      = "Oracle 11G - 10.168.11.51 - HR";
+var db          = null;
+var schema      = "HR";
+var sql         = "select * from HR.ANGER";
+var conn        = aqua.project.getServerConnection(server);
+conn.connect();
+
+var resultSet       = conn.executeQuery(sql);
+var columnStructure = resultSet.getColumnStructure();
+var columnNames     = columnStructure.getColumnNames();
+
+if (resultSet.next()){
+    for (var i=0; i<columnStructure.getColumnCount(); i++){
+        try{
+            // calling AQResultSet.getClob() to get a clob object.
+            var clob = resultSet.getClob(i);
+            if (clob != null){
+
+                aqua.console.println("Column[" + i + "]      [" + columnNames[i] + "]    clob.toString()   [" + clob.toString() + "]");
+                aqua.console.println("Column[" + i + "]      [" + columnNames[i] + "]    AQClob.getLength()   [" + clob.getLength() + "]");
+
+                // freeing clob object
+                clob.free();
+            }
+        }
+        catch(ex){
+            aqua.console.println("Exception: " + ex.toString());
+        }
+    }
+}
+
+resultSet.close();
+conn.disconnect();

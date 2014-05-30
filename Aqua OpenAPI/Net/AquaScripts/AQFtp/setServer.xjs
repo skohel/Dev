@@ -1,0 +1,21 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        setServer()
+ 
+   Synopsis:
+       void setServer(String server)
+
+   Description
+        Sets the remote FTP server.      
+
+   Parameters
+        server - the remote server address, can be a hostname or an IP address.
+  
+   Throws
+        none
+ 
+   Example
+        See below.
+*/

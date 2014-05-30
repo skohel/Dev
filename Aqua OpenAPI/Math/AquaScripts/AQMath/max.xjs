@@ -1,0 +1,22 @@
+/*
+aqua.math.max
+
+Returns the larger of two double values.  If the arguments have the same value, the result is that same value. 
+   
+Synopsys
+    double aqua.math.max(double value1, double value2)
+
+Description
+    Nothing exciting to describe.
+
+Example
+    see below
+*/
+// --- max() ---
+function show_max(value1, value2) {
+    aqua.console.println("max[" + value1 + ", " + value2 + "] --> [" + aqua.math.max(value1, value2) + "]");
+}
+show_max(2, 7);
+show_max(880, 280);
+show_max(2.345, 9.876);
+show_max(9.876, 9.875);

@@ -1,0 +1,3 @@
+﻿var sqlen = aqua.util.sqlEncode("select * from \Order's");
+aqua.console.println(sqlen);
+

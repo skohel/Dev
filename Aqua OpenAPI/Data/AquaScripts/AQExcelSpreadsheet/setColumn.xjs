@@ -1,0 +1,21 @@
+﻿var ExlSp = aqua.data.excelSpreadsheet('C://setColumn.xls');
+
+// example on how to set individual cells
+ExlSp.currentWorksheet = 'Company';
+ExlSp.setCell(0, 0, 'Created by:');
+ExlSp.setCell(0, 1, aqua.system.getProperty('user.name'));
+ExlSp.setCell(1, 0, 'Date:');
+ExlSp.setCell(1, 1, new java.util.Date());
+
+// insert dataset to append
+var ds = aqua.data.newDataSet(['Company','City']);
+ds.addRowWithValues("IBM", "Washington, D.C.");
+ds.addRowWithValues("Oracle", "Tokyo");
+
+ExlSp.row = 3;
+ExlSp.column = 5;
+ExlSp.insert(ds, true);
+ExlSp.autoResize = true;
+
+// save the excel spreadsheet
+ExlSp.save();

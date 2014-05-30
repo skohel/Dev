@@ -1,0 +1,14 @@
+﻿// run this script by clicking "debug in browser"
+var action    = "clearToolbarButtons.xjs?clear=yes";
+var title     = "clear";
+var toolTip   = "Click me to clear";
+var icon      = "";
+var dashboard =  aqua.response.getDashboard();
+var request   = aqua.getRequest();
+
+if (request.getParameter("clear") == "yes"){
+    dashboard.clearToolbarButtons();
+}
+else{
+    dashboard.addToolbarButton(action, null, toolTip, icon);
+}

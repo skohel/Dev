@@ -1,0 +1,54 @@
+﻿// define the output EXCEL file
+var excelFile = "/ExlWrtr.xls";
+
+// create an EXCEL writer
+var writer = aqua.io.newExcelWriter();
+aqua.console.println("Writing to file: [" + excelFile + "]");
+writer.write(generateDataSet());
+writer.saveToFile(excelFile);
+writer.close();
+
+aqua.console.println("Data Set written to EXCEL File:  [" + excelFile + "]");
+aqua.exit();
+
+
+function generateDataSet(){
+
+    // define a data set
+    var columns = ["shiporder", "date"];
+    var ds = aqua.data.newDataSet(columns);
+
+    // add dataset row with values
+    ds.addRowWithValues("US", "12-12-2012");
+    ds.addRowWithValues("UK", "07-05-1998");
+    ds.addRowWithValues("Japan", "01-02-1999");
+    ds.addRowWithValues("Canada","03-04-2000");
+    ds.addRowWithValues("France", "05-06-2001");
+    ds.addRowWithValues("Germany", "07-08-2002");
+    ds.addRowWithValues("India", "09-10-2003");
+    ds.addRowWithValues("China", "11-12-2004");
+    ds.addRowWithValues("Zambia", "03-03-2005");
+    ds.addRowWithValues("Zaire","06-06-2006");
+    ds.addRowWithValues("Canada", "08-08-2007");
+
+    // to convert the date from string to a AQDate object
+    format = new java.text.SimpleDateFormat("MM-dd-yyyy");
+
+    for(i=0; i<ds.rowCount; i++)
+    {
+        row = ds.get(i);
+        value = row.get(1);
+        try
+        {
+            date = format.parse(value);
+            row.set(1, date)
+        }
+        catch(e)
+        {
+            // Exceptions if any
+            print(e + " " + value);
+        }
+    }
+
+    return ds;
+}

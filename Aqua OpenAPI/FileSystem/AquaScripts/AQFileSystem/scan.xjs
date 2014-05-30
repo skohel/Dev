@@ -1,0 +1,70 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "/tmp/test/AQFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.filesystem;
+
+test_scan_dir();
+test_scan_fileset();
+
+
+// --- scan directory ---
+function test_scan_dir() {
+
+    var src_base  = test_data_dir;
+
+    // testing error condition
+    exec_scan_dir(null);
+    // this should work - scanning a single directory
+    exec_scan_dir(src_base);
+
+}
+function exec_scan_dir(srcDir) {
+
+    var files;
+    
+    try {
+        aqua.console.println("scan for files in [" + srcDir + "]...");
+        files = AQFS.scan(srcDir);
+              
+        for (var i=0; i<files.length; i++){
+        	aqua.console.println("[" + files[i] + "]\n");
+        }
+        aqua.console.println("scan dir: done.\n");
+    }
+    catch(ex) {
+        aqua.console.println("scan dir: failed - " + ex.toString() + "\n");
+    }
+}
+
+// --- scan fileset ---
+function test_scan_fileset() {
+
+    var src_base  = test_data_dir;
+    var fileset   = AQFS.newFileSet();
+    
+    fileset.setBaseDir(src_base);
+    fileset.setIncludes("**/*");
+    fileset.setExcludes("**/*.txt");
+
+    // testing error condition
+    exec_scan_fileset(null);
+    // this should work - scanning a single fileset
+    exec_scan_fileset(fileset);
+
+}
+function exec_scan_fileset(fileset) {
+
+    var files;
+    
+    try {
+        aqua.console.println("scan for files in fileset [" + (fileset == null? 'null' : fileset.getBaseDir()) + "]...");
+        files = aqua.filesystem.scan(fileset);
+        for(var i=0; i<files.length; i++){
+        	aqua.console.println("[" + files[i] + "]\n");
+        }
+        aqua.console.println("scan fileset: done.\n");
+    } catch(ex) {
+        aqua.console.println("scan fileset: failed - " + ex.toString() + "\n");
+    }
+}

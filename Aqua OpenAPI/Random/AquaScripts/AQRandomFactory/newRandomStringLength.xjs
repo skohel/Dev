@@ -1,0 +1,24 @@
+
+// create a random data set generator
+var rows = 6;
+var types = [ "text", "text", "text" ];
+var ranges = [ 
+    null, 
+    aqua.random.newRandomStringLength(),
+    aqua.random.newRandomStringLength(3, 18)
+];
+var randomDataSet = aqua.random.newRandomDataSet(rows, types, ranges);
+
+
+// create a report
+var report = aqua.report.newReport();
+
+// generate some datasets and add them to report
+for( var i=0; i<2; i++ ) {
+    var dataset = randomDataSet.nextDataSet();
+    report.addDataSet(dataset, null);
+}
+
+
+// show report
+aqua.console.println(report.renderText());

@@ -1,0 +1,25 @@
+﻿var server = "Oracle 11G - 10.168.11.51 - HR";
+var db     = null;
+var schema = "HR";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+var objs     = metadata.extractTables(db, schema);
+
+for (var i=0; i<objs.length; i++){
+
+    var obj = metadata.extractTable(db, schema, objs[i].getName());
+    var permissions = obj.extractPermissions();
+    for (var j=0; j<permissions.length; j++){
+        var permission = permissions[j];
+
+        aqua.console.println("Table Name: [" + obj.getName() + "]    GRANT script: [" + permission.scriptGRANT("user") + "]");
+        aqua.console.println("Table Name: [" + obj.getName() + "]    GRANT script: [" + permission.scriptGRANT("role") + "]");
+        aqua.console.println("Table Name: [" + obj.getName() + "]    REOVKE script: [" + permission.scriptREVOKE("user") + "]");
+        aqua.console.println("Table Name: [" + obj.getName() + "]    REVOKE script: [" + permission.scriptREVOKE("role") + "]");
+        
+        aqua.console.println("");
+    }
+}
+conn.disconnect();

@@ -1,0 +1,23 @@
+﻿var dataSet = generateDataSet();
+var column  = 0;
+var name    = "freight";
+
+aqua.console.println("Is sorting for column [" + column + "] none?: [" + dataSet.isSortingNone(column) + "]");
+aqua.console.println("Is sorting for column [" + name + "] none?: [" + dataSet.isSortingNone(name) + "]\n");
+dataSet.setSortingNone(column);
+dataSet.setSortingNone(name);
+
+aqua.console.println("Set sorting on column " + 0 + " and " + name + " to None:");
+aqua.console.println("Is sorting for column [" + column + "] none?: [" + dataSet.isSortingNone(column) + "]");
+aqua.console.println("Is sorting for column [" + name + "] none?: [" + dataSet.isSortingNone(name) + "]\n");
+
+//------------------------------------------------------------------------------
+function generateDataSet(){
+
+    var ds = aqua.data.newDataSet(["shipcountry","freight","id"]);
+    ds.addRowWithValues(aqua.random.nextCountry(),    "10", "100001");
+    ds.addRowWithValues(aqua.random.nextCountry(),   "100", "100002");
+    ds.addRowWithValues(aqua.random.nextCountry(),  "1000", "100003");
+    ds.addRowWithValues(aqua.random.nextCountry(), "10000", "100004");
+    return ds;
+}

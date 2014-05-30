@@ -1,0 +1,44 @@
+﻿var bigDecimalFactory = aqua.type.getBigDecimal();
+
+var validObject       = ".00000000000000000000000000000000000000000000000000001";
+var invalidObject     = "a11111111111111111111111111111111111111111111111111111";
+var validString       = "1000.0001";
+var invalidString     = "1,000.0001";
+var pattern           = "####.#";
+
+try{
+    aqua.console.println("Is object [" + validObject   + "] a big decimal? [" + bigDecimalFactory.parse(validObject) + "]");
+    aqua.console.println("Is object [" + invalidObject + "] a big decimal? [" + bigDecimalFactory.parse(invalidObject) + "]");
+    aqua.console.println("");
+}
+catch(e){
+    aqua.console.println(e);
+    aqua.console.println("");
+}
+
+try{
+    aqua.console.println("Is object [" + validString   + "] with pattern [" + pattern + "] a big decimal? [" + bigDecimalFactory.parse(validString, pattern) + "]");
+    aqua.console.println("Is object [" + invalidString + "] with pattern [" + pattern + "] a big decimal? [" + bigDecimalFactory.parse(invalidString, pattern) + "]");
+    aqua.console.println("");
+}
+catch(e){
+    aqua.console.println(e);
+    aqua.console.println("");
+}
+
+try{
+    // doing decimal the French way.
+    var locale  = "FR";
+    validString = "100000,01";
+    pattern     = "#.#";
+
+    aqua.console.println("Is object [" + validString   + "] with pattern [" + pattern + "] and locale [" + locale + "] a big decimal? [" + bigDecimalFactory.parse(validString, pattern, locale) + "]");
+    aqua.console.println("Is object [" + invalidString + "] with pattern [" + pattern + "] and locale [" + locale + "] a big decimal? [" + bigDecimalFactory.parse(invalidString, pattern, locale) + "]");
+    aqua.console.println("");
+}
+catch(e){
+    aqua.console.println(e);
+    aqua.console.println("");
+}
+
+

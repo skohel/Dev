@@ -1,0 +1,16 @@
+﻿var test_file = "C://tmp//test//AQFileSet";
+// get instance of filesystem object
+var AQFS = aqua.filesystem;
+var fileset = AQFS.newFileSet();
+// set base directory of filesystem object
+fileset.setBaseDir(test_file);
+files = AQFS.scan(fileset);
+try {
+    aqua.console.println("______ Set Base Directory of FileSystem ______ ");
+    aqua.console.println(fileset.getBaseDir() );
+    aqua.console.println("______________________________________________ ");   
+}
+catch(ex) {
+    aqua.console.println("Failed to Set Base Directory - " + ex.toString() + "\n");
+}
+   

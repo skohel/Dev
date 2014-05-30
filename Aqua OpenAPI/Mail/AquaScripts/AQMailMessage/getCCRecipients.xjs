@@ -1,0 +1,37 @@
+
+// create a new email message
+var email = aqua.mail.newMessage();
+
+// get CC list, should be empty at the moment
+var ccList = email.getCCRecipients();
+if ( ccList.length != 0 ) {
+    throw "Unexpected CC list length = " + ccList.length + ", empty list expected.";
+}
+
+// add CC addresses
+email.addCCRecipient("address1");
+email.addCCRecipient("address2 ");
+email.addCCRecipient(" address2,address3 ");
+email.addCCRecipient("address3,, ,address3, address4");
+
+// this is the list of addresses just added to the CC list
+var originList = [ "address1", "address2", "address2", "address3", "address3", "address3", "address4" ];
+
+// get CC list and compare it with the original list
+ccList = email.getCCRecipients();
+aqua.console.println("Validating CC list...");
+
+if ( ccList.length != originList.length ) {
+    throw "Unexpected CC list length = " + ccList.length + ", expected length = " + originList.length + ".";
+}
+
+for( var i=0; i<ccList.length; i++ ) {
+    var cc = ccList[i];
+    var origin = originList[i];
+    if ( cc != origin ) {
+        throw "Unexpected CC address '" + cc + "', expected address is '" + origin + "'";
+    }
+}
+
+// done with test
+aqua.console.println("DONE");

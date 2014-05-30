@@ -1,0 +1,29 @@
+
+
+var rawDataX=new Array();
+var rawDataY = new Array();
+var noise = new Array();
+var fitY=new Array();
+var guess=new Array();
+
+guess[0]=1;
+guess[1]=1
+
+
+//generate noisy data
+for(i=0;i<30;i++){
+   rawDataX[i]=(i+1)/10.0;
+noise[i]=2*Math.random()-1;
+rawDataY[i]=Math.pow(rawDataX[i]/2,1.5);
+   rawDataY[i]=Math.exp(-rawDataY[i]) +noise[i]/5;
+   
+}
+
+//perform smoothing
+fitY=aqua.math.fit.weibullFitCoeff(rawDataX,rawDataY,guess);
+
+
+aqua.console.println("y = exp[(-x/" +fitY[0] + ")^" + fitY[1]+"]");
+
+
+

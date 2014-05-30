@@ -1,0 +1,22 @@
+﻿var server = "Oracle 11G - 10.168.11.51 - HR";
+var db     = null;
+var schema = "HR";
+
+var conn = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+
+var objs = metadata.extractSynonyms(db, schema);
+
+for(var i=0; i<objs.length; i++){
+
+    var obj         = metadata.extractSynonym(db, schema, objs[i].getName());
+    var permissions = obj.extractPermissions();
+
+    for (var j=0; j<permissions.length; j++){
+        aqua.console.println("Synonym Name:\t[" + obj.getName() + "]\t\tPermission: \t[" + permissions[j].getName() + "]");
+    }
+    aqua.console.println("");
+}
+conn.disconnect();

@@ -1,0 +1,19 @@
+﻿var factory        = aqua.type.getDate();
+var date           = factory.newDate();
+var years          = 1;
+var months         = 1;
+var days           = 1;
+var hours          = 1;
+var minutes        = 1;
+var seconds        = 1;
+var milliseconds   = 1;
+
+aqua.console.println("Current datetime: [" + date + "]");
+aqua.console.println("Current datetime + [" + years + "] Year(s):         [" + date.add(years, 0, 0, 0, 0, 0, 0) + "]");
+aqua.console.println("Current datetime + [" + months + "] Month(s):        [" + date.add(0, months, 0, 0, 0, 0, 0) + "]");
+aqua.console.println("Current datetime + [" + days + "] Day(s):          [" + date.add(0, 0, days, 0, 0, 0, 0) + "]");
+aqua.console.println("Current datetime + [" + hours + "] Hour(s):         [" + date.add(0, 0, 0, hours, 0, 0, 0) + "]");
+aqua.console.println("Current datetime + [" + minutes + "] Minutes(s):      [" + date.add(0, 0, 0, 0, minutes, 0, 0) + "]");
+aqua.console.println("Current datetime + [" + seconds + "] Seconds(s):      [" + date.add(0, 0, 0, 0, 0, seconds, 0) + "]");
+aqua.console.println("Current datetime + [" + milliseconds + "] Millisecond(s):  [" + date.add(0, 0, 0, 0, 0, 0, milliseconds) + "]");
+

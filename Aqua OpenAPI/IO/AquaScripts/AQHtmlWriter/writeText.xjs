@@ -1,0 +1,8 @@
+﻿var saveFile = "/sampleHTMLWriter.htm";
+var writer   = aqua.io.newHtmlWriter();
+
+writer.writeText("Here is a list freight by country");
+writer.saveToFile(saveFile);
+writer.close();
+
+aqua.console.println("Data Set written to HTML File: " + saveFile);

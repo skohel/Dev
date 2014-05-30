@@ -1,0 +1,41 @@
+﻿var Pws    = aqua.vcs.newPerforce();
+Pws.setVerbose(false);
+
+// create AQOpaqueObject containing the username and password
+var usr = aqua.crypto.getSecureField('svn.username');
+var pwd = aqua.crypto.getSecureField('svn.password');
+
+// connect to the Perforce server
+Pws.connect("p4jrpc://10.168.11.82:1666","client","F:\\May_Perforce",usr,pwd);
+
+// define the have list object
+var depfil=Pws.getDepotFiles("F:\\May_Perforce\\AAA\\commit.txt",true);
+
+aqua.console.println("** Returning all revisions of the Depot File - allrev is true  **");
+for (var i=0; i < depfil.size(); i++)
+{
+// List files and revisions that have been synced to the client workspace
+aqua.console.println(depfil.toArray().valueOf()[i]);
+}
+
+var depfil=Pws.getDepotFiles("F:\\May_Perforce\\AAA\\commit.txt",false);
+aqua.console.println("** Returning head revision of the Depot File - allrev is false **");
+for (var i=0; i < depfil.size(); i++)
+{
+// List files and revisions that have been synced to the client workspace
+aqua.console.println(depfil.toArray().valueOf()[i]);
+}
+
+
+var depfil=Pws.getDepotFiles(["F:\\May_Perforce\\AAA\\commit.txt","F:\\May_Perforce\\AAA\\open_1.sql"],false);
+aqua.console.println("** Returning head revision of the array of files - allrev is false **");
+for (var i=0; i < depfil.size(); i++)
+{
+// List files and revisions that have been synced to the client workspace
+aqua.console.println(depfil.toArray().valueOf()[i]);
+}
+
+
+Pws.close();
+// disconnect from the Perforce server
+print("** Disconnected from Perforce Server ..!");

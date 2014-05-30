@@ -1,0 +1,114 @@
+// ------------------------------------------------------------------------------------------
+// This script is used to test all possible exceptions that can be thrown by AQRandomDataSet.
+// ------------------------------------------------------------------------------------------
+
+var CONSOLE = aqua.console;
+var RANDOM = aqua.random;
+
+// utility function - abort execution
+function abort(api) {
+    CONSOLE.println("!!! expected exception is not generated on execution of [" + api + "]");
+    aqua.exit();
+}
+// utility function - write expected exception to console
+function showExpectedError(ex) {
+    CONSOLE.println("... expected exception received - " + ex.name + " - " + ex.message);
+}
+
+var randomDataSet = RANDOM.newRandomDataSet();
+
+CONSOLE.println("====== setRows() ======");
+try { randomDataSet.nextDataSet(); abort("nextDataSet() - 1"); } catch(ex) { showExpectedError(ex); }
+try { randomDataSet.setRows(-2); abort("setRows(-2)"); } catch(ex) { showExpectedError(ex); }
+randomDataSet.setRows(2);
+
+CONSOLE.println("====== setColumns() ======");
+try { randomDataSet.nextDataSet(); abort("nextDataSet() - 2"); } catch(ex) { showExpectedError(ex); }
+try { randomDataSet.setColumns(0); abort("setColumns(0)"); } catch(ex) { showExpectedError(ex); }
+try { randomDataSet.setColumns(-1); abort("setColumns(-1)"); } catch(ex) { showExpectedError(ex); }
+randomDataSet.setColumns(3);
+
+CONSOLE.println("====== setType() ======");
+try { randomDataSet.nextDataSet(); abort("nextDataSet() - 3"); } catch(ex) { showExpectedError(ex); }
+try { randomDataSet.setType(null); abort("setType(null)"); } catch(ex) { showExpectedError(ex); }
+try { randomDataSet.setType(""); abort('setType("")'); } catch(ex) { showExpectedError(ex); }
+try { randomDataSet.setType("  "); abort('setType("  ")'); } catch(ex) { showExpectedError(ex); }
+try { randomDataSet.setType("xyz"); abort('setType("xyz")'); } catch(ex) { showExpectedError(ex); }
+try { randomDataSet.setType(" abc  "); abort('setType(" abc  ")'); } catch(ex) { showExpectedError(ex); }
+randomDataSet.setType("date");
+randomDataSet.setType("  date ");
+
+CONSOLE.println("====== setTypes() ======");
+try { randomDataSet.setTypes(null); abort("setTypes(null)"); } catch(ex) { showExpectedError(ex); }
+try { randomDataSet.setTypes([]); abort("setTypes([])"); } catch(ex) { showExpectedError(ex); }
+try { randomDataSet.setTypes([null]); abort("setTypes([null])"); } catch(ex) { showExpectedError(ex); }
+try { randomDataSet.setTypes(["abc"]); abort('setTypes(["abc"])'); } catch(ex) { showExpectedError(ex); }
+try { randomDataSet.setTypes([" date", null]); abort('setTypes([" date", null])'); } catch(ex) { showExpectedError(ex); }
+try { randomDataSet.setTypes([" number", "xyz"]); abort('setTypes([" number", "xyz"])'); } catch(ex) { showExpectedError(ex); }
+try { randomDataSet.setTypes([" date", "text", "  "]); abort('setTypes([" date", "text", "  "])'); } catch(ex) { showExpectedError(ex); }
+
+CONSOLE.println("====== setColumnNameLengthConstraints() ======");
+try { randomDataSet.setColumnNameLengthConstraints(0, 1); abort("setColumnNameLengthConstraints(0, 1)"); } catch(ex) { showExpectedError(ex); }
+try { randomDataSet.setColumnNameLengthConstraints(-1, -3); abort("setColumnNameLengthConstraints(-1, -3)"); } catch(ex) { showExpectedError(ex); }
+try { randomDataSet.setColumnNameLengthConstraints(1, 0); abort("setColumnNameLengthConstraints(1, 0)"); } catch(ex) { showExpectedError(ex); }
+try { randomDataSet.setColumnNameLengthConstraints(1, -1); abort("setColumnNameLengthConstraints(1, -1)"); } catch(ex) { showExpectedError(ex); }
+try { randomDataSet.setColumnNameLengthConstraints(8, 3); abort("setColumnNameLengthConstraints(8, 3)"); } catch(ex) { showExpectedError(ex); }
+randomDataSet.setColumnNameLengthConstraints(6, 6);
+randomDataSet.setColumnNameLengthConstraints(9, 18);
+
+CONSOLE.println("====== setDataStringLengthConstraints() ======");
+try { randomDataSet.setDataStringLengthConstraints(1, -1); abort("setDataStringLengthConstraints(1, -1)"); } catch(ex) { showExpectedError(ex); }
+try { randomDataSet.setDataStringLengthConstraints(8, 2); abort("setDataStringLengthConstraints(8, 2)"); } catch(ex) { showExpectedError(ex); }
+try { randomDataSet.setDataStringLengthConstraints(-2, -8); abort("setDataStringLengthConstraints(-2, -8)"); } catch(ex) { showExpectedError(ex); }
+randomDataSet.setDataStringLengthConstraints(-2, -1);
+randomDataSet.setDataStringLengthConstraints(-1, 2);
+randomDataSet.setDataStringLengthConstraints(0, 2);
+randomDataSet.setDataStringLengthConstraints(2, 8);
+
+CONSOLE.println("====== types vs. columns ======");
+randomDataSet.setTypes([" date", " number "]);
+randomDataSet.setColumns(3);
+try { randomDataSet.nextDataSet(); abort("nextDataSet() - 4"); } catch(ex) { showExpectedError(ex); }
+
+CONSOLE.println("====== ranges vs. types ======");
+randomDataSet.setTypes([" date", " number ", "text", "text "]);
+randomDataSet.setRanges([null, null]);
+try { randomDataSet.nextDataSet(); abort("nextDataSet() - 5"); } catch(ex) { showExpectedError(ex); }
+
+CONSOLE.println("====== variations vs. types ======");
+randomDataSet.setRanges(null);
+randomDataSet.setVariations([null, null, null, null, null]);
+try { randomDataSet.nextDataSet(); abort("nextDataSet() - 6"); } catch(ex) { showExpectedError(ex); }
+randomDataSet.setVariations(null);
+
+CONSOLE.println("====== range object vs. type ======");
+var dateRange = RANDOM.newRandomDateRange();
+var numberRange = RANDOM.newRandomNumberRange();
+var textRange = RANDOM.newRandomStringLength();
+randomDataSet.setTypes([" date", " number ", "text "]);
+randomDataSet.setRanges([numberRange, null, null]);
+try { randomDataSet.nextDataSet(); abort("nextDataSet() - 7"); } catch(ex) { showExpectedError(ex); }
+randomDataSet.setRanges([dateRange, dateRange, null]);
+try { randomDataSet.nextDataSet(); abort("nextDataSet() - 8"); } catch(ex) { showExpectedError(ex); }
+randomDataSet.setRanges([dateRange, numberRange, numberRange]);
+try { randomDataSet.nextDataSet(); abort("nextDataSet() - 9"); } catch(ex) { showExpectedError(ex); }
+randomDataSet.setRanges(null);
+
+CONSOLE.println("====== variation object vs. type ======");
+var dateVariation = RANDOM.newRandomDateVariation();
+var numberVariation = RANDOM.newRandomNumberVariation();
+randomDataSet.setTypes([" date", " number ", "text "]);
+randomDataSet.setVariations([numberVariation, null, null]);
+try { randomDataSet.nextDataSet(); abort("nextDataSet() - 10"); } catch(ex) { showExpectedError(ex); }
+randomDataSet.setVariations([dateVariation, dateVariation, null]);
+try { randomDataSet.nextDataSet(); abort("nextDataSet() - 11"); } catch(ex) { showExpectedError(ex); }
+
+
+// everything beyond this line should work
+randomDataSet.setTypes([" date", " number ", "text "]);
+randomDataSet.setRanges([dateRange, numberRange, textRange]);
+randomDataSet.setVariations([dateVariation, numberVariation, null]);
+randomDataSet.nextDataSet();
+
+CONSOLE.println("====== Done ======");
+

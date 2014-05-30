@@ -1,0 +1,16 @@
+﻿var server = "MS SQLServer - 10.168.11.57 - msdb - dbo";
+var db     = "msdb";
+var schema = "dbo";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+var defaults = metadata.extractDefaults(db, schema);
+
+for (var i=0; i<defaults.length; i++){
+    var obj = metadata.extractDefault(db, schema, defaults[i].getName());
+   // calling AQDefault.scriptCREATE()
+    aqua.console.println("Default Name: [" + obj.getName() + "]    CREATE script: [" + obj.scriptCREATE() + "]");
+    aqua.console.println("");
+}
+conn.disconnect();

@@ -1,0 +1,17 @@
+﻿
+//
+// This script demonstrates how to determine whether to display the footer divider.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// check whether to display footer divider
+var flag = settings.isShowFooterDivider();
+aqua.console.println("Default setting: footer divider is " + (flag ? "" : "not ") + "displayed by default.");
+
+
+// do not display footer divider
+settings.setShowFooter(false);
+flag = settings.isShowFooter();
+aqua.console.println("Custom setting: footer divider is " + (flag ? "" : "not ") + "displayed.");

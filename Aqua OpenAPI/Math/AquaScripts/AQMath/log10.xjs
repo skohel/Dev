@@ -1,0 +1,29 @@
+/*
+aqua.math.log10
+
+Returns the base 10 logarithm of a double value. 
+
+Synopsys
+    double aqua.math.log10(double)
+
+Description
+    * If the argument is NaN or less than zero, then the result is NaN.
+    * If the argument is positive infinity, then the result is positive infinity.
+    * If the argument is positive zero or negative zero, then the result is negative infinity.
+    * If the argument is equal to 10n for integer n, then the result is n. 
+    The computed result must be within 1 ulp of the exact result. Results must be semi-monotonic. 
+
+Example
+    see below
+*/
+// --- log10() ---
+function show_log10(value) {
+    aqua.console.println("log10[" + value + "] --> [" + aqua.math.log10(value) + "]");
+}
+show_log10(-1);
+show_log10(0)
+show_log10(1);
+show_log10("3.5");
+show_log10(5);
+show_log10(10);
+show_log10(100);

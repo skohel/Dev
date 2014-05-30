@@ -1,0 +1,27 @@
+﻿
+importPackage(com.aquafold.openapi.random);
+
+print("Generate a random string with max-length constraint:");
+for ( i = 1; i < 5; i++ ) {
+    var x = aqua.random.nextString(i);
+    print("\t"+x);
+}
+
+print("Generate a random string with max-length and language (spanish) constraints:");
+for ( i = 1; i < 5; i++ ) {
+    var x = aqua.random.nextString(i, AQRandomFactory.LANG_SPANISH);
+    print("\t"+x);
+}
+
+print("Generate a random string with min/max-length constraints:");
+for ( i = 1; i < 5; i++ ) {
+    var x = aqua.random.nextString(i, 9);
+    print("\t"+x);
+}
+
+print("Generate a random string with min/max-length and language (traditional chinese) constraints:");
+for ( i = 1; i < 5; i++ ) {
+    var x = aqua.random.nextString(i, 9, AQRandomFactory.LANG_TRADITIONAL_CHINESE);
+    print("\t"+x);
+}
+

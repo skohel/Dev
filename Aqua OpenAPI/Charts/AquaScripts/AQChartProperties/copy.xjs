@@ -1,0 +1,71 @@
+﻿/*
+aqua.chart.properties.copy
+
+Synopsys
+    void copy(AQChartProperties properties);
+
+Description
+Copy the specified properties into this properties instance
+
+Example
+    see below
+
+*/
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+model.addSeries("a");
+model.addSeries("b");
+
+model.addCategory("US");
+model.addCategory("UK");
+model.addCategory("France");
+
+model.setValue(0, 0, 100);
+model.setValue(0, 1, 200);
+model.setValue(0, 2, 300);
+model.setValue(1, 0, 10);
+model.setValue(1, 1, 20);
+model.setValue(1, 2, 30);
+
+var propertiesA = chart.getProperties();
+propertiesA.setChartTypeArea(0);
+propertiesA.setChartTypeColumn(1);
+propertiesA.setMergeAxis(true);
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');
+
+
+var chartB = aqua.chart.newChart();
+var modelB = chartB.getModel();
+
+modelB.addSeries("a");
+modelB.addSeries("b");
+
+modelB.addCategory("US");
+modelB.addCategory("UK");
+modelB.addCategory("France");
+
+modelB.setValue(0, 0, 1000);
+modelB.setValue(0, 1, 2000);
+modelB.setValue(0, 2, 3000);
+modelB.setValue(1, 0, 100);
+modelB.setValue(1, 1, 200);
+modelB.setValue(1, 2, 300);
+
+chartB.getProperties().copy(propertiesA);
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chartB.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

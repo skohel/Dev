@@ -1,0 +1,95 @@
+﻿// generates an html page which contains grid results and chart.
+
+var conn = aqua.project.getServerConnection('NextGen Servers/MySQL/MySQL 6.0');
+conn.connect();
+conn.changeDatabase('demo');
+
+// statement 1
+aqua.response.write('select 0 as category, -1 as s1\n' + 
+'union\n' + 
+'select 1 as category, -1.25 as s1\n' + 
+'union\n' + 
+'select -1.25 as category, 1 as s1\n' + 
+'union\n' + 
+'select -1.50 as category, 2 as s1\n' + 
+'union\n' + 
+'select -1.75 as category, 0 as s1\n' + 
+'union\n' + 
+'select 2 as category, -1 as s1');
+aqua.response.write('<p>');
+dataSet = conn.executeSnapshot('select 0 as category, -1 as s1\n' + 
+'union\n' + 
+'select 1 as category, -1.25 as s1\n' + 
+'union\n' + 
+'select -1.25 as category, 1 as s1\n' + 
+'union\n' + 
+'select -1.50 as category, 2 as s1\n' + 
+'union\n' + 
+'select -1.75 as category, 0 as s1\n' + 
+'union\n' + 
+'select 2 as category, -1 as s1');
+
+
+// chart
+chart = aqua.chart.newChart();
+chart.setDataSource(dataSet);
+chart.setSeriesFields("s1");
+chart.setCategoryFields("category");
+chart.properties.setBackgroundColorBottom(-2630411);
+chart.properties.setBackgroundColorTop(-1314571);
+chart.properties.setCategorySpacing(1.0);
+chart.properties.setDepth(5.0);
+chart.properties.setNumericCategoryAxis(false);
+chart.properties.setFixedCategoryCount(0);
+chart.properties.setShowFixedCategoryCount(false);
+chart.properties.setFont('Arial-PLAIN-7');
+chart.properties.setGroupSmallValuesThreshold(3.0);
+chart.properties.setGroupSmallValues(true);
+chart.properties.setHeight(10.0);
+chart.properties.setImageWidth(640);
+chart.properties.setImageHeight(480);
+chart.properties.setShowLegend(true);
+chart.properties.setLegendHeight(160);
+chart.properties.setLegendHeightTypeFit();
+chart.properties.setLegendPositionTopRight();
+chart.properties.setLegendWidth(100);
+chart.properties.setLegendWidthTypeFit();
+chart.properties.setLightingDefault();
+chart.properties.setLineWidth(1.0);
+chart.properties.setShowMarkers(true);
+chart.properties.setMapShowBackground(false);
+chart.properties.setMapShowDetails(false);
+chart.properties.setMergeAxis(false);
+chart.properties.setPanX(-5.0);
+chart.properties.setPanY(-5.0);
+chart.properties.setPieShowLines(false);
+chart.properties.setPieExplode(0.0);
+chart.properties.setPieLabelDistance(3.0);
+chart.properties.setReverseValueAxis(false);
+chart.properties.setRotationX(324);
+chart.properties.setRotationY(0);
+chart.properties.setRotationZ(0);
+chart.properties.setSeriesSpacing(1.0);
+chart.properties.setStackedPercent(false);
+chart.properties.setTitle('2D XY Line Zero Axis');
+chart.properties.setWidth(16.0);
+chart.properties.setView2D(true);
+chart.properties.setZoom(3);
+chart.properties.setShowValueAxis(true);
+chart.properties.setShowCategoryAxis(true);
+chart.properties.setShowSeriesAxis(true);
+chart.properties.setShowGrid(true);
+chart.properties.setChartTypeLine(0);
+chart.properties.setColor(0, -65536);
+chart.properties.setColumnTypeCube(0);
+
+url = chart.cache(3600);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');
+
+// grid results
+writer = aqua.io.newHtmlWriter();
+writer.setTableStyle('background:#ffffe1;');
+writer.write(dataSet);
+aqua.response.write(writer.toHtml());
+aqua.response.write('<p>');

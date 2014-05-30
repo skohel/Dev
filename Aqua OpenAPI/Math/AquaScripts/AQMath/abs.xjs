@@ -1,0 +1,27 @@
+/*
+aqua.math.abs
+
+Get the absolute value of a number
+
+Synopsys
+    double aqua.math.abs(double);
+
+Description
+    Returns the absolute value of a long value. If the argument is not
+    negative, the argument is returned. If the argument is negative, the 
+    negation of the argument is returned. 
+
+Example
+    see below
+*/
+
+function show_abs(value) {
+    aqua.console.println("abs[" + value + "] --> [" + aqua.math.abs(value) + "]");
+}
+var value = null;
+// show_abs(value);  // this won't compile
+show_abs(12345);
+show_abs(123456789012345);
+show_abs(12345.6789);
+show_abs(123456789.123456789);
+show_abs(123456789012345.123456789);

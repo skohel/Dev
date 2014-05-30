@@ -1,0 +1,56 @@
+﻿
+//
+// This script demonstrates how to reset all of custom characters used to draw row dividers.
+// Row divider is only applicable to a plain text grid and is turned off by default.
+//
+
+// define a data set
+var columns = ["ShipCountry", "CustomerID", "ShipName", "Freight"];
+var dataSet = aqua.data.newDataSet(columns);
+
+// add rows to data set
+dataSet.addRowWithValues("Canada", "C039", "ABC Inc.",   200);
+dataSet.addRowWithValues("Canada", "C061", "Sunrise",    230);
+dataSet.addRowWithValues("Japan",  "C375", "JPL Corp.", 4200);
+dataSet.addRowWithValues("France", "C123", "Joe Smith", 1620);
+dataSet.addRowWithValues("UK",     "C028", "BUK",       1500);
+dataSet.addRowWithValues("US",     "C006", "AuqaFold",    35);
+dataSet.addRowWithValues("US",     "C257", "BOA",         89);
+
+// create a settings for the data set, settings is used to describe how data set to be rendered
+var settings = aqua.report.newReportDataSetSettings();
+
+// display a row divider in front of the fourth row, row index is zero based
+settings.addCustomRowDividerLocation(3);
+
+// display a row divider in front of the third and the sixth rows, row index is zero-based
+var indexes = [2, 5];
+settings.addCustomRowDividerLocations(indexes);
+
+// use '#' character to draw the divider in front of the third row
+settings.addCustomRowDivider(2, "#");
+// use '*' character to draw the divider in front of the fourth row
+settings.addCustomRowDivider(3, "*");
+
+// set title
+settings.setTitle("AquaFold Open API Example: custom row dividers");
+
+// create a report
+var report = aqua.report.newReport();
+
+// add data set and its settings to report
+report.addDataSet(dataSet, settings);
+
+// present report as a plain text grid in console
+aqua.console.print(report.renderText());
+aqua.console.println(""); aqua.console.println("");
+
+
+// clear all of custom row dividers
+settings.clearCustomRowDividers();
+
+// update title
+settings.setTitle("AquaFold Open API Example: custom divider characters reset to default");
+
+// present report as a plain text grid in console
+aqua.console.print(report.renderText());

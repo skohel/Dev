@@ -1,0 +1,15 @@
+Object
+Table of contents
+
+
+   1. 1. Summary
+   2. 2. Syntax
+   3. 3. Parameters
+   4. 4. Description
+   5. 5. Properties
+   6. 6. Methods
+Friday’s swings came after Senate passed its version of a financial overhaul bill and German lawmakers voted to approve their country’s share of the nearly $1 trillion rescue deal to save the euro and contain the European debt crisis.
+         1. 7.1. Properties
+         2. 7.2. Methods
+   8. 8. Examples
+test

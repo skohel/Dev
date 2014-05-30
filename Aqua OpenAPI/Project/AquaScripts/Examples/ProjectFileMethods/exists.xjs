@@ -1,0 +1,30 @@
+﻿/*
+
+Returns true if the file exists.
+
+Synopsys
+    boolean exists()
+
+Description
+     Returns true if the file exists.
+
+Example
+    //
+    a = aqua.project.getUserFile{"/jonathan.txt"};
+    a.exists();
+*/
+
+
+userFiles = aqua.project.collectUserFiles("/");
+for(i=0; i<userFiles.length; i++) 
+{
+    if(userFiles[i].exists()) {
+        print("file exists!")
+    } else {
+        print("file does not exists!")
+    }
+}
+
+function print(m) {
+    aqua.console.println(m);
+}

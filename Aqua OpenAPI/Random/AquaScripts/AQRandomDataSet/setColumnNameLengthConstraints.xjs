@@ -1,0 +1,20 @@
+
+// create a report
+var report = aqua.report.newReport();
+
+// create a random data set generator with 6 rows and 3 columns, each column has different type
+var rows = 6;
+var types = [ "text", "date", "number" ];
+var randomDataSet = aqua.random.newRandomDataSet(rows, types, null);
+
+// set constraints on the generated column names
+randomDataSet.setColumnNameLengthConstraints(3, 12);
+
+// generate some datasets and add them to report
+for( var i=0; i<3; i++ ) {
+    var dataset = randomDataSet.nextDataSet();
+    report.addDataSet(dataset, null);
+}
+
+// present report
+aqua.console.println(report.renderText());

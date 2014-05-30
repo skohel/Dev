@@ -1,0 +1,13 @@
+﻿var gitWS    = aqua.vcs.newGit();
+
+try {
+// set the workspace with an already existing git repository.( You can use the git clone open api)
+gitWS.setWorkspace("c://git_clone");
+
+// git merge
+gitWS.merge("2f27327cde7f3abc0b717ce75c541384a168879d");
+}
+catch(ex) {
+// print to console if failure
+aqua.console.println("Error in initializing Git Repo..." +ex.toString() + "\n");
+}

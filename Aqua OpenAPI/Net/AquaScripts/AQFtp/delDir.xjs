@@ -1,0 +1,23 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        delDir()
+ 
+   Synopsis:
+        void delDir(String remotedir) throws Exception
+        void delDir(String remotedir, boolean includeSubdir) throws Exception
+
+   Description
+        Deletes all files, with option to include files in subdirectories, from a remote directory.  
+        Note that only files under the remote directory get deleted, but not the remote directory itself. 
+        To remove a remote directory or directories, rmdir(dirname, remotedir) or rmdir(fileset, remotedir) should be used. 
+   Parameters
+        remotedir - the name of the remote directory 
+  
+   Throws
+        Exception - if failed to delete files
+ 
+   Example
+        See below.
+*/

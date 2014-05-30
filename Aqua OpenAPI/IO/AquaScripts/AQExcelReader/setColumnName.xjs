@@ -1,0 +1,30 @@
+﻿var excelFile = "/ExlWrtr.xls";
+
+
+aqua.console.println("Start ExcelFileReader getColumnStructure() test...");
+var reader = aqua.io.newExcelReader();
+
+reader.setFile(excelFile);
+
+var namesOut = new Array();
+namesOut[0] = "Country";
+namesOut[1] = "Dates";
+reader.setColumnNames(namesOut);
+
+var columnStructure = reader.getColumnStructure();
+if(columnStructure == null) {
+    aqua.console.println("Expected: columnStructure != null but was: " + columnStructure);
+}
+
+var names = columnStructure.getColumnNames();
+if(names == null) {
+    aqua.console.println("Expected: column names != null but was: " + names);
+}
+if(names.length <= 0) {
+    aqua.console.println("Expected: names > 0 but was: " + names.length);
+}
+
+for(i=0; i < names.length; i++) {
+    aqua.console.println("Column: " + names[i]);
+}
+aqua.console.println("DONE");

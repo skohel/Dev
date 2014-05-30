@@ -1,0 +1,12 @@
+﻿var factory  = aqua.type.getLong();
+
+var value1   = 100001;
+var value2   = 100000;
+
+aqua.console.println("Is [" + value1 + "] greater then [" + value2 + "]? " + factory.isGreater(value1, value2));
+
+value2 = 100001;
+aqua.console.println("Is [" + value1 + "] greater then [" + value2 + "]? " + factory.isGreater(value1, value2));
+
+value2 = 100001.1;
+aqua.console.println("Is [" + value1 + "] greater then [" + value2 + "]? " + factory.isGreater(value1, value2));

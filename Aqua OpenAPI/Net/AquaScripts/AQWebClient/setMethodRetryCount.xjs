@@ -1,0 +1,22 @@
+﻿
+
+
+aqua.console.println("1 retry");
+request(1);
+aqua.console.println("10 retries");
+request(10);
+
+aqua.console.println("DONE");
+
+function request(retry) {
+try {
+    var client = aqua.net.newWebClient();
+    var req = client.newWebRequest("http://aquafold.com")
+    client.setMethodRetryCount(retry);
+    client.setConnectionTimeout(1);
+    var resp = client.submitGetRequest(req);
+    resp.getContentString();
+} catch(error) {
+    aqua.console.println(error);
+}
+}

@@ -1,0 +1,670 @@
+﻿/*
+
+Financial Case Study: Overlays
+
+*/
+var high= new Array();
+var low= new Array();
+var close= new Array();
+var open= new Array();
+var volume = new Array();
+var date = new Array();
+
+
+//csv import test
+var TextFile = "C:\\Aqua10-0 Workspace\\share\\aqua-projects\\Aqua OpenAPI\\Math\\User Files\\stockdata2.csv";  //or wherever the file goes
+
+var reader = aqua.io.newTextReader();
+reader.setFile(TextFile);
+reader.setFirstLineContainsColumnNames(true);
+reader.setCellDelimiter(",");
+
+var dataSet = aqua.data.newDataSet();//reader.read();
+
+
+dataSet.importData(reader);
+
+dataSet.sort("Date",true);
+//aqua.console.println(dataSet.getValueAt(0,0))
+//
+N=dataSet.getRowCount();
+for(i=0;i<N;i++){
+
+date[i]=dataSet.getValueAt(i,0);
+open[i]=parseFloat(dataSet.getValueAt(i,1));
+high[i]=parseFloat(dataSet.getValueAt(i,2));
+low[i]=parseFloat(dataSet.getValueAt(i,3));
+close[i]=parseFloat(dataSet.getValueAt(i,4));
+volume[i]=parseFloat(dataSet.getValueAt(i,5));
+}
+
+
+//calculations
+ma9=aqua.math.financial.movingaverage(close,9);
+bol=aqua.math.financial.bollinger(close,9);
+ma20=aqua.math.financial.movingaverage(close,20);
+ema9=aqua.math.financial.ema(close,9);
+mstd9=aqua.math.financial.movingstd(close,9);
+th=aqua.math.financial.trh(high,close);
+tl=aqua.math.financial.trl(low,close);
+ema20=aqua.math.financial.ema(close,20);
+ema100=aqua.math.financial.ema(close,100);
+
+//keltner channels
+var tr=new Array();
+
+for(i=0;i<tl.length;i++){
+tr[i]=th[i]-tl[i];
+}
+atr=aqua.math.financial.movingaverage(tr,10);
+//end keltner channels
+
+//ichimoku scripts
+var convline=new Array();
+var baseline=new Array();
+
+var leadingA=new Array();
+
+var leadingB=new Array();
+var lagging = new Array();
+
+high9=aqua.math.financial.hhigh(close,9);
+low9=aqua.math.financial.llow(close,9);
+
+high26=aqua.math.financial.hhigh(close,26);
+low26=aqua.math.financial.llow(close,26);
+
+high52=aqua.math.financial.hhigh(close,52);
+low52=aqua.math.financial.llow(close,52);
+
+for(i=0;i<high9.length;i++){
+
+convline[i]=(high9[i]+low9[i])/2;  //Tenkan-sen (Conversion Line): (9-period high + 9-period low)/2)) 
+baseline[i]=(high26[i]+low26[i])/2; //Kijun-sen (Base Line): (26-period high + 26-period low)/2))
+
+leadingA[i]=(convline[i]+baseline[i])/2;  //Senkou Span A (Leading Span A): (Conversion Line + Base Line)/2)) 
+leadingB[i]=(high52[i]+low52[i])/2;  //Senkou Span B (Leading Span B): (52-period high + 52-period low)/2)) 
+}
+
+for(i=0;i<high9.length-26;i++){
+lagging[i]=close[i+26];
+}
+for(i=high9.length;i<high9.length+26;i++){        //populate lagging vector
+lagging[i]=NaN;
+}
+//end ichimoku scripts
+
+//charts
+
+//chartBase
+var chartBase = aqua.chart.newChart();
+var modelBase = chartBase.getModel();
+
+
+modelBase.addSeries("High");
+modelBase.addSeries("Low");
+modelBase.addSeries("Close");
+modelBase.addSeries("Open");
+
+stockend=100
+for(i=0;i<stockend;i++){
+k=i+11
+modelBase.addCategory(date[k]);
+modelBase.setValue(0,i,high[k]);
+modelBase.setValue(1,i,low[k]);
+modelBase.setValue(2,i,close[k]);
+modelBase.setValue(3,i,open[k]);
+}
+
+//chart types
+chartBase.getProperties().setChartTypeCandlestick();
+
+
+//line colors
+chartBase.getProperties().setColor(0,"#000000"); 
+
+//chartBase.getProperties().set
+
+chartBase.getProperties().setImageHeight(480);
+chartBase.getProperties().setImageWidth(800);
+//
+//
+chartBase.getProperties().setPanX(-475);
+chartBase.getProperties().setPanY(-240);
+//
+chartBase.getProperties().setWidth(42);
+chartBase.getProperties().setHeight(24);
+//
+chartBase.getProperties().setRotationX(-45);
+chartBase.getProperties().setDepth(1);
+
+chartBase.getProperties().showSeriesAxis=false;
+chartBase.getProperties().showCategoryAxis=true;
+chartBase.getProperties().showLegend=true;
+
+chartBase.getProperties().showMarkers=false
+chartBase.getProperties().setLineWidth(2);
+chartBase.getProperties().setMergeSeriesMin(9500);
+chartBase.getProperties().setMergeSeriesMax(12000);
+chartBase.getProperties().setCategoryAxisDateFormat("MMM dd");
+
+//chart1
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+//model.addCategory("Date");
+model.addSeries("High");
+model.addSeries("Low");
+model.addSeries("Close");
+model.addSeries("Open");
+model.addSeries("ma9");
+model.addSeries("ma20");
+model.addSeries("ema9");
+model.addSeries("ema100");
+
+for(i=0;i<100;i++){
+k=i+21
+model.addCategory(date[k]);
+model.setValue(0,i,high[k]);
+model.setValue(1,i,low[k]);
+model.setValue(2,i,close[k]);
+model.setValue(3,i,open[k]);
+
+model.setValue(4,i,ma9[k]);
+model.setValue(5,i,ma20[k]);
+model.setValue(6,i,ema9[k]);
+model.setValue(7,i,ema100[k]);
+//model.setValue(6,i,ma20[k]*(1-.025));
+
+
+}
+
+//chart types
+chart.getProperties().setChartTypeCandlestick();
+chart.getProperties().setChartTypeLine(4);
+chart.getProperties().setChartTypeLine(5);
+chart.getProperties().setChartTypeLine(6);
+chart.getProperties().setChartTypeLine(7);
+
+
+//line colors
+chart.getProperties().setColor(6,"#FF0000");
+chart.getProperties().setColor(4,"#0000ff");
+chart.getProperties().setColor(5,"#009900");
+
+
+//chart.getProperties().set
+
+chart.getProperties().setImageHeight(480);
+chart.getProperties().setImageWidth(800);
+//
+//
+chart.getProperties().setPanX(-475);
+chart.getProperties().setPanY(-240);
+//
+chart.getProperties().setWidth(42);
+chart.getProperties().setHeight(24);
+//
+chart.getProperties().setRotationX(-45);
+chart.getProperties().setDepth(1);
+
+chart.getProperties().showSeriesAxis=false;
+chart.getProperties().showCategoryAxis=true;
+chart.getProperties().showLegend=true;
+
+chart.getProperties().showMarkers=false
+chart.getProperties().setLineWidth(2);
+chart.getProperties().setMergeSeriesMin(9500);
+chart.getProperties().setMergeSeriesMax(11500);
+
+chart.getProperties().setCategoryAxisDateFormat("MMM dd");
+
+//chart2
+var chart2 = aqua.chart.newChart();
+var model2 = chart2.getModel();
+
+//model2.addCategory("Date");
+model2.addSeries("High");
+model2.addSeries("Low");
+model2.addSeries("Close");
+model2.addSeries("Open");
+model2.addSeries("ma20");
+model2.addSeries("ma20 envelope");
+model2.addSeries("ma20 envelope");
+
+
+for(i=0;i<100;i++){
+k=i+21
+model2.addCategory(date[k]);
+model2.setValue(0,i,high[k]);
+model2.setValue(1,i,low[k]);
+model2.setValue(2,i,close[k]);
+model2.setValue(3,i,open[k]);
+
+model2.setValue(4,i,ma20[k]);
+model2.setValue(5,i,ma20[k]*(1+ 0.025));
+model2.setValue(6,i,ma20[k]*(1-.025));
+
+
+}
+
+//chart types
+chart2.getProperties().setChartTypeCandlestick();
+chart2.getProperties().setChartTypeLine(4);
+chart2.getProperties().setChartTypeLine(5);
+chart2.getProperties().setChartTypeLine(6);
+
+
+//line colors
+chart2.getProperties().setColor(6,"#000000");
+chart2.getProperties().setColor(4,"#0000ff");
+chart2.getProperties().setColor(5,"#000000");
+
+
+//chart2.getProperties().set
+
+chart2.getProperties().setImageHeight(480);
+chart2.getProperties().setImageWidth(800);
+//
+//
+chart2.getProperties().setPanX(-475);
+chart2.getProperties().setPanY(-240);
+//
+chart2.getProperties().setWidth(42);
+chart2.getProperties().setHeight(24);
+//
+chart2.getProperties().setRotationX(-45);
+chart2.getProperties().setDepth(1);
+
+chart2.getProperties().showSeriesAxis=false;
+chart2.getProperties().showCategoryAxis=true;
+chart2.getProperties().showLegend=true;
+
+chart2.getProperties().showMarkers=false
+chart2.getProperties().setLineWidth(2);
+chart2.getProperties().setMergeSeriesMin(9500);
+chart2.getProperties().setMergeSeriesMax(11500);
+
+chart2.getProperties().setCategoryAxisDateFormat("MMM dd");
+
+//chart3
+var chart3 = aqua.chart.newChart();
+var model3 = chart3.getModel();
+
+//model3.addCategory("Date");
+model3.addSeries("High");
+model3.addSeries("Low");
+model3.addSeries("Close");
+model3.addSeries("Open");
+model3.addSeries("ma9");
+model3.addSeries("bol 9");
+model3.addSeries("bol 9");
+model3.addSeries("1 mstd9");
+model3.addSeries("1 mstd9");
+model3.addSeries("5 mstd9");
+model3.addSeries("5 mstd9");
+
+
+for(i=0;i<100;i++){
+k=i+21
+model3.addCategory(date[k]);
+model3.setValue(0,i,high[k]);
+model3.setValue(1,i,low[k]);
+model3.setValue(2,i,close[k]);
+model3.setValue(3,i,open[k]);
+
+model3.setValue(4,i,ma9[k]);
+model3.setValue(5,i,bol[k][1]);
+model3.setValue(6,i,bol[k][2]);
+model3.setValue(7,i,ma9[k]+1*mstd9[k]);
+model3.setValue(8,i,ma9[k]-1*mstd9[k]);
+model3.setValue(9,i,ma9[k]+5*mstd9[k]);
+model3.setValue(10,i,ma9[k]-5*mstd9[k]);
+
+
+}
+
+//chart types
+chart3.getProperties().setChartTypeCandlestick();
+chart3.getProperties().setChartTypeLine(4);
+chart3.getProperties().setChartTypeLine(5);
+chart3.getProperties().setChartTypeLine(6);
+chart3.getProperties().setChartTypeLine(7);
+chart3.getProperties().setChartTypeLine(8);
+chart3.getProperties().setChartTypeLine(9);
+chart3.getProperties().setChartTypeLine(10);
+
+
+//line colors
+
+//chart3.getProperties().setColor(4,"#0000ff");
+chart3.getProperties().setColor(5,"#000000");
+chart3.getProperties().setColor(6,"#000000");
+chart3.getProperties().setColor(7,"#0000ff");
+chart3.getProperties().setColor(8,"#0000ff");
+chart3.getProperties().setColor(9,"#ff0000");
+chart3.getProperties().setColor(10,"#ff0000");
+
+
+//chart3.getProperties().set
+
+chart3.getProperties().setImageHeight(480);
+chart3.getProperties().setImageWidth(800);
+//
+//
+chart3.getProperties().setPanX(-475);
+chart3.getProperties().setPanY(-240);
+//
+chart3.getProperties().setWidth(42);
+chart3.getProperties().setHeight(24);
+//
+chart3.getProperties().setRotationX(-45);
+chart3.getProperties().setDepth(1);
+
+chart3.getProperties().showSeriesAxis=false;
+chart3.getProperties().showCategoryAxis=true;
+chart3.getProperties().showLegend=true;
+
+chart3.getProperties().showMarkers=false
+chart3.getProperties().setLineWidth(2);
+chart3.getProperties().setMergeSeriesMin(8500);
+chart3.getProperties().setMergeSeriesMax(12500);
+
+chart3.getProperties().setCategoryAxisDateFormat("MMM dd");
+
+//chart4
+var chart4 = aqua.chart.newChart();
+var model4 = chart4.getModel();
+
+//model4.addCategory("Date");
+model4.addSeries("High");
+model4.addSeries("Low");
+model4.addSeries("Close");
+model4.addSeries("Open");
+model4.addSeries("ema20");
+model4.addSeries("keltner: 1 atr");
+model4.addSeries("keltner: 1 atr");
+model4.addSeries("keltner: 2 atr");
+model4.addSeries("keltner: 2 atr");
+
+
+for(i=0;i<100;i++){
+k=i+21
+model4.addCategory(date[k]);
+model4.setValue(0,i,high[k]);
+model4.setValue(1,i,low[k]);
+model4.setValue(2,i,close[k]);
+model4.setValue(3,i,open[k]);
+
+model4.setValue(4,i,ema20[k]);
+model4.setValue(5,i,ema20[k]-1*atr[k]);
+model4.setValue(6,i,ema20[k]+1*atr[k]);
+model4.setValue(7,i,ema20[k]-2*atr[k]);
+model4.setValue(8,i,ema20[k]+2*atr[k]);
+
+
+}
+
+//chart types
+chart4.getProperties().setChartTypeCandlestick();
+chart4.getProperties().setChartTypeLine(4);
+chart4.getProperties().setChartTypeLine(5);
+chart4.getProperties().setChartTypeLine(6);
+chart4.getProperties().setChartTypeLine(7);
+chart4.getProperties().setChartTypeLine(8);
+
+
+//line colors
+chart4.getProperties().setColor(6,"#000000");
+chart4.getProperties().setColor(4,"#0000ff");
+chart4.getProperties().setColor(5,"#000000");
+chart4.getProperties().setColor(7,"#ff0000");
+chart4.getProperties().setColor(8,"#ff0000");
+
+
+//chart4.getProperties().set
+
+chart4.getProperties().setImageHeight(480);
+chart4.getProperties().setImageWidth(800);
+//
+//
+chart4.getProperties().setPanX(-475);
+chart4.getProperties().setPanY(-240);
+//
+chart4.getProperties().setWidth(42);
+chart4.getProperties().setHeight(24);
+//
+chart4.getProperties().setRotationX(-45);
+chart4.getProperties().setDepth(1);
+
+chart4.getProperties().showSeriesAxis=false;
+chart4.getProperties().showCategoryAxis=true;
+chart4.getProperties().showLegend=true;
+
+chart4.getProperties().showMarkers=false
+chart4.getProperties().setLineWidth(2);
+chart4.getProperties().setMergeSeriesMin(9500);
+chart4.getProperties().setMergeSeriesMax(12000);
+
+chart4.getProperties().setCategoryAxisDateFormat("MMM dd");
+
+//chart5
+var chart5 = aqua.chart.newChart();
+var model5 = chart5.getModel();
+
+
+model5.addSeries("High");
+model5.addSeries("Low");
+model5.addSeries("Close");
+model5.addSeries("Open");
+model5.addSeries("leading A");
+model5.addSeries("Leading B");
+model5.addSeries("Lagging Price");
+model5.addSeries("Baseline");
+model5.addSeries("Convline");
+
+
+
+
+stockend=100
+for(i=0;i<stockend;i++){
+k=i+90
+model5.addCategory(date[k]);
+model5.setValue(0,i,high[k]);
+model5.setValue(1,i,low[k]);
+model5.setValue(2,i,close[k]);
+model5.setValue(3,i,open[k]);
+
+model5.setValue(4,i,leadingA[k-26]);
+model5.setValue(5,i,leadingB[k-26]);
+model5.setValue(6,i,close[k+26]);  //Chikou Span (Lagging Span): Close plotted 26 days in the past
+model5.setValue(7,i,baseline[k]);
+model5.setValue(8,i,convline[k]);
+
+}
+for(i=stockend;i<stockend+26;i++){
+k=i+100
+model5.addCategory(date[k]);
+model5.setValue(0,i,NaN);
+model5.setValue(1,i,NaN);
+model5.setValue(2,i,NaN);
+model5.setValue(3,i,NaN);
+
+model5.setValue(4,i,leadingA[k-26]);
+model5.setValue(5,i,leadingB[k-26]);
+model5.setValue(6,i,NaN);
+model5.setValue(7,i,NaN);
+model5.setValue(8,i,NaN);
+
+}
+
+//chart types
+chart5.getProperties().setChartTypeCandlestick();
+chart5.getProperties().setChartTypeCloud(4);
+chart5.getProperties().setChartTypeCloud(5)
+chart5.getProperties().setChartTypeLine(6);
+chart5.getProperties().setChartTypeLine(7);
+chart5.getProperties().setChartTypeLine(8);
+
+
+//line colors
+chart5.getProperties().setColor(4,"#009900"); //green
+chart5.getProperties().setColor(5,"#ff0000");
+chart5.getProperties().setColor(6,"#000000"); //green
+chart5.getProperties().setColor(7,"#220000"); //red
+chart5.getProperties().setColor(8,"#0000ff"); //blue
+
+
+
+//chart5.getProperties().set
+
+chart5.getProperties().setImageHeight(480);
+chart5.getProperties().setImageWidth(800);
+//
+//
+chart5.getProperties().setPanX(-475);
+chart5.getProperties().setPanY(-240);
+//
+chart5.getProperties().setWidth(42);
+chart5.getProperties().setHeight(24);
+//
+chart5.getProperties().setRotationX(-45);
+chart5.getProperties().setDepth(1);
+
+chart5.getProperties().showSeriesAxis=false;
+chart5.getProperties().showCategoryAxis=true;
+chart5.getProperties().showLegend=true;
+
+chart5.getProperties().showMarkers=false
+chart5.getProperties().setLineWidth(2);
+chart5.getProperties().setMergeSeriesMin(9500);
+chart5.getProperties().setMergeSeriesMax(11500);
+chart5.getProperties().setCategoryAxisDateFormat("MMMM dd");
+//aqua.console.println(form);
+var urlBase = chartBase.cache(5);
+var url = chart.cache(5);
+var url2 = chart2.cache(5);
+var url3 = chart3.cache(5);
+var url4 = chart4.cache(5);
+var url5 = chart5.cache(5);
+
+
+
+
+//introduction
+
+aqua.response.write(' <p><span style="color: #2778cb;"><big><strong>Aqua Financial Methods: Overlays</strong></big></span></p>');
+
+aqua.response.write('<ol>')
+aqua.response.write('<li><a href="#section1"><span style="color: #2778cb;">Overview</span></a>');
+aqua.response.write('<li><a href="#section2"><span style="color: #2778cb;">Inputs</span></a>');
+aqua.response.write('<ul><li><span style="color: #2778cb;">Stock Data</span></a>');
+aqua.response.write('<li><span style="color: #2778cb;">CandleStick Plot</span></a></ul>');
+
+aqua.response.write('<li><a href="#section3"><span style="color: #2778cb;">Overlays</span></a>');
+aqua.response.write('<ul><li><span style="color: #2778cb;">Moving Average</span></a>');
+aqua.response.write('<li><span style="color: #2778cb;">Moving Standard Deviation</span></a>');
+aqua.response.write('<li><span style="color: #2778cb;">Envelopes</span></a></ul>');
+
+aqua.response.write('<li><a href="#section5"><span style="color: #2778cb;">Custom Scripting</span></a>');
+aqua.response.write('<ul><li><span style="color: #2778cb;">Keltner Bands</span></a>');
+aqua.response.write('<li><span style="color: #2778cb;">Ichimoku Clouds</span></a></ul>');
+
+aqua.response.write('</ol><hr>')
+
+aqua.response.write('<p><a name="section1"><span style="color: #2778cb;"><big>Overview</big></span></a></br>');
+aqua.response.write('<p>AquaData Studio has financial methods that are useful in modelling price behavior.  In addition, the AquaScript environment available to the user can be a valuable asset in constructing custom financial tools.   <br>');
+
+aqua.response.write('<p><a name="section2"><span style="color: #2778cb;"><big>Inputs: Stock and Pricing Data</big></span></a></br>');
+
+aqua.response.write('<p> In order to illustrate some of the features of aqua.math.financial, we will be using standard pricing data.  Specifically, the High, Low, Close, Open, Volume, and Adjusted Close of the Dow Index daily values for 2010');
+aqua.response.write('<blockquote><pre>how we get the data h,l,o,c,v</pre></blockquote>');
+aqua.response.write('<p><span style="color: #2778cb;">CandleStick Plot</span><br>');
+aqua.response.write('<p>One of the most common ways to view pricing data is via candlestick plot.  This chart has two components, the body (range of open to close price) and the wick (range of high to low price) and illustrates the difference \
+                        between these two ranges. This chart type is available in the charting toolset.');
+aqua.response.write('<blockquote><pre>chart.getProperties().setChartTypeCandleStick();</pre></blockquote>');
+aqua.response.write('<img src=').write(urlBase).write('><br><br>');
+aqua.response.write('<hr width=45% align=center>');
+
+aqua.response.write('<p><a name="section3"><span style="color: #2778cb;"><big>Overlays</big></span></a></br>');
+
+aqua.response.write('<p><span style="color: #2778cb;">Moving Averages (trends)</span><br>');
+aqua.response.write('<p>Mapping price trends is often done by comparing moving averages of a given data set.  They smooth data, as well as remove sensitivity to rapid changes in price.  They are useful for tracing general trends.  We can calculate simple or exponential moving average or given periods.');
+
+aqua.response.write('<blockquote><pre>movAverage9 = aqua.math.financial.movingaverage(close,9);  // calculate simple moving average on closing price over period of 9 days</pre></blockquote>');
+aqua.response.write('<blockquote><pre>emovAverage9 = aqua.math.financial.ema(close,9);  // calculate exponential moving average on closing price over period of 9 days</pre></blockquote>');
+aqua.response.write('<img src=').write(url).write('><br><br>');
+aqua.response.write('<hr width=45% align=center>');
+
+aqua.response.write('<p><span style="color: #2778cb;">Envelopes</span><br>');
+aqua.response.write('<p>We can also construct moving average envelopes, which are plots a given percentage above and below the price data.  They can be used to follow trends or highlight deviations.');
+aqua.response.write('<blockquote><pre>model.setValue(0,i,ma9[i]+.025*ma9[i]); //upper band</pre>');
+aqua.response.write('<pre>model.setValue(1,i,ma9[i]-.025*ma9[i]); //lower band</pre></blockquote>');
+aqua.response.write('<img src=').write(url2).write('><br><br>');
+aqua.response.write('<hr width=45% align=center>');
+
+aqua.response.write('<p><span style="color: #2778cb;">Moving Standard Deviations (variability)</span><br>');
+aqua.response.write('<p>In addition to tracking general trends, we may also wish to study the variablity of pricing information.  This can be done by calculating the moving standard deviation, which tells us the variability of the data over a given period. \
+                        We can then overlay the pricing data with an upper and lower bound on expected variability.  A special case of this is the popular Bollinger Band (2 standard deviations from moving average).');
+aqua.response.write('<blockquote><pre>movStd9 = aqua.math.financial.movingstd(close,9);  // calculate moving standard deviation of closing price over period of 9 days</pre></blockquote>');
+aqua.response.write('<blockquote><pre>bollinger9 = aqua.math.financial.bollinger(close,9);  // calculate bollinger bands bounding closing price over period of 9 days</pre></blockquote>');
+aqua.response.write('<p>The general case of bounding the price with moving standard deviation can be done in aquascript.');
+aqua.response.write('<blockquote><pre>model3.setValue(0,i,ma9[i]+1*mstd9[i]); //upper band</pre>');
+aqua.response.write('<pre>model3.setValue(1,i,ma9[i]-1*mstd9[i]); //lower band</pre></blockquote>');
+aqua.response.write('<img src=').write(url3).write('><br><br>');
+aqua.response.write('<hr width=45% align=center>');
+
+aqua.response.write('<p><span style="color: #2778cb;"><big>Custom Overlays</big></span><br>');
+aqua.response.write('<p>The previous overlays are already available in aqua.math.financial, but users can use the scripting environment to construct custom overlays.  We will build two useful overlays, Keltner Bands and IchiMoku Clouds.');
+
+aqua.response.write('<p><span style="color: #2778cb;">Keltner Bands</span><br>');
+aqua.response.write('<p>Keltner Bands are an envelope overlay that tracks variability, like Bollinger Bands.  However, instead of calculating the moving standard deviation, \
+                        we use the Average True Range of the price as the variability measure.  The width of the Keltner bands are twice the difference between the average true range and the 20-day \
+                        exponential moving average.  We first calculate the True Range of the price data using aqua financial methods trh (true range high) and trl (true range low).<br>');
+aqua.response.write('<blockquote><pre>trueHigh=aqua.math.financial.trh(high,close); //calculate true range high</pre>');
+aqua.response.write('<pre>trueLow=aqua.math.financial.trl(low,close); //calculate true range low</pre></blockquote>');
+//aqua.response.write('<blockquote><pre>//keltner channels </pre>');
+aqua.response.write('<blockquote><pre>var trueRange=new Array();</pre>');
+aqua.response.write('<pre>for(i=0;i &lt trueLow.length;i++){</pre>');
+aqua.response.write('<pre>trueRange[i]=trueHigh[i]-trueLow[i];</pre>');
+aqua.response.write('<pre>}</pre></blockquote>');
+aqua.response.write('<p>Then, we find the moving average over 10 days of the true range, as well as the 20 day exppnential moving average.');
+aqua.response.write('<blockquote><pre>averageTrueRange=aqua.math.financial.movingaverage(trueRange,10);</pre>');
+aqua.response.write('<pre>expMA20=aqua.math.financial.ema(close,20);</pre></blockquote>');
+aqua.response.write('<p>Finally, we find the difference between the average true range and the 20 day exponential moving average.  This can be assigned in the chart via setValue.');
+aqua.response.write('<blockquote><pre>model.setValue(7,i,ema20[k]-2*averageTrueRange[k]); //lower Keltner Band</pre>');
+aqua.response.write('<pre>model.setValue(8,i,ema20[k]+2*averageTrueRange[k]); //upper Keltner Band</pre></blockquote>');
+//aqua.response.write('<pre>//end keltner channels</pre></blockquote>');
+aqua.response.write('<img src=').write(url4).write('><br><br>');
+aqua.response.write('<hr width=45% align=center>');
+
+aqua.response.write('<p><span style="color: #2778cb;">Ichimoku Clouds</span><br>');
+aqua.response.write('<p>Ichimoku clouds, or the One-Look Equilibrium Charts, are used to illustrate support and resistance levels as well as direction and strength of trends.  The "cloud" is the region between the Senkou spans (leadingA and LeadingB).  In general, the \
+                        location of the pricing activity relative to the cloud is used as an indicator of bullish versus bearish market activity.  After declaring the relevant variables, <br>');
+//ichimoku scripts
+aqua.response.write('<blockquote><pre>var convline=new Array(); Tenkan-sen (Conversion Line): //(9-period high + 9-period low)/2))</pre>'); 
+aqua.response.write('<pre>var baseline=new Array(); //Kijun-sen (Base Line): (26-period high + 26-period low)/2))</pre>');
+aqua.response.write('<pre>var leadingA=new Array(); //Senkou Span A (Leading Span A): (Conversion Line + Base Line)/2))</pre>');
+aqua.response.write('<pre>var leadingA=new Array(); //Senkou SpanB (Leading Span B): (52-period high + 52-period low)/2))</pre>');
+aqua.response.write('<pre>var lagging=new Array();  //Lagging Span (26 day lag of price) </pre></blockquote>');
+aqua.response.write('<p>we calculate the 9, 26 and 52 period highs and lows for the price data.');
+aqua.response.write('<blockquote><pre>high9=aqua.math.financial.hhigh(close,9);// 9-day high</pre>'); 
+aqua.response.write('<pre>low9=aqua.math.financial.llow(close,9);// 9-day low</pre></blockquote>'); 
+aqua.response.write('<blockquote><pre>high26=aqua.math.financial.hhigh(close,26); //26-day high</pre>'); 
+aqua.response.write('<pre>low26=aqua.math.financial.llow(close,26); //26-day low</pre>');
+aqua.response.write('<pre>high52=aqua.math.financial.hhigh(close,52); //52-day high</pre>');
+aqua.response.write('<pre>low52=aqua.math.financial.llow(close,52); //52-day low</pre></blockquote>');
+aqua.response.write('<p>Next we build the spans, as well as the base and conversion lines.');
+aqua.response.write('<blockquote><pre>for(i=0;i &lt high9.length;i++){</pre>');
+aqua.response.write('<pre>      convline[i]=(high9[i]+low9[i])/2;</pre>  ');
+aqua.response.write('<pre>      baseline[i]=(high26[i]+low26[i])/2; </pre>');
+aqua.response.write('<pre>      leadingA[i]=(convline[i]+baseline[i])/2;</pre> ');
+aqua.response.write('<pre>      leadingB[i]=(high52[i]+low52[i])/2; </pre>');
+aqua.response.write('<pre>      }</pre></blockquote>');
+aqua.response.write('<p>Note that we can advance the leadingA and leadingB plots during the chart definition.  Specifically,'); 
+aqua.response.write('<blockquote><pre>model5.setValue(4,i,leadingA[k-26]);// plots the leadingA data 26 days ahead</pre>' );
+aqua.response.write('<pre>model5.setValue(5,i,leadingB[k-26]); // plots the leadingB data 26 days ahead</pre></blockquote><br>');
+
+//end ichimoku scripts
+aqua.response.write('<img src=').write(url5).write('><br><br>');
+aqua.response.write('<hr width=45% align=center>');

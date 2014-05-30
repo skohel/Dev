@@ -1,0 +1,40 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "/tmp/test/AQFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.filesystem;
+
+/* ---  test touch --- */
+test_touch();
+
+// --- touch ---
+
+function test_touch() {
+    var src_base = test_data_dir + "files/src_base/";
+    var dest_base = test_data_dir + "touch/";
+
+    AQFS.copy(src_base, dest_base);
+    
+    // testing error condition
+    exec_touch(null, null);
+    exec_touch(dest_base + "test_fileset3.txt", "bad timestamp");
+    
+    // this should work
+    exec_touch(dest_base + "file.does.not.exist.txt", null);
+    exec_touch(dest_base + "test_fileset1.txt", null);
+    exec_touch(dest_base + "test_fileset2.txt", "12/31/1999 11:59 PM");
+    
+    
+}
+function exec_touch(fileName, modificationTime) {
+    try {
+        aqua.console.println("touch: touching [" + fileName + "] with modification-time=[" + modificationTime + "]...");
+        AQFS.touch(fileName, modificationTime);
+        aqua.console.println("touch done.");
+    }
+    catch(ex) {
+        aqua.console.println("touch failed - " + ex.toString());
+    }
+}
+
+// -------------------------------------------------------------------------------

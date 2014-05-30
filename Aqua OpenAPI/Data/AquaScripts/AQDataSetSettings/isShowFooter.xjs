@@ -1,0 +1,17 @@
+﻿
+//
+// This script demonstrates how to determine whether to display footer text.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// check whether to display footer text
+var flag = settings.isShowFooter();
+aqua.console.println("Default setting: footer text is " + (flag ? "" : "not ") + "displayed by default.");
+
+
+// do not display footer text
+settings.setShowFooter(false);
+flag = settings.isShowFooter();
+aqua.console.println("Custom setting: footer text is " + (flag ? "" : "not ") + "displayed.");

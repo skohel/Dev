@@ -1,0 +1,51 @@
+﻿// create a new dataset
+var ds = aqua.data.newDataSet(["shipcountry","text","freight","number"]);
+
+// add dataset row with values
+ds.addRowWithValues("US", 100);
+ds.addRowWithValues("UK", 10);
+ds.addRowWithValues("Japan", 200);
+ds.addRowWithValues("Canada", 20);
+ds.addRowWithValues("France", 300);
+ds.addRowWithValues("Germany", 30);
+
+// print the dataset as a formatted grid
+aqua.console.println(ds.renderText());
+aqua.response.write(ds.renderHtml());
+
+ds = aqua.data.newDataSet(ds.getColumnStructure());
+
+// add dataset row with values
+ds.addRowWithValues("US", 100);
+ds.addRowWithValues("UK", 10);
+ds.addRowWithValues("Japan", 200);
+ds.addRowWithValues("Canada", 20);
+ds.addRowWithValues("France", 300);
+ds.addRowWithValues("Germany", 30);
+
+// print the dataset as a formatted grid
+aqua.console.println(ds.renderText());
+
+
+ds = aqua.data.newDataSet(1,2);
+
+// add dataset row with values
+ds.addRowWithValues("US", 100);
+ds.addRowWithValues("UK", 10);
+ds.addRowWithValues("Japan", 200);
+ds.addRowWithValues("Canada", 20);
+ds.addRowWithValues("France", 300);
+ds.addRowWithValues("Germany", 30);
+
+// print the dataset as a formatted grid
+aqua.console.println(ds.renderText());
+
+
+
+
+ds = aqua.data.newDataSet(1,2, ["aa","bb"]);
+aqua.console.println(ds.renderText());
+
+ds = aqua.data.newDataSet();
+aqua.console.println(ds.renderText());
+

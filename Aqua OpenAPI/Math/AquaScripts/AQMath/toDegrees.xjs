@@ -1,0 +1,20 @@
+/*
+aqua.math.toDegrees
+
+Converts an angle measured in radians to an approximately equivalent angle 
+measured in degrees. The conversion from radians to degrees is generally 
+inexact; users should not expect cos(toRadians(90.0)) to exactly equal 0.0. 
+   
+Synopsys
+    double aqua.math.toDegrees(double)
+
+Description
+    Nothing exciting to describe.
+
+Example
+    see below
+*/
+
+aqua.console.println("converts 0 to degree returns [" + aqua.math.toDegrees(0) + "]");
+aqua.console.println("converts PI/2 to degree returns [" + aqua.math.toDegrees(aqua.math.getPI())/2 + "]");
+aqua.console.println("converts PI to degree returns [" + aqua.math.toDegrees(aqua.math.getPI()) + "]");

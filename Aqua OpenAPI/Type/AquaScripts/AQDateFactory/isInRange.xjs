@@ -1,0 +1,15 @@
+﻿var factory  = aqua.type.getDate();
+
+var start = factory.newDate();
+aqua.util.sleep(20);
+var date = factory.newDate();
+aqua.util.sleep(20);
+var end   = factory.newDate();
+
+aqua.console.println("Is [" + date + "] between  [" + start + "] and [" + end + "]? " + factory.isInRange(date, start, end));
+
+aqua.console.println("Is [" + date + "] between  [" + end + "] and [" + start + "]? " + factory.isInRange(date, end, start));
+
+aqua.util.sleep(20);
+date = factory.newDate();
+aqua.console.println("Is [" + date + "] between  [" + start + "] and [" + end + "]? " + factory.isInRange(date, start, end));

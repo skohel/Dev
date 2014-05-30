@@ -1,0 +1,47 @@
+﻿/*
+aqua.project.getServerConnections()
+
+Returns all server connections available within the script context.
+
+Synopsys
+    AQServerConnection[] getServerConnections()
+
+Description
+    Returns all server connections available within the script context.
+
+Example
+    //return all of the server connections for the current project.
+    aqua.project.getServerConnections() ;
+
+*/
+
+
+ap = aqua.project;
+
+serverConnections = ap.getServerConnections() ;
+
+print("============== Connections ==============================")
+for(i=0; i<serverConnections.length; i++) 
+{
+    PrintConnectionssDetails(serverConnections[i]);
+}
+print("===================================================")
+
+
+function PrintConnectionssDetails(objFile) 
+{
+    objFile.connect();
+    objFile.changeDatabase("adsweblogs");
+    print("     -------------- Conn -------------------------------")
+    print("     execute: " + objFile.execute("SELECT * FROM Activation_Logs WHERE 1 = 2"));
+    print("     Name: " + objFile.getName());
+    print("     Session: " + objFile.getSessionID());
+    print("     Version: " + objFile.getVersionString());
+    print("     isConnected?: " + objFile.isConnected());
+    print("     ---------------------------------------------------")
+    objFile.disconnect();
+}
+
+function print(m) {
+    aqua.console.println(m);
+}

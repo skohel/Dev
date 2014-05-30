@@ -1,0 +1,7 @@
+﻿if(argument["a"] == "one") {
+     // return value
+     1;
+ }
+ else {
+     "not one";
+ }

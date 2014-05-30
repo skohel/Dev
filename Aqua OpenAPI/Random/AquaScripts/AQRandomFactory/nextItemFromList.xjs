@@ -1,0 +1,23 @@
+﻿var a;
+
+// javascript array
+a = new Array();
+a[0] = '0';
+a[1] = 1;
+a[2] = 'two';
+a[3] = '3';
+aqua.console.println(aqua.random.nextItemFromList(a));
+
+// java array
+a = aqua.util.newJavaArray("java.lang.String", 3);
+a[0] = 'a';
+a[1] = '1';
+a[2] = 'yo';
+aqua.console.println(aqua.random.nextItemFromList(a));
+
+// java List
+a = new java.util.ArrayList();
+a.add('yo');
+a.add(1);
+a.add(2);
+aqua.console.println(aqua.random.nextItemFromList(a));

@@ -1,0 +1,25 @@
+
+
+var rawDataX=new Array();
+var rawDataY=new Array();
+var detrendData = new Array();
+var noise = new Array();
+
+
+//generate noisy data
+for(i=0;i<30;i++){
+   rawDataX[i]=(i+1)/10.0;
+noise[i]=2*Math.random()-1;
+   rawDataY[i]=2*Math.pow(rawDataX[i],1.5)+10+noise[i]/3;
+   
+}
+
+//detrend data
+detrendData=aqua.math.curve.deTrend(rawDataX,rawDataY);
+
+
+aqua.console.println("Raw Data, Detrended Data");
+
+for(i=0;i<30;i++){
+aqua.console.println(rawDataY[i] +", " + detrendData[i]);
+}

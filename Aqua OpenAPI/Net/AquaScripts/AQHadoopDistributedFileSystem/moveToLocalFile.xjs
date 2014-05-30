@@ -1,0 +1,64 @@
+﻿//------------------------------------------------------------------------------
+// Class:  
+//      CoreHadoopFileSystem
+// Method:
+//      moveToLocalFile()
+//
+// Synopsis:
+//      moveToLocalFile()
+//
+// Description
+//      Moves a single file or directory from FS to local. if the destination
+//      directory does not exist, it will be created.
+//    
+// Parameters
+//      string - The file to be moved; required.
+//      string - The location of where the file will be copied; required. 
+//
+// Throws
+//      Exception - on error
+//
+// Return
+//      None.
+//
+// Example
+//      See below.
+//------------------------------------------------------------------------------
+// all test data will be created under this FS directory
+var fs_data_dir = "/test/AQHadoopFileSystem/";
+var local_data_dir = "d:/temp/files/";
+
+// get instance of filesystem object
+var AQFS = aqua.net.newHadoopDistributedFileSystem("hdfs://localhost:9100");
+
+test_moveToLocalFile();
+
+//--- copy files specified in a fileset to a directory ---
+function test_moveToLocalFile() {
+
+    var src_base = fs_data_dir + "files/";
+    var dest_base = fs_data_dir + "copy/";
+    AQFS.copy(src_base, dest_base);
+    
+    // testing error condition - source file is required
+    exec_moveToLocalFile(null, "ab");
+    // testing error condition - destination is requred
+    exec_moveToLocalFile("ab", null);
+    // this should work
+    exec_moveToLocalFile(dest_base + "license.txt", local_data_dir + "license.txt");
+    exec_moveToLocalFile(dest_base, local_data_dir);
+
+    // Clean up
+    AQFS.deleteDirectory(dest_base, true);
+}
+
+function exec_moveToLocalFile(srcFile, destFile) {
+    try {
+        aqua.console.println("moveToLocalFile (file) : moving [" + srcFile + "] to [" + destFile + "]...");
+        aqua.console.println(" to [" + destFile + "]...");
+        AQFS.moveToLocalFile(srcFile, destFile);
+        aqua.console.println("moveToLocalFile done.");
+    } catch(ex) {
+        aqua.console.println("moveToLocalFile failed - " + ex.toString());
+    }
+}

@@ -1,0 +1,25 @@
+﻿var server = "Sybase ASE 15.0 - TDS 5.5 - 10.168.1.46";
+var db     = "example_data";
+var schema = "dbo";
+var tabName= "AAA";
+
+var conn = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+
+//var objs = metadata.extractTables(db, schema);
+var obj = metadata.extractTable(db, schema, tabName);
+
+// calling AQTable.getWriter()
+var writer = obj.getWriter();
+
+var dataRow = writer.newDataRow();
+
+dataRow.set(0, "column 1 data");
+dataRow.set(1, "column 2 data");
+
+writer.write(dataRow);
+
+writer.close();
+conn.disconnect();

@@ -1,0 +1,26 @@
+/*
+aqua.math.asin
+
+Get the arc sine of an angle, in the range of -pi/2 through pi/2.
+
+Synopsys
+    double aqua.math.asin(double);
+
+Description
+    * If the argument is NaN or its absolute value is greater than 1, then the result is NaN.
+    * If the argument is zero, then the result is a zero with the same sign as the argument.
+    
+    The computed result must be within 1 ulp of the exact result. Results must be semi-monotonic. 
+
+Example
+    see below
+
+*/
+var pi = aqua.math.getPI();
+
+aqua.console.println("asin[" + pi + "] --> [" + aqua.math.asin(pi) + "]");
+aqua.console.println("asin[-1] --> [" + aqua.math.asin(-1) + "]");
+aqua.console.println("asin[-0.5] --> [" + aqua.math.asin(-0.5) + "]");
+aqua.console.println("asin[" + 0 + "] --> [" + aqua.math.asin(0) + "]");
+aqua.console.println("asin[0.5] --> [" + aqua.math.asin(0.5) + "]");
+aqua.console.println("asin[1] --> [" + aqua.math.asin(1) + "]");

@@ -1,0 +1,37 @@
+﻿/*
+
+Deletes an underlying file object.
+
+Synopsys
+    boolean remove()
+
+Description
+     Deletes an underlying file object.
+
+Example
+    //
+    a = aqua.project.getUserFile{"/jonathan.txt"};
+    a.remove();
+*/
+
+
+userFiles = aqua.project.collectUserFiles("/");
+for(i=0; i<userFiles.length; i++) 
+{
+    if((f=userFiles[i].getName()) == "testdelete.txt") {
+        print("deleting " + f);
+        bDel = userFiles[i].remove();  
+        if(bDel) {
+            print(f + " was deleted successfully");
+        } else {
+            print(f + " was unable to be deleted!");
+        }
+    } else {
+        print("Will not delete " + f);
+        print("");
+    }
+}
+
+function print(m) {
+    aqua.console.println(m);
+}

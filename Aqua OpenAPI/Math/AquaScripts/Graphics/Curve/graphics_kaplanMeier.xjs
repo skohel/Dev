@@ -1,0 +1,85 @@
+﻿/*
+aqua.math.curve.kaplanMeier
+
+Returns KaplanMeier estimator / survival curve and unique event times.
+
+Synopsys
+    double[][] aqua.curve.kaplanMeier(double[],double[]);
+
+Description
+   Calculates relative proportion of survivors in a sample group, accounting for coincident times and censored data.
+
+Example
+    see below
+*/
+
+
+var times=new Array(1, 5, 6, 6, 9, 10, 10, 10, 12, 12, 12, 12, 12, 13, 15, 16, 20, 24, 24, 27, 32, 34, 36, 36, 44);
+var censor= new Array(1,0,1,1,0,1,1,0,1,1,1,1,0,1,0,1,0,1,0,0,1,0,1,1,0);
+var survival=new Array();
+var dataX = new Array();
+var dataY = new Array();
+var fitted = new Array();
+var guess = new Array();
+guess[0]=1;
+guess[1]=1;
+
+//calculate survival curve
+//survival[0][] is survival time
+//survival[1][] is relative fraction of survivors
+survival=aqua.math.curve.kaplanMeier(times,censor);
+
+
+for(i=0;i<survival[0].length;i++){
+dataX[i]=survival[0][i];
+dataY[i]=survival[1][i];
+}
+
+fitted=aqua.math.fit.weibullFit(dataX,dataY,guess);
+
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+//var testFit = aqua.math.getFit();
+
+model.addSeries("Survival Fraction");
+model.addSeries("Weibull Fit");
+
+for(i=0;i<dataX.length;i++){
+aqua.console.println(dataX[i]);
+model.addCategory(dataX[i]);
+model.setValue(0,i,dataY[i]);
+model.setValue(1,i,fitted[i]);
+
+}
+
+
+chart.getProperties().setTitle("Survival Curve");
+chart.getProperties().setChartTypeLine(0);
+chart.getProperties().setChartTypeLine(1);
+
+chart.getProperties().setMergeAxis(true);
+chart.getProperties().setNumericCategoryAxis(true);
+
+chart.getProperties().setRotationX(-45);
+chart.getProperties().setDepth(10);
+chart.getProperties().setWidth(20);
+chart.getProperties().setHeight(12);
+
+//chart.getProperties().setMergeSeriesMin(0);
+//chart.getProperties().setMergeSeriesMax(100);
+//chart.getProperties().setCategoryRange(9,100);
+
+
+chart.getProperties().setImageHeight(480);
+chart.getProperties().setImageWidth(800);
+
+
+chart.getProperties().setShowSeriesAxis(false);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p style="font-size:200%">');
+
+

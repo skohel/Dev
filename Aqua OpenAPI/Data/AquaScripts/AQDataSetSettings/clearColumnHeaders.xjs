@@ -1,0 +1,60 @@
+﻿
+//
+// This script demonstrates how to reset all of custom column headers, either created by using column names or by using column indexes.
+//
+
+// define a data set
+var columns = ["ShipCountry", "CustomerID", "ShipName", "Freight"];
+var dataSet = aqua.data.newDataSet(columns);
+
+// add rows to data set
+dataSet.addRowWithValues("Canada", "C039", "ABC Inc.",   200);
+dataSet.addRowWithValues("Canada", "C061", "Sunrise",    230);
+dataSet.addRowWithValues("France", "C123", "Joe Smith", 1620);
+dataSet.addRowWithValues("Japan",  "C375", "JPL Corp.", 4200);
+dataSet.addRowWithValues("UK",     "C028", "BUK",       1500);
+dataSet.addRowWithValues("US",     "C006", "AuqaFold",    35);
+dataSet.addRowWithValues("US",     "C257", "BOA",         89);
+
+// create a settings for the data set, settings is used to describe how data set to be rendered
+var settings = aqua.report.newReportDataSetSettings();
+
+// define custom column headers by column names
+var names = [ "Freight", "ShipName" ];
+headers = [ "<Freight>", "Ship Name" ];
+settings.setColumnHeaders(names, headers);
+
+// define custom column header by column name
+settings.setColumnHeader("ShipCountry", "[Ship Country]");
+
+// define custom column header by column index, column index is zero based
+settings.setColumnHeader(1, "<Employee ID>");
+
+// set title
+settings.setTitle("AquaFold Open API Example: custom column headers");
+
+// create a report
+var report = aqua.report.newReport();
+
+// add data set and its settings to report
+report.addDataSet(dataSet, settings);
+
+// present report as a plain text grid in console
+aqua.console.print(report.renderText());
+aqua.console.println(""); aqua.console.println("");
+// render report in HTML and display it in browser
+aqua.response.write(report.renderHtml());
+aqua.response.write("<br><br>");
+
+
+// reset all of custom column headers
+settings.clearColumnHeaders();
+
+// update title
+settings.setTitle("AquaFold Open API Example: column headers cleared");
+
+// present report as a plain text grid in console
+aqua.console.print(report.renderText());
+// render report in HTML and display it in browser
+aqua.response.write(report.renderHtml());
+

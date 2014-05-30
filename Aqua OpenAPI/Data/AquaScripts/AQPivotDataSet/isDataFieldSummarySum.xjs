@@ -1,0 +1,20 @@
+﻿
+// create pivot data set
+var pivotTable = aqua.data.newPivotDataSet();
+
+// data field name
+var fieldName = "Freight";
+
+// check summary type
+var isSum = pivotTable.isDataFieldSummarySum(fieldName);
+aqua.console.println("--- before setting summary type ---");
+aqua.console.println("data field summary sum = " + isSum);
+
+// set summary type
+pivotTable.setDataFieldSummarySum(fieldName);
+
+// check summary type
+var isSum = pivotTable.isDataFieldSummarySum(fieldName);
+aqua.console.println("--- after setting summary type ---");
+aqua.console.println("data field summary sum = " + isSum);
+

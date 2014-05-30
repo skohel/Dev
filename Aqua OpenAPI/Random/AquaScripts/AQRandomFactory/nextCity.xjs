@@ -1,0 +1,5 @@
+﻿print("Generate a random city:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextCity();
+    print("\t"+x);
+}

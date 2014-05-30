@@ -1,0 +1,26 @@
+/*
+aqua.math.exp
+
+Returns Euler's number e raised to the power of a double value.
+
+Synopsys
+    double aqua.math.exp(double);
+
+Description
+    * If the argument is positive infinity, then the result is positive infinity.
+    * If the argument is negative infinity, then the result is positive zero.
+    The computed result must be within 1 ulp of the exact result. Results must be semi-monotonic. 
+
+Example
+    see below
+
+*/
+// --- exp() ---
+function show_exp(power) {
+    aqua.console.println("exp[" + power + "] --> [" + aqua.math.exp(power) + "]");
+}
+show_exp(-3.5);
+show_exp(-2);
+show_exp(0);
+show_exp(2);
+show_exp(3.5);

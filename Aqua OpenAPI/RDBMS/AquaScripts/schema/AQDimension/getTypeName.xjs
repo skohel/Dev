@@ -1,0 +1,16 @@
+﻿var server = "Oracle 11G - 10.168.11.51 - HR";
+var db     = null;
+var schema = "HR";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata   = conn.getMetadata();
+var dimensions = metadata.extractDimensions(db, schema);
+
+for (var j=0; j<dimensions.length; j++){
+    var dimension = metadata.extractDimension(db, schema, dimensions[j].getName());
+    // calling AQDimension.getTypeName()
+    aqua.console.println("Dimension Name: [" + dimension.getName() + "]    Type Name: [" + dimension.getTypeName() + "]");
+    aqua.console.println("");
+}
+conn.disconnect();

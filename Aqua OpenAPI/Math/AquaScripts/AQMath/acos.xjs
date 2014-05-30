@@ -1,0 +1,25 @@
+/*
+aqua.math.acos
+
+Get the arc cosine of an angle, in the range of 0.0 through pi.
+
+Synopsys
+    double aqua.math.acos(double);
+
+Description
+    * If the argument is NaN or its absolute value is greater than 1, then the result is NaN.
+    * If the argument is zero, then the result is a zero with the same sign as the argument.
+    The computed result must be within 1 ulp of the exact result. Results must be semi-monotonic. 
+
+Example
+    see below
+
+*/
+var pi = aqua.math.getPI();
+
+aqua.console.println("acos[" + pi + "] --> [" + aqua.math.acos(pi) + "]");
+aqua.console.println("acos[-1] --> [" + aqua.math.acos(-1) + "]");
+aqua.console.println("acos[-0.5] --> [" + aqua.math.acos(-0.5) + "]");
+aqua.console.println("acos[" + 0 + "] --> [" + aqua.math.acos(0) + "]");
+aqua.console.println("acos[0.5] --> [" + aqua.math.acos(0.5) + "]");
+aqua.console.println("acos[1] --> [" + aqua.math.acos(1) + "]");

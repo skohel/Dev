@@ -1,0 +1,65 @@
+﻿
+//
+// This script demonstrates how to bind URL links to header cells defined in a pivot table by column indexes.
+//
+
+// define a data set
+var columns = ["ShipCountry", "CustomerID", "ShipName", "Freight"];
+var dataSet = aqua.data.newDataSet(columns);
+
+// add rows to data set
+dataSet.addRowWithValues("Canada", "C039", "ABC Inc.",   200);
+dataSet.addRowWithValues("Canada", "C061", "Sunrise",    230);
+dataSet.addRowWithValues("France", "C123", "Joe Smith", 1620);
+dataSet.addRowWithValues("Japan",  "C375", "JPL Corp.", 4200);
+dataSet.addRowWithValues("UK",     "C028", "BUK",       1500);
+dataSet.addRowWithValues("US",     "C006", "AuqaFold",    35);
+dataSet.addRowWithValues("US",     "C007", "NETINC",     105);
+dataSet.addRowWithValues("US",     "C257", "BOA SALES",   89);
+dataSet.addRowWithValues("US",     "C257", "BOA MKT",     89);
+
+// create a pivot data set
+var pivotTable = aqua.data.newPivotDataSet();
+
+// define pivot fields
+pivotTable.addRowField("ShipCountry");
+pivotTable.addColumnField("CustomerID");
+pivotTable.addColumnField("ShipName");
+
+// set pivot source data and calculate pivot data
+pivotTable.setDataSet(dataSet);
+pivotTable.calculateGrid();
+
+// create a settings for the pivot data set, settings is used to describe how pivot data to be rendered
+var settings = aqua.report.newReportDataSetSettings();
+
+// set title
+settings.setTitle("AquaFold Open API Example: default pivot grid");
+
+// create a report
+var report = aqua.report.newReport();
+
+// add pivot data set and its settings to report
+report.addDataSet(pivotTable, settings);
+
+// render report in HTML and display it in browser
+aqua.response.write(report.renderHtml());
+aqua.response.write("<br><br>");
+
+
+// list of column indexes where links to be presented
+var indexes = [2, 0];
+// list of sorting URLs to be used
+var urls = new Array(
+    "http://www.aquafold.com?cid=2&sort=<AQSO>",
+    "http://www.aquafold.com?cid=0&sort=<AQSO>"
+);
+// bind URL links to column indexes
+settings.addHtmlHeaderSortLinkByIndexes(indexes, urls);
+
+// update title
+settings.setTitle("AquaFold Open API Example: headers with sort links (by column indexes)");
+
+// render report in HTML and display it in browser
+aqua.response.write(report.renderHtml());
+

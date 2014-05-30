@@ -1,0 +1,23 @@
+/*
+aqua.math.cosh
+
+    Returns the hyperbolic cosine of a double value. The hyperbolic cosine of x is defined to be (ex + e-x)/2 where e is Euler's number. 
+
+Synopsys
+    double aqua.math.cosh(double);
+
+Description
+    * If the argument is infinite, then the result is positive infinity.
+    * If the argument is zero, then the result is 1.0. 
+    The computed result must be within 2.5 ulps of the exact result. 
+
+Example
+    see below
+
+*/
+
+aqua.console.println("cosh[-90] --> [" + aqua.math.cosh(-90) + "]");
+aqua.console.println("cosh[-45] --> [" + aqua.math.cosh(-45) + "]");
+aqua.console.println("cosh[0] --> [" + aqua.math.cosh(0) + "]");
+aqua.console.println("cosh[45] --> [" + aqua.math.cosh(45) + "]");
+aqua.console.println("cosh[90] --> [" + aqua.math.cosh(90) + "]");

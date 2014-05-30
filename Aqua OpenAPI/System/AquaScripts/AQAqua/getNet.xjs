@@ -1,0 +1,5 @@
+﻿var url  = "www.aquafold.com";
+var dest = "/tmp/aquafold.html";
+var net  = aqua.getNet();
+
+net.get(url, dest);

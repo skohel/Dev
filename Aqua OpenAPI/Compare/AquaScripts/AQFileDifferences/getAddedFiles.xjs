@@ -1,0 +1,14 @@
+﻿importPackage(java.io);
+
+var c       = aqua.compare.newFileComparator();
+var folder1 = new File("/tmp/compare/folder1");
+var folder2 = new File("/tmp/compare/folder2");
+var result  = c.compare(folder1, folder2, true);
+result.sort();
+
+aqua.console.println("files that were added");
+var files = result.getAddedFiles();
+for (var i=0; i < result.getAddedFiles().length; i++) {
+    aqua.console.println(files[i].getName());
+}
+aqua.console.println("\n\n");

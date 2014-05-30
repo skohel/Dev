@@ -1,0 +1,67 @@
+﻿//------------------------------------------------------------------------------
+// Class:  
+//      CoreHadoopFileSystem
+// Method:
+//      chmod()
+//
+// Synopsis:
+//      chmod()
+//
+// Description
+//      Changes the permissions of a file or all files inside the specified
+//      directory. Currently, it has effect only under Unix. The permissions 
+//      are also UNIX style, like the arguments for the chmod command. 
+//    
+// Parameters
+//      string - The unix style permission values; required.
+//      string - The file or directory to perform the task; required. 
+//
+// Throws
+//      Exception - on error
+//
+// Return
+//      None.
+//
+// Example
+//      See below.
+//------------------------------------------------------------------------------
+// all test data will be created under this directory
+var fs_data_dir = "/test/AQHadoopFileSystem/";
+
+// get instance of filesystem object
+//var url = "hdfs://localhost:54310";
+var url = "ftp://10.168.2.138";
+var AQFS = aqua.net.newFtpFileSystem(url, "anonymous", "user");
+
+test_chmod();
+
+//--- chmod file or directory ---
+function test_chmod() {
+    var src_base = fs_data_dir + "files/";
+    var dest_base = fs_data_dir + "chmod/";
+    
+    AQFS.copy(src_base, dest_base);
+    
+    var permissions = "-rw-rw-rw-";
+    
+    // testing error condition - missing file or directory
+    exec_chmod(null, permissions);
+    
+    // this should work - chmod on a single file
+    exec_chmod(dest_base + "license.txt", permissions);
+    // this should work  - chmod on a single directory
+    exec_chmod(dest_base, permissions);
+
+    // Clean up
+    AQFS.deleteDirectory(dest_base, true);
+}
+
+function exec_chmod(pathname, permissions) {
+    try {
+        aqua.console.println("chmod: changing permissions of [" + pathname + "] to [" + permissions + "]...");
+        AQFS.chmod(pathname, permissions);
+        aqua.console.println("chmod done.");
+    } catch(ex) {
+        aqua.console.println("chmod failed - " + ex.toString());
+    }
+}

@@ -1,0 +1,319 @@
+// script for unit test
+
+
+// --- abs() ---
+function show_abs(value) {
+    aqua.console.println("abs[" + value + "] --> [" + aqua.math.abs(value) + "]");
+}
+var value = null;
+// show_abs(value);  // this won't compile
+show_abs(12345);
+show_abs(123456789012345);
+show_abs(12345.6789);
+show_abs(123456789.123456789);
+show_abs(123456789012345.123456789);
+
+// --- cbrt() ---
+function show_cbrt(value) {
+    aqua.console.println("cbrt[" + value + "] --> [" + aqua.math.cbrt(value) + "]");
+}
+show_cbrt(8);
+show_cbrt(10);
+show_cbrt(27);
+
+// --- ceil() ---
+function show_ceil(value) {
+    aqua.console.println("ceil[" + value + "] --> [" + aqua.math.ceil(value) + "]");
+}
+show_ceil(12345);
+show_ceil(6789.12345);
+
+// --- constrain() ---
+function show_constrain(value, min, max) {
+    aqua.console.println("constrain[" + value + ", " + min + ", " + max + "] --> [" + aqua.math.constrain(value, min, max) + "]");
+}
+show_constrain(-10, 0, 10);
+show_constrain(20, 0, 10);
+show_constrain(0, 0, 10);
+show_constrain(10, 0, 10);
+show_constrain(5, 0, 10);
+
+// --- copySign() ---
+function show_copySign(magnitude, sign) {
+    aqua.console.println("copySign[" + magnitude + ", " + sign + "] --> [" + aqua.math.copySign(magnitude, sign) + "]");
+}
+show_copySign(3, 1);
+show_copySign(3, -1);
+show_copySign(-3, 1);
+show_copySign(-3, -1);
+
+// --- exp() ---
+function show_exp(power) {
+    aqua.console.println("exp[" + power + "] --> [" + aqua.math.exp(power) + "]");
+}
+show_exp(-3.5);
+show_exp(-2);
+show_exp(0);
+show_exp(2);
+show_exp(3.5);
+
+// --- expm1() ---
+function show_expm1(power) {
+    aqua.console.println("expm1[" + power + "] --> [" + aqua.math.expm1(power) + "]");
+}
+show_expm1(-3.5);
+show_expm1(-2);
+show_expm1(0);
+show_expm1(2);
+show_expm1(3.5);
+
+// --- factorial() ---
+function show_factorial(factor) {
+    var value = "ERROR!";
+    try { value = aqua.math.factorial(factor); } catch(ignore) { }
+    aqua.console.println("factorial[" + factor + "] --> [" + value + "]");
+}
+show_factorial(-1);
+show_factorial(0);
+show_factorial(1);
+show_factorial(5);
+show_factorial(9);
+
+// --- floor() ---
+function show_floor(power) {
+    aqua.console.println("floor[" + power + "] --> [" + aqua.math.floor(power) + "]");
+}
+show_floor(-3.5);
+show_floor(-2);
+show_floor(0)
+show_floor(2);
+show_floor(3.5);
+
+// --- gcd() ---
+function show_gcd(p, q) {
+    aqua.console.println("gcd[" + p + ", " + q + "] --> [" + aqua.math.gcd(p, q) + "]");
+}
+show_gcd(2, 3);
+show_gcd(27, 45);
+
+// --- getE() ---
+aqua.console.println("E is [" + aqua.math.getE() + "]");
+
+// --- hash() ---
+function show_hash(value) {
+    aqua.console.println("hash[" + value + "] --> [" + aqua.math.hash(value) + "]");
+}
+show_hash(-3.5);
+show_hash(-3.5);
+show_hash(0);
+show_hash(5.321);
+show_hash(5.321);
+
+// --- hypot() ---
+function show_hypot(x, y) {
+    aqua.console.println("hypot[" + x + ", " + y + "] --> [" + aqua.math.hypot(x, y) + "]");
+}
+show_hypot(3, 4);
+
+// --- IEEEremainder() ---
+function show_IEEEremainder(v1, v2) {
+    aqua.console.println("IEEEremainder[" + v1 + ", " + v2 + "] --> [" + aqua.math.IEEEremainder(v1, v2) + "]");
+}
+show_IEEEremainder(3, 8);
+show_IEEEremainder(8, 3);
+
+// --- lcm() ---
+function show_lcm(a, b) {
+    aqua.console.println("lcm[" + a + ", " + b + "] --> [" + aqua.math.lcm(a, b) + "]");
+}
+show_lcm(2, 3);
+show_lcm(10, 35);
+
+// --- log() ---
+function show_log(value) {
+    aqua.console.println("log[" + value + "] --> [" + aqua.math.log(value) + "]");
+}
+show_log(-1);
+show_log(0)
+show_log("1");
+show_log(3.5);
+show_log(5);
+
+// --- log10() ---
+function show_log10(value) {
+    aqua.console.println("log10[" + value + "] --> [" + aqua.math.log10(value) + "]");
+}
+show_log10(-1);
+show_log10(0)
+show_log10(1);
+show_log10("3.5");
+show_log10(5);
+
+// --- log1p() ---
+function show_log1p(value) {
+    aqua.console.println("log1p[" + value + "] --> [" + aqua.math.log1p(value) + "]");
+}
+show_log1p(-2);
+show_log1p(-1);
+show_log1p(0)
+show_log1p(1);
+show_log1p(2.5);
+show_log1p("4");
+
+// --- max() ---
+function show_max(v1, v2) {
+    aqua.console.println("max[" + v1 + ", " + v2 + "] --> [" + aqua.math.max(v1, v2) + "]");
+}
+show_max(2, 7);
+show_max(880, 280);
+show_max(2.345, 9.876);
+show_max(9.876, 9.875);
+
+// --- min() ---
+function show_min(v1, v2) {
+    aqua.console.println("min[" + v1 + ", " + v2 + "] --> [" + aqua.math.min(v1, v2) + "]");
+}
+show_min(2, 7);
+show_min(880, 280);
+show_min(2.345, 9.876);
+show_min(9.876, 9.875);
+
+// --- nextAfter() ---
+function show_nextAfter(start, direction) {
+    aqua.console.println("nextAfter[" + start + ", " + direction + "] --> [" + aqua.math.nextAfter(start, direction) + "]");
+}
+show_nextAfter(2, 1);
+show_nextAfter(2, 2);
+show_nextAfter(2, 3);
+show_nextAfter(2.1, 1.2);
+show_nextAfter(2.3, 2.3);
+show_nextAfter(2.5, 3.4);
+show_nextAfter(-2.1, -1.2);
+show_nextAfter(-2.3, -2.3);
+show_nextAfter(-2.5, -3.4);
+
+// --- nextUp() ---
+function show_nextUp(value) {
+    aqua.console.println("nextUp[" + value + "] --> [" + aqua.math.nextUp(value) + "]");
+}
+show_nextUp(1.1);
+show_nextUp(0);
+show_nextUp(-1);
+
+// --- norm() ---
+function show_norm(value, low, high) {
+    aqua.console.println("norm[" + value + ", " + low + ", " + high + "] --> [" + aqua.math.norm(value, low, high) + "]");
+}
+show_norm(-10, 0, 10);
+show_norm(20, 0, 10);
+show_norm(5, 0, 10);
+show_norm(5.6, -4.5, 5.5);
+show_norm(5.5, -4.5, 5.5);
+show_norm(5.4, -4.5, 5.5);
+show_norm(3.5, -4.5, 5.5);
+show_norm(-4.4, -4.5, 5.5);
+show_norm(-4.5, -4.5, 5.5);
+show_norm(-4.6, -4.5, 5.5);
+
+// --- pow() ---
+function show_pow(value, power) {
+    aqua.console.println("pow[" + value + ", " + power + "] --> [" + aqua.math.pow(value, power) + "]");
+}
+show_pow(2, 3);
+show_pow(2.5, 2);
+show_pow(2.5, 2.1);
+
+// --- random() ---
+for( var i=0; i<3; i++ ) {
+    aqua.console.println("random() returns [" + aqua.math.random() + "]");
+}
+
+// --- rint() ---
+function show_rint(value) {
+    aqua.console.println("rint[" + value + "] --> [" + aqua.math.rint(value) + "]");
+}
+show_rint(-2.2);
+show_rint(-1.2);
+show_rint(-1);
+show_rint(0);
+show_rint(1);
+show_rint(1.2);
+show_rint(2.2);
+
+// --- round() ---
+function show_round(value) {
+    aqua.console.println("round[" + value + "] --> [" + aqua.math.round(value) + "]");
+}
+show_round(-3.2);
+show_round(-2.51);
+show_round(-2.5);
+show_round(-2.49);
+show_round(-1);
+show_round(0);
+show_round(1);
+show_round(1.49);
+show_round(1.5);
+show_round(1.51);
+show_round(3.7);
+
+// --- scalb() ---
+function show_scalb(value, factor) {
+    aqua.console.println("scalb[" + value + ", " + factor + "] --> [" + aqua.math.scalb(value, factor) + "]");
+}
+show_scalb(3, 0);
+show_scalb(3.5, 1);
+
+// --- signum() ---
+function show_signum(value) {
+    aqua.console.println("signum[" + value + "] --> [" + aqua.math.signum(value) + "]");
+}
+show_signum(-3.2);
+show_signum(0);
+show_signum(3.2);
+
+// --- sqrt() ---
+function show_sqrt(value) {
+    aqua.console.println("sqrt[" + value + "] --> [" + aqua.math.sqrt(value) + "]");
+}
+show_sqrt(12.5);
+show_sqrt(3);
+show_sqrt(9);
+show_sqrt(0);
+show_sqrt(-12.5);
+
+// --- ulp() ---
+function show_ulp(value) {
+    aqua.console.println("ulp[" + value + "] --> [" + aqua.math.ulp(value) + "]");
+}
+show_ulp(-1);
+show_ulp(0);
+show_ulp(1);
+
+
+// --- Trigonometry ---
+
+var pi = aqua.math.getPI();
+aqua.console.println("PI is [" + pi + "]");
+
+var pi_3 = pi / 3;
+value = aqua.math.sin(pi_3);
+aqua.console.println("sin[" + pi_3 + "] --> [" + value + "]");
+aqua.console.println("asin[" + value + "] --> [" + aqua.math.asin(value) + "]");
+aqua.console.println("sinh[" + pi_3 + "] --> [" + aqua.math.sinh(pi_3) + "]");
+
+value = aqua.math.cos(pi);
+aqua.console.println("cos[" + pi + "] --> [" + value + "]");
+aqua.console.println("acos[" + value + "] --> [" + aqua.math.acos(value) + "]");
+aqua.console.println("cosh[" + pi + "] --> [" + aqua.math.cosh(pi) + "]");
+
+value = aqua.math.tan(pi_3);
+aqua.console.println("tan[" + pi_3 + "] --> [" + value + "]");
+aqua.console.println("atan[" + value + "] --> [" + aqua.math.atan(value) + "]");
+aqua.console.println("tanh[" + pi_3 + "] --> [" + aqua.math.tanh(pi_3) + "]");
+var t2x = 1;
+var t2y = 1;
+aqua.console.println("atan[" + t2x + ", " + t2y + "] --> [" + aqua.math.atan2(t2x, t2y) + "]");
+
+var radians = aqua.math.toRadians(30);
+aqua.console.println("sin[30-degree] --> [" + aqua.math.sin(radians) + "]");
+aqua.console.println("converts PI to degree returns [" + aqua.math.toDegrees(aqua.math.getPI()) + "]");

@@ -1,0 +1,27 @@
+﻿/*
+aqua.project.getUserFilesRootFolder();
+
+Returns a file object corresponding to the "User Files" project folder.
+
+Synopsys
+    AQProjectFile getUserFilesRootFolder()
+
+Description
+    Returns a file object corresponding to the "User Files" project folder.  
+
+Example
+    //Return the file object corresponding to the current "User Files" project folder. 
+    aqua.project.getUserFilesRootFolder();
+
+*/
+
+
+ap = aqua.project;
+
+objFile = ap.getUserFilesRootFolder();
+
+print("User File root folder: [" + objFile.getName() + "]");
+
+function print(m) {
+    aqua.console.println(m);
+}

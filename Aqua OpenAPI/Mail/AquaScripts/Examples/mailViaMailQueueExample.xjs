@@ -1,0 +1,98 @@
+
+var mailQueue = aqua.mail.newMailQueue();
+println("------ Mail Queue state ------");
+println("Enabled:  " + (mailQueue.isEnabled()  ? "Yes" : "No"));
+println("Paused:   " + (mailQueue.isPaused()   ? "Yes" : "No"));
+println("Archived: " + (mailQueue.isArchived() ? "Yes" : "No"));
+println("------------------------------");
+
+function println(message) {
+    aqua.console.println(message);
+}
+
+function sendMail(sequence, email) {
+    println("Trying to send test email #" + sequence + " via mail queue...");
+    try {
+        mailQueue.sendMail(email);
+        println("  email successfully sent.");
+    } catch(ex) {
+        println("  Error sending email: " + ex.toString());
+    }
+}
+
+function newMailMessage() {
+    return aqua.mail.newMessage();
+}
+
+
+var sequence = 0;
+var mailMessage = null;
+sendMail(++sequence, mailMessage);
+
+mailMessage = newMailMessage();
+sendMail(++sequence, mailMessage);
+
+var from = "info@company.com";  // <------ replace this
+var to   = "info@company.com";  // <------ replace this
+
+mailMessage.setFrom(from);
+sendMail(++sequence, mailMessage);
+
+mailMessage.addToRecipient(to);
+sendMail(++sequence, mailMessage);
+
+// should be able to successfully deliver emails created below
+
+mailMessage.setSubject("");
+sendMail(++sequence, mailMessage);
+
+mailMessage.addCCRecipient(from);
+mailMessage.addCCRecipient(to);
+var srcDir = "C://tmp/aqmail_test/";
+var subDir = srcDir + "subdir/";
+mailMessage.setSubject("Attachments - queue");
+mailMessage.addFileAttachment(srcDir + "tmp.txt");
+// mailMessage.addFileAttachment(srcDir + "tmp.txt");
+mailMessage.addFileAttachment(srcDir + "tmp.html");
+mailMessage.addFileAttachment(srcDir + "tmp.zip");
+mailMessage.addFileAttachment(srcDir + "tmp.png");
+mailMessage.addFileAttachment(srcDir + "tmp.xls");
+// mailMessage.addFileAttachment(subDir + "tmp.txt");
+// mailMessage.addFileAttachment(subDir + "tmp.html");
+
+// ------ file attachment with custom attachment name ------
+mailMessage.addFileAttachment(srcDir + "tmp.txt", "tmpAlias.txt");
+// mailMessage.addFileAttachment(srcDir + "tmp.txt", "tmpAlias.txt");
+// mailMessage.addFileAttachment(srcDir + "tmp.html", "tmpAlias.html");
+// mailMessage.addFileAttachment(srcDir + "tmp.xls", "tmpAlias.xls");
+
+// ------ byte array attachment ------
+// create a simple report and convert it to Excel in byte array
+var serverPath = "SQL Server 2000 - 54";
+var databaseName = "Northwind";
+var serverConnection = aqua.project.getServerConnection(serverPath);
+serverConnection.connect();
+serverConnection.changeDatabase(databaseName);
+var dataSet = serverConnection.executeSnapshot("select * from orders where CustomerId like 'AN%';");
+var settings = aqua.report.newReportDataSetSettings();
+settings.setTitle("Report: Customer ID starts with letter AN");
+var report = aqua.report.newReport();
+report.addDataSet(dataSet, settings);
+mailMessage.addByteArrayAttachment(report.getAsExcel2003(), "tmp.xls");
+// mailMessage.addByteArrayAttachment(report.getAsExcel2003(), "tmp.xls");
+// mailMessage.addByteArrayAttachment(report.getAsExcel2003(), "tmp.xls");
+// mailMessage.addByteArrayAttachment(report.getAsExcel2003(), "tmpReport.xls");
+mailMessage.addByteArrayAttachment(report.getAsExcel2003(), "tmpReport2.xls");
+
+// ------ AQProjectFile attachment ------
+var pfEmpty = aqua.project.getAquaScript("test/empty.xjs");
+var pfIssue = aqua.project.getAquaScript("examples/qa-issue-3782.xjs");
+// mailMessage.addProjectFileAttachment(null);
+// mailMessage.addProjectFileAttachment(pfEmpty, null);
+mailMessage.addProjectFileAttachment(pfEmpty);
+mailMessage.addProjectFileAttachment(pfEmpty);
+mailMessage.addProjectFileAttachment(pfIssue, "i3782.xjs");
+
+sendMail(++sequence, mailMessage);
+
+println("---End of Test---");

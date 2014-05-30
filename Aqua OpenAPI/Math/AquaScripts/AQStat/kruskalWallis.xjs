@@ -1,0 +1,34 @@
+
+
+var rawDataA=new Array();
+var rawDataB=new Array();
+var rawDataC=new Array();
+var allData= new Array();
+var out;
+
+
+
+allData[0]=new Array();
+allData[1]=new Array();
+allData[2]=new Array();
+//generate data
+for(i=0;i<30;i++){
+
+
+   rawDataA[i]=2*Math.random()-1;
+   rawDataB[i]=2*+2*Math.random()-1;
+   rawDataC[i]=-3*+2*Math.random()-1;
+   allData[0][i]=rawDataA[i];
+   allData[1][i]=rawDataB[i];
+   allData[2][i]=rawDataC[i];
+  
+}
+
+//ANOVA tests
+out = aqua.math.stat.kruskalWallis(allData);
+
+aqua.console.println("Kruskal Wallis ANOVA");
+
+aqua.console.println(out);
+
+

@@ -1,0 +1,149 @@
+﻿// generates an html page which contains grid results and chart.
+
+var conn = aqua.project.getServerConnection('NextGen Servers/MySQL/MySQL 6.0');
+conn.connect();
+conn.changeDatabase('demo');
+
+// statement 1
+aqua.response.write('select \'A\' as category, 25 as s1, 24 as s2, 23 as s3, 22 as s4, 21 as s5\n' + 
+'union\n' + 
+'select \'B\' as category, -15 as s1, -13 as s2, 0 as s3, 3 as s4, 5 as s5\n' + 
+'union\n' + 
+'select \'C\' as category, 35 as s1, 2 as s2, 0 as s3, 5 as s4, -5 as s5\n' + 
+'union\n' + 
+'select \'D\' as category, -7 as s1, -6 as s2, 0 as s3, 3 as s4, -3 as s5\n' + 
+'union\n' + 
+'select \'E\' as category, 25 as s1, 24 as s2, 0 as s3, 5 as s4, -2 as s5\n' + 
+'union\n' + 
+'select \'F\' as category, 0 as s1, 1 as s2, 3 as s3, 5 as s4, -3 as s5\n' + 
+'union\n' + 
+'select \'G\' as category, 1 as s1, 0 as s2, 4 as s3, 6 as s4, -6 as s5\n' + 
+'union\n' + 
+'select \'H\' as category, 9 as s1, 4 as s2, 2 as s3, 0 as s4, -3 as s5\n' + 
+'union\n' + 
+'select \'I\' as category, -2 as s1, 0 as s2, 3 as s3, 5 as s4, 7 as s5\n' + 
+'union\n' + 
+'select \'K\' as category, -1 as s1, -3 as s2, 0 as s3, 4 as s4, 6 as s5\n' + 
+'union\n' + 
+'select \'M\' as category, 0 as s1, 1 as s2, 4 as s3, 6 as s4, 8 as s5\n' + 
+'union\n' + 
+'select \'O\' as category, -5 as s1, -3 as s2, 4 as s3, 2 as s4, 0 as s5\n' + 
+'union\n' + 
+'select \'P\' as category, 3 as s1, 0 as s2, 1 as s3, -4 as s4, -6 as s5\n' + 
+'union\n' + 
+'select \'T\' as category, 1 as s1, 3 as s2, 0 as s3, -4 as s4, 8 as s5\n' + 
+'union\n' + 
+'select \'W\' as category, -4 as s1, 0 as s2, -1 as s3, 5 as s4, 7 as s5\n' + 
+'union\n' + 
+'select \'Z\' as category, 0 as s1, 3 as s2, 5 as s3, -2 as s4, -4 as s5');
+aqua.response.write('<p>');
+dataSet = conn.executeSnapshot('select \'A\' as category, 25 as s1, 24 as s2, 23 as s3, 22 as s4, 21 as s5\n' + 
+'union\n' + 
+'select \'B\' as category, -15 as s1, -13 as s2, 0 as s3, 3 as s4, 5 as s5\n' + 
+'union\n' + 
+'select \'C\' as category, 35 as s1, 2 as s2, 0 as s3, 5 as s4, -5 as s5\n' + 
+'union\n' + 
+'select \'D\' as category, -7 as s1, -6 as s2, 0 as s3, 3 as s4, -3 as s5\n' + 
+'union\n' + 
+'select \'E\' as category, 25 as s1, 24 as s2, 0 as s3, 5 as s4, -2 as s5\n' + 
+'union\n' + 
+'select \'F\' as category, 0 as s1, 1 as s2, 3 as s3, 5 as s4, -3 as s5\n' + 
+'union\n' + 
+'select \'G\' as category, 1 as s1, 0 as s2, 4 as s3, 6 as s4, -6 as s5\n' + 
+'union\n' + 
+'select \'H\' as category, 9 as s1, 4 as s2, 2 as s3, 0 as s4, -3 as s5\n' + 
+'union\n' + 
+'select \'I\' as category, -2 as s1, 0 as s2, 3 as s3, 5 as s4, 7 as s5\n' + 
+'union\n' + 
+'select \'K\' as category, -1 as s1, -3 as s2, 0 as s3, 4 as s4, 6 as s5\n' + 
+'union\n' + 
+'select \'M\' as category, 0 as s1, 1 as s2, 4 as s3, 6 as s4, 8 as s5\n' + 
+'union\n' + 
+'select \'O\' as category, -5 as s1, -3 as s2, 4 as s3, 2 as s4, 0 as s5\n' + 
+'union\n' + 
+'select \'P\' as category, 3 as s1, 0 as s2, 1 as s3, -4 as s4, -6 as s5\n' + 
+'union\n' + 
+'select \'T\' as category, 1 as s1, 3 as s2, 0 as s3, -4 as s4, 8 as s5\n' + 
+'union\n' + 
+'select \'W\' as category, -4 as s1, 0 as s2, -1 as s3, 5 as s4, 7 as s5\n' + 
+'union\n' + 
+'select \'Z\' as category, 0 as s1, 3 as s2, 5 as s3, -2 as s4, -4 as s5');
+
+
+// chart
+chart = aqua.chart.newChart();
+chart.setDataSource(dataSet);
+chart.setSeriesFields("s1", "s2", "s3", "s4", "s5");
+chart.setCategoryFields("category");
+chart.properties.setBackgroundColorBottom(-1314571);
+chart.properties.setBackgroundColorTop(-2630411);
+chart.properties.setCategoryAxisNumberFormat("#,##0");
+chart.properties.setCategorySpacing(0.25);
+chart.properties.setDepth(8.0);
+chart.properties.setNumericCategoryAxis(false);
+chart.properties.setFixedCategoryCount(1);
+chart.properties.setShowFixedCategoryCount(false);
+chart.properties.setFont('Arial-PLAIN-6');
+chart.properties.setGroupSmallValuesThreshold(3.0);
+chart.properties.setGroupSmallValues(true);
+chart.properties.setHeight(10.0);
+chart.properties.setImageWidth(640);
+chart.properties.setImageHeight(480);
+chart.properties.setShowLegend(true);
+chart.properties.setLegendHeight(160);
+chart.properties.setLegendHeightTypeFit();
+chart.properties.setLegendPositionTopRight();
+chart.properties.setLegendWidth(100);
+chart.properties.setLegendWidthTypeExact();
+chart.properties.setLightingDefault();
+chart.properties.setLineWidth(1.0);
+chart.properties.setShowMarkers(true);
+chart.properties.setMapShowBackground(false);
+chart.properties.setMapShowDetails(false);
+chart.properties.setMergeAxis(true);
+chart.properties.setPanX(-4.299999);
+chart.properties.setPanY(-5.900001);
+chart.properties.setPieShowLines(false);
+chart.properties.setPieExplode(0.0);
+chart.properties.setPieLabelDistance(3.0);
+chart.properties.setReverseValueAxis(false);
+chart.properties.setRotationX(324);
+chart.properties.setRotationY(0);
+chart.properties.setRotationZ(0);
+chart.properties.setSeriesSpacing(0.25);
+chart.properties.setStackedPercent(false);
+chart.properties.setTitle('2D Zero Crossing Chart');
+chart.properties.setValueAxisNumberFormat("###0");
+chart.properties.setWidth(16.0);
+chart.properties.setView2D(true);
+chart.properties.setZoom(3);
+chart.properties.setShowValueAxis(true);
+chart.properties.setShowCategoryAxis(true);
+chart.properties.setShowSeriesAxis(false);
+chart.properties.setShowGrid(true);
+chart.properties.setChartTypeScatter(0);
+chart.properties.setColor(0, -16744448);
+chart.properties.setColumnTypeCube(0);
+chart.properties.setChartTypeScatter(1);
+chart.properties.setColor(1, -65281);
+chart.properties.setColumnTypeCube(1);
+chart.properties.setChartTypeScatter(2);
+chart.properties.setColor(2, -16777088);
+chart.properties.setColumnTypeCube(2);
+chart.properties.setChartTypeScatter(3);
+chart.properties.setColor(3, -6737152);
+chart.properties.setColumnTypeCube(3);
+chart.properties.setChartTypeScatter(4);
+chart.properties.setColor(4, -16777216);
+chart.properties.setColumnTypeCube(4);
+
+url = chart.cache(3600);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');
+
+// grid results
+writer = aqua.io.newHtmlWriter();
+writer.setTableStyle('background:#ffffe1;');
+writer.write(dataSet);
+aqua.response.write(writer.toHtml());
+aqua.response.write('<p>');

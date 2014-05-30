@@ -1,0 +1,79 @@
+﻿//------------------------------------------------------------------------------
+// Class:  
+//      CoreHadoopFileSystem
+// Method:
+//      glob()
+//
+// Synopsis:
+//      glob()
+//
+// Description
+//      Return all the files that match filePattern and are not checksum
+//      files. Results are sorted by their names
+//    
+// Parameters
+//      pattern - The Unix glob pattern.
+//      filter - A user-supplied filter.
+// Throws
+//      Exception - on error
+//
+// Return
+//      A list of files. The list contains the absolute path of the file.
+//
+// Example
+//      See below.
+//------------------------------------------------------------------------------
+// all test data will be created under this directory
+var fs_data_dir = "/test/AQHadoopFileSystem/";
+
+// get instance of filesystem object
+//var url = "hdfs://localhost:54310";
+var url = "ftp://10.168.2.138";
+var AQFS = aqua.net.newFtpFileSystem(url, "anonymous", "user");
+
+test_glob();
+
+// --- glob directory ---
+function test_glob() {
+
+    var src_base  = fs_data_dir + "files/";
+
+    // testing error condition
+    exec_glob(null);
+    // this should work - glob a single directory
+    exec_glob(src_base + "*.*");
+
+    // this should work - glob a single directory with exclude filter
+    var filter = AQFS.newRegexExcludeFilter(".*\\.js");
+    exec_glob_filter(src_base + "*.*", filter);
+}
+
+function exec_glob(pattern) {
+    var files;    
+    try {
+        aqua.console.println("glob in [" + pattern + "]...");
+        files = AQFS.glob(pattern);
+              
+        for (var i=0; i<files.length; i++){
+        	aqua.console.println("[" + files[i] + "]\n");
+        }
+        aqua.console.println("glob: done.\n");
+    } catch(ex) {
+        aqua.console.println("glob: failed - " + ex.toString() + "\n");
+    }
+}
+
+function exec_glob_filter(pattern, filter) {
+    var files;    
+    try {
+        aqua.console.println("glob with filter in [" + pattern + "]...");
+        files = AQFS.glob(pattern, filter);
+              
+        for (var i=0; i<files.length; i++){
+        	aqua.console.println("[" + files[i] + "]\n");
+        }
+        aqua.console.println("glob with filter: done.\n");
+    } catch(ex) {
+        aqua.console.println("glob with filter: failed - " + ex.toString() + "\n");
+    }
+}

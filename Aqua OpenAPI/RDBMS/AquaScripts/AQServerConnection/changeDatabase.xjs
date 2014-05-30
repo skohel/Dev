@@ -1,0 +1,9 @@
+﻿var server = "MySql 6.0 - 10.168.1.38 - demo";
+var db     = "mysql";
+var conn   = aqua.project.getServerConnection(server);
+
+conn.connect();
+
+conn.changeDatabase(db);
+
+conn.disconnect();

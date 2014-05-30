@@ -1,0 +1,21 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        setListingFile()
+ 
+   Synopsis:
+        void setListingFile(String listingFile)
+
+   Description
+        The output file for the list command. This attribute is required for the list command and ignored for any other commands.    
+
+   Parameters
+        listingFile - file in which to store the listing 
+  
+   Throws
+        none
+ 
+   Example
+        See below.
+*/

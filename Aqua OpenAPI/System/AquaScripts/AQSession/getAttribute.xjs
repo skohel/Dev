@@ -1,0 +1,4 @@
+﻿var session = aqua.request.getSession();
+aqua.console.println("calling aqua.session.setAttribute(\"key\", \"value\")");
+session.setAttribute("key", "value");
+aqua.console.println("aqua.session.getAttribute(\"key\"): [" + session.getAttribute("key") + "]\n");

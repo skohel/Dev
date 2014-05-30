@@ -1,0 +1,3 @@
+﻿aqua.console.println("aqua.response.getHeader(\"key\"): [" + aqua.response.getHeader("key") + "]");
+aqua.response.setHeader("key", "value");
+aqua.console.println("aqua.response.getHeader(\"key\"): [" + aqua.response.getHeader("key") + "]");

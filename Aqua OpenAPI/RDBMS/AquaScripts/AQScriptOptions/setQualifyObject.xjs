@@ -1,0 +1,15 @@
+﻿var server = "DB2 LUW 9.7 - 10.168.11.57 - SAMPLE - demo";
+var db     = "SAMPLE";
+var schema = "demo";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata     = conn.getMetadata();
+var scriptOption = conn.getScriptOptions();
+
+aqua.console.println("AQOptions.getQualifyObject():       [" + scriptOption.getQualifyObject() + "]");
+
+aqua.console.println("Executing AQOptions.setQualifyObject(false)"); 
+scriptOption.setQualifyObject(false);
+
+aqua.console.println("AQOptions.getQualifyObject():       [" + scriptOption.getQualifyObject() + "]");

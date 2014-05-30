@@ -1,0 +1,20 @@
+﻿
+//
+// This script demonstrates how to get/set the character used to represent the row divider.
+// The row divider is only applicable to a plain text grid.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// get default row divider
+var divider = settings.getRowDivider();
+aqua.console.println("The default row divider is '" + divider + "'.");
+
+// customize row divider
+settings.setRowDivider("+");
+
+// get current row divider
+divider = settings.getRowDivider();
+aqua.console.println("The row divider is currently set to '" + divider + "'.");
+

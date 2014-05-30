@@ -1,0 +1,21 @@
+/*
+
+Description of method functionality
+
+Synopsys
+    [Return Data Type] functionName()  
+
+Description
+    Description of functionality
+
+Example
+    //
+
+
+*/
+
+print("Genereate a random last name:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextLastName();
+    print("\t"+x);
+}

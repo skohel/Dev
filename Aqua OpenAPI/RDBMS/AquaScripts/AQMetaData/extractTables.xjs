@@ -1,0 +1,291 @@
+﻿var server = "Oracle 11G - 10.168.11.51 - HR";
+var db     = null;
+var schema = "HR";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+var tables   = metadata.extractTables(db, schema);
+
+for(var i=0; i<tables.length; i++){
+
+    var table = metadata.extractTable(db, schema, tables[i].getName());
+
+    printAQSchemaObject(table);
+
+    var columns = table.extractColumns()
+
+    aqua.console.println("No. of columns in table:  [" + columns.length + "]");
+    for (var j=0; j<columns.length; j++){
+        printAQTableColumn(columns[j]);
+    }
+    aqua.console.println("Done printing columns for table");
+
+    var constraints = table.extractConstraints();
+
+    aqua.console.println("No. of constraints in table:[" + constraints.length + "]");
+    for (var j=0; j<constraints.length; j++){
+        var constraint = table.extractConstraint(constraints[j].getName());
+        printAQConstraint(constraint);
+    }
+    aqua.console.println("Done printing constraint for table");
+
+    var indexes = table.extractIndexes();
+
+    aqua.console.println("No. of indexes in table:    [" + constraints.length + "]");
+    for (var j=0; j<indexes.length; j++){
+        var index = table.extractIndex(indexes[j].getName());
+        printAQIndex(index);
+    }
+    aqua.console.println("Done printing indexes for table");
+
+    var permissions = table.extractPermissions();
+
+    aqua.console.println("No. of permissions in table: [" + permissions.length + "]");
+    for (var j=0; j<permissions.length; j++){
+        var permission = permissions[j];
+
+        printAQObjectPermission(permission);
+    }
+    aqua.console.println("Done printing permissions for table");
+
+    var triggers = table.extractTriggers();
+
+    aqua.console.println("No. of triggers in table:    [" + triggers.length + "]");
+    for (var j=0; j<triggers.length; j++){
+        var trigger = table.extractTrigger(triggers[j].getName());
+        printAQTrigger(trigger);
+    }
+    aqua.console.println("Done printing triggers for table");
+    aqua.console.println("");
+    aqua.console.println("");
+}
+
+conn.disconnect();
+
+
+//---------------------------------------------------------------
+// Print all getters in AQTrigger
+//---------------------------------------------------------------
+function printAQTrigger(obj){
+
+    if (obj != null){
+        aqua.console.println("FROM AQTrigger: ");
+        aqua.console.println("Table Name:               [" + obj.getTableName() + "]");
+
+        // calling function to print getters in the superclass (AQSchemaObject)
+        printAQSchemaObject(obj);
+    }
+}
+
+
+//---------------------------------------------------------------
+// Print all getters in AQIndex
+//---------------------------------------------------------------
+function printAQIndex(obj){
+
+    if (obj != null){
+        aqua.console.println("From AQIndex: ");
+
+        // extracting object permission
+        var permissions = obj.extractPermissions();
+
+        // printing GRANT and REVOKE scripts
+        for (var j=0; j<permissions.length; j++){
+            // calling function to print getters in the AQPermission object
+            printAQObjectPermission(permissions[j]);
+        }
+
+        // printing paramters
+        var columns = obj.extractColumns();
+        for (var j=0; j<columns.length; j++){
+            // calling function to print getters in the AQParamter object
+            printAQIndexColumn(columns[j]);
+        }
+
+        // calling function to print getters in the superclass (AQSchemaObject)
+        printAQSchemaObject(obj);
+    }
+}
+
+
+//---------------------------------------------------------------
+// Print all getters in AQIndexColumn
+//---------------------------------------------------------------
+function printAQIndexColumn(obj){
+
+    if (obj != null){
+        aqua.console.println("FROM AQIndexColumn: ");
+        aqua.console.println("Order:                    [" + obj.getOrder() + "]");
+        aqua.console.println("Sequence:                 [" + obj.getSeq() + "]");
+
+        // print other interesting info from AQSchemaObject
+        printAQSchemaObject(obj);
+    }
+}
+
+
+//---------------------------------------------------------------
+// Print all getters in AQParameter
+//---------------------------------------------------------------
+function printAQParameter(obj){
+
+    if (obj != null){
+        aqua.console.println("FROM AQParameter: ");
+        aqua.console.println("Data Type:                [" + obj.getDataType() + "]");
+        aqua.console.println("Name:                     [" + obj.getName() + "]");
+        aqua.console.println("Ordinal:                  [" + obj.getOrdinal() + "]");
+        aqua.console.println("is Input:                 [" + obj.isInput() + "]");
+    }
+}
+
+
+//---------------------------------------------------------------
+// Print all getters in AQConstaint
+//---------------------------------------------------------------
+function printAQConstraint(obj){
+
+    if (obj != null){
+        aqua.console.println("FROM AQConstraint: ");
+
+        var columns = obj.extractColumns();
+
+        for (var i=0; i<columns.length; i++){
+
+            var column = columns[i];
+
+            // calling function to print getters AQConstraintColumn
+            printAQConstraintColumn(column);
+            aqua.console.println("done with columns");
+        }
+        // calling function to print getters in the superclass (AQSchemaObject)
+        printAQSchemaObject(obj);
+    }
+}
+
+
+//---------------------------------------------------------------
+// Print all getters in AQConstraintColumn
+//---------------------------------------------------------------
+function printAQConstraintColumn(obj){
+
+    if (obj != null){
+        aqua.console.println("FROM AQConstraintColumn: ");
+        
+        
+        // print other interesting info from AQSchemaObject
+        printAQSchemaObject(obj);
+    }
+}
+
+
+//---------------------------------------------------------------
+// Print all getters in AQTableColumn
+//---------------------------------------------------------------
+function printAQTableColumn(obj){
+
+    if (obj != null){
+        aqua.console.println("From AQTableColumn: ");
+        aqua.console.println("Data Type:                [" + obj.getDataType() + "]");
+        aqua.console.println("is Identity:              [" + obj.isIdentity() + "]");
+        aqua.console.println("is Nullable:              [" + obj.isNullable() + "]");
+        aqua.console.println("Default Value:            [" + obj.getDefaultValue() + "]");
+        // calling function to print getters in the superclass (AQSchemaObject)
+        printAQSchemaObject(obj);
+    }
+}
+
+
+//---------------------------------------------------------------
+// Print all getters in AQSchemaObject
+//---------------------------------------------------------------
+function printAQSchemaObject(obj){
+
+    if (obj != null){
+        aqua.console.println("From AQSchemaObject: ");
+        aqua.console.println("Database Name:            [" + obj.getDatabaseName() + "]");
+        aqua.console.println("Schema Name:              [" + obj.getSchemaName() + "]");
+        // calling function to print getters in the superclass (AQServerObject)
+        printAQServerObject(obj);
+    }
+}
+
+
+//---------------------------------------------------------------
+// Print all getters in AQServerObject
+//---------------------------------------------------------------
+function printAQServerObject(obj){
+
+    if (obj != null){
+        aqua.console.println("FROM AQServerObject: " );
+        aqua.console.println("Object Name:              [" + obj.getName() + "]");
+        aqua.console.println("Type Name:                [" + obj.getTypeName() + "]");
+    
+        try{
+            aqua.console.println("Script DROP:              [" + obj.scriptDROP() + "]");
+        }
+        catch(ex){
+            aqua.console.println("Script Drop - Exception:  [" + ex.toString() + "]");
+        }
+        try{
+            aqua.console.println("Script CREATE:            [" + obj.scriptCREATE() + "]");
+        }
+        catch(ex){
+            aqua.console.println("Script Create - Exception:[" + ex.toString() + "]");
+        }
+        
+        // calling function to print getters from object returned
+        // from method getServerConnection();
+        printAQServerConnection(obj.getServerConnection());
+    }
+}
+
+
+//---------------------------------------------------------------
+// Print all getters in AQServerConnection
+//---------------------------------------------------------------
+function printAQServerConnection(obj){
+
+    if (obj != null){
+        aqua.console.println("FROM AQServerConnection: ");
+        aqua.console.println("Name:                     [" + obj.getName() + "]");
+        aqua.console.println("Session ID:               [" + obj.getSessionID() + "]");
+        aqua.console.println("Version String:           [" + obj.getVersionString() + "]");
+        aqua.console.println("Connected:                [" + obj.isConnected() + "]");
+
+        // calling function to print getter from object returned
+        // from calling method getScriptOptions()
+        printAQScriptOptions(obj.getScriptOptions());
+    }
+}
+
+
+//---------------------------------------------------------------
+// Print all getters in AQScriptOptions
+//---------------------------------------------------------------
+function printAQScriptOptions(obj){
+
+    if (obj != null){
+        aqua.console.println("FROM AQScriptOptions: ");
+        aqua.console.println("Leading quote identifier: [" + obj.getLeadingQuoteIdentifier() + "]");
+        aqua.console.println("Line Separator:           [" + obj.getLineSeparator() + "]");
+        aqua.console.println("Qualify Object:           [" + obj.getQualifyObject() + "]");
+        aqua.console.println("Statement Separator:      [" + obj.getStatementSeparator() + "]");
+        aqua.console.println("Trailing quote identifier:[" + obj.getTrailingQuoteIdentifier() + "]");
+    }
+}
+
+
+//---------------------------------------------------------------
+// Print all getters in AQObjectPermission
+//---------------------------------------------------------------
+function printAQObjectPermission(obj){
+
+    if (obj != null){
+        aqua.console.println("FROM AQObjectPermission: ");
+        aqua.console.println("Script GRANT 'user':      [" + obj.scriptGRANT("user") + "]");
+        aqua.console.println("Script GRANT 'role':      [" + obj.scriptGRANT("role") + "]");
+        aqua.console.println("Script REVOKE 'user':     [" + obj.scriptREVOKE("user") + "]");
+        aqua.console.println("Script REVOKE 'role':     [" + obj.scriptREVOKE("role") + "]");
+    }
+}

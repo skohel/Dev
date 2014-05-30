@@ -1,0 +1,54 @@
+﻿                                             
+var url = 'svn://10.168.1.33/AquaTestRep';
+var folder = 'c:/Test.aquascript/test2.svn/';
+
+try
+{
+    aqua.filesystem.deleteDirectory(folder);
+}
+catch(ignore)
+{ }
+aqua.filesystem.createDirectory(folder);
+
+// checkout
+var svn = aqua.vcs.newWorkspaceSubversion();
+svn.verbose = true;
+svn.username = aqua.crypto.getSecureField('svn.username');
+svn.password = aqua.crypto.getSecureField('svn.password');
+svn.checkout(folder, url);
+
+// get latest revision
+var file = folder + 'breaks-jide.jpg';
+print(svn.getRevision(file));
+
+// update to a different revision
+svn.update(file, "900");
+print(svn.getRevision(file));
+
+var myfile = folder+"test_ilya.txt";
+var mySecondFile = folder+"test2_ilya.txt";
+var writer = aqua.io.newTextWriter();
+writer.setFile(myfile);
+writer.write(aqua.random.nextFirstName());
+writer.close();
+var writer2 = aqua.io.newTextWriter();
+writer2.setFile(mySecondFile);
+writer2.write(aqua.random.nextFirstName());
+writer2.close();
+var fileSet = aqua.filesystem.newFileSet();
+fileSet.setBaseDir(folder);
+fileSet.setIncludes("*ilya.txt");
+
+
+var files = aqua.filesystem.scan(fileSet);
+for(i = 0; i < files.length; i++) {
+    print(files[i]);
+}
+
+svn.commit("Another commit", fileSet);
+
+//svn.commit("Another commit", myfile);
+//svn.commit("Another commit", mySecondFile);
+//print(svn.getRevision(myfile));
+
+print('done');

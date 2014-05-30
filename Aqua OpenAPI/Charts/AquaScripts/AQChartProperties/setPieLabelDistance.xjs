@@ -1,0 +1,44 @@
+﻿/*
+aqua.chart.properties.setPieLabelDistance
+
+Synopsys
+    void setPieLabelDistance(float distance);
+
+Description
+Set the distance at which labels are placed from their corresponding pie slices
+
+Example
+    see below
+
+*/
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+model.addSeries("a");
+model.addSeries("b");
+
+model.addCategory("US");
+model.addCategory("UK");
+model.addCategory("France");
+model.addCategory("Japan");
+
+model.setValue(0, 0, 100);
+model.setValue(0, 1, 200);
+model.setValue(0, 2, 300);
+model.setValue(0, 3, 400);
+
+chart.getProperties().setChartTypePie();
+
+chart.getProperties().setPieLabelDistance(8);
+
+var value = chart.getProperties().getPieLabelDistance();
+aqua.response.write('Pie Label Distance: ').write(value).write("<p>");
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

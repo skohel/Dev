@@ -1,0 +1,23 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        delFile()
+ 
+   Synopsis:
+        void getFile(String localdir, String filename, String remotedir) throws Exception
+
+   Description
+        Downloads a file from the remote FTP server to a local directory.  
+
+   Parameters
+        localdir - the name of the local directory
+        filename - the path of the remote file relative to remotedir
+        remotedir - the base directory on the remote FTP server  
+  
+   Throws
+        Exception - if failed to download files
+ 
+   Example
+        See below.
+*/

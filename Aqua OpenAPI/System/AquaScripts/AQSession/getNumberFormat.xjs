@@ -1,0 +1,4 @@
+﻿var session      = aqua.request.getSession();
+var numberFormat = session.getNumberFormat();
+
+aqua.console.println("session.getNumberFormat().getMaximumFractionDigits(): [" + numberFormat.getMaximumFractionDigits() + "]");

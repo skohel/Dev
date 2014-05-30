@@ -1,0 +1,41 @@
+
+// utility function - abort execution
+function abort(api) {
+    aqua.console.println("!!! expected exception is not generated on execution of [" + api + "]");
+    aqua.exit();
+}
+
+// utility function - write expected exception to console
+function showExpectedError(ex) {
+    aqua.console.println("... expected exception received - " + ex.name + " - " + ex.message);
+}
+
+// utility function to validate Reply-To list
+function validateList(email, length) {
+    var list = email.getReplyTo();
+    if ( list.length != count ) {
+        var message = "!!! List length (" + list.length + ") does not match expected length (" + length + ")";
+        throw message;
+    }
+}
+
+
+// create a new email message
+var email = aqua.mail.newMessage();
+
+// test invalid arguments
+try { email.addReplyTo(null); abort('addReplyTo(null)'); } catch(ex) { showExpectedError(ex); } 
+try { email.addReplyTo(""); abort('addReplyTo("")'); } catch(ex) { showExpectedError(ex); } 
+try { email.addReplyTo("  "); abort('addReplyTo("  ")'); } catch(ex) { showExpectedError(ex); } 
+try { email.addReplyTo(" , ,, "); abort('addReplyTo(" , ,, ")'); } catch(ex) { showExpectedError(ex); } 
+
+// test valid arguments
+var count = 0;
+email.addReplyTo("address1");  validateList(email, ++count);
+email.addReplyTo("address1");  validateList(email, ++count);
+email.addReplyTo("address2");  validateList(email, ++count);
+email.addReplyTo("address2,address3");  validateList(email, (count+=2));
+email.addReplyTo("address3,, ,address3, address4");  validateList(email, (count+=3));
+
+// done with test
+aqua.console.println("DONE");

@@ -1,0 +1,56 @@
+﻿var factory       = aqua.type.getFloat();
+var validObject   = 100.001;
+var invalidObject = "a100.00";
+var validString   = "1,000";
+var invalidString = "1.000";
+var pattern       = "#,###";
+
+try{
+    aqua.console.println("Is object [" + validObject   + "] a float? [" + factory.parse(validObject) + "]");
+    aqua.console.println("Is object [" + invalidObject + "] a float? [" + factory.parse(invalidObject) + "]");
+    aqua.console.println("");
+}
+catch(e){
+    aqua.console.println(e);
+    aqua.console.println("");
+}
+
+try{
+    aqua.console.println("Is object [" + validString   + "] with pattern [" + pattern + "] a float? [" + factory.parse(validString, pattern) + "]");
+    aqua.console.println("Is object [" + invalidString + "] with pattern [" + pattern + "] a float? [" + factory.parse(invalidString, pattern) + "]");
+    aqua.console.println("");
+}
+catch(e){
+    aqua.console.println(e);
+    aqua.console.println("");
+}
+
+try{
+    // doing integer the way they do in Spain
+    var locale    = "ES";
+    var pattern   = null;
+    validString   = "1.000.000,001";
+    invalidString = "1,000,000";
+    aqua.console.println("Is object [" + validString   + "] with pattern [" + pattern + "] and locale [" + locale + "] a float? [" + factory.parse(validString, pattern, locale) + "]");
+    aqua.console.println("Is object [" + invalidString + "] with pattern [" + pattern + "] and locale [" + locale + "] a float? [" + factory.parse(invalidString, pattern, locale) + "]");
+    aqua.console.println("");
+}
+catch(e){
+    aqua.console.println(e);
+    aqua.console.println("");
+}
+
+
+try{
+    var locale    = null;
+    var pattern   = null;
+    validString   = "1,000,000"; // default locale (in the here in the US), uses "," as thousand separators.
+    invalidString = "1.000.000";
+    aqua.console.println("Is object [" + validString   + "] with pattern [" + pattern + "] and locale [" + locale + "] a float? [" + factory.parse(validString, pattern, locale) + "]");
+    aqua.console.println("Is object [" + invalidString + "] with pattern [" + pattern + "] and locale [" + locale + "] a float? [" + factory.parse(invalidString, pattern, locale) + "]");
+    aqua.console.println("");
+}
+catch(e){
+    aqua.console.println(e);
+    aqua.console.println("");
+}

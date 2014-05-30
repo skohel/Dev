@@ -1,0 +1,44 @@
+﻿/*
+aqua.chart.setSeriesFields
+
+Synopsys
+    void setSeriesFields(String... seriesFieldNames);
+
+Description
+Set series values from one or more fields in the datasource.  These values are then displayed according to the chart type.
+This method replaces any previously-selected series fields.  
+
+Example
+    see below
+
+*/
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+var ds = aqua.data.newDataSet(["country","cost","freight"]);
+
+ds.addRowWithValues("US", 100, 50);
+ds.addRowWithValues("UK", 10, 5);
+ds.addRowWithValues("Japan", 200, 125);
+ds.addRowWithValues("Canada", 20, 7);
+ds.addRowWithValues("France", 300, 150);
+ds.addRowWithValues("Germany", 30, 8);
+
+model.setDataSource(ds);
+
+model.addCategoryField("country");
+model.setSeriesFields("cost", "freight");
+
+chart.getProperties().setMergeAxis(true);
+
+chart.getProperties().setChartTypeArea(0);
+chart.getProperties().setChartTypeLine(1);
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

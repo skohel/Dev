@@ -1,0 +1,23 @@
+
+// create a new email message
+var email = aqua.mail.newMessage();
+
+// validate mail From
+var from = email.getFrom();
+if ( from != null ) {
+    throw "Unexpected mail From '" + from + "', null expected.";
+}
+
+// set mail From
+var address = "  name@company.com ";
+email.setFrom(address);
+
+// validate mail from
+aqua.console.println("Validating mail From...");
+from = email.getFrom();
+if ( from != address ) {
+    throw "Unexpected mail From '" + from + "', expected address is '" + address + "'.";
+}
+
+// done with test
+aqua.console.println("DONE");

@@ -1,0 +1,11 @@
+// create an array[100] of integer values.
+var myInt = new Array();
+for(val=0; val<100; val++) {
+    myInt[val]=val+1;
+}
+
+print("Generate random integer from an Enumeration of integers");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextEnumerationInteger(myInt);
+    print("\t"+x);
+}

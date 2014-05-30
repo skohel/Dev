@@ -1,0 +1,11 @@
+﻿testGetRunURL();
+
+function testGetRunURL() {
+	aqua.console.println('[TEST] aqua.project.getRunURL()');
+	var url = aqua.project.getRunURL();
+	if(url == null) {
+		throw "Expected url != null but was: " + url;
+	}
+	aqua.console.println(url);	
+	aqua.console.println('[OK]');	
+}

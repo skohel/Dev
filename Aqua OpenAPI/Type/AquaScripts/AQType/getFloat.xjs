@@ -1,0 +1,7 @@
+﻿var validValue   = "123.123";
+var invalidValue = "123 123";
+var factory      = aqua.type.getFloat();
+
+aqua.console.println("Is [" + validValue   + "] a float? [" + factory.isValid(validValue) + "]");
+aqua.console.println("Is [" + invalidValue + "] a float? [" + factory.isValid(invalidValue) + "]");
+

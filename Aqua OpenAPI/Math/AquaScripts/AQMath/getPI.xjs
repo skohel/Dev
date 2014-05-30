@@ -1,0 +1,16 @@
+/*
+aqua.math.getPI
+
+Returns the double value that is closer than any other to pi, the ratio of the circumference of a circle to its diameter.
+
+Synopsys
+    double aqua.math.getPI();
+
+Description
+
+Example
+    see below
+
+*/
+
+aqua.console.println("getPI() --> [" + aqua.math.getPI() + "]");

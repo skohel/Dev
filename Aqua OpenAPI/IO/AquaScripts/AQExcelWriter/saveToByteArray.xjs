@@ -1,0 +1,14 @@
+﻿// define the output EXCEL file
+var ExlFile = "/ExlWrtr.xlsx";
+
+// create an EXCEL writer
+var writer = aqua.io.newExcelWriter();
+
+// save to the Byte Array
+abyte = writer.saveToByteArray();
+for (i=0; i<abyte.length; i++) {
+    aqua.console.println(abyte[i]);
+}
+
+aqua.console.println("Data Set written to Byte Array");
+aqua.exit();

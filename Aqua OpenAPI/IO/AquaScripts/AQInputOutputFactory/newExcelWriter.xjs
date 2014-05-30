@@ -1,0 +1,8 @@
+﻿// define the output EXCEL file
+var excelFile = "/ExlWrtr.xls";
+
+// create an EXCEL writer
+var writer = aqua.io.newExcelWriter();
+aqua.console.println("Open file  [" + excelFile + "]");
+aqua.console.println("Close file [" + excelFile + "]");
+writer.close();

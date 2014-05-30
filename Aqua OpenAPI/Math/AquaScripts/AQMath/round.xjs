@@ -1,0 +1,31 @@
+/*
+aqua.math.round
+
+Returns the closest long to the argument.
+
+Synopsys
+    double aqua.math.round(double)
+
+Description
+    Nothing exciting to describe.
+
+Example
+    see below
+*/
+
+// --- round() ---
+function show_round(value) {
+    aqua.console.println("round[" + value + "] --> [" + aqua.math.round(value) + "]");
+}
+
+show_round(-3.2);
+show_round(-2.51);
+show_round(-2.5);
+show_round(-2.49);
+show_round(-1);
+show_round(0);
+show_round(1);
+show_round(1.49);
+show_round(1.5);
+show_round(1.51);
+show_round(3.7);

@@ -1,0 +1,9 @@
+﻿var sql = "select 1<1 and 2=2 or 3<5";
+
+var beautifier  = aqua.project.getServerConnection("MySql 6.0 - 10.168.1.38 - demo").newSqlFormat();
+
+beautifier.setBreakAfterLogical(true);
+
+aqua.console.println("BEFORE BEAUTIFICATION:\n[" + sql + "]");
+aqua.console.println("");
+aqua.console.println("AFTER BEAUTIFICATION:\n[" +  beautifier.format(sql) + "]");

@@ -1,0 +1,7 @@
+﻿var textFile = "C:/access.log";
+
+var writer = aqua.io.newTextWriter();
+writer.setFile(textFile);
+aqua.console.println("line delimiter [" + writer.getLineDelimiter() + "]");
+writer.close();
+

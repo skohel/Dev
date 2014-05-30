@@ -1,0 +1,12 @@
+﻿
+aqua.console.println("Process Start");
+aqua.console.println("Sleep for 1000ms");
+// sleep
+aqua.util.sleep(1000);
+aqua.console.println("Sleep for 2000ms");
+// sleep
+aqua.util.sleep(2000);
+aqua.console.println("Sleep for 3000ms");
+// sleep
+aqua.util.sleep(3000);
+aqua.console.println("Process Stop");

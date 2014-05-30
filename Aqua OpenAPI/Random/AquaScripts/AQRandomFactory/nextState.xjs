@@ -1,0 +1,5 @@
+﻿print("Generate a random US state:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextState();
+    print("\t"+x);
+}

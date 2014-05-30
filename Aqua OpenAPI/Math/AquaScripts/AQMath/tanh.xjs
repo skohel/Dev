@@ -1,0 +1,27 @@
+/*
+aqua.math.tanh
+
+Returns the hyperbolic tangent of a double value. The hyperbolic tangent of x is 
+defined to be (ex - e-x)/(ex + e-x), in other words, sinh(x)/cosh(x). Note that 
+the absolute value of the exact tanh is always less than 1. 
+   
+Synopsys
+    double aqua.math.tanh(double value1, double value2)
+
+Description
+    The computed result must be within 2.5 ulps of the exact result. The result
+    of tanh for any finite input must have an absolute value less than or equal 
+    to 1. Note that once the exact result of tanh is within 1/2 of an ulp of the 
+    limit value of ±1, correctly signed ±1.0 should be returned. 
+
+Example
+    see below
+*/
+var pi = aqua.math.getPI();
+var pi_3 = pi / 3;
+
+value = aqua.math.sin(pi_3);
+
+aqua.console.println("PI is [" + pi + "]");
+
+aqua.console.println("tanh[" + pi_3 + "] --> [" + aqua.math.tanh(pi_3) + "]");

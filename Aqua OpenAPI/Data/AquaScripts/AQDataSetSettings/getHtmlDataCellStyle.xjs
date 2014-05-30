@@ -1,0 +1,27 @@
+﻿
+//
+// This script demonstrates how to get/set the CSS style for a specific data cell in a HTML grid.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// data cell index is zero based
+var rowIndex = 0;
+var columnIndex = 1;
+
+// get current style setting
+var style = settings.getHtmlDataCellStyle(rowIndex, columnIndex);
+if ( style == null ) {
+    aqua.console.println("The custom CSS style at cell [" + rowIndex + ", " + columnIndex + "] is not defined.");
+} else {
+    aqua.console.println("The custom CSS style at cell [" + rowIndex + ", " + columnIndex + "] is '" + style + "'.");
+}
+
+// set custom style
+settings.setHtmlDataCellStyle(rowIndex, columnIndex, "border:1px solid #dae8ff; background:orange;");
+
+// get current style setting
+style = settings.getHtmlDataCellStyle(rowIndex, columnIndex);
+aqua.console.println("The custom CSS style at cell [" + rowIndex + ", " + columnIndex + "] is currently set to '" + style + "'.");
+

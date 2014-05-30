@@ -1,0 +1,15 @@
+﻿var server  = "Oracle 11G - 10.168.11.51 - HR";
+var db      = null;
+var schema  = "HR";
+var sql     = "select * from HR.ANGER";
+var conn    = aqua.project.getServerConnection(server);
+conn.connect();
+
+var resultSet = conn.executeQuery(sql);
+
+while (resultSet.next()){
+        aqua.console.println(resultSet.getCurrentRow());
+}
+
+resultSet.close();
+conn.disconnect();

@@ -1,0 +1,15 @@
+﻿
+//
+// This script demonstrates how to get/set the title text.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// set title text
+settings.setTitle("This is a title text");
+
+// get title text
+var title = settings.getTitle();
+aqua.console.println("The title is currently et to '" + title + "'.");
+

@@ -1,0 +1,67 @@
+﻿//------------------------------------------------------------------------------
+// Class:  
+//      CoreHadoopFileSystem
+// Method:
+//      deleteFile()
+//
+// Synopsis:
+//      deletefile()
+//
+// Description
+//      Delete a singale file.
+//    
+// Parameters
+//      string - The name of the file to be deleted; required.
+//
+// Throws
+//      Exception - on error
+//
+// Return
+//      None.
+//
+// Example
+//      See below.
+//------------------------------------------------------------------------------
+// all test data will be created under this directory
+var fs_data_dir = "/test/AQHadoopFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.net.newHadoopDistributedFileSystem("hdfs://localhost:9100");
+
+test_deleteFile();
+
+// --- delete a single file ---
+function test_deleteFile() {
+    var src_dir = fs_data_dir + "files/";
+    var dest_dir = fs_data_dir + "deleteDirectory/";
+
+    if (AQFS.exists(dest_dir)) {
+        AQFS.deleteDirectory(dest_dir, true);
+    }
+    AQFS.copy(src_dir, dest_dir);
+        
+    // testing error condition - file required
+    exec_deleteFile(null);
+    // testing error condition - file to be deleted has to exist
+    exec_deleteFile(dest_dir + "file.does.not.exist.txt");
+    // testing error condition - does not support wild card values
+    exec_deleteFile(dest_dir + "src_base/*.*");
+    // testing error condition - deleting directory
+    exec_deleteFile(dest_dir);
+    
+    // this should work - delete single file
+    exec_deleteFile(dest_dir + "license.txt");
+    
+    // Clean up
+    AQFS.deleteDirectory(dest_dir, true);
+}
+
+function exec_deleteFile(source) {
+    try {
+        aqua.console.println("deleteFile: deleting [" + source + "]...");
+        // NOTE: delete cannot be used as a method name; otherwise, would cause javascript error
+        aqua.console.println("deleteFile done? " + AQFS.deleteFile(source));
+    } catch(ex) {
+        aqua.console.println("deleteFile failed - " + ex.toString());
+    }
+}

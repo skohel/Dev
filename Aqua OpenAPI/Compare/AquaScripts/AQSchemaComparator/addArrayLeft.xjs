@@ -1,0 +1,12 @@
+﻿var comparator = aqua.compare.newSchemaComparator();
+var server     = aqua.project.getServerConnection("MSSQL");
+server.connect();
+
+var schemaLeft  = server.getMetadata().extractSchemas("NORTHWIND");
+var schemaRight = server.getMetadata().extractSchemas("NORTHWIND");
+
+comparator.addArrayLeft(schemaLeft);
+comparator.addArrayRight(schemaRight);
+
+var differences = comparator.compare();
+aqua.console.println("Are the 2 arrays of schema objects different? " + (differences.hasChanges()? "YES" : "NO"));

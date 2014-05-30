@@ -1,0 +1,191 @@
+﻿/*
+aqua.math.curve, aqua.math.fit
+
+Synopsyis
+    Summary of prediction and trendline methods
+
+
+
+Example
+    see below
+
+*/
+var rawDataX=new Array();
+var rawDataXGraph = new Array();
+var rawDataY=new Array();
+var rawDataYGraph = new Array();
+
+//var interpolatedPoint=0;
+var noise = new Array();
+//var desiredX=0;
+
+//generate noise
+for(i=0;i<34;i++){
+noise[i]=2*Math.random()-1;
+noise[i]=noise[i]*10;
+}
+
+//generate noisy data with gap
+for(i=0;i<25;i++){
+   rawDataX[i]=i;
+rawDataXGraph[i]=rawDataX[i];
+   rawDataY[i]=.2*Math.pow(rawDataX[i],2)+15+noise[i];
+   rawDataYGraph[i]=rawDataY[i];
+}
+
+//placeholders for predicted points on graph
+for(i=25;i<30;i++){
+   rawDataXGraph[i]=i;
+   rawDataYGraph[i]=NaN; 
+}
+
+
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+
+model.addSeries("raw");
+
+for(i=0;i<30;i++){
+model.addCategory(rawDataXGraph[i]);
+model.setValue(0,i,rawDataYGraph[i]);
+
+}
+
+
+
+chart.getProperties().setNumericCategoryAxis(true);
+
+chart.getProperties().setTitle("25 days of raw data.");
+chart.getProperties().setChartTypeLine(0);
+
+chart.getProperties().setMergeAxis(true);
+
+chart.getProperties().setView2D(true);
+
+chart.getProperties().setWidth(20);
+chart.getProperties().setHeight(12);
+
+//chart.getProperties().setMergeSeriesMin(0);
+chart.getProperties().setMergeSeriesMax(200);
+//chart.getProperties().setCategoryRange(9,100);
+
+chart.getProperties().setImageHeight(480);
+chart.getProperties().setImageWidth(800);
+
+
+//get fits to use in prediction
+
+var chart2 = aqua.chart.newChart();
+var model2 = chart2.getModel();
+
+var testFit = aqua.math.getFit();
+var fitY = new Array();
+//polynomial fit
+var fitYGraphPoly = new Array();
+var polyCoeff = new Array();
+var newPoly = testFit.newPOLY_Function();
+
+fitPolyY=testFit.polyFit(rawDataX,rawDataY,2);
+polyCoeff=testFit.polyFitCoeff(rawDataX,rawDataY,2);
+
+//linear fit
+var fitYGraphLinear = new Array();
+var linCoeff = new Array();
+var newLine = testFit.newPOLY_Function();
+
+fitLinY=testFit.polyFit(rawDataX,rawDataY,1);
+linCoeff=testFit.polyFitCoeff(rawDataX,rawDataY,1);
+
+//exponential fit
+var fitYGraphExp = new Array();
+var expCoeff = new Array();
+var newExp = testFit.newEXP_Function();
+
+fitExpY=aqua.math.fit.expFit(rawDataX,rawDataY);
+expCoeff=aqua.math.fit.expFitCoeff(rawDataX,rawDataY);
+
+//initialize graph data
+for(i=0;i<30;i++){
+fitYGraphPoly[i]=NaN;
+fitYGraphLinear[i]=NaN;
+fitYGraphExp[i]=NaN;
+}
+
+
+//establish trendline
+for(i=0;i<rawDataYGraph.length-1;i++){
+fitYGraphPoly[i]=testFit.evaluate(i,newPoly,polyCoeff);
+fitYGraphLinear[i]=testFit.evaluate(i,newLine,linCoeff);
+fitYGraphExp[i]=testFit.evaluate(i,newExp,expCoeff);
+}
+
+model2.addSeries("Raw");
+model2.addSeries("Trendline (Polynomial)");
+model2.addSeries("Trendline (Linear)");
+model2.addSeries("Trendline (Exponential)");
+
+
+
+//predict future data using fit and evaluate
+for(i=0;i<30;i++){
+model2.addCategory(i);
+model2.setValue(0,i,rawDataYGraph[i]);
+model2.setValue(1,i,testFit.evaluate(i,newPoly,polyCoeff));
+model2.setValue(2,i,testFit.evaluate(i,newLine,linCoeff));
+model2.setValue(3,i,testFit.evaluate(i,newExp,expCoeff));
+}
+
+chart2.getProperties().setTitle("Trendline / Prediction");
+chart2.getProperties().setChartTypeLine(0);
+chart2.getProperties().setLineWidth(1);
+chart2.getProperties().setChartTypeLine(1);
+chart2.getProperties().setChartTypeLine(2);
+chart2.getProperties().setChartTypeLine(3);
+chart2.getProperties().setMergeAxis(true);
+
+chart2.getProperties().setRotationX(-45);
+chart2.getProperties().setDepth(10);
+chart2.getProperties().setWidth(20);
+chart2.getProperties().setHeight(12);
+chart2.getProperties().setView2D(true);
+
+chart2.getProperties().setNumericCategoryAxis(true);
+
+//chart2.getProperties().setMergeSeriesMin(-10);
+//chart2.getProperties().setMergeSeriesMax(200);
+//chart2.getProperties().setCategoryRange(0,32);
+
+
+chart2.getProperties().setImageHeight(480);
+chart2.getProperties().setImageWidth(800);
+// image will be available for 5 seconds
+var url = chart.cache(5);
+var url2 = chart2.cache(5);
+
+
+//introduction
+
+aqua.response.write(' <p><span style="color: #2778cb;"><big><strong>Aqua Prediction Methods: Extrapolation and trendlines.</strong></big></span></p>');
+aqua.response.write('In order to approximate data outside a given data set, we must extrapolate.  The most common applications of this type of method are trendlines and prediction of future data. ');
+//aqua.response.write('<ol><li>Raw Data <li>interpolate to fil gap <li>fit and evaluate to fill gap <li> extrapolate / predict </ol><br>');
+
+aqua.response.write('The following data set represents 25 consecutive days of data.<br>');
+//fig 1
+aqua.response.write('<img src=').write(url).write('>');
+
+//notes on fig 1
+
+aqua.response.write('<hr> We can see some kind of increase in the data, and we expect the predicted data to capture that feature.  Also, a closer look reveals a slight increase in that growth rate over time.  We can try several types of fit to determine which will provide the best trendline.  For example, we find the best fit line, 2nd order polynomial and exponential function for comparison.  ')  
+aqua.response.write('<table>');
+aqua.response.write('<pre>         fitY=testFit.polyFit(rawDataX,rawDataY,2);  //best fit polynomial of order 2</pre>');
+aqua.response.write('<pre>         polyCoeff=testFit.polyFitCoeff(rawDataX,rawDataY,2);  //recover polynomial coefficients for evaluation</pre>');
+aqua.response.write('<pre>         evaluatedPoint = testFit.evaluate(desiredX,newPoly,polyCoeff);  //evaluate fit at desiredX</pre>');
+
+aqua.response.write('In order to calculate a trendline, we simply evaluate the functions for a series of data points outside the original set.  Since we are interested in prediction, we choose the next 5 days in the month for evaluation.');
+
+//fig 2
+aqua.response.write('<img src=').write(url2).write('>');
+
+

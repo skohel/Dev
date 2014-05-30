@@ -1,0 +1,18 @@
+
+
+var rawData=new Array();
+var out=0;
+
+//generate data
+for(i=0;i<30;i++){
+
+   rawData[i]=10+2*Math.random()-1;
+   
+}
+
+out=aqua.math.stat.bins(rawData,10);
+aqua.console.println("Raw Data, Binned Data");
+for(i=0;i<30;i++){
+aqua.console.println(rawData[i] + " " + out[i]);
+
+}

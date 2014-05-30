@@ -1,0 +1,22 @@
+﻿
+
+
+aqua.console.println("1 ms timeout results in exception ");
+request(1);
+aqua.console.println("1 sec timeout results is big enough");
+request(1000);
+
+aqua.console.println("DONE");
+
+function request(timeout) {
+try {
+    var client = aqua.net.newWebClient();
+    var req = client.newWebRequest("http://aquafold.com")
+    client.setConnectionTimeout(timeout);
+    var resp = client.submitGetRequest(req);
+    resp.getContentString();
+    client.closeConnection();
+} catch(error) {
+    aqua.console.println(error);
+}
+}

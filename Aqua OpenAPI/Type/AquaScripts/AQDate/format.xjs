@@ -1,0 +1,9 @@
+﻿var factory = aqua.type.getDate();
+var date    = factory.newDate();
+var pattern = "yyyy MMM dd HH.mm.ss z";
+var locale  = "ZH";
+
+aqua.console.println("Current datetime: [" + date + "]");
+
+aqua.console.println("Date string of current datetime with + [" + pattern + "] pattern: [" + date.format(pattern) + "]");
+aqua.console.println("Date string of current datetime with + [" + pattern + "] pattern and ["+ locale + "] locale: [" + date.format(pattern, locale) + "]");

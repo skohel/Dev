@@ -1,0 +1,7 @@
+﻿var file     = "/out.txt";
+var str      = "Aquafold Inc.";
+var encoding = "UTF-8";
+
+aqua.console.println("Writing string [" + str + "] to file [" + file + "] using encoding [" + encoding + "]");
+
+aqua.io.saveToFile(file, str, "UTF-8");

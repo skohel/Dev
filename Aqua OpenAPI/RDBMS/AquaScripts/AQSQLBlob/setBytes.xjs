@@ -1,0 +1,81 @@
+﻿var server      = "Oracle 11G - 10.168.11.51 - HR";
+var db          = null;
+var schema      = "HR";
+var sql         = "select * from HR.ANGER where ID = 2991";
+
+var conn = aqua.project.getServerConnection(server);
+conn.connect();
+
+var resultSet = conn.executeQuery(sql);
+var rowCount  = 0;
+
+resultSet.next();
+
+var row = resultSet.getRow();
+var columnStructure = resultSet.getColumnStructure();
+var columnNames     = columnStructure.getColumnNames();
+var blobColumnOne;
+var blobColumnTwo;
+
+if (row !=null){
+    var blob;
+    try{
+        blobColumnOne = resultSet.getBlob(0);
+        blobColumnTwo = resultSet.getBlob(1);
+    }
+    catch(ex){
+        aqua.console.println(ex.toString());
+        aqua.console.println("");
+    }
+
+    // print out blobs
+    var bytesFromColumnOne = blobColumnOne.getBytes(0, blobColumnOne.getLength());
+    var bytesFromColumnTwo = blobColumnTwo.getBytes(0, blobColumnTwo.getLength());
+
+    var stringFactory = aqua.type.getString();
+    aqua.console.print("Column One AQSQLBlob.getBytes()  [");
+    for (var j=0; j<bytesFromColumnOne.length; j++){
+        aqua.console.print("[" + bytesFromColumnOne[j] + "] ");
+    }
+    aqua.console.println("]");
+
+    aqua.console.print("Column Two AQSQLBlob.getBytes()  [");
+    for (var j=0; j<bytesFromColumnTwo.length; j++){
+        aqua.console.print("[" + bytesFromColumnTwo[j] + "] ");
+    }
+    aqua.console.println("]");
+    aqua.console.println("");
+
+    aqua.console.println("Now take column one date and put at the end of column two");
+
+    var numOfBytesWritten = blobColumnTwo.setBytes(blobColumnTwo.getLength(), bytesFromColumnOne, 0, blobColumnOne.getLength())
+
+    aqua.console.println("No. of bytes written: " + numOfBytesWritten);
+
+    bytesFromColumnTwo = blobColumnTwo.getBytes(0, blobColumnTwo.getLength()-1);
+    aqua.console.print("Column Two AQSQLBlob.getBytes()  [");
+    for (var j=0; j<bytesFromColumnTwo.length; j++){
+        aqua.console.print("[" + bytesFromColumnTwo[j] + "] ");
+    }
+    aqua.console.println("]");
+    aqua.console.println("");
+
+
+    aqua.console.println("Now take column two data and put it into blob column one");
+
+    var numOfBytesWritten = blobColumnOne.setBytes(0, blobColumnTwo.getBytes(0, blobColumnTwo.getLength()));
+
+    aqua.console.println("No. of bytes written: " + numOfBytesWritten);
+
+    bytesFromColumnTwo = blobColumnTwo.getBytes(0, blobColumnTwo.getLength()-1);
+    aqua.console.print("Column Two AQSQLBlob.getBytes()  [");
+    for (var j=0; j<bytesFromColumnTwo.length; j++){
+        aqua.console.print("[" + bytesFromColumnTwo[j] + "] ");
+    }
+    aqua.console.println("]");
+    aqua.console.println("");
+
+}
+
+resultSet.close();
+conn.disconnect();

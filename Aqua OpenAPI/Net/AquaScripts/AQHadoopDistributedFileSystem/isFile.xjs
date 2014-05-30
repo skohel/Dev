@@ -1,0 +1,45 @@
+﻿//------------------------------------------------------------------------------
+// Class:  
+//      CoreHadoopFileSystem
+// Method:
+//      isFile()
+//
+// Synopsis:
+//      isFile()
+//
+// Description
+//      Test whether the file specified exists.
+//    
+// Parameters
+//      string - The name of the file; required.
+//
+// Throws
+//      Exception - on error
+//
+// Return
+//      Returns true if and only if the file denoted exists and is a normal file; 
+//      false otherwise.
+//
+// Example
+//      See below.
+//------------------------------------------------------------------------------
+// all test data will be created under this directory
+var fs_data_dir = "/test/AQHadoopFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.net.newHadoopDistributedFileSystem("hdfs://localhost:9100");
+
+test_isFile();
+
+// --- test isFile ---
+
+function test_isFile(){
+
+   var src_file = fs_data_dir + "files/license.txt";
+   var file_doesnt_exist = fs_data_dir + "file_doesnt_exist";
+   
+   aqua.console.println("Is " + file_doesnt_exist  + " a file (true/false)?: " + AQFS.isFile(file_doesnt_exist));
+   aqua.console.println("Is " + fs_data_dir  + " a file (true/false)?: " + AQFS.isFile(fs_data_dir));
+   aqua.console.println("Is " + src_file + " a file (true/false)?: " + AQFS.isFile(src_file));
+ 
+}

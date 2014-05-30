@@ -1,0 +1,38 @@
+/*
+
+Description of method functionality
+
+Synopsys
+    [Return Data Type] functionName()  
+
+Description
+    Description of functionality
+
+Example
+    //
+
+
+*/
+
+print("Return a random string from an array of strings");
+var myColor = new Array();
+myColor[0]="blue";
+myColor[1]="green";
+myColor[2]="white";
+myColor[3]="black";
+myColor[4]="yellow";
+myColor[5]="red";
+myColor[6]="orange";
+myColor[7]="grey";
+myColor[8]="silver";
+myColor[9]="gold";
+myColor[10]="purple";
+myColor[11]="pink";
+myColor[12]="brown";
+myColor[13]="hazel";
+myColor[14]="platnum";
+myColor[15]="blonde";
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextEnumerationString(myColor);
+    print("\t"+x);
+}

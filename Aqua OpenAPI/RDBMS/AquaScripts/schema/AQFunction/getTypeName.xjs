@@ -1,0 +1,18 @@
+﻿var server = "Oracle 11G - 10.168.11.51 - HR";
+var db     = null;
+var schema = "HR";
+var conn = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata  = conn.getMetadata();
+var functions = metadata.extractFunctions(db, schema);
+
+for (var i=0; i<functions.length; i++){
+
+    var func = functions[i];
+
+    // calling AQFunction.getTypeName()
+    aqua.console.println("Function Name: [" + func.getName() + "]    Type Name: [" + func.getTypeName() + "]");
+    aqua.console.println("");
+}
+conn.disconnect();

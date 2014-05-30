@@ -1,0 +1,21 @@
+﻿var mysql = aqua.getProject().getServerConnection("NorthWind");
+
+mysql.connect();
+
+var ds = mysql.executeSnapshot("select * from orders");
+
+var chart = aqua.chart.newChart();
+chart.setDataSource(ds);
+
+chart.getModel().addCategoryField("shipcountry");
+chart.getModel().setSeriesFields("freight", "shipvia");
+
+chart.getProperties().setChartTypeLine();
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

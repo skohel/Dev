@@ -1,0 +1,47 @@
+﻿/*
+aqua.chart.properties.getImageWidth
+
+Synopsys
+    Integer getImageWidth();
+
+Description
+Return the width of the chart image, if any has been specified
+
+Example
+    see below
+
+*/
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+model.addSeries("a");
+model.addSeries("b");
+
+model.addCategory("US");
+model.addCategory("UK");
+model.addCategory("France");
+
+model.setValue(0, 0, 100);
+model.setValue(0, 1, 200);
+model.setValue(0, 2, 300);
+model.setValue(1, 0, 10);
+model.setValue(1, 1, 20);
+model.setValue(1, 2, 30);
+
+chart.getProperties().setChartTypeArea(0);
+chart.getProperties().setChartTypeColumn(1);
+chart.getProperties().setMergeAxis(true);
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+var width = chart.getProperties().getImageWidth();
+aqua.response.write('Image Width: ').write(width).write("<p>");
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

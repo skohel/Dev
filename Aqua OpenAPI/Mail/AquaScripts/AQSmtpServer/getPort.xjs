@@ -1,0 +1,17 @@
+
+// create a new server
+var smtpServer = aqua.mail.newSmtpServer();
+
+// set port
+var port = 108;
+smtpServer.setPort(port);
+
+// validate port
+var portNumber = smtpServer.getPort();
+if ( portNumber != port ) {
+    throw "Unexpected port '" + portNumber + "' retrieved, expected value is '" + port + "'";
+}
+
+// done with test
+aqua.console.println("DONE");
+

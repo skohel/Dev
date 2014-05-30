@@ -1,0 +1,28 @@
+
+importPackage(java.util);
+
+// an utility function to apply a randomly generated date variation to a date object
+function generateVariations(generator, target) {
+    for( var i=0; i<6; i++ ) {
+        aqua.console.println("  " + generator.apply(target));
+    }
+}
+
+
+// create a random date variation generator using default variation range, i.e. 12 hours delta
+var randomVariation = aqua.random.newRandomDateVariation();
+var target = new java.util.Date();
+aqua.console.println("Generate Date variations using default variation range (+/- 12 hours), base date object is [" + target + "]");
+generateVariations(randomVariation, target);
+
+
+// create a random date variation generator with variation range set to +/- 1 month 
+aqua.console.println("Generate Date variations with variation range set to (+/- 1 month), base date object is [" + target + "]");
+randomVariation = aqua.random.newRandomDateVariation(0, 1, 0, 0, 0, 0);
+generateVariations(randomVariation, target);
+
+
+// create a random date variation generator with variation range set to 10 minutes, i.e. moving forward only
+aqua.console.println("Generate Date variations with variation range set to 10 minutes, base date object is [" + target + "]");
+randomVariation = aqua.random.newRandomDateVariation(0, 0, 0, 0, 0, 0,   0, 0, 0, 0, 10, 0);
+generateVariations(randomVariation, target);

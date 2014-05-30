@@ -1,0 +1,12 @@
+﻿var factory  = aqua.type.getBigDecimal();
+
+var value     = .0000000000005;
+var threshold = .0000000000010;
+
+aqua.console.println("Is [" + value + "] less then  [" + threshold + "]? " + factory.isLess(value, threshold));
+
+threshold = .0000000000005;
+aqua.console.println("Is [" + value + "] less then  [" + threshold + "]? " + factory.isLess(value, threshold));
+
+threshold = .0000000000004;
+aqua.console.println("Is [" + value + "] less then  [" + threshold + "]? " + factory.isLess(value, threshold));

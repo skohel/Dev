@@ -1,0 +1,6 @@
+﻿var folder  = "/Aqua-rdbms-docs";
+var svn     = aqua.vcs.getWorkspaceSubversion(folder);
+
+svn.commit(folder, "Testing commit through API");
+
+aqua.console.println("COMMIT is successful and " + svn.getRevision(folder));

@@ -1,0 +1,28 @@
+﻿
+//
+// This script demonstrates how to determine whether a column is a hidden column.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// check hidden column by index, column index is zero based
+var index = 0;
+var flag = settings.isHiddenColumn(index);
+aqua.console.println("Default setting: column at index " + index + " is " + (flag ? "" : "not ") + "a hidden column.");
+
+// hide column by index
+settings.hideColumn(index);
+flag = settings.isHiddenColumn(index);
+aqua.console.println("Custom setting: column at index " + index + " is " + (flag ? "" : "not ") + "a hidden column.");
+
+
+// check hidden column by name
+var name = "CustomerID";
+flag = settings.isHiddenColumn(name);
+aqua.console.println("Default setting: column '" + name + "' is " + (flag ? "" : "not ") + "a hidden column.");
+
+// hide column by name
+settings.hideColumn(name);
+flag = settings.isHiddenColumn(name);
+aqua.console.println("Custom setting: column '" + name + "' is " + (flag ? "" : "not ") + "a hidden column.");

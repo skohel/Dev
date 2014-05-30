@@ -1,0 +1,18 @@
+﻿var gitWS    = aqua.vcs.newGit();
+
+try {
+// set the git workspace in your local machine
+gitWS.setWorkspace("c://git_clone");
+
+
+var history = gitWS.getHistory("c://git_clone/README.rdoc");
+print("File revision history ...");
+for(i = 0; i < history.length; i++) 
+{
+ aqua.console.println("Modified on : " + history[i].getTime() + " Author : " + history[i].getAuthor()) ;
+}
+}
+catch(ex) {
+// print if add to git repo failure
+aqua.console.println("Error in adding file in Git Repo..." +ex.toString() + "\n");
+}

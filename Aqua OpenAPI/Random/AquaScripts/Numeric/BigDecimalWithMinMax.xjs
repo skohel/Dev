@@ -1,0 +1,9 @@
+importPackage(java.math);
+
+print("Generate random big decimal numeric value with Min & Max values:");
+min = new BigDecimal("5.37");
+max = new BigDecimal("15.84");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextBigDecimal(min, max);
+    print("\t"+x);
+}

@@ -1,0 +1,18 @@
+﻿var factory  = aqua.type.getShort();
+
+var value1   = 10000;
+var value2   = 10000;
+
+aqua.console.println("Is [" + value1 + "] equal to [" + value2 + "]? " + factory.isEqual(value1, value2));
+
+value2 = 20000;
+aqua.console.println("Is [" + value1 + "] equal to [" + value2 + "]? " + factory.isEqual(value1, value2));
+
+// This is a test for is max value of short + 1
+value1 = 32767;
+value2 = 32768;
+aqua.console.println("Is [" + value1 + "] equal to [" + value2 + "]? " + factory.isEqual(value1, value2));
+
+// value2 as a string
+value2 = "100000.01";
+aqua.console.println("Is [" + value1 + "] equal to [" + value2 + "]? " + factory.isEqual(value1, value2));

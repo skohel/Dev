@@ -1,0 +1,28 @@
+﻿/*
+aqua.project.getServerConnectionsRootFolder
+
+Returns a file object corresponding to the "Servers" project folder. Files in this folder and the folder itself are read-only. 
+
+Synopsys
+    AQProjectFile getServerConnectionsRootFolder()
+
+Description
+    Returns a file object corresponding to the "Servers" project folder. Files in this folder and the folder itself are read-only. 
+
+Example
+    //Return a file object corresponding to the "Servers" project folder of the current project.
+    aqua.project.getServerConnectionsRootFolder();
+
+*/
+
+
+ap = aqua.project;
+
+objFile = ap.getServerConnectionsRootFolder();
+
+print("Server root folder: [" + objFile.getName() + "]");
+
+
+function print(m) {
+    aqua.console.println(m);
+}

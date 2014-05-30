@@ -1,0 +1,24 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        list()
+ 
+   Synopsis:
+        void list(AQFileSet fileset, String remotedir) throws Exception
+        void list(String remotedir) throws Exception
+        void list(String remotedir, boolean includeSubdir) throws Exception
+
+   Description
+        Lists all files, defined by a file set, in a remote directory. setListingFile(listFile)  needs to be called beforehand to define the local file where output to be stored.   
+
+   Parameters
+        remotedir - the name of the remote directory
+        includeSubdir - includes all of files in the subdirectories if true    
+  
+   Throws
+        Exception - if failed to list files
+ 
+   Example
+        See below.
+*/

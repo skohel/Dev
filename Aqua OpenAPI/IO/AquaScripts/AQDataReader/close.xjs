@@ -1,0 +1,11 @@
+﻿// define the input EXCEL file
+var excelFile = "/ExlWrtr.xls";
+var reader    = aqua.io.newExcelReader();
+
+aqua.console.println("Start opening file: [" + excelFile + "]");
+reader.setFile(excelFile);
+
+var file = reader.getFile();
+
+aqua.console.println("Closing file: [" + excelFile + "]");
+reader.close();

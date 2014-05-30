@@ -1,0 +1,23 @@
+﻿var Pws    = aqua.vcs.newPerforce();
+Pws.setVerbose(false);
+
+// create AQOpaqueObject containing the username and password
+var usr = aqua.crypto.getSecureField('svn.username');
+var pwd = aqua.crypto.getSecureField('svn.password');
+
+// connect to the Perforce server
+Pws.connect("p4jrpc://10.168.11.82:1666","client","F:\\May_Perforce",usr,pwd);
+aqua.console.println("Connected to the Perforce Server ...!");
+
+var usr = Pws.getUser(null);
+aqua.console.println("** Display User information **");
+
+// Display information of the User
+aqua.console.println("Login Name:"         + usr.getLoginName());
+aqua.console.println("Full Name:"          + usr.getFullName());
+aqua.console.println("Update Date:"        + usr.getUpdate());
+aqua.console.println("Last Accessed Date:" + usr.getAccess());
+
+Pws.close();
+// disconnect from the Perforce server
+print("Disconnected from Perforce Server ..!");

@@ -1,0 +1,23 @@
+﻿var Pws    = aqua.vcs.newPerforce();
+Pws.setVerbose(false);
+
+// create AQOpaqueObject containing the username and password
+var usr = aqua.crypto.getSecureField('svn.username');
+var pwd = aqua.crypto.getSecureField('svn.password');
+
+// connect to the Perforce server
+Pws.connect("p4jrpc://10.168.11.82:1666","client","F:\\May_Perforce",usr,pwd);
+
+// define the diff file object
+var diffFil=Pws.getDiffFiles(["F:\\May_Perforce\\Activate_10.7\\11.txt","F:\\May_Perforce\\ADS_10.14\\11.txt"],true,false,true,true,false,false,false);
+
+aqua.console.println("** Returning list of files that differ **");
+for (var i=0; i < diffFil.size(); i++)
+{
+// List files and revisions that have been synced to the client workspace
+aqua.console.println(diffFil.get(i));
+}
+
+Pws.close();
+// disconnect from the Perforce server
+print("** Disconnected from Perforce Server ..!");

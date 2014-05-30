@@ -1,0 +1,12 @@
+﻿// run this script by clicking "debug in browser"
+var action = "http://www.aquafold.com";
+var title  = "Aquafold Inc.";
+var toolTip = "Click me";
+var icon    = "http://www.aquafold.com/images/Aqua_Fold_Logo_16color.gif"
+var dashboard =  aqua.response.getDashboard();
+
+dashboard.addToolbarButton(action, null, toolTip, icon);
+dashboard.addToolbarSeparator(); 
+dashboard.addToolbarButton(action, title, null, null);
+dashboard.addToolbarSeparator(); 
+dashboard.addToolbarButton(action, title, toolTip, null);

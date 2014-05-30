@@ -1,0 +1,37 @@
+
+// create a new email message
+var email = aqua.mail.newMessage();
+
+// get To list, should be empty at the moment
+var toList = email.getToRecipients();
+if ( toList.length != 0 ) {
+    throw "Unexpected To list length = " + toList.length + ", empty list expected.";
+}
+
+// add To addresses
+email.addToRecipient("address1");
+email.addToRecipient("address2 ");
+email.addToRecipient(" address2,address3 ");
+email.addToRecipient("address3,, ,address3, address4");
+
+// this is the list of addresses just added to the To list
+var originList = [ "address1", "address2", "address2", "address3", "address3", "address3", "address4" ];
+
+// get To list and compare it with the original list
+toList = email.getToRecipients();
+aqua.console.println("Validating To list...");
+
+if ( toList.length != originList.length ) {
+    throw "Unexpected To list length = " + toList.length + ", expected length = " + originList.length + ".";
+}
+
+for( var i=0; i<toList.length; i++ ) {
+    var to = toList[i];
+    var origin = originList[i];
+    if ( to != origin ) {
+        throw "Unexpected To address '" + to + "', expected address is '" + origin + "'";
+    }
+}
+
+// done with test
+aqua.console.println("DONE");

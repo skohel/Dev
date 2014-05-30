@@ -1,0 +1,53 @@
+﻿/*
+aqua.chart.setModel
+
+Synopsys
+    void setModel(AQChartModel chartModel);
+
+Description
+Sets the chart's underlying data model.  The data model contains the category and series values used to render the chart.
+
+Example
+    see below
+
+*/
+
+var chart = aqua.chart.newChart();
+var firstModel = chart.getModel();
+
+var ds = aqua.data.newDataSet(["country","freight"]);
+
+ds.addRowWithValues("US", 100);
+ds.addRowWithValues("UK", 10);
+ds.addRowWithValues("Japan", 200);
+ds.addRowWithValues("Canada", 20);
+ds.addRowWithValues("France", 300);
+ds.addRowWithValues("Germany", 30);
+
+firstModel.setDataSource(ds);
+
+firstModel.addCategoryField("country");
+firstModel.addSeriesField("freight");
+
+chart.getProperties().setChartTypeArea(0);
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');
+
+//  Second chart, reusing the model from the first chart
+var secondChart = aqua.chart.newChart();
+secondChart.setModel(firstModel);
+secondChart.getProperties().setChartTypeBar(0);
+
+secondChart.getProperties().setImageWidth(640);
+secondChart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+url = secondChart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

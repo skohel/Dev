@@ -1,0 +1,7 @@
+﻿var validValue        = ".00000000000000000000000000000000000000000000000000001";
+var invalidValue      = "a11111111111111111111111111111111111111111111111111111";
+var bigDecimalFactory = aqua.type.getBigDecimal();
+
+aqua.console.println("Is [" + validValue   + "] a big decimal? [" + bigDecimalFactory.isValid(validValue) + "]");
+aqua.console.println("Is [" + invalidValue + "] a big decimal? [" + bigDecimalFactory.isValid(invalidValue) + "]");
+

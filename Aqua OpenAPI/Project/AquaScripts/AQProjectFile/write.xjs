@@ -1,0 +1,15 @@
+﻿// note: write will overwrite the content of the file and will not append
+var file        = "test.txt";
+var str         = "Aquafold inc.";
+var encoding    = "UTF-16";
+var projectFile = aqua.project.getUserFile(file);
+var bytes       = [65, 66, 67, 68, 69, 70];
+
+aqua.console.println("Writing string [" + str + "] to file [" + file + "]");
+projectFile.write(str);
+
+aqua.console.println("Writing string [" + str + "] using encoding [" + encoding + "] to file [" + file + "]");
+projectFile.write(str, encoding);
+
+aqua.console.println("Writing bytts [" + bytes + "] to file [" + file + "]");
+projectFile.write(bytes);

@@ -1,0 +1,131 @@
+
+var testHost = "10.168.5.211";
+var testUser = "aquatest";
+var testPassword = aqua.console.readPassword("Please enter remote server password for user '" + testUser + "': ");
+
+var testLocalRootDir = "c:/tmp/aqnet_test/";
+var testLocalSshexecDir = testLocalRootDir + "sshexec/";
+
+// local SSH files
+var cygwinSSHdir = "c:/cygwin/home/fyang/.ssh/";
+var cygwinKeyfile = cygwinSSHdir + "id_rsa";
+var cygwinKnownhosts = cygwinSSHdir + "known_hosts";
+var cygwinPassphrase = "aquatest account";
+
+// an utility function to write a message to the console
+function show_message(message) {
+    aqua.console.println(message);
+}
+
+// an utility function to report error
+function show_error(command, exception) {
+    show_message(command + " failed !!! - " + exception.name + " : " + exception.message);
+}
+
+// an utility function to execute open API
+function exec_sshexec_password(parameters) {
+    try {
+        var command = parameters.command || null;
+        var commandFile = parameters.commandFile || null;
+        var host = parameters.host || null;
+        var username = parameters.username || null;
+        var password = parameters.password || null;
+        var output = parameters.output || null;
+        var trust = parameters.trust || null;
+        var timeout = parameters.timeout ? parseInt(parameters.timeout) : null;
+        var knownhosts = parameters.knownhosts || null;
+        aqua.net.sshexec(command, commandFile, host, username, password, output, trust, timeout, knownhosts);
+        show_message("sshexec(password): done.");
+    } catch(ex) {
+        show_error("sshexec(password)", ex);
+    }
+}
+
+show_message("------ password based authentication ------");
+
+// test invalid settings
+show_message("==> test invalid settings...");
+
+var parameters = { };
+exec_sshexec_password(parameters);
+
+parameters.command = "ps -ef";
+exec_sshexec_password(parameters);
+
+parameters.host = testHost;
+exec_sshexec_password(parameters);
+
+parameters.username = testUser;
+exec_sshexec_password(parameters);
+
+// all of required parameters should have been set now, including password below
+
+show_message("==> executing command...");
+parameters.password = testPassword;
+exec_sshexec_password(parameters);
+
+show_message("==> executing commands defined in file...");
+delete parameters.command;
+parameters.commandFile = testLocalSshexecDir + "sshexec-passwd.cmd";
+// override default known_hosts
+parameters.knownhosts = cygwinKnownhosts;
+exec_sshexec_password(parameters);
+
+// set both command and command file; test showed that only command get executed
+show_message("==> executing command and save output to file...");
+parameters.command = "w";
+parameters.output = testLocalSshexecDir + "sshexec-passwd.out";
+exec_sshexec_password(parameters);
+
+
+
+function exec_sshexec_key(parameters) {
+    try {
+        var command = parameters.command || null;
+        var commandFile = parameters.commandFile || null;
+        var trust = parameters.trust ? true : false;
+        var host = parameters.host || null;
+        var username = parameters.username || null;
+        var keyfile = parameters.keyfile || null;
+        var output = parameters.output || null;
+        var passphrase = parameters.passphrase || null;
+        var timeout = parameters.timeout ? parseInt(parameters.timeout) : null;
+        var knownhosts = parameters.knownhosts || null;
+        aqua.net.sshexec(command, commandFile, trust, host, username, keyfile, output, passphrase, timeout, knownhosts);
+        show_message("sshexec(key-files): done.");
+    } catch(ex) {
+        show_error("sshexec(key-files)", ex);
+    }
+}
+
+show_message("------ public/private keys based authentication ------");
+
+// test invalid settings
+show_message("==> test invalid settings...");
+
+parameters = { };
+exec_sshexec_key(parameters);
+
+parameters.command = "ps ; w ";
+exec_sshexec_key(parameters);
+
+parameters.host = testHost;
+exec_sshexec_key(parameters);
+
+parameters.username = testUser;
+exec_sshexec_key(parameters);
+
+parameters.keyfile = cygwinKeyfile;
+exec_sshexec_key(parameters);
+
+// all of required parameters should have been set now, including passphrase below
+
+show_message("==> executing commands...");
+parameters.passphrase = cygwinPassphrase;
+exec_sshexec_key(parameters);
+
+show_message("==> executing commands using custom known_hosts file...");
+parameters.knownhosts = cygwinKnownhosts;
+exec_sshexec_key(parameters);
+
+show_message("DONE")

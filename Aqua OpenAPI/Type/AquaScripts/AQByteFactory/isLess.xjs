@@ -1,0 +1,12 @@
+﻿var factory  = aqua.type.getByte();
+
+var value1   = -32;
+var value2   =  32;
+
+aqua.console.println("Is [" + value1 + "] less then  [" + value2 + "]? " + factory.isLess(value1, value2));
+
+value2 = -33;
+aqua.console.println("Is [" + value1 + "] less then  [" + value2 + "]? " + factory.isLess(value1, value2));
+
+value2 = -128;
+aqua.console.println("Is [" + value1 + "] less then  [" + value2 + "]? " + factory.isLess(value1, value2));

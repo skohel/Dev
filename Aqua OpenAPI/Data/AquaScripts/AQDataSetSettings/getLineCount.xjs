@@ -1,0 +1,19 @@
+﻿
+//
+// This script demonstrates how to get/set the maximum number of rows to be displayed in a grid.
+//
+
+// create a data set settings
+var settings = aqua.data.newDataSetSettings();
+
+// get default line count
+var count = settings.getLineCount();
+aqua.console.println("The default line count is " + count + ".");
+
+// customize line count
+settings.setLineCount(9);
+
+// get line count
+count = settings.getLineCount();
+aqua.console.println("The line count is currently set to " + count + ".");
+

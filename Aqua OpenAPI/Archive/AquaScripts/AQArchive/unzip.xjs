@@ -1,0 +1,27 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "c:\\tmp\\test\\AQArchive\\";
+test_unzip();
+
+// --- unzip() ---
+function test_unzip() {
+    
+    var src_base = test_data_dir + "zip\\zip_dest\\";
+    var dest_base = test_data_dir + "zip\\unzip_dest\\";
+    
+    // testing error condition - missing zip file
+    exec_unzip(null, dest_base + "tmp_dir");
+    // this should work
+    exec_unzip(src_base + "dir.zip",  dest_base + "dir");
+    exec_unzip(src_base + "fileset.zip", dest_base + "fileset");
+    exec_unzip(src_base + "filesets.zip", dest_base + "filesets");
+}
+function exec_unzip(zipFile, destDir) {
+    try {
+        print("unzip: from [" + zipFile + "] to [" + destDir + "]...");
+        aqua.archive.unzip(zipFile, destDir);
+        print("unzip: done.");
+    } catch(ex) {
+        print("unzip: !!! failed - " + ex.toString());
+    }
+}
+

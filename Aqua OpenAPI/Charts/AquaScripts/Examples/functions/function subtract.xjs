@@ -1,0 +1,37 @@
+﻿importPackage(com.aquafold.openapi.rdbms);
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+var ds = aqua.data.newDataSet(["shipcountry","part_cost","shipping_cost"]);
+
+var row;
+
+ds.addRowWithValues("US", 10, 8);
+ds.addRowWithValues("UK", 20, 15);
+ds.addRowWithValues("Japan", 15, 10);
+ds.addRowWithValues("Canada", 30, 20);
+ds.addRowWithValues("France", 40, 32);
+ds.addRowWithValues("Germany", 60, 40);
+
+model.setDataSource(ds);
+
+model.addCategoryField("shipcountry");
+model.addSeriesField("part_cost");
+model.addSeriesField("shipping_cost");
+
+chart.getProperties().addFunctionSeries("Subtract(0, 1)");
+
+chart.getProperties().setMergeAxis(true);
+chart.getProperties().setChartTypeArea(0);
+chart.getProperties().setChartTypeArea(1);
+chart.getProperties().setChartTypeLine(2);
+chart.getProperties().setColor(2, "#000000");
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

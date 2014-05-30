@@ -1,0 +1,27 @@
+/*
+
+Description of method functionality
+
+Synopsys
+    [Return Data Type] functionName()  
+
+Description
+    Description of functionality
+
+Example
+    //
+
+
+*/
+
+aqua.util.list(aqua.compare.compare("a\nb\nc\nd","1\na\nx\nc"));
+
+var diff = aqua.compare.newComparator();
+
+diff.setIgnoreSpaces(false);
+aqua.util.list(diff.compare("a\nb\nc\nd","1\na\nx\nc"));
+
+
+diff.setIgnoreSpaces(true);
+aqua.util.list(diff.compare("   a\nb\nc\nd","1\na   \nx\nc"));
+

@@ -1,0 +1,10 @@
+﻿testGetFileURL();
+
+function testGetFileURL() {
+	aqua.console.println('[TEST] aqua.project.getFileURL()');
+	var url = aqua.project.getFileURL("User Files/test.txt");
+	if(url == null) {
+		throw "Expected url != null but was: " + url;
+	}
+	aqua.console.println('[OK]');	
+}

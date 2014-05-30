@@ -1,0 +1,2 @@
+﻿var hexEnc = aqua.util.hexEncode(["127"]);
+aqua.console.println(hexEnc);

@@ -1,0 +1,213 @@
+
+importPackage(java.math);
+importPackage(java.text);
+importPackage(java.sql);
+
+// ------ utility functions to create Java objects ------
+
+var dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+function toDate(text) {
+    var date = text;
+    try { date = dateFormat.parse(text); }
+    catch(ex) { aqua.console.println("Error converting [" + text + "] to Date object - " + ex.toString()); }
+    return date;
+}
+
+function toTimestamp(text) {
+    var date = toDate(text);
+    var timestamp = date;
+    try { timestamp = new java.sql.Timestamp(date.getTime()); }
+    catch(ex) { aqua.console.println("Error converting [" + text + "] to Timestamp object - " + ex.toString()); }
+    return timestamp;
+}
+
+function toDouble(text) {
+    var number = text;
+    try { number = new java.lang.Double(text); }
+    catch(ex) { aqua.console.println("Error converting [" + text + "] to Double object - " + ex.toString()); }
+    return number;
+}
+
+function toInteger(text) {
+    var number = text;
+    try { number = new java.lang.Integer(text); }
+    catch(ex) { aqua.console.println("Error converting [" + text + "] to Integer object - " + ex.toString()); }
+    return number;
+}
+
+function toBigDecimal(text) {
+    var number = text;
+    try { number = new java.math.BigDecimal(text); }
+    catch(ex) { aqua.console.println("Error converting [" + text + "] to BigDecimal object - " + ex.toString()); }
+    return number;
+}
+
+// ----- Column Indexes, Names, SQL Types, Java Types and Data Types -----
+//   0 - OrderID         -  4 INTEGER    (Integer)    -  (int identity)
+//   1 - CustomerID      -  1 CHAR       (String)     -  (nchar)
+//   2 - EmployeeID      -  4 INTEGER    (Integer)    -  (int)
+//   3 - OrderDate       - 93 TIMESTAMP  (Timestamp)  -  (datetime)
+//   4 - RequiredDate    - 93 TIMESTAMP  (Timestamp)  -  (datetime)
+//   5 - ShippedDate     - 93 TIMESTAMP  (Timestamp)  -  (datetime)
+//   6 - ShipVia         -  4 INTEGER    (Integer)    -  (int)
+//   7 - Freight         -  3 DECIMAL    (BigDecimal) -  (money)
+//   8 - ShipName        - 12 VARCHAR    (String)     -  (nvarchar)
+//   9 - ShipAddress     - 12 VARCHAR    (String)     -  (nvarchar)
+//  10 - ShipCity        - 12 VARCHAR    (String)     -  (nvarchar)
+//  11 - ShipRegion      - 12 VARCHAR    (String)     -  (nvarchar)
+//  12 - ShipPostalCode  - 12 VARCHAR    (String)     -  (nvarchar)
+//  13 - ShipCountry     - 12 VARCHAR    (String)     -  (nvarchar)
+//  14 - Unknown         - 12 VARCHAR    (String)     -  (varchar)
+
+
+// ------ data set #1 - built from scratch ------
+
+var columnNames = [
+    "OrderID", "CustomerID", "EmployeeID",  "OrderDate", "RequiredDate", "ShippedDate",  "ShipVia",
+    "Freight", "ShipName",   "ShipAddress", "ShipCity",  "ShipRegion", "ShipPostalCode", "ShipCountry", "Unknown"
+];
+var dataSet_1 = aqua.data.newDataSet(columnNames);
+var clmStructure = dataSet_1.getColumnStructure();
+var clmDescriptor = null;
+clmDescriptor = clmStructure.getColumn( 0);  clmDescriptor.setSqlType(java.sql.Types.INTEGER);    clmDescriptor.setJavaType("java.lang.Integer");     clmDescriptor.setDataType("int identity");
+clmDescriptor = clmStructure.getColumn( 1);  clmDescriptor.setSqlType(java.sql.Types.CHAR);       clmDescriptor.setJavaType("java.lang.String");      clmDescriptor.setDataType("nchar");
+clmDescriptor = clmStructure.getColumn( 2);  clmDescriptor.setSqlType(java.sql.Types.INTEGER);    clmDescriptor.setJavaType("java.lang.Integer");     clmDescriptor.setDataType("int");
+clmDescriptor = clmStructure.getColumn( 3);  clmDescriptor.setSqlType(java.sql.Types.TIMESTAMP);  clmDescriptor.setJavaType("java.sql.Timestamp");    clmDescriptor.setDataType("datetime");
+clmDescriptor = clmStructure.getColumn( 4);  clmDescriptor.setSqlType(java.sql.Types.TIMESTAMP);  clmDescriptor.setJavaType("java.sql.Timestamp");    clmDescriptor.setDataType("datetime");
+clmDescriptor = clmStructure.getColumn( 5);  clmDescriptor.setSqlType(java.sql.Types.TIMESTAMP);  clmDescriptor.setJavaType("java.sql.Timestamp");    clmDescriptor.setDataType("datetime");
+clmDescriptor = clmStructure.getColumn( 6);  clmDescriptor.setSqlType(java.sql.Types.INTEGER);    clmDescriptor.setJavaType("java.lang.Integer");     clmDescriptor.setDataType("int");
+clmDescriptor = clmStructure.getColumn( 7);  clmDescriptor.setSqlType(java.sql.Types.DECIMAL);    clmDescriptor.setJavaType("java.math.BigDecimal");  clmDescriptor.setDataType("money");
+clmDescriptor = clmStructure.getColumn( 8);  clmDescriptor.setSqlType(java.sql.Types.VARCHAR);    clmDescriptor.setJavaType("java.lang.String");      clmDescriptor.setDataType("nvarchar");
+clmDescriptor = clmStructure.getColumn( 9);  clmDescriptor.setSqlType(java.sql.Types.VARCHAR);    clmDescriptor.setJavaType("java.lang.String");      clmDescriptor.setDataType("nvarchar");
+clmDescriptor = clmStructure.getColumn(10);  clmDescriptor.setSqlType(java.sql.Types.VARCHAR);    clmDescriptor.setJavaType("java.lang.String");      clmDescriptor.setDataType("nvarchar");
+clmDescriptor = clmStructure.getColumn(11);  clmDescriptor.setSqlType(java.sql.Types.VARCHAR);    clmDescriptor.setJavaType("java.lang.String");      clmDescriptor.setDataType("nvarchar");
+clmDescriptor = clmStructure.getColumn(12);  clmDescriptor.setSqlType(java.sql.Types.VARCHAR);    clmDescriptor.setJavaType("java.lang.String");      clmDescriptor.setDataType("nvarchar");
+clmDescriptor = clmStructure.getColumn(13);  clmDescriptor.setSqlType(java.sql.Types.VARCHAR);    clmDescriptor.setJavaType("java.lang.String");      clmDescriptor.setDataType("nvarchar");
+clmDescriptor = clmStructure.getColumn(14);  clmDescriptor.setSqlType(java.sql.Types.VARCHAR);    clmDescriptor.setJavaType("java.lang.String");      clmDescriptor.setDataType("varchar");
+
+dataSet_1.addRowWithValues( toInteger(10308), "ANATR", toInteger(7),
+    toTimestamp("1996-09-18 00:00:00"), toTimestamp("1996-10-16 00:00:00"), toTimestamp("1996-09-24 00:00:00"), toInteger(3),
+    toBigDecimal("1.61"),  "Ana Trujillo Emparedados y helados", "Avda. de la Constitución 2222", "México D.F.", "", "05021", "Mexico", "U1");
+dataSet_1.addRowWithValues(toInteger(10365), "ANTON", toInteger(3),
+    toTimestamp("1996-11-27 00:00:00"), toTimestamp("1996-12-25 00:00:00"), toTimestamp("1996-12-02 00:00:00"), toInteger(2),
+    toBigDecimal("22"),    "Antonio Moreno Taquería",            "Mataderos  2312", "México D.F.",               "", "05023", "Mexico", "U2");
+dataSet_1.addRowWithValues(toInteger(10507), "ANTON", toInteger(7),
+    toTimestamp("1997-04-15 00:00:00"), toTimestamp("1997-05-13 00:00:00"), toTimestamp("1997-04-22 00:00:00"), toInteger(1),
+    toBigDecimal("47.45"), "Antonio Moreno Taquería",            "Mataderos  2312", "México D.F.",               "", "05023", "Mexico", "U3");
+dataSet_1.addRowWithValues(toInteger(10535), "ANTON", toInteger(4),
+    toTimestamp("1997-05-13 00:00:00"), toTimestamp("1997-06-10 00:00:00"), toTimestamp("1997-05-21 00:00:00"), toInteger(1),
+    toBigDecimal("15.64"), "Antonio Moreno Taquería",            "Mataderos  2312", "México D.F.",               "", "05023", "Mexico", "U4");
+dataSet_1.addRowWithValues(toInteger(10573), "ANTON", toInteger(7),
+    toTimestamp("1997-06-19 00:00:00"), toTimestamp("1997-07-17 00:00:00"), toTimestamp("1997-06-20 00:00:00"), toInteger(3),
+    toBigDecimal("84.84"), "Antonio Moreno Taquería",            "Mataderos  2312", "México D.F.",               "", "05023", "Mexico", "U5");
+dataSet_1.addRowWithValues(toInteger(10625), "ANATR", toInteger(3),
+    toTimestamp("1997-08-08 00:00:00"), toTimestamp("1997-09-05 00:00:00"), toTimestamp("1997-08-14 00:00:00"), toInteger(1),
+    toBigDecimal("43.9"),  "Ana Trujillo Emparedados y helados", "Avda. de la Constitución 2222", "México D.F.", "", "05021", "Mexico", "U6");
+dataSet_1.addRowWithValues(toInteger(10677), "ANTON", toInteger(1),
+    toTimestamp("1997-09-22 00:00:00"), toTimestamp("1997-10-20 00:00:00"), toTimestamp("1997-09-26 00:00:00"), toInteger(3),
+    toBigDecimal("4.03"),  "Antonio Moreno Taquería",            "Mataderos  2312", "México D.F.",               "", "05023", "Mexico", "U5");
+dataSet_1.addRowWithValues(toInteger(10682), "ANTON", toInteger(3),
+    toTimestamp("1997-09-25 00:00:00"), toTimestamp("1997-10-23 00:00:00"), toTimestamp("1997-10-01 00:00:00"), toInteger(2),
+    toBigDecimal("36.13"), "Antonio Moreno Taquería",            "Mataderos  2312", "México D.F.",               "", "05023", "Mexico", "U4");
+dataSet_1.addRowWithValues(toInteger(10759), "ANATR", toInteger(3),
+    toTimestamp("1997-11-28 00:00:00"), toTimestamp("1997-12-26 00:00:00"), toTimestamp("1997-12-12 00:00:00"), toInteger(3),
+    toBigDecimal("11.99"), "Ana Trujillo Emparedados y helados", "Avda. de la Constitución 2222", "México D.F.", "", "05021", "Mexico", "U3");
+dataSet_1.addRowWithValues(toInteger(10856), "ANTON", toInteger(3),
+    toTimestamp("1998-01-28 00:00:00"), toTimestamp("1998-02-25 00:00:00"), toTimestamp("1998-02-10 00:00:00"), toInteger(2),
+    toBigDecimal("58.43"), "Antonio Moreno Taquería",            "Mataderos  2312", "México D.F.",               "", "05023", "Mexico", "U2");
+dataSet_1.addRowWithValues(toInteger(10926), "ANATR", toInteger(4),
+    toTimestamp("1998-03-04 00:00:00"), toTimestamp("1998-04-01 00:00:00"), toTimestamp("1998-03-11 00:00:00"), toInteger(3),
+    toBigDecimal("39.92"), "Ana Trujillo Emparedados y helados", "Avda. de la Constitución 2222", "México D.F.", "", "05021", "Mexico", "U1");
+dataSet_1.addRowWithValues(toInteger(10856), "ANTON", toInteger(18),
+    toTimestamp("1998-01-28 00:00:00"), toTimestamp("1998-02-25 00:00:00"), toTimestamp("1998-02-10 00:00:00"), toInteger(2),
+    toBigDecimal("58.43"), "Antonio Moreno Taquería",            "Mataderos  1430", "México D.F.",               "", "05023", "Mexico", "U2");
+
+
+// ------ data set #2 - retrieved from database using serverConnection.executeSnapshot() ------
+
+// the path in the local "Servers" folder
+var serverPath = "SQL Server 2000 - 54";
+// the database in which we are interested
+var databaseName = "Northwind";
+
+// open connection to server
+var serverConnection = aqua.project.getServerConnection(serverPath);
+
+// establish SQL connection
+serverConnection.connect();
+
+// change database
+serverConnection.changeDatabase(databaseName);
+
+// create the data set
+var dataSet_2 = serverConnection.executeSnapshot("select * from orders where CustomerId like 'AN%';");
+
+// ------ data set #3 - retrieved from database using serverConnection.executeSnapshot() with data borrowed from dataSet_1 ------
+
+var dataSet_3 = serverConnection.executeSnapshot("select * from orders where CustomerId like 'AN%';");
+dataSet_3.clear();
+dataSet_3.append(dataSet_1);
+
+// ------ data set #4 - created by using dataSet_2's column structure and dataSet_1's data ------
+
+var dataSet_4 = aqua.data.newDataSet(dataSet_2.getColumnStructure());
+dataSet_4.append(dataSet_1);
+
+// ------ data set #5 - created by using dataSet_1's column structure and dataSet_1's data ------
+
+var dataSet_5 = aqua.data.newDataSet(dataSet_1.getColumnStructure());
+dataSet_5.append(dataSet_1);
+
+// ------ pivot data set ------
+
+// create pivot data set and its settings
+var pivotDataSet = aqua.data.newPivotDataSet();
+var pivotSettings = aqua.report.newReportDataSetSettings();
+
+// define pivot table
+pivotDataSet.addRowField("ShipAddress");
+// pivotDataSet.addRowField("ShipName");
+pivotDataSet.addColumnField("CustomerID");
+// pivotDataSet.addColumnField("OrderID");
+pivotDataSet.addDataField("Freight");
+pivotDataSet.addDataField("EmployeeID");
+
+// sorting URLs
+var sortURI = "http://www.yahoo.com?";
+var headerSortURL = sortURI + "type=header&sort=<AQSO>";
+var dataSortURL = sortURI + "sort=<AQSO>&columnId=<AQSID>";
+pivotSettings.setHtmlDataColumnSortLink(dataSortURL);
+
+// sorting
+// pivotDataSet.sortGrandTotalColumnAscending("Freight");
+// pivotDataSet.sortGrandTotalColumnDescending("Freight");
+// pivotDataSet.sortGrandTotalColumnAscending("EmployeeID");
+pivotDataSet.sortGrandTotalColumnDescending("EmployeeID");
+// pivotDataSet.sortDataColumnAscending(1);
+// pivotDataSet.sortDataColumnDescending(1);
+
+// bind data set to pivot data set and calculate pivot data
+var dataSet = dataSet_1;
+dataSet.setSortingDescending("Freight");
+dataSet.sort();
+pivotDataSet.setDataSet(dataSet);
+pivotDataSet.calculateGrid();
+
+// ------ report ------
+
+// create a new report
+var report = aqua.report.newReport();
+
+// add both data set and pivot data set to the report
+report.addDataSet(dataSet, null);
+report.addDataSet(pivotDataSet, pivotSettings);
+
+// render an HTML report
+aqua.response.write(report.renderHtml());
+// render a text report
+aqua.console.println(report.renderText());
+
+// done, disconnect from server
+serverConnection.disconnect();
+

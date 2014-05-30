@@ -1,0 +1,22 @@
+
+
+var rawDataX=new Array();
+var rawDataY = new Array();
+var noise = new Array();
+var rsquared=0;
+
+
+//generate clean data to compare with noisy data
+
+for(i=0;i<30;i++){
+   rawDataX[i]=2*Math.exp(1.5*(i+1)/10.0);
+noise[i]=2*Math.random()-1;
+   rawDataY[i]= rawDataX[i] +noise[i]/5;
+   
+}
+
+//calculate R-squared value
+rsquared=aqua.math.fit.getRsq(rawDataX,rawDataY);
+
+aqua.console.println("R-Squared = " + rsquared);
+

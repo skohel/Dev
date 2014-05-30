@@ -1,0 +1,28 @@
+/*
+aqua.math.log
+
+Returns the natural logarithm (base e) of a double value.
+
+Synopsys
+    double aqua.math.log(double)
+
+Description
+    * If the argument is NaN or less than zero, then the result is NaN.
+    * If the argument is positive infinity, then the result is positive infinity.
+    * If the argument is positive zero or negative zero, then the result is negative infinity.
+    The computed result must be within 1 ulp of the exact result. Results must be semi-monotonic. 
+
+Example
+    see below
+*/
+// --- log() ---
+function show_log(value) {
+    aqua.console.println("log[" + value + "] --> [" + aqua.math.log(value) + "]");
+}
+show_log(-1);
+show_log(0)
+show_log(1);
+show_log(3.5);
+show_log(5);
+show_log(aqua.math.getE());
+

@@ -1,0 +1,12 @@
+﻿var factory  = aqua.type.getFloat();
+
+var value1   = "100.001";
+var value2   = "100.000";
+
+aqua.console.println("Is [" + value1 + "] greater or equal to [" + value2 + "]? " + factory.isGreaterOrEqual(value1, value2));
+
+value2 = 100.001;
+aqua.console.println("Is [" + value1 + "] greater or equal to [" + value2 + "]? " + factory.isGreaterOrEqual(value1, value2));
+
+value2 = 100.003;
+aqua.console.println("Is [" + value1 + "] greater or equal to [" + value2 + "]? " + factory.isGreaterOrEqual(value1, value2));

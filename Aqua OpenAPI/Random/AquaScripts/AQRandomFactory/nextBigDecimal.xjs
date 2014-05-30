@@ -1,0 +1,21 @@
+
+print("Generate a random big decimal:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextBigDecimal();
+    print("\t"+x);
+}
+
+
+print("Generate a random big decimal with scale and precision constraints:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextBigDecimal(3, 5, 6, 12);
+    print("\t"+x);
+}
+
+var min = -1000;
+var max = 1000;
+print("Generate a random big decimal between " + min + " and " + max + ":");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextBigDecimal(min, max);
+    print("\t"+x);
+}

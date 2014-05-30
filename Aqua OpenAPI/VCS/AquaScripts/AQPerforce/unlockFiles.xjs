@@ -1,0 +1,21 @@
+﻿var Pws    = aqua.vcs.newPerforce();
+
+// create AQOpaqueObject containing the username and password
+var usr = aqua.crypto.getSecureField('svn.username');
+var pwd = aqua.crypto.getSecureField('svn.password');
+
+// connect to the Perforce server
+Pws.connect("p4jrpc://10.168.11.82:1666","client","F:\\May_Perforce\\AAA",usr,pwd);
+
+// define the file to lock
+var lockfle = "F:\\May_Perforce\\AAA\\lock.txt";
+
+// edit the file
+filenme=Pws.edit(lockfle);
+
+// unlock the file
+Pws.unlockFiles(lockfle,0,true);
+
+// disconnect from the Perforce server
+Pws.close();
+print("The file is unlocked and disconnecting from server ...");

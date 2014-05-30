@@ -1,0 +1,17 @@
+﻿var reader    = aqua.io.newStringReader();
+var str       = "Column A|Column B|Column C|Column D";
+var delimiter = "|";
+
+aqua.console.println("Set input string [" + str + "]");
+reader.setInputString(str);
+
+aqua.console.println("Set input string [" + delimiter + "]");
+reader.setCellDelimiter("|");
+aqua.console.println("");
+
+aqua.console.println("Read input string with delimter set:");
+var row = reader.readNextRow();
+
+for (var i=0; i<row.getSize(); i++){
+    aqua.console.println("Column [" + i + "] value [" + row.get(i) + "]");
+}

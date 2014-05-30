@@ -1,0 +1,64 @@
+﻿//------------------------------------------------------------------------------
+// Class:  
+//      AQFileSystem
+// Method:
+//      deleteFile()
+//
+// Synopsis:
+//      deletefile()
+//
+// Description
+//      Delete a singale file.
+//    
+// Parameters
+//      string - The name of the file to be deleted; required.
+//
+// Throws
+//      Exception - on error
+//
+// Return
+//      None.
+//
+// Example
+//      See below.
+//------------------------------------------------------------------------------
+// all test data will be created under this directory
+var test_data_dir = "c:/tmp/test/AQFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.filesystem;
+
+test_deleteFile();
+
+// --- delete a single file ---
+function test_deleteFile() {
+    var src_dir = test_data_dir + "files/";
+    var dest_dir = test_data_dir + "deleteFile/deleteFile_dest/";
+
+    AQFS.copy(src_dir, dest_dir);
+    
+    // testing error condition - file required
+    exec_deleteFile(null);
+    // testing error condition - file to be deleted has to exist
+    exec_deleteFile(dest_dir + "file.does.not.exist.txt");
+    // testing error condition - does not support wild card values
+    exec_deleteFile(dest_dir + "src_base/*.*");
+    // testing error condition - deleting directory
+    exec_deleteFile(dest_dir + "src_tar");
+    
+    // this should work - delete single file
+    exec_deleteFile(dest_dir + "web.xml");
+    
+    
+}
+
+function exec_deleteFile(source) {
+    try {
+        aqua.console.println("deleteFile: deleting [" + source + "]...");
+        // NOTE: delete cannot be used as a method name; otherwise, would cause javascript error
+        aqua.console.println("deleteFile done? " + AQFS.deleteFile(source));
+    } 
+    catch(ex) {
+        aqua.console.println("deleteFile failed - " + ex.toString());
+    }
+}

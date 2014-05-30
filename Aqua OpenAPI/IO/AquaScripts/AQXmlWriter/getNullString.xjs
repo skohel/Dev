@@ -1,0 +1,3 @@
+﻿var writer = aqua.io.newXmlWriter();
+writer.setNullString("XMLBLANK");
+aqua.console.println("The Null String of the XML file is : " + writer.getNullString() );

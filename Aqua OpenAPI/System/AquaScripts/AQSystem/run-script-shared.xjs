@@ -1,0 +1,19 @@
+﻿/*
+This is a sample script which shows how to run an external AquaScript from the current AquaScript with a global shared context. 
+Global shared context is set by third argument of aqua.system.runScript method - shareContext. If it is set to true the global shared context 
+is enabled, the parent and child scripts can use each other variables, functions etc.
+*/
+
+function toTitleCase(str) {
+    var strOut = "";
+    while ((/(\b\w)(\S+\s*)/g.exec(str)) != null)
+    strOut += RegExp.$1.toUpperCase() + RegExp.$2.toLowerCase();
+    return strOut;
+}
+function toUpperCase(str) {
+   return (str) ? str.toUpperCase() : "";
+}
+var sharedContext = true;
+aqua.system.runScript("AQSystem/util-shared.xjs", null, sharedContext);
+// invoking greet method defined in util-shared.xjs. This will work only if sharedContext is set to true.
+print(greet("Hello", "tim berners-lee"));

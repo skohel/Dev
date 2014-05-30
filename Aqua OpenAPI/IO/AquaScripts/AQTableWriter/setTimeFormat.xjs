@@ -1,0 +1,12 @@
+﻿var server = aqua.project.getServerConnection("SQL Server 2000");
+server.connect();
+var table = server.getMetaData().extractTable("Northwind","dbo","testextcols");
+var writer = table.getWriter();
+
+var row = writer.newDataRow();
+row.set(4, "22:12:32");
+
+writer.setTimeFormat("HH:mm:ss");
+writer.write(row);
+writer.close();
+server.disconnect();

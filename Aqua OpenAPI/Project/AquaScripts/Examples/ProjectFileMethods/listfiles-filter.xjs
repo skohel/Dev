@@ -1,0 +1,30 @@
+﻿/*
+
+Returns an array of files and folders in a project folder, satisfying the specified file name filter.
+
+Synopsys
+    AQProjectFile[] listFiles(String filter) 
+
+Description
+    Returns an array of files and folders in a project folder, satisfying the specified file name filter.
+
+Example
+    //
+
+
+*/
+
+
+ap = aqua.project;
+
+objFile = ap.getAquaScript("");
+
+listoffiles = objFile.listFiles("*User*.xjs");
+
+for(i=0;i<listoffiles.length;i++) {
+    print(listoffiles[i].getName());
+}
+
+function print(m) {
+    aqua.console.println(m);
+}

@@ -1,0 +1,23 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        rmdir()
+ 
+   Synopsis:
+        void rmdir(String dirname, String remotedir) throws Exception
+        void rmdir(AQFileSet fileset, String remotedir) throws Exception
+
+   Description
+        Removes directories defined by fileset from the remote FTP server; the directories to be removed must be empty and their paths should be relative to the directory specified by remotedir.    
+
+   Parameters
+        fileset - defines the set of directories to be removed, the base directory of fileset is ignored completely
+        remotedir - the base directory on the remote FTP server  
+  
+   Throws
+        Exception - if failed to remove directories
+ 
+   Example
+        See below.
+*/

@@ -1,0 +1,16 @@
+﻿var server = "MS SQLServer - 10.168.11.57 - msdb - dbo";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+var metadata = conn.getMetadata();
+
+aqua.console.println("Is connection [" + server + "] to an DB2 iSeries server? " + metadata.isDB2iSeries());
+conn.disconnect();
+
+
+var server = "DB2 iSeries";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+var metadata = conn.getMetadata();
+
+aqua.console.println("Is connection [" + server + "] to an DB2 iSeries server? " + metadata.isDB2iSeries());
+conn.disconnect();

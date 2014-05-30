@@ -1,0 +1,19 @@
+
+// an utility function to execute get open API
+function exec_get(url, destFile) {
+    try {
+        print("get: requesting [" + url + "]...");
+        aqua.net.get(url, destFile);
+        print("get() done.");
+    } catch(ex) {
+        print("!!! get() failed - " + ex.toString());
+    }
+}
+
+
+var testDataDir = "c:/tmp/test-filesystem/get_dest/";
+
+exec_get("http://www.google.com", testDataDir + "tmp_google.txt");
+exec_get("http://www.doesNotExist.com", testDataDir + "tmp_none.txt");
+
+print("DONE")

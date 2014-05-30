@@ -1,0 +1,2 @@
+﻿var htmlen = aqua.util.htmlEncode("This is a <TEST> for HTML &Encode&")
+aqua.console.println(htmlen);

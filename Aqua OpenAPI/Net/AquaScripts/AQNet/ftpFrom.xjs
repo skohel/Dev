@@ -1,0 +1,85 @@
+﻿
+var testHost = "127.0.0.1";
+var testUser = "aquatest";
+var testPassword = aqua.console.readPassword("Please enter FTP server password for user '" + testUser + "': ");
+
+var testLocalRootDir = "c:/tmp/aqnet_test/";
+var testRemoteUserHome = "/home/" + testUser + "/";
+var testRemoteRootDir = testRemoteUserHome + "aqnet_test/";
+
+var testFtpLocalSrcDir = testLocalRootDir + "ftp_src/";
+var testFtpLocalDestDir = testLocalRootDir + "ftp_dest/";
+var testFtpRemoteSrcDir = testRemoteRootDir + "ftp_src/";
+var testFtpRemoteDestDir = testRemoteRootDir + "ftp_dest/";
+
+// an utility function to write a message to the console
+function show_message(message) {
+    aqua.console.println(message);
+}
+
+// an utility function to report error
+function show_error(command, exception) {
+    show_message(command + " failed !!! - " + exception.name + " : " + exception.message);
+}
+
+// an utility function to execute open API
+function exec_ftp_from(parameters) {
+    try {
+        var server = parameters.server || null;
+        var userid = parameters.userid || null;
+        var password = parameters.password || null;
+        var fileset = parameters.fileset || null;
+        var remotedir = parameters.remotedir || null;
+        aqua.net.ftpFrom(server, userid, password, fileset, remotedir);
+        show_message("ftpFrom(): done.");
+    } catch(ex) {
+        show_error("ftpFrom()", ex);
+    }
+}
+
+// test invalid settings
+show_message("==> test invalid settings...");
+
+var parameters = { };
+exec_ftp_from(parameters);
+
+parameters.server = testHost;
+exec_ftp_from(parameters);
+
+parameters.userid = testUser;
+exec_ftp_from(parameters);
+
+parameters.password = testPassword;
+exec_ftp_from(parameters);
+
+// all of required parameters should have been set now, including fileset below
+
+show_message("==> copy a single file from the remote default directory to a local custom dir...");
+var fileset = aqua.filesystem.newFileSet();
+fileset.setBaseDir(testFtpLocalDestDir);
+fileset.setIncludes(".profile");
+parameters.fileset = fileset;
+exec_ftp_from(parameters);
+
+show_message("==> copy a single file from the remote default directory to the local default dir...");
+var fileset = aqua.filesystem.newFileSet();
+fileset.setFile(".profile");
+exec_ftp_from(parameters);
+
+show_message("==> copy a single file from the remote default directory to a local custom dir...");
+var fileset = aqua.filesystem.newFileSet();
+// this would work as well, file will copied to tmppro directory
+fileset.setFile(testFtpLocalDestDir + "tmppro/tmp.profile");
+fileset.setIncludes(".profile");
+parameters.fileset = fileset;
+exec_ftp_from(parameters);
+
+show_message("==> copy a sub-directory from a remote custom directory to a local custom dir...");
+parameters.remotedir = testFtpRemoteSrcDir;
+fileset = aqua.filesystem.newFileSet();
+fileset.setBaseDir(testFtpLocalDestDir);
+fileset.setIncludes("tmp_dir/*");
+parameters.fileset = fileset;
+exec_ftp_from(parameters);
+
+show_message("DONE")

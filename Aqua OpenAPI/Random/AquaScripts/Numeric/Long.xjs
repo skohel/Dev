@@ -1,0 +1,5 @@
+print("Genereate a random Long value:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextLong();
+    print("\t"+x);
+}

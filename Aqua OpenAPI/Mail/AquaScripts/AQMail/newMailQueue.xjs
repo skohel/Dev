@@ -1,0 +1,28 @@
+
+// create a mail queue
+var mailQueue = aqua.mail.newMailQueue();
+if ( mailQueue == null ) {
+    throw "Failed to create mail queue, null object returned!";
+}
+
+// define mail recipient, provide a valid to-address below to enable sending email via the mail queue
+var toAddress = null;
+if ( toAddress != null ) {
+    // create an email message
+    var email = aqua.mail.newMessage();
+    email.setFrom("UnitTest");
+    email.addToRecipient(toAddress);
+    email.setSubject("AQMail: test creation of mail queue");
+
+    // send email
+    aqua.console.println("Sending mail via the mail queue...");
+    try {
+        mailQueue.sendMail(email);
+        aqua.console.println("Email successfully sent.");
+    } catch(ex) {
+        aqua.console.println("Failed to send email: " + ex.toString());
+    }
+}
+
+aqua.console.println("DONE");
+

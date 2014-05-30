@@ -1,0 +1,30 @@
+﻿/*
+
+Writes the text string to a file using the specified encoding, or writes the byte array to a file.
+
+Synopsys
+    void write(String text,
+                String encoding)
+
+Description
+    Writes the text string to a file using the specified encoding.
+
+Example
+    //
+
+
+*/
+
+
+userFiles = aqua.project.collectUserFiles("/");
+for(i=0; i<userFiles.length; i++)
+{
+    if(userFiles[i].getName() == "jon-ascii.txt") {
+        userFiles[i].write("writing some text to a file.  \n testing a line break  \n testing tabs \t tab \t tab ;;","US-ASCII");
+        print("writing to file.");
+    }
+}
+
+function print(m) {
+    aqua.console.println(m);
+}

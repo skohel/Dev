@@ -1,0 +1,12 @@
+﻿var factory  = aqua.type.getBigDecimal();
+
+var value1   = .0000000000005;
+var value2   = .0000000000010;
+
+aqua.console.println("Is [" + value1 + "] less or equal to  [" + value2 + "]? " + factory.isLessOrEqual(value1, value2));
+
+value2 = .0000000000005;
+aqua.console.println("Is [" + value1 + "] less or equal to  [" + value2 + "]? " + factory.isLessOrEqual(value1, value2));
+
+value2 = .0000000000004;
+aqua.console.println("Is [" + value1 + "] less or equal to [" + value2 + "]? " + factory.isLessOrEqual(value1, value2));

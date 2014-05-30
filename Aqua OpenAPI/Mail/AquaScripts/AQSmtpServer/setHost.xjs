@@ -1,0 +1,35 @@
+
+// utility function - abort execution
+function abort(api) {
+    aqua.console.println("!!! expected exception is not generated on execution of [" + api + "]");
+    aqua.exit();
+}
+
+// utility function - write expected exception to console
+function showExpectedError(ex) {
+    aqua.console.println("... expected exception received - " + ex.name + " - " + ex.message);
+}
+
+
+// create a new server
+var smtpServer = aqua.mail.newSmtpServer();
+
+// test invalid arguments
+try { smtpServer.setHost(null); abort('setHost(null)'); } catch(ex) { showExpectedError(ex); }
+try { smtpServer.setHost(""); abort('setHost("")'); } catch(ex) { showExpectedError(ex); }
+try { smtpServer.setHost(" "); abort('setHost(" ")'); } catch(ex) { showExpectedError(ex); }
+
+// set host
+var host = "hostName";
+smtpServer.setHost(host);
+
+// validate host
+var hostName = smtpServer.getHost();
+if ( hostName != host ) {
+    throw "Unexpected host name '" + hostName + "' retrieved, expected name is '" + host + "'";
+}
+
+
+// done with test
+aqua.console.println("DONE");
+

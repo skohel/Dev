@@ -1,0 +1,21 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        setVerbose()
+ 
+   Synopsis:
+        void setVerbose(boolean verbose)
+
+   Description
+        Set to true to receive notification about each file as it is transferred. 
+
+   Parameters
+        verbose - true if verbose notifications are required
+
+   Throws
+        none
+ 
+   Example
+        See below.
+*/

@@ -1,0 +1,35 @@
+﻿/*
+aqua.project.getUserFile()
+
+Returns a file object within "User Files" project folder. 
+
+Synopsys
+    AQProjectFile getUserFile(String path)
+
+Description
+    Returns a file objects within "User Files" project folder. 
+
+Example
+    //return the User Files object for TestFolder
+    aqua.project.getUserFile("/TestFolder");
+
+*/
+
+
+ap = aqua.project;
+
+objFile = ap.getUserFile("/TestFolder");
+
+if(objFile.isFile()) {
+    print("file: [" + objFile.getName() + "]");
+} else if(objFile.isFolder()) {
+    print("folder: [" + objFile.getName() + "]");
+} else {
+    objFile.mkdir();
+    print("No file or folder of this name found!");
+    
+}
+
+function print(m) {
+    aqua.console.println(m);
+}

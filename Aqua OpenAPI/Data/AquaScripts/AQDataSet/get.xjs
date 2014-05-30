@@ -1,0 +1,16 @@
+﻿var dataSet = generateDataSet();
+
+for (var i=0; i<dataSet.getRowCount(); i++){
+    aqua.console.println("Row [" + i + "]: " + dataSet.get(i));
+}
+
+//------------------------------------------------------------------------------
+function generateDataSet(){
+
+    var ds = aqua.data.newDataSet(["shipcountry","freight","id"]);
+    ds.addRowWithValues(aqua.random.nextCountry(),    "10", "100001");
+    ds.addRowWithValues(aqua.random.nextCountry(),   "100", "100002");
+    ds.addRowWithValues(aqua.random.nextCountry(),  "1000", "100003");
+    ds.addRowWithValues(aqua.random.nextCountry(), "10000", "100004");
+    return ds;
+}

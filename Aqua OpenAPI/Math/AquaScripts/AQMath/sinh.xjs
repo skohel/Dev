@@ -1,0 +1,22 @@
+/*
+aqua.math.sinh
+
+Returns the hyperbolic sine of a double value. The hyperbolic sine of x is defined to be (ex - e-x)/2 where e is Euler's number. 
+
+Synopsys
+    double aqua.math.sinh(double)
+
+Description
+    Nothing exciting to describe.
+
+Example
+    see below
+*/
+
+var pi = aqua.math.getPI();
+var pi_3 = pi / 3;
+
+aqua.console.println("PI is [" + pi + "]");
+value = aqua.math.sin(pi_3);
+
+aqua.console.println("sinh[" + pi_3 + "] --> [" + aqua.math.sinh(pi_3) + "]");

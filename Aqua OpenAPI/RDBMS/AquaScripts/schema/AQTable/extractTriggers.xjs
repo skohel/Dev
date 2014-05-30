@@ -1,0 +1,18 @@
+﻿var server = "Sybase ASE 15.0 - TDS 5.5 - 10.168.1.46";
+var db     = "example_data";
+var schema = "dbo";
+var conn   = aqua.project.getServerConnection(server);
+conn.connect();
+
+var metadata = conn.getMetadata();
+var objs     = metadata.extractTables(db, schema);
+
+for (var i=0; i<objs.length; i++){
+    var obj = metadata.extractTable(db, schema, objs[i].getName());
+    var triggers = obj.extractTriggers();
+    for (var j=0; j<triggers.length; j++){
+        var trigger = obj.extractTrigger(triggers[j].getName());
+        aqua.console.println("Table Name: [" + obj.getName() + "]    Trigger Name: [" + trigger.getName() + "]");
+    }
+}
+conn.disconnect();

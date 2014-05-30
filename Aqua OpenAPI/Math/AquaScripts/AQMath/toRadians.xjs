@@ -1,0 +1,18 @@
+/*
+aqua.math.toRadians
+
+Converts an angle measured in degrees to an approximately equivalent angle measured in radians.
+   
+Synopsys
+    double aqua.math.toRadians(double)
+
+Description
+    Nothing exciting to describe.
+
+Example
+    see below
+*/
+
+aqua.console.println("radians[180] --> [" + aqua.math.toRadians(180) + "]");
+aqua.console.println("radians[90] --> [" + aqua.math.toRadians(90) + "]");
+aqua.console.println("radians[0] --> [" + aqua.math.toRadians(0) + "]");

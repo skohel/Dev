@@ -1,0 +1,26 @@
+/*
+
+Description of method functionality
+
+Synopsys
+    [Return Data Type] functionName()  
+
+Description
+    Description of functionality
+
+Example
+    //
+
+
+*/
+
+print("Random Date with Min & Max Values");
+var minDate = new Date();
+var maxDate = new Date();
+minDate.setFullYear(2001,3,6);
+maxDate.setFullYear(2010,5,9);
+print("["+minDate+"] <--> [" + maxDate+"]\n");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextDate(minDate, maxDate);
+    print("\t" + x);
+}

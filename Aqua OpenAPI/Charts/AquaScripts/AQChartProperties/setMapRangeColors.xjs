@@ -1,0 +1,43 @@
+﻿/*
+aqua.chart.properties.setMapRangeColors
+
+Synopsys
+    void setMapRangeColors(String colors);
+
+Description
+Set the Map Range Colors e.g. "red, green, blue, yellow, cyan" or "#FF0000, #00FF00, #0000FF, #FFFF00, #00FFFF"
+
+Example
+    see below
+
+*/
+
+var chart = aqua.chart.newChart();
+var model = chart.getModel();
+
+model.addSeries("a");
+model.addSeries("b");
+
+model.addCategory("US");
+model.addCategory("UK");
+model.addCategory("France");
+
+model.setValue(0, 0, 50);
+model.setValue(0, 1, 150);
+model.setValue(0, 2, 250);
+
+chart.getProperties().setChartTypeMap();
+
+chart.getProperties().setMapRange("0, 100, 200, 300");
+chart.getProperties().setMapRangeColors("green, blue, red");
+
+var colors = chart.getProperties().getMapRangeColors();
+aqua.response.write('Map Range Colors: ').write(colors).write("<p>");
+
+chart.getProperties().setImageWidth(640);
+chart.getProperties().setImageHeight(480);
+
+// image will be available for 5 seconds
+var url = chart.cache(5);
+aqua.response.write('<img src=').write(url).write('>');
+aqua.response.write('<p>');

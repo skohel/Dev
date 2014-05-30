@@ -1,0 +1,28 @@
+
+importPackage(java.lang);
+
+// an utility function to apply a randomly generated number variation to a number object
+function generateVariations(generator, target) {
+    for( var i=0; i<6; i++ ) {
+        aqua.console.println("  " + generator.apply(target));
+    }
+}
+
+
+// create a random number variation generator using default variation range (+/- 60)
+var randomVariation = aqua.random.newRandomNumberVariation();
+var target = new java.lang.Integer(30);
+aqua.console.println("Generate Number variations using default variation range (+/- 60), base number object is [" + target + "]");
+generateVariations(randomVariation, target);
+
+
+// create a random number variation generator with variation range set to +/- 10
+aqua.console.println("Generate Number variations with variation range set to (+/- 10), base number object is [" + target + "]");
+randomVariation = aqua.random.newRandomNumberVariation(10);
+generateVariations(randomVariation, target);
+
+
+// create a random number variation generator with variation range set from 3 to 6
+aqua.console.println("Generate Number variations with variation range set from 3 to 6, base number object is [" + target + "]");
+randomVariation = aqua.random.newRandomNumberVariation(3, 6);
+generateVariations(randomVariation, target);

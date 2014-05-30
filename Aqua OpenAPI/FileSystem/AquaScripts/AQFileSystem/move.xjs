@@ -1,0 +1,55 @@
+﻿// all test data will be created under this directory
+var test_data_dir = "/tmp/test/AQFileSystem/";
+
+// get instance of filesystem object
+var AQFS = aqua.filesystem;
+
+/* --- test move --- */
+
+test_move();
+
+// --- move() ---
+
+function test_move() {
+    var src_base = test_data_dir + "files/src_base/";
+    var src_file = src_base + "test_file.txt";
+    var dest_base = test_data_dir + "move/";
+    var dest_from_base = dest_base + "from/";
+    var dest_from_file = dest_from_base + "tmp_file.txt";
+    var no_dest_from_dir = dest_from_base + "tmp_dir";
+    var dest_to_base = dest_base + "to/";
+    var dest_to_file = dest_to_base + "new_test_file.txt";
+    var no_dest_to_dir = dest_to_base + "tmp_new_dir";
+
+    AQFS.copy(src_file, dest_from_file);
+    AQFS.copy(src_file, dest_to_file);
+    AQFS.copy(src_base, dest_from_base);
+
+    // testing error condition - cannot move a directory into a file
+    exec_move(dest_from_base, dest_to_file);
+    // testing error condition - source directory/file has to be specified
+    exec_move(no_dest_from_dir, dest_to_base);
+    // testing error condtion - destination directory/file has to be specifed
+    exec_move(dest_from_base, null);
+    
+    // this should work - move file to directory
+    exec_move(dest_from_base + "test_fileset1.txt", dest_to_base)    
+    // this should work - move file to another file
+    exec_move(dest_from_base + "test_fileset2.txt", dest_to_base + "new_test_fileset2.txt");
+    // this should work - if directory doesn't exist, create it
+    exec_move(dest_from_base, no_dest_to_dir);
+
+}
+function exec_move(source, destination) {
+    try {
+        aqua.console.println("move: moving [" + source + "] to [" + destination + "]...");
+        AQFS.move(source, destination);
+        aqua.console.println("move done.");
+    } 
+    catch(ex) {
+        aqua.console.println("move failed - " + ex.toString());
+    }
+}
+
+
+// -------------------------------------------------------------------------------

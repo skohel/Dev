@@ -1,0 +1,25 @@
+﻿var Pws    = aqua.vcs.newPerforce();
+Pws.setVerbose(false);
+
+// create AQOpaqueObject containing the username and password
+var usr = aqua.crypto.getSecureField('svn.username');
+var pwd = aqua.crypto.getSecureField('svn.password');
+
+// connect to the Perforce server
+Pws.connect("p4jrpc://10.168.11.82:1666","client","F:\\May_Perforce",usr,pwd);
+
+var usrGrps = Pws.getUserGroups("pGroup",false,true);
+aqua.console.println("** List of Perforce Groups in the Server **");
+for (var i=0; i < usrGrps.size(); i++)
+{
+// display Group info
+aqua.console.println("Group : "          + usrGrps.get(i).getName() );
+aqua.console.println("Owner : "          + usrGrps.get(i).getOwners() );
+aqua.console.println("Is subgroup : "    + usrGrps.get(i).isSubGroup() );
+aqua.console.println("Get the Users : "  + usrGrps.get(i).getUsers()  );
+aqua.console.println("Max lock time : "  + usrGrps.get(i).getMaxLockTime() );
+aqua.console.println("Max results : "    + usrGrps.get(i).getMaxResults() );
+aqua.console.println("Max scan rows : "  + usrGrps.get(i).getMaxScanRows() );
+}
+
+Pws.close();

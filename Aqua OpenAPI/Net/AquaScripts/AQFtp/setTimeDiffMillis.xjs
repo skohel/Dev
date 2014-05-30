@@ -1,0 +1,21 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        setTimeDiffMillis()
+ 
+   Synopsis:
+        void setTimeDiffMillis(long timeDiffMillis)
+
+   Description
+        Number of milliseconds to add to the time on the remote machine to get the time on the local machine, use in conjunction with setNewer(boolean).
+
+   Parameters
+        timeDiffMillis  - find automatically the time difference if true
+
+   Throws
+        none
+ 
+   Example
+        See below.
+*/

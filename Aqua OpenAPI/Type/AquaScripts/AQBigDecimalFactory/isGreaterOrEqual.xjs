@@ -1,0 +1,12 @@
+﻿var factory  = aqua.type.getBigDecimal();
+
+var value     = "100000.002";
+var threshold = "100000.001";
+
+aqua.console.println("Is [" + value + "] greater or equal to [" + threshold + "]? " + factory.isGreaterOrEqual(value, threshold));
+
+threshold = "100000.002";
+aqua.console.println("Is [" + value + "] greater or equal to [" + threshold + "]? " + factory.isGreaterOrEqual(value, threshold));
+
+threshold = "100000.003";
+aqua.console.println("Is [" + value + "] greater or equal to [" + threshold + "]? " + factory.isGreaterOrEqual(value, threshold));

@@ -1,0 +1,28 @@
+﻿/*
+
+Description of method functionality
+
+Synopsys
+    [Return Data Type] functionName()  
+
+Description
+    Description of functionality
+
+Example
+    //
+
+
+*/
+
+var args =
+{
+    a : 5,
+    b : 6
+};
+
+var returnValue = aqua.system.runScript("/AQSystem/runScript-sub.xjs", args);
+
+aqua.console.println("Executed runScript-sub.xjs");
+aqua.console.println("Parameters Used : " + args);
+aqua.console.println("Script returned value : " + returnValue);
+

@@ -1,0 +1,7 @@
+﻿
+var row = aqua.data.newDataSet().addRowWithValues("aa", "bb");
+print(row.getString(1));
+
+function print(text) {
+    aqua.console.println(text);
+}

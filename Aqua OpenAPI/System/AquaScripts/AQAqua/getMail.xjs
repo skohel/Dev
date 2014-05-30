@@ -1,0 +1,4 @@
+﻿var mail = aqua.getMail();
+var message = mail.newMessage();
+
+// now do something with the message object here

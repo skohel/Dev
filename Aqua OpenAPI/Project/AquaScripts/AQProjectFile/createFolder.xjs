@@ -1,0 +1,16 @@
+﻿var folder = aqua.random.nextString(10, 10).replaceAll(" ", "_");
+
+testAquaScript(folder);
+testUserFile(folder);
+
+function testAquaScript(folder) {
+	aqua.console.println("[TEST] aqua.project.getAquaScript(" + folder + ").createFolder()");
+    var status = aqua.project.getAquaScript(folder).createFolder();
+	aqua.console.println("Status: [" + status + "]"); // <-- suppose to be false
+}
+
+function testUserFile(folder) {
+	aqua.console.println("[TEST] aqua.project.getUserFile(" + folder + ").createFolder()");
+    var status = aqua.project.getUserFile(folder).createFolder();
+	aqua.console.println("Status: [" + status + "]"); // <-- suppose to be true
+}

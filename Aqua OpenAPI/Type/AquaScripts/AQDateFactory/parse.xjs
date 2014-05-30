@@ -1,0 +1,15 @@
+﻿var factory = aqua.type.getDate();
+
+var dateString1 = "2009 Jan 01 12:34:56";
+var dateString2 = "01-10-2009";
+var pattern1   = "yyyy MMM dd HH:MM:SS";
+var pattern2   = "dd-MM-yyyy";
+var pattern3   = "dd MM yyyy";
+var timezone   = "GMT +01:00";
+var locale     = "FR";
+
+aqua.console.println("date without locale: [" + factory.parse(dateString1, pattern1, timezone) + "]");
+aqua.console.println("date with locale   : [" + factory.parse(dateString2, pattern2, timezone, locale) + "]");
+
+aqua.console.println("date with locale   : [" + factory.parse(dateString2, pattern3, timezone, locale) + "]");
+

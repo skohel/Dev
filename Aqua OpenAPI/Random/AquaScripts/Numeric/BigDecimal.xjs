@@ -1,0 +1,5 @@
+print("Generate a random big decimal value:");
+for ( i = 0; i < 5; i++ ) {
+    var x = aqua.random.nextBigDecimal();
+    print("\t"+x);
+}

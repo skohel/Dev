@@ -1,0 +1,21 @@
+/*
+aqua.math.cos
+
+    Returns the trigonometric cosine of an angle.
+
+Synopsys
+    double aqua.math.cos(double);
+
+Description
+     * If the argument is NaN or an infinity, then the result is NaN.
+    The computed result must be within 1 ulp of the exact result. Results must be semi-monotonic. 
+
+Example
+    see below
+
+*/
+aqua.console.println("cos[180] --> [" + aqua.math.cos(180) + "]");
+aqua.console.println("cos[90] --> [" + aqua.math.cos(90) + "]");
+aqua.console.println("cos[0] --> [" + aqua.math.cos(0) + "]");
+aqua.console.println("cos[-90] --> [" + aqua.math.cos(-90) + "]");
+aqua.console.println("cos[-180] --> [" + aqua.math.cos(-180) + "]");

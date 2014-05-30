@@ -1,0 +1,21 @@
+﻿/*
+   Class:  
+        AQFtp
+   Method:
+        setPreserveLastModified()
+ 
+   Synopsis:
+        void setPreserveLastModified(boolean preserveLastModified)
+
+   Description
+        Gives the copied files the same last modified time as the original source files, applies to get command only and defaults to false.    
+
+   Parameters
+        preserveLastModified - preserver modification times if true
+  
+   Throws
+        none
+ 
+   Example
+        See below.
+*/
