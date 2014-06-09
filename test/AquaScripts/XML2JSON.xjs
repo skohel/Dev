@@ -1,0 +1,100 @@
+﻿function openTextFile(file){
+    this.file = file ;
+    var reader= aqua.io.newTextReader();
+    reader.setFile(file);
+    
+    this.getRow = function(){
+       var row;
+       var list = [];
+
+       row = reader.readNextRow();
+       
+       while(row != null){
+           list.push(row);
+           row = reader.readNextRow();
+       }
+       return list;
+    };
+
+    this.close = function(){
+        reader.close();
+    };
+}
+
+var XML2JSON = function (xml){
+    var obj = {};
+    var root = xml.shift().getString(0);
+    trimString(root);
+    //print(root.length());
+    var rootLength = root.length();
+    root = root.substring(1, rootLength - 1);
+    print("root: " +root);
+    var convert_helper = function(head, text){
+        var value;
+        var node = text.shift().getString(0);
+        //trimString(node);
+        print ("head: " + head + " node: " + node.substring(2, node.length()-1));
+        if (node.substring(2, node.length() - 1).equals(head)){
+                print("yes");
+              value = "";
+        }
+        else{
+            if (text.length < 0){
+                value = {};
+                var child = text.shift().getString(0);
+                child = child.substring(1, child.length() - 1)
+                value[child] = convert_helper(child, text);
+            }
+            else return;
+        }
+       /*else{
+            var space = []
+            for (var i = 0; i < node.length; i++){
+                if (node.charAt(i) === " ")
+                    space.push(i);
+            }
+            if (space.length == 1){
+                
+            }
+            else{
+
+            }
+        }*/
+        
+        return value;
+    }
+    obj[root] = convert_helper(root, xml);
+    return obj;
+}
+
+var trimString = function(line){
+    //print("line: " + line);
+    var i = 0;
+    while (line.charAt(i).toString() == " "){ 
+        //print(line.charAt(i).toString() + i);
+        i++;
+    }
+    var start = i;
+    for(;i < line.length();i++){  
+        //print(line.charAt(i) + i);
+        if(line.charAt(i).toString().equals(" "))
+            break;
+    }
+    var end = i;
+    //print("end: " + end);
+    //if (start == 0 && end == line.length)
+    //    print(line)
+    //else
+    //    aqua.console.println("substring: " + line.substring(start,end));
+    var newLine = line.substring(start,end);
+    //print("newLine: " + newLine);
+    return newLine;
+}
+var x = new openTextFile("/home/sterling/Dev/test/User\ Files/animals.xml");
+
+var y = x.getRow();
+x.close();
+print(y);
+var z = XML2JSON(y); 
+
+print(JSON.stringify(z));

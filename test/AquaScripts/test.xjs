@@ -1,0 +1,12 @@
+﻿/*var x = "<car make=\"chevy\" model=\"camaro\"/>";
+
+var list = []
+for (var i = 0; i < x.length; i++){
+    if (x[i] === " ")
+        list.push(i);
+}
+print(list);
+
+print(list.length);*/
+
+{    animals:{        dog:[            {                name:'Rufus',                breed:'labrador'            },            {                name:'Marty',                breed:'whippet'            }        ],        cat:{            name:'Matilda'        }    }}
